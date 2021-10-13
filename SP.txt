@@ -210,7 +210,6 @@ end
 create store procedure sp_modificarCli
 (
 	v_rut_cli number,
-	v_dv_cli nvarchar,
 	v_nom_cli nvarchar,
 	v_appat_cli nvarchar,
 	v_apmat_cli nvarchar,
@@ -221,7 +220,7 @@ create store procedure sp_modificarCli
 as
 begin
 	update Cliente set nom_cli = v_nom_cli, appat_cli = v_appat_cli, apmat_cli = v_apmat_cli, email_cli = v_email_cli, cel_cli = v_cel_cli, tipo_cli = v_tipo_cli
-	where rut_cli = v_rut_cli and dv_cli = v_dv_cli 
+	where rut_cli = v_rut_cli 
 	
 end
 
@@ -231,12 +230,11 @@ TABLA CLIENTE
 
 create store procedure sp_eliminarCli
 (
-	v_rut_cli number,
-	v_dv_cli nvarchar
+	v_rut_cli number
 )
 as
 begin
-	delete Cliente from Cliente where rut_cli = v_rut_cli and dv_cli = v_dv_cli
+	delete Cliente from Cliente where rut_cli = v_rut_cli
 end
 
 ---------------------------------------------------------------------------
@@ -282,7 +280,6 @@ end
 create store procedure sp_modificarCli
 (
 	v_rut_cli number,
-	v_dv_cli nvarchar,
 	v_nom_cli nvarchar,
 	v_appat_cli nvarchar,
 	v_apmat_cli nvarchar,
@@ -293,7 +290,65 @@ create store procedure sp_modificarCli
 as
 begin
 	update Cliente set nom_cli = v_nom_cli, appat_cli = v_appat_cli, apmat_cli = v_apmat_cli, email_cli = v_email_cli, cel_cli = v_cel_cli, tipo_cli = v_tipo_cli
-	where rut_cli = v_rut_cli and dv_cli = v_dv_cli 
+	where rut_cli = v_rut_cli 
+	
+end
+
+---------------------------------------------------------------------------
+
+TABLA TRANSPORTE
+
+create store procedure sp_eliminarTransporte
+(
+	v_id_serv number
+)
+as
+begin
+	delete Transporte from Transporte where id_serv = v_id_serv
+end
+
+---------------------------------------------------------------------------
+
+create store procedure sp_listarTransporte
+
+as
+begin
+	select v_max_pas, v_asiento_nigno, v_per_silla
+	order v_max_pas asc
+end	
+
+---------------------------------------------------------------------------
+
+create store procedure sp_agregarTransporte
+(
+	v_max_pas number,
+	v_asiento_nigno char,
+	v_per_silla char
+)
+as
+begin
+	insert into Transporte values
+	(
+	v_id_serv_seq.nextval,
+	v_max_pas number,
+	v_asiento_nigno char,
+	v_per_silla char
+	)
+end
+
+---------------------------------------------------------------------------
+
+create store procedure sp_modificarTransporte
+(
+	v_id_serv number,
+	v_max_pas number,
+	v_asiento_nigno char,
+	v_per_silla char
+)
+as
+begin
+	update Transporte set max_pas = v_max_pas, asiento_nigno = v_asiento_nigno, per_silla = v_per_silla
+	where id_serv = v_id_serv
 	
 end
 
