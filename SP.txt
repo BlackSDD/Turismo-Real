@@ -353,3 +353,62 @@ begin
 end
 
 ---------------------------------------------------------------------------
+
+TABLA TOUR
+
+create store procedure sp_eliminarTour
+(
+	v_id_serv number
+)
+as
+begin
+	delete Tour from Tour where id_serv = v_id_serv
+end
+
+---------------------------------------------------------------------------
+
+create store procedure sp_listarTour
+
+as
+begin
+	select v_lugar_destino, v_lugar_recogida, v_hora_acor
+	order v_lugar_destino asc
+end	
+
+---------------------------------------------------------------------------
+
+create store procedure sp_agregarTour
+(
+	
+	v_lugar_destino number,
+	v_lugar_recogida char,
+	v_hora_acor char
+)
+as
+begin
+	insert into Tour values
+	(
+	v_id_serv_seq.nextval,
+	v_lugar_destino nvarcahr,
+	v_lugar_recogida nvarchar,
+	v_hora_acor date
+	)
+end
+
+---------------------------------------------------------------------------
+
+create store procedure sp_modificarTour
+(
+	v_id_serv,
+	v_lugar_destino nvarchar,
+	v_lugar_recogida nvarchar,
+	v_hora_acor date
+)
+as
+begin
+	update Tour set lugar_destino = v_lugar_destino, lugar_recogida = v_lugar_recogida, hora_acor = v_hora_acor
+	where id_serv = v_id_serv
+	
+end
+
+---------------------------------------------------------------------------
