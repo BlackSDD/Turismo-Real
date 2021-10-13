@@ -1,0 +1,224 @@
+TABLA USUARIO
+
+create store procedure sp_eliminarUsr
+(
+	v_email_usr nvarchar,
+	v_contr_usr nvarchar
+)
+as
+begin
+	delete Usuario from Usuario where email_usr = v_email_usr and contr_usr = v_contr_usr
+end
+
+---------------------------------------------------------------------------
+
+create store procedure sp_listarUsr
+
+as
+begin
+	select email_usr, contr_usr, nom_usr, appat_usr, apmat_usr, cel_usr, tipo_usr
+	order appat_usr asc
+end	
+
+---------------------------------------------------------------------------
+
+create store procedure sp_agregarUsr
+(
+	v_email_usr nvarchar,
+	v_contr_usr nvarchar,
+	v_nom_usr nvarchar,
+	v_appat_usr nvarchar,
+	v_apmat_usr nvarchar,
+	v_cel_usr number,
+	v_tipo_usr nvarchar
+)
+as
+begin
+	insert into Usuario values
+	(
+	v_email_usr nvarchar,
+	v_contr_usr nvarchar,
+	v_nom_usr nvarchar,
+	v_appat_usr nvarchar,
+	v_apmat_usr nvarchar,
+	v_cel_usr number,
+	v_tipo_usr nvarchar
+	)
+end
+
+---------------------------------------------------------------------------
+
+create store procedure sp_modificarUsr
+(
+	v_email_usr nvarchar,
+	v_contr_usr nvarchar,
+	v_nom_usr nvarchar,
+	v_appat_usr nvarchar,
+	v_apmat_usr nvarchar,
+	v_cel_usr number,
+	v_tipo_usr nvarchar
+)
+as
+begin
+	update Usuario set contr_usr = v_contr_usr, nom_usr = v_nom_usr, appat_usr = v_appat_usr, apmat_usr = v_apmat_usr, cel_usr = v_cel_usr, tipo_usr = v_tipo_usr
+	where email_usr = v_email_usr
+	
+end
+
+---------------------------------------------------------------------------
+
+TABLA CHECK IN
+
+create store procedure sp_listarCheckin
+
+as
+begin
+	select v_deta_chi
+	order v_deta_chi asc
+end	
+
+---------------------------------------------------------------------------
+
+create store procedure sp_agregarCheckin
+(
+	v_deta_chi nvarchar,
+	
+)
+as
+begin
+	insert into Checkin values
+	(
+	id_chi_seq.nextval,
+	v_deta_chi nvarchar
+	)
+end
+
+---------------------------------------------------------------------------
+
+create store procedure sp_modificarCheckin
+(
+	v_id_chi number,
+	v_deta_chi nvarchar
+	
+)
+as
+begin
+	update Checkin set deta_chi = v_deta_chi
+	where id_chi = v_id_chi
+	
+end
+
+---------------------------------------------------------------------------
+
+TABLA CHECK OUT
+
+create store procedure sp_listarCheckout
+
+as
+begin
+	select v_cost_multa, v_deta_cho
+	order v_deta_chi asc
+end	
+
+---------------------------------------------------------------------------
+
+create store procedure sp_agregarCheckout
+(
+	v_cost_multa number,
+	v_deta_cho nvarchar,
+	
+)
+as
+begin
+	insert into Checkout values
+	(
+	v_id_cho_seq.nextval,
+	v_cost_multa number,
+	v_deta_chi nvarchar
+	)
+end
+
+---------------------------------------------------------------------------
+
+create store procedure sp_modificarCheckout
+(
+	v_cost_multa number,
+	v_deta_cho nvarchar
+	
+)
+as
+begin
+	update Checkout set costo_multa = v_costo_multa , deta_chi = v_deta_cho
+	where id_cho = v_id_cho
+	
+end
+
+---------------------------------------------------------------------------
+
+TABLA CLIENTE
+
+create store procedure sp_eliminarCli
+(
+	v_rut_cli number
+)
+as
+begin
+	delete Cliente from Cliente where rut_cli = v_rut_cli
+end
+
+---------------------------------------------------------------------------
+
+create store procedure sp_listarCli
+
+as
+begin
+	select v_rut_cli, v_dv_cli, v_nom_cli, v_appat_cli, v_apmat_cli, v_email_cli, v_cel_cli, v_tipo_usr
+	order v_rut_cli asc
+end	
+
+---------------------------------------------------------------------------
+
+create store procedure sp_agregarCli
+(
+	v_rut_cli number,
+	v_dv_cli nvarchar,
+	v_nom_cli nvarchar,
+	v_appat_cli nvarchar,
+	v_apmat_cli nvarchar,
+	v_email_cli nvarchar,
+	v_cel_usr number,
+	v_tipo_usr nvarchar
+)
+as
+begin
+	insert into Cliente values
+	(
+	v_rut_cli number,
+	v_dv_cli nvarchar,
+	v_nom_cli nvarchar,
+	v_appat_cli nvarchar,
+	v_apmat_cli nvarchar,
+	v_email_cli nvarchar,
+	v_cel_cli number,
+	v_tipo_cli nvarchar
+	)
+end
+
+---------------------------------------------------------------------------
+
+create store procedure sp_modificarUsr
+(
+	v_email_usr nvarchar,
+	v_contr_usr nvarchar,
+	v_nom_usr nvarchar,
+	v_appat_usr nvarchar,
+	v_apmat_usr nvarchar,
+	v_cel_usr number,
+	v_tipo_usr nvarchar
+)
+as
+begin
+	update Usuario set contr_usr = v_contr_usr, nom_usr = v_nom_usr, appat_usr = v_appat_usr, apmat_usr = v_apmat_usr, cel_usr = v_cel_usr, tipo_usr = v_tipo_usr
+	where email_usr = v_email_usr
+	
+end
