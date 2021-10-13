@@ -43,9 +43,7 @@ DROP TABLE transporte CASCADE CONSTRAINTS;
 
 DROP TABLE usuario CASCADE CONSTRAINTS;
 
--- predefined type, no DDL - MDSYS.SDO_GEOMETRY
 
--- predefined type, no DDL - XMLTYPE
 
 CREATE TABLE agencia_externa (
     id_agencia    NUMBER(10) NOT NULL,
@@ -485,3 +483,4 @@ EXCEPTION
 END;
 /
 
+------
