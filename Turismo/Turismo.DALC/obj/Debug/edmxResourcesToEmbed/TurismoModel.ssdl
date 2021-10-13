@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model.Store" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="11.2" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="DEPARTAMENTO">
+    <Key>
+      <PropertyRef Name="DEPARTAMENTO_ID" />
+      <PropertyRef Name="REGION_REGION_ID" />
+    </Key>
+    <Property Name="DEPARTAMENTO_ID" Type="number" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="DIRECCION_DEPARTAMENTO" Type="varchar2" MaxLength="100" Nullable="false" />
+    <Property Name="PRECIO_DEPARTAMENTO" Type="number" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="NUMERO_DEPARTAMENTO" Type="number" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="REGION_REGION_ID" Type="number" Precision="38" Scale="0" Nullable="false" />
+  </EntityType>
+  <EntityType Name="REGION">
+    <Key>
+      <PropertyRef Name="REGION_ID" />
+    </Key>
+    <Property Name="REGION_ID" Type="number" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="NOMBRE" Type="varchar2" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="USUARIO">
+    <Key>
+      <PropertyRef Name="USUARIO_ID" />
+    </Key>
+    <Property Name="USUARIO_ID" Type="number" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="EMAIL" Type="varchar2" MaxLength="200" Nullable="false" />
+    <Property Name="PASSWORD" Type="varchar2" MaxLength="200" Nullable="false" />
+    <Property Name="ULTIMA_CONEXION" Type="timestamp with time zone" Precision="6" />
+  </EntityType>
+  <Association Name="DEPARTAMENTO_REGION_FK">
+    <End Role="REGION" Type="Self.REGION" Multiplicity="1" />
+    <End Role="DEPARTAMENTO" Type="Self.DEPARTAMENTO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="REGION">
+        <PropertyRef Name="REGION_ID" />
+      </Principal>
+      <Dependent Role="DEPARTAMENTO">
+        <PropertyRef Name="REGION_REGION_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="SP_CREATE_DEPARTAMENTO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TURISMO">
+    <Parameter Name="V_DIRECCION" Type="varchar2" Mode="In" />
+    <Parameter Name="V_PRECIO" Type="number" Mode="In" />
+    <Parameter Name="V_NUMERO" Type="number" Mode="In" />
+    <Parameter Name="V_REGION_ID" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_CREATE_REGION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TURISMO">
+    <Parameter Name="V_NOMBRE" Type="varchar2" Mode="In" />
+  </Function>
+  <Function Name="SP_DELETE_DEPARTAMENTO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TURISMO">
+    <Parameter Name="V_ID" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_DELETE_REGION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TURISMO">
+    <Parameter Name="V_ID" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_UPDATE_DEPARTAMENTO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TURISMO">
+    <Parameter Name="V_ID" Type="number" Mode="In" />
+    <Parameter Name="V_DIRECCION" Type="varchar2" Mode="In" />
+    <Parameter Name="V_PRECIO" Type="number" Mode="In" />
+    <Parameter Name="V_NUMERO" Type="number" Mode="In" />
+    <Parameter Name="V_REGION_ID" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_UPDATE_REGION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TURISMO">
+    <Parameter Name="V_ID" Type="number" Mode="In" />
+    <Parameter Name="V_NOMBRE" Type="varchar2" Mode="In" />
+  </Function>
+  <EntityContainer Name="ModelStoreContainer">
+    <EntitySet Name="DEPARTAMENTO" EntityType="Self.DEPARTAMENTO" Schema="TURISMO" store:Type="Tables" />
+    <EntitySet Name="REGION" EntityType="Self.REGION" Schema="TURISMO" store:Type="Tables" />
+    <EntitySet Name="USUARIO" EntityType="Self.USUARIO" Schema="TURISMO" store:Type="Tables" />
+    <AssociationSet Name="DEPARTAMENTO_REGION_FK" Association="Self.DEPARTAMENTO_REGION_FK">
+      <End Role="REGION" EntitySet="REGION" />
+      <End Role="DEPARTAMENTO" EntitySet="DEPARTAMENTO" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
