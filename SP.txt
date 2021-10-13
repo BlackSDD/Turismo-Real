@@ -159,11 +159,12 @@ TABLA CLIENTE
 
 create store procedure sp_eliminarCli
 (
-	v_rut_cli number
+	v_rut_cli number,
+	v_dv_cli nvarchar
 )
 as
 begin
-	delete Cliente from Cliente where rut_cli = v_rut_cli
+	delete Cliente from Cliente where rut_cli = v_rut_cli and dv_cli = v_dv_cli
 end
 
 ---------------------------------------------------------------------------
@@ -206,20 +207,93 @@ end
 
 ---------------------------------------------------------------------------
 
-create store procedure sp_modificarUsr
+create store procedure sp_modificarCli
 (
-	v_email_usr nvarchar,
-	v_contr_usr nvarchar,
-	v_nom_usr nvarchar,
-	v_appat_usr nvarchar,
-	v_apmat_usr nvarchar,
+	v_rut_cli number,
+	v_dv_cli nvarchar,
+	v_nom_cli nvarchar,
+	v_appat_cli nvarchar,
+	v_apmat_cli nvarchar,
+	v_email_cli nvarchar,
+	v_cel_cli number,
+	v_tipo_cli nvarchar
+)
+as
+begin
+	update Cliente set nom_cli = v_nom_cli, appat_cli = v_appat_cli, apmat_cli = v_apmat_cli, email_cli = v_email_cli, cel_cli = v_cel_cli, tipo_cli = v_tipo_cli
+	where rut_cli = v_rut_cli and dv_cli = v_dv_cli 
+	
+end
+
+---------------------------------------------------------------------------
+
+TABLA CLIENTE
+
+create store procedure sp_eliminarCli
+(
+	v_rut_cli number,
+	v_dv_cli nvarchar
+)
+as
+begin
+	delete Cliente from Cliente where rut_cli = v_rut_cli and dv_cli = v_dv_cli
+end
+
+---------------------------------------------------------------------------
+
+create store procedure sp_listarCli
+
+as
+begin
+	select v_rut_cli, v_dv_cli, v_nom_cli, v_appat_cli, v_apmat_cli, v_email_cli, v_cel_cli, v_tipo_usr
+	order v_rut_cli asc
+end	
+
+---------------------------------------------------------------------------
+
+create store procedure sp_agregarCli
+(
+	v_rut_cli number,
+	v_dv_cli nvarchar,
+	v_nom_cli nvarchar,
+	v_appat_cli nvarchar,
+	v_apmat_cli nvarchar,
+	v_email_cli nvarchar,
 	v_cel_usr number,
 	v_tipo_usr nvarchar
 )
 as
 begin
-	update Usuario set contr_usr = v_contr_usr, nom_usr = v_nom_usr, appat_usr = v_appat_usr, apmat_usr = v_apmat_usr, cel_usr = v_cel_usr, tipo_usr = v_tipo_usr
-	where email_usr = v_email_usr
+	insert into Cliente values
+	(
+	v_rut_cli number,
+	v_dv_cli nvarchar,
+	v_nom_cli nvarchar,
+	v_appat_cli nvarchar,
+	v_apmat_cli nvarchar,
+	v_email_cli nvarchar,
+	v_cel_cli number,
+	v_tipo_cli nvarchar
+	)
+end
+
+---------------------------------------------------------------------------
+
+create store procedure sp_modificarCli
+(
+	v_rut_cli number,
+	v_dv_cli nvarchar,
+	v_nom_cli nvarchar,
+	v_appat_cli nvarchar,
+	v_apmat_cli nvarchar,
+	v_email_cli nvarchar,
+	v_cel_cli number,
+	v_tipo_cli nvarchar
+)
+as
+begin
+	update Cliente set nom_cli = v_nom_cli, appat_cli = v_appat_cli, apmat_cli = v_apmat_cli, email_cli = v_email_cli, cel_cli = v_cel_cli, tipo_cli = v_tipo_cli
+	where rut_cli = v_rut_cli and dv_cli = v_dv_cli 
 	
 end
 
