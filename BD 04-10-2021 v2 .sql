@@ -190,6 +190,26 @@ CREATE TABLE transporte (
     per_silla     CHAR(2) NOT NULL
 );
 
+CREATE TABLE conductor (
+    rut_conduc  NUMBER(8) NOT NULL,    
+    dv_conduc   CHAR(1) NOT NULL,
+    nom_conduc   NVARCHAR2(50) NOT NULL,
+    appat_conduc NVARCHAR2(50) NOT NULL,
+    apmat_conduc NVARCHAR2(50) NOT NULL,
+    email_conduc NVARCHAR2(100) NOT NULL,
+    tel_conduc   NUMBER(9) NOT NULL
+);
+
+CREATE TABLE vehiculo (
+    patente_alfa CHAR(4) NOT NULL,
+    patente_num NUMBER(2) NOT NULL,
+    color NVARCHAR2(30) NOT NULL,
+    modelo NVARCHAR2(30) NOT NULL,
+    cant_puertas NUMBER(1) NOT NULL,
+    cap_pasaj NUMBER(2) NOT NULL, 
+    cap_male NUMBER (4) NOT NULL,
+);
+
 CREATE TABLE usuario (
     email_usr NVARCHAR2(100) NOT NULL,
     contr_usr NVARCHAR2(50) NOT NULL,
@@ -440,5 +460,3 @@ EXCEPTION
 END;/
 
 commit;
-
-
