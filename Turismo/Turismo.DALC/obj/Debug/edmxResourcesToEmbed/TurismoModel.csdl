@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="DEPARTAMENTO">
+    <Key>
+      <PropertyRef Name="DEPARTAMENTO_ID" />
+      <PropertyRef Name="REGION_REGION_ID" />
+    </Key>
+    <Property Name="DEPARTAMENTO_ID" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="DIRECCION_DEPARTAMENTO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PRECIO_DEPARTAMENTO" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="NUMERO_DEPARTAMENTO" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="REGION_REGION_ID" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <NavigationProperty Name="REGION" Relationship="Self.DEPARTAMENTO_REGION_FK" FromRole="DEPARTAMENTO" ToRole="REGION" />
+  </EntityType>
+  <EntityType Name="REGION">
+    <Key>
+      <PropertyRef Name="REGION_ID" />
+    </Key>
+    <Property Name="REGION_ID" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="NOMBRE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="DEPARTAMENTO" Relationship="Self.DEPARTAMENTO_REGION_FK" FromRole="REGION" ToRole="DEPARTAMENTO" />
+  </EntityType>
+  <EntityType Name="USUARIO">
+    <Key>
+      <PropertyRef Name="USUARIO_ID" />
+    </Key>
+    <Property Name="USUARIO_ID" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="EMAIL" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PASSWORD" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ULTIMA_CONEXION" Type="DateTimeOffset" Precision="9" />
+  </EntityType>
+  <Association Name="DEPARTAMENTO_REGION_FK">
+    <End Role="REGION" Type="Self.REGION" Multiplicity="1" />
+    <End Role="DEPARTAMENTO" Type="Self.DEPARTAMENTO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="REGION">
+        <PropertyRef Name="REGION_ID" />
+      </Principal>
+      <Dependent Role="DEPARTAMENTO">
+        <PropertyRef Name="REGION_REGION_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TurismoEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="DEPARTAMENTO" EntityType="Self.DEPARTAMENTO" />
+    <EntitySet Name="REGION" EntityType="Self.REGION" />
+    <EntitySet Name="USUARIO" EntityType="Self.USUARIO" />
+    <AssociationSet Name="DEPARTAMENTO_REGION_FK" Association="Self.DEPARTAMENTO_REGION_FK">
+      <End Role="REGION" EntitySet="REGION" />
+      <End Role="DEPARTAMENTO" EntitySet="DEPARTAMENTO" />
+    </AssociationSet>
+    <FunctionImport Name="SP_CREATE_DEPARTAMENTO">
+      <Parameter Name="V_DIRECCION" Mode="In" Type="String" />
+      <Parameter Name="V_PRECIO" Mode="In" Type="Decimal" />
+      <Parameter Name="V_NUMERO" Mode="In" Type="Decimal" />
+      <Parameter Name="V_REGION_ID" Mode="In" Type="Decimal" />
+    </FunctionImport>
+    <FunctionImport Name="SP_CREATE_REGION">
+      <Parameter Name="V_NOMBRE" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SP_DELETE_DEPARTAMENTO">
+      <Parameter Name="V_ID" Mode="In" Type="Decimal" />
+    </FunctionImport>
+    <FunctionImport Name="SP_DELETE_REGION">
+      <Parameter Name="V_ID" Mode="In" Type="Decimal" />
+    </FunctionImport>
+    <FunctionImport Name="SP_UPDATE_DEPARTAMENTO">
+      <Parameter Name="V_ID" Mode="In" Type="Decimal" />
+      <Parameter Name="V_DIRECCION" Mode="In" Type="String" />
+      <Parameter Name="V_PRECIO" Mode="In" Type="Decimal" />
+      <Parameter Name="V_NUMERO" Mode="In" Type="Decimal" />
+      <Parameter Name="V_REGION_ID" Mode="In" Type="Decimal" />
+    </FunctionImport>
+    <FunctionImport Name="SP_UPDATE_REGION">
+      <Parameter Name="V_ID" Mode="In" Type="Decimal" />
+      <Parameter Name="V_NOMBRE" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="TurismoEntities">
+    <EntitySetMapping Name="DEPARTAMENTO">
+      <EntityTypeMapping TypeName="Model.DEPARTAMENTO">
+        <MappingFragment StoreEntitySet="DEPARTAMENTO">
+          <ScalarProperty Name="DEPARTAMENTO_ID" ColumnName="DEPARTAMENTO_ID" />
+          <ScalarProperty Name="DIRECCION_DEPARTAMENTO" ColumnName="DIRECCION_DEPARTAMENTO" />
+          <ScalarProperty Name="PRECIO_DEPARTAMENTO" ColumnName="PRECIO_DEPARTAMENTO" />
+          <ScalarProperty Name="NUMERO_DEPARTAMENTO" ColumnName="NUMERO_DEPARTAMENTO" />
+          <ScalarProperty Name="REGION_REGION_ID" ColumnName="REGION_REGION_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="REGION">
+      <EntityTypeMapping TypeName="Model.REGION">
+        <MappingFragment StoreEntitySet="REGION">
+          <ScalarProperty Name="REGION_ID" ColumnName="REGION_ID" />
+          <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="USUARIO">
+      <EntityTypeMapping TypeName="Model.USUARIO">
+        <MappingFragment StoreEntitySet="USUARIO">
+          <ScalarProperty Name="USUARIO_ID" ColumnName="USUARIO_ID" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+          <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+          <ScalarProperty Name="ULTIMA_CONEXION" ColumnName="ULTIMA_CONEXION" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="SP_CREATE_DEPARTAMENTO" FunctionName="Model.Store.SP_CREATE_DEPARTAMENTO" />
+    <FunctionImportMapping FunctionImportName="SP_CREATE_REGION" FunctionName="Model.Store.SP_CREATE_REGION" />
+    <FunctionImportMapping FunctionImportName="SP_DELETE_DEPARTAMENTO" FunctionName="Model.Store.SP_DELETE_DEPARTAMENTO" />
+    <FunctionImportMapping FunctionImportName="SP_DELETE_REGION" FunctionName="Model.Store.SP_DELETE_REGION" />
+    <FunctionImportMapping FunctionImportName="SP_UPDATE_DEPARTAMENTO" FunctionName="Model.Store.SP_UPDATE_DEPARTAMENTO" />
+    <FunctionImportMapping FunctionImportName="SP_UPDATE_REGION" FunctionName="Model.Store.SP_UPDATE_REGION" />
+  </EntityContainerMapping>
+</Mapping>

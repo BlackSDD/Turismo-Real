@@ -1,0 +1,42 @@
+﻿@model Turismo.Negocio.Departamento
+
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Agregar Nuevo Departamento</h2>
+@Html.ValidationSummary()
+
+@Html.ActionLink("Ver departamentos", "Index")
+
+@using (Html.BeginForm())
+{
+
+    @Html.LabelFor(d => d.Direccion, "Dirección")
+    <br />
+    @Html.TextBoxFor(d => d.Direccion)
+    <br />
+    <br />
+    @Html.LabelFor(d => d.Numero, "Número del departamento")
+    <br />
+    @Html.TextBoxFor(d => d.Numero)
+    <br />
+    <br />
+    @Html.LabelFor(d => d.Precio)
+    <br />
+    @Html.TextBoxFor(d => d.Precio)
+    <br />
+    <br />
+    @Html.LabelFor(d => d.RegionId, "Region")
+    <br />
+    @Html.DropDownListFor(d => d.RegionId, new SelectList(ViewBag.region, "Id", "Nombre"))
+
+    <button>Guardar</button>
+
+    <br />
+    <br />
+
+    @Html.ActionLink("Ver departamentos", "Index", "Departamento")
+
+}
