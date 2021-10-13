@@ -71,7 +71,7 @@ CREATE TABLE articulo (
 );
 
 COMMENT ON COLUMN articulo.cant_arti IS
-    'se utilizará para mencionar la cantidad que compone los set de objetos
+    'se utilizarï¿½ para mencionar la cantidad que compone los set de objetos
 ej: cucharas  6 unidades';
 
 ALTER TABLE articulo ADD CONSTRAINT articulo_pk PRIMARY KEY ( id_arti );
@@ -119,8 +119,8 @@ COMMENT ON COLUMN cliente.tipo_cli IS
 "frecuente" o "normal"';
 
 COMMENT ON COLUMN cliente.cant_res IS
-    'número de reservas 
-se refiere a la cantidad de reservas efectuadas por el cliente para así luego evaluarlo como cliente frecuente o normal';
+    'nï¿½mero de reservas 
+se refiere a la cantidad de reservas efectuadas por el cliente para asï¿½ luego evaluarlo como cliente frecuente o normal';
 
 ALTER TABLE cliente ADD CONSTRAINT cliente_pk PRIMARY KEY ( rut_cli );
 
@@ -157,11 +157,11 @@ CREATE TABLE cont_serv (
 );
 
 COMMENT ON COLUMN cont_serv.fec_cont IS
-    'fecha de contratación';
+    'fecha de contrataciï¿½n';
 
 COMMENT ON COLUMN cont_serv.fec_acord IS
     'fecha acordada del servicio
-día y hora';
+dï¿½a y hora';
 
 ALTER TABLE cont_serv ADD CONSTRAINT cont_serv_pk PRIMARY KEY ( id_cont_serv );
 
@@ -301,16 +301,16 @@ ALTER TABLE tour
     ADD CONSTRAINT val_aliment CHECK ( alimentacion IN ( 'No', 'Si', 'no', 'si' ) );
 
 COMMENT ON COLUMN tour.dur_hra IS
-    'Horas de duración del tour';
+    'Horas de duraciï¿½n del tour';
 
 COMMENT ON COLUMN tour.dur_min IS
-    'Minutos de duración del tour';
+    'Minutos de duraciï¿½n del tour';
 
 COMMENT ON COLUMN tour.ubi_partida IS
-    'ubicación del inicio de un tour';
+    'ubicaciï¿½n del inicio de un tour';
 
 COMMENT ON COLUMN tour.ubi_fin IS
-    'ubicación del lugar de termino de un tour';
+    'ubicaciï¿½n del lugar de termino de un tour';
 
 COMMENT ON COLUMN tour.alimentacion IS
     '"Si" o "si" equivale a que si se ofrece comida en el tour
@@ -485,47 +485,3 @@ EXCEPTION
 END;
 /
 
-
-
--- Informe de Resumen de Oracle SQL Developer Data Modeler: 
--- 
--- CREATE TABLE                            19
--- CREATE INDEX                             4
--- ALTER TABLE                             50
--- CREATE VIEW                              0
--- ALTER VIEW                               0
--- CREATE PACKAGE                           0
--- CREATE PACKAGE BODY                      0
--- CREATE PROCEDURE                         0
--- CREATE FUNCTION                          0
--- CREATE TRIGGER                           2
--- ALTER TRIGGER                            0
--- CREATE COLLECTION TYPE                   0
--- CREATE STRUCTURED TYPE                   0
--- CREATE STRUCTURED TYPE BODY              0
--- CREATE CLUSTER                           0
--- CREATE CONTEXT                           0
--- CREATE DATABASE                          0
--- CREATE DIMENSION                         0
--- CREATE DIRECTORY                         0
--- CREATE DISK GROUP                        0
--- CREATE ROLE                              0
--- CREATE ROLLBACK SEGMENT                  0
--- CREATE SEQUENCE                          0
--- CREATE MATERIALIZED VIEW                 0
--- CREATE MATERIALIZED VIEW LOG             0
--- CREATE SYNONYM                           0
--- CREATE TABLESPACE                        0
--- CREATE USER                              0
--- 
--- DROP TABLESPACE                          0
--- DROP DATABASE                            0
--- 
--- REDACTION POLICY                         0
--- 
--- ORDS DROP SCHEMA                         0
--- ORDS ENABLE SCHEMA                       0
--- ORDS ENABLE OBJECT                       0
--- 
--- ERRORS                                   0
--- WARNINGS                                 0
