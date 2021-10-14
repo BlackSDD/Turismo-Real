@@ -14,6 +14,8 @@ DROP TABLE comuna CASCADE CONSTRAINTS;
 
 DROP TABLE condominio CASCADE CONSTRAINTS;
 
+DROP TABLE conductor CASCADE CONSTRAINTS;
+
 DROP TABLE cont_serv CASCADE CONSTRAINTS;
 
 DROP TABLE departamento CASCADE CONSTRAINTS;
@@ -23,6 +25,8 @@ DROP TABLE disponibilidad CASCADE CONSTRAINTS;
 DROP TABLE gastos CASCADE CONSTRAINTS;
 
 DROP TABLE mantencion CASCADE CONSTRAINTS;
+
+DROP TABLE marca CASCADE CONSTRAINTS;
 
 DROP TABLE region CASCADE CONSTRAINTS;
 
@@ -38,6 +42,7 @@ DROP TABLE transporte CASCADE CONSTRAINTS;
 
 DROP TABLE usuario CASCADE CONSTRAINTS;
 
+DROP TABLE vehiculo CASCADE CONSTRAINTS;
 
 -- Script para crear las tablas -- 
 
@@ -83,7 +88,7 @@ CREATE TABLE cliente (
 
 CREATE TABLE comuna (
     id_com        NUMBER(4) NOT NULL,
-    nom_com       NVARCHAR2(50) NOT NULL,
+    nom_com       NVARCHAR2(100) NOT NULL,
     region_id_rgn NUMBER(2) NOT NULL
 );
 
@@ -143,7 +148,7 @@ CREATE TABLE mantencion (
 
 CREATE TABLE region (
     id_rgn  NUMBER(2) NOT NULL,
-    nom_rgn NVARCHAR2(50) NOT NULL
+    nom_rgn NVARCHAR2(100) NOT NULL
 );
 
 CREATE TABLE res_mant (
@@ -167,9 +172,6 @@ CREATE TABLE servextras (
     id_serv                    NUMBER(10) NOT NULL,
     nom_serv                   NVARCHAR2(100) NOT NULL,
     tipo_serv                  CHAR(1) DEFAULT 'T' NOT NULL,
-    cost_adult                 NUMBER(6) NOT NULL,
-    costo_nigno                NUMBER(6) NOT NULL,
-    costo_3ra                  NUMBER(6) NOT NULL,
     desc_serv                  NVARCHAR2(5000) NOT NULL,
     agencia_externa_id_agencia NUMBER(10) NOT NULL
 );
@@ -178,16 +180,21 @@ CREATE TABLE tour (
     id_serv      NUMBER(10) NOT NULL,
     dur_hra      NUMBER(2) NOT NULL,
     dur_min      NUMBER(2) NOT NULL,
+    cost_adult   NUMBER(6) NOT NULL,
+    costo_nigno  NUMBER(6) NOT NULL,
+    costo_3ra    NUMBER(6) NOT NULL,
     ubi_partida  NVARCHAR2(100) NOT NULL,
     ubi_fin      NVARCHAR2(100) NOT NULL,
-    alimentacion CHAR(2) DEFAULT 'No' NOT NULL
+    alimentacion CHAR(2) DEFAULT 'No' NOT NULL,
+    transporte CHAR(2) DEFAULT 'No' NOT NULL
 );
 
 CREATE TABLE transporte (
     id_serv       NUMBER(10) NOT NULL,
-    max_pas       NUMBER(2) NOT NULL,
-    asiento_nigno CHAR(2) NOT NULL,
-    per_silla     CHAR(2) NOT NULL
+    cost_km_dia   NUMBER(5) NOT NULL,
+    cost_km_noc   NUMBER(5) NOT NULL,
+    extra_fest  NUMBER(5) NOT NULL,
+    conductor_rut_conduc NUMBER(8) NOT NULL
 );
 
 CREATE TABLE usuario (
@@ -200,7 +207,42 @@ CREATE TABLE usuario (
     tipo_usr  NVARCHAR2(20) DEFAULT 'cliente' NOT NULL
 );
 
--- Se crean las secuencias -- 
+--Nuevas tablas segun acordado para visualizar documento de acuerdo de transporte --
+CREATE TABLE conductor (
+    rut_conduc  NUMBER(8) NOT NULL,    
+    dv_conduc   CHAR(1) NOT NULL,
+    nom_conduc   NVARCHAR2(50) NOT NULL,
+    appat_conduc NVARCHAR2(50) NOT NULL,
+    apmat_conduc NVARCHAR2(50) NOT NULL,
+    email_conduc NVARCHAR2(100) NOT NULL,
+    tel_conduc   NUMBER(9) NOT NULL,
+    vehiculo_patente CHAR (8) NOT NULL
+);
+
+CREATE TABLE vehiculo (
+    patente CHAR(8) NOT NULL,
+    color NVARCHAR2(30) NOT NULL,
+    agno DATE NOT NULL,
+    cant_puertas NUMBER(1) NOT NULL,
+    cap_pasaj NUMBER(2) NOT NULL, 
+    cap_male NUMBER (4) NOT NULL,
+    asiento_nigno CHAR(2) NOT NULL,
+    per_silla     CHAR(2) NOT NULL,
+    modelo_id_modelo NUMBER(4) NOT NULL    
+);
+
+CREATE TABLE modelo (
+    id_modelo NUMBER(4) NOT NULL,
+    nombre_modelo NVARCHAR2(100) NOT NULL,
+    marca_id_marca NUMBER(3) NOT NULL
+);
+
+CREATE TABLE marca (
+    id_marca NUMBER (3) NOT NULL,
+    nombre_marca NVARCHAR2 (100) NOT NULL
+);
+
+-- Se crean los index -- 
 
 CREATE UNIQUE INDEX gastos__idx ON
     gastos (
@@ -292,6 +334,10 @@ ALTER TABLE tour
     ADD CONSTRAINT val_aliment CHECK ( alimentacion IN ( 'No', 'Si', 'no', 'si' )
 );
 
+ALTER TABLE tour
+    ADD CONSTRAINT val_trans CHECK ( transporte IN ( 'No', 'Si', 'no', 'si' )
+);
+
 ALTER TABLE tour ADD CONSTRAINT tour_pk PRIMARY KEY ( id_serv );
 
 ALTER TABLE transporte
@@ -309,6 +355,36 @@ ALTER TABLE usuario ADD CONSTRAINT tipo_usr CHECK ( tipo_usr IN ( 'administrador
 ALTER TABLE usuario ADD CONSTRAINT usuario_pk PRIMARY KEY ( email_usr );
 
 ALTER TABLE usuario ADD CONSTRAINT usuario_tel_usr_un UNIQUE ( tel_usr );
+
+ALTER TABLE vehiculo ADD CONSTRAINT vehiculo_pk PRIMARY KEY (patente);
+
+ALTER TABLE conductor ADD CONSTRAINT conductor_pk PRIMARY KEY (rut_conduc);
+
+ALTER TABLE conductor
+    ADD CONSTRAINT dv CHECK ( dv_conduc IN ( '0', '1', '2', '3', '4',
+                                          '5', '6', '7', '8', '9',
+                                          'K', 'k' )
+);
+
+ALTER TABLE conductor ADD CONSTRAINT conductor_email_un UNIQUE (email_conduc);
+
+ALTER TABLE conductor ADD CONSTRAINT conductor_tel_conduc_un UNIQUE (tel_conduc);
+
+ALTER TABLE marca ADD CONSTRAINT marca_pk PRIMARY KEY (id_marca);
+
+ALTER TABLE modelo ADD CONSTRAINT modelo_pk PRIMARY KEY (id_modelo);
+
+ALTER TABLE conductor ADD CONSTRAINT conductor_vehiculo_fk FOREIGN KEY (vehiculo_patente)
+                        REFERENCES vehiculo (patente);
+
+ALTER TABLE vehiculo ADD CONSTRAINT vehiculo_modelo_fk FOREIGN KEY (modelo_id_modelo)
+                        REFERENCES modelo ( id_modelo);
+
+ALTER TABLE modelo ADD CONSTRAINT modelo_marca_fk FOREIGN KEY (marca_id_marca)
+                        REFERENCES marca ( id_marca);
+
+ALTER transporte ADD CONSTRAINT transporte_conductor_fk FOREIGN KEY (conductor_rut_conduc)
+                    REFERENCES conductor (rut_conduc);
 
 ALTER TABLE agencia_externa
     ADD CONSTRAINT agencia_externa_comuna_fk FOREIGN KEY ( comuna_id_com )
@@ -382,9 +458,7 @@ ALTER TABLE transporte
     ADD CONSTRAINT transporte_servextras_fk FOREIGN KEY ( id_serv )
         REFERENCES servextras ( id_serv );
 
-
-
--- Terminan de ejectarse los cambios de las tablas -- 
+-- Triggers para hacer la relacion de supertipo -- 
 
 CREATE OR REPLACE TRIGGER arc_tipo_serv_transporte BEFORE
     INSERT OR UPDATE OF id_serv ON transporte
@@ -440,5 +514,3 @@ EXCEPTION
 END;/
 
 commit;
-
-
