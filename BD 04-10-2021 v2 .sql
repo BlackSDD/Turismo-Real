@@ -88,7 +88,7 @@ CREATE TABLE cliente (
 
 CREATE TABLE comuna (
     id_com        NUMBER(4) NOT NULL,
-    nom_com       NVARCHAR2(50) NOT NULL,
+    nom_com       NVARCHAR2(100) NOT NULL,
     region_id_rgn NUMBER(2) NOT NULL
 );
 
@@ -148,7 +148,7 @@ CREATE TABLE mantencion (
 
 CREATE TABLE region (
     id_rgn  NUMBER(2) NOT NULL,
-    nom_rgn NVARCHAR2(50) NOT NULL
+    nom_rgn NVARCHAR2(100) NOT NULL
 );
 
 CREATE TABLE res_mant (
@@ -172,9 +172,6 @@ CREATE TABLE servextras (
     id_serv                    NUMBER(10) NOT NULL,
     nom_serv                   NVARCHAR2(100) NOT NULL,
     tipo_serv                  CHAR(1) DEFAULT 'T' NOT NULL,
-    cost_adult                 NUMBER(6) NOT NULL,
-    costo_nigno                NUMBER(6) NOT NULL,
-    costo_3ra                  NUMBER(6) NOT NULL,
     desc_serv                  NVARCHAR2(5000) NOT NULL,
     agencia_externa_id_agencia NUMBER(10) NOT NULL
 );
@@ -183,16 +180,20 @@ CREATE TABLE tour (
     id_serv      NUMBER(10) NOT NULL,
     dur_hra      NUMBER(2) NOT NULL,
     dur_min      NUMBER(2) NOT NULL,
+    cost_adult   NUMBER(6) NOT NULL,
+    costo_nigno  NUMBER(6) NOT NULL,
+    costo_3ra    NUMBER(6) NOT NULL,
     ubi_partida  NVARCHAR2(100) NOT NULL,
     ubi_fin      NVARCHAR2(100) NOT NULL,
-    alimentacion CHAR(2) DEFAULT 'No' NOT NULL
+    alimentacion CHAR(2) DEFAULT 'No' NOT NULL,
+    transporte CHAR(2) DEFAULT 'No' NOT NULL
 );
 
 CREATE TABLE transporte (
     id_serv       NUMBER(10) NOT NULL,
-    max_pas       NUMBER(2) NOT NULL,
-    asiento_nigno CHAR(2) NOT NULL,
-    per_silla     CHAR(2) NOT NULL,
+    cost_km_dia   NUMBER(5) NOT NULL,
+    cost_km_noc   NUMBER(5) NOT NULL,
+    extra_fest  NUMBER(5) NOT NULL,
     conductor_rut_conduc NUMBER(8) NOT NULL
 );
 
@@ -221,19 +222,27 @@ CREATE TABLE conductor (
 CREATE TABLE vehiculo (
     patente CHAR(8) NOT NULL,
     color NVARCHAR2(30) NOT NULL,
-    modelo NVARCHAR2(30) NOT NULL,
+    agno DATE NOT NULL,
     cant_puertas NUMBER(1) NOT NULL,
     cap_pasaj NUMBER(2) NOT NULL, 
-    cap_male NUMBER (4) NOT NULL
-    marca_id_marca NUMBER (3) NOT NULL
+    cap_male NUMBER (4) NOT NULL,
+    asiento_nigno CHAR(2) NOT NULL,
+    per_silla     CHAR(2) NOT NULL,
+    modelo_id_modelo NUMBER(4) NOT NULL    
+);
+
+CREATE TABLE modelo (
+    id_modelo NUMBER(4) NOT NULL,
+    nombre_modelo NVARCHAR2(100) NOT NULL,
+    marca_id_marca NUMBER(3) NOT NULL
 );
 
 CREATE TABLE marca (
     id_marca NUMBER (3) NOT NULL,
-    nombre_marca NVARCHAR2 (50) NOT NULL
-)
+    nombre_marca NVARCHAR2 (100) NOT NULL
+);
 
--- Se crean las secuencias -- 
+-- Se crean los index -- 
 
 CREATE UNIQUE INDEX gastos__idx ON
     gastos (
@@ -325,6 +334,10 @@ ALTER TABLE tour
     ADD CONSTRAINT val_aliment CHECK ( alimentacion IN ( 'No', 'Si', 'no', 'si' )
 );
 
+ALTER TABLE tour
+    ADD CONSTRAINT val_trans CHECK ( transporte IN ( 'No', 'Si', 'no', 'si' )
+);
+
 ALTER TABLE tour ADD CONSTRAINT tour_pk PRIMARY KEY ( id_serv );
 
 ALTER TABLE transporte
@@ -359,10 +372,15 @@ ALTER TABLE conductor ADD CONSTRAINT conductor_tel_conduc_un UNIQUE (tel_conduc)
 
 ALTER TABLE marca ADD CONSTRAINT marca_pk PRIMARY KEY (id_marca);
 
+ALTER TABLE modelo ADD CONSTRAINT modelo_pk PRIMARY KEY (id_modelo);
+
 ALTER TABLE conductor ADD CONSTRAINT conductor_vehiculo_fk FOREIGN KEY (vehiculo_patente)
                         REFERENCES vehiculo (patente);
 
-ALTER TABLE vehiculo ADD CONSTRAINT vehiculo_marca_fk FOREIGN KEY (marca_id_marca)
+ALTER TABLE vehiculo ADD CONSTRAINT vehiculo_modelo_fk FOREIGN KEY (modelo_id_modelo)
+                        REFERENCES modelo ( id_modelo);
+
+ALTER TABLE modelo ADD CONSTRAINT modelo_marca_fk FOREIGN KEY (marca_id_marca)
                         REFERENCES marca ( id_marca);
 
 ALTER transporte ADD CONSTRAINT transporte_conductor_fk FOREIGN KEY (conductor_rut_conduc)
