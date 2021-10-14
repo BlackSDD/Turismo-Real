@@ -498,7 +498,7 @@ TABLA RES_MANT
 
 create store procedure sp_eliminarResMant
 (
-	v_id_rmant date
+	v_id_rmant number
 )
 as
 begin
@@ -510,7 +510,7 @@ create store procedure sp_listaRestMant
 
 as
 begin
-	select fec_rmant
+	select v_fec_rmant
 	order v_fec_rmant asc
 end	
 
@@ -522,7 +522,7 @@ create store procedure sp_agregarResMant
 )
 as
 begin
-	insert into Mantencion values
+	insert into Res_mant values
 	(
 	v_id_rmant.nextval,
 	v_fec_rmant date
@@ -537,7 +537,66 @@ create store procedure sp_modificarResMant
 )
 as
 begin
-	update res_mant set fec_rmant = v_fec_rmant
+	update Res_mant set fec_rmant = v_fec_rmant
 	where id_rmant = v_id_rmant
+	
+end
+
+---------------------------------------------------------------------------
+
+TABLA ARTICULO
+
+create store procedure sp_eliminarArticulo
+(
+	v_id_arti number
+)
+as
+begin
+	delete Articulo from Articulo where id_arti = v_id_arti
+end
+
+
+create store procedure sp_listaArticulo
+
+as
+begin
+	select v_nom_arti, v_cant_arti, v_deta_arti, v_valor_arti
+	order v_nom_arti asc
+end	
+
+
+create store procedure sp_agregarArticulo
+(
+	
+	v_nom_arti nvarchar,
+	v_cant_arti number,
+	v_deta_arti nvarchar,
+	v_valor_arti number
+)
+as
+begin
+	insert into Articulo values
+	(
+	v_id_arti.nextval,
+	v_nom_arti nvarchar,
+	v_cant_arti number,
+	v_deta_arti nvarchar,
+	v_valor_arti number
+	)
+end
+
+
+create store procedure sp_modificarArticulo
+(
+	v_id_arti number,
+	v_nom_arti nvarchar,
+	v_cant_arti number,
+	v_deta_arti nvarchar,
+	v_valor_arti number
+)
+as
+begin
+	update Articulo set nom_arti = v_nom_arti, cant_arti = v_cant_arti, deta_arti = v_deta_arti, valor_arti = v_valor_arti
+	where id_arti = v_id_arti
 	
 end
