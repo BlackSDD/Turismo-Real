@@ -10,7 +10,7 @@ begin
 	delete Usuario from Usuario where email_usr = v_email_usr and contr_usr = v_contr_usr
 end
 
----------------------------------------------------------------------------
+
 
 create store procedure sp_listarUsr
 
@@ -20,7 +20,7 @@ begin
 	order appat_usr asc
 end	
 
----------------------------------------------------------------------------
+
 
 create store procedure sp_agregarUsr
 (
@@ -46,7 +46,7 @@ begin
 	)
 end
 
----------------------------------------------------------------------------
+
 
 create store procedure sp_modificarUsr
 (
@@ -77,7 +77,7 @@ begin
 	order v_deta_chi asc
 end	
 
----------------------------------------------------------------------------
+
 
 create store procedure sp_agregarCheckin
 (
@@ -88,12 +88,12 @@ as
 begin
 	insert into Checkin values
 	(
-	id_chi_seq.nextval,
+	id_chi.nextval,
 	v_deta_chi nvarchar
 	)
 end
 
----------------------------------------------------------------------------
+
 
 create store procedure sp_modificarCheckin
 (
@@ -120,7 +120,7 @@ begin
 	order v_deta_chi asc
 end	
 
----------------------------------------------------------------------------
+
 
 create store procedure sp_agregarCheckout
 (
@@ -132,13 +132,13 @@ as
 begin
 	insert into Checkout values
 	(
-	v_id_cho_seq.nextval,
+	v_id_cho.nextval,
 	v_cost_multa number,
 	v_deta_chi nvarchar
 	)
 end
 
----------------------------------------------------------------------------
+
 
 create store procedure sp_modificarCheckout
 (
@@ -167,7 +167,7 @@ begin
 	delete Cliente from Cliente where rut_cli = v_rut_cli and dv_cli = v_dv_cli
 end
 
----------------------------------------------------------------------------
+
 
 create store procedure sp_listarCli
 
@@ -177,7 +177,7 @@ begin
 	order v_rut_cli asc
 end	
 
----------------------------------------------------------------------------
+
 
 create store procedure sp_agregarCli
 (
@@ -205,77 +205,7 @@ begin
 	)
 end
 
----------------------------------------------------------------------------
 
-create store procedure sp_modificarCli
-(
-	v_rut_cli number,
-	v_nom_cli nvarchar,
-	v_appat_cli nvarchar,
-	v_apmat_cli nvarchar,
-	v_email_cli nvarchar,
-	v_cel_cli number,
-	v_tipo_cli nvarchar
-)
-as
-begin
-	update Cliente set nom_cli = v_nom_cli, appat_cli = v_appat_cli, apmat_cli = v_apmat_cli, email_cli = v_email_cli, cel_cli = v_cel_cli, tipo_cli = v_tipo_cli
-	where rut_cli = v_rut_cli 
-	
-end
-
----------------------------------------------------------------------------
-
-TABLA CLIENTE
-
-create store procedure sp_eliminarCli
-(
-	v_rut_cli number
-)
-as
-begin
-	delete Cliente from Cliente where rut_cli = v_rut_cli
-end
-
----------------------------------------------------------------------------
-
-create store procedure sp_listarCli
-
-as
-begin
-	select v_rut_cli, v_dv_cli, v_nom_cli, v_appat_cli, v_apmat_cli, v_email_cli, v_cel_cli, v_tipo_usr
-	order v_rut_cli asc
-end	
-
----------------------------------------------------------------------------
-
-create store procedure sp_agregarCli
-(
-	v_rut_cli number,
-	v_dv_cli nvarchar,
-	v_nom_cli nvarchar,
-	v_appat_cli nvarchar,
-	v_apmat_cli nvarchar,
-	v_email_cli nvarchar,
-	v_cel_usr number,
-	v_tipo_usr nvarchar
-)
-as
-begin
-	insert into Cliente values
-	(
-	v_rut_cli number,
-	v_dv_cli nvarchar,
-	v_nom_cli nvarchar,
-	v_appat_cli nvarchar,
-	v_apmat_cli nvarchar,
-	v_email_cli nvarchar,
-	v_cel_cli number,
-	v_tipo_cli nvarchar
-	)
-end
-
----------------------------------------------------------------------------
 
 create store procedure sp_modificarCli
 (
@@ -307,7 +237,7 @@ begin
 	delete Transporte from Transporte where id_serv = v_id_serv
 end
 
----------------------------------------------------------------------------
+
 
 create store procedure sp_listarTransporte
 
@@ -317,7 +247,7 @@ begin
 	order v_max_pas asc
 end	
 
----------------------------------------------------------------------------
+
 
 create store procedure sp_agregarTransporte
 (
@@ -329,14 +259,13 @@ as
 begin
 	insert into Transporte values
 	(
-	v_id_serv_seq.nextval,
+	v_id_serv.nextval,
 	v_max_pas number,
 	v_asiento_nigno char,
 	v_per_silla char
 	)
 end
 
----------------------------------------------------------------------------
 
 create store procedure sp_modificarTransporte
 (
@@ -365,7 +294,7 @@ begin
 	delete Tour from Tour where id_serv = v_id_serv
 end
 
----------------------------------------------------------------------------
+
 
 create store procedure sp_listarTour
 
@@ -375,7 +304,7 @@ begin
 	order v_lugar_destino asc
 end	
 
----------------------------------------------------------------------------
+
 
 create store procedure sp_agregarTour
 (
@@ -388,14 +317,14 @@ as
 begin
 	insert into Tour values
 	(
-	v_id_serv_seq.nextval,
-	v_lugar_destino nvarcahr,
+	v_id_serv.nextval,
+	v_lugar_destino nvarchar,
 	v_lugar_recogida nvarchar,
 	v_hora_acor date
 	)
 end
 
----------------------------------------------------------------------------
+
 
 create store procedure sp_modificarTour
 (
@@ -412,3 +341,203 @@ begin
 end
 
 ---------------------------------------------------------------------------
+
+TABLA GASTOS
+
+create store procedure sp_eliminarGastos
+(
+	v_id_gastos number
+)
+as
+begin
+	delete Gastos from Gastos where id_gastos = v_id_gastos
+end
+
+
+
+create store procedure sp_listarGastos
+
+as
+begin
+	select v_gast_mes, v_gast_agno
+	order v_gast_agno asc
+end	
+
+
+
+create store procedure sp_agregarGastos
+(
+	
+	v_gast_mes number,
+	v_gast_agno number
+)
+as
+begin
+	insert into Tour values
+	(
+	v_id_gastos.nextval,
+	v_gast_mes number,
+	v_gast_agno number
+	)
+end
+
+
+
+create store procedure sp_modificarGastos
+(
+	v_id_gastos,
+	v_gast_mes number,
+	v_gast_agno number
+)
+as
+begin
+	update Gastos set v_gast_mes = v_gast_mes, gast_agno = v_gast_agno
+	where id_gastos = v_id_gastos
+	
+end
+
+---------------------------------------------------------------------------
+
+TABLA DISPONIBILIDAD
+
+create store procedure sp_listarDisponibilidad
+
+as
+begin
+	select v_fec_disp, v_esta_disp
+	order v_esta_disp asc
+end	
+
+
+
+create store procedure sp_agregarDisponibilidad
+(
+	
+	v_fec_disp date,
+	v_esta_disp char
+)
+as
+begin
+	insert into Disponibilidad values
+	(
+	v_fec_disp date,
+	v_esta_disp char
+	)
+end
+
+
+
+create store procedure sp_modificarDisponibilidad
+(
+	v_fec_disp date,
+	v_esta_disp char
+)
+as
+begin
+	update Disponibilidad set esta_disp = v_esta_disp
+	where fec_disp = v_fec_disp
+	
+end
+
+---------------------------------------------------------------------------
+
+TABLA MANTENCION
+
+create store procedure sp_eliminarMantencion
+(
+	v_id_mant number
+)
+as
+begin
+	delete Mantencion from Mantencion where id_mant = v_id_mant
+end
+
+
+create store procedure sp_listarMantencion
+
+as
+begin
+	select v_cost_mant, v_deta_mant, v_fec_rmant
+	from Mantencion m inner join res_mant r on m.v_id_rmant = b.v_id_rmant
+end	
+
+
+create store procedure sp_agregarMantencion
+(
+	
+	v_cost_mant number,
+	v_deta_mant nvarchar
+)
+as
+begin
+	insert into Mantencion values
+	(
+	v_id_mant.nextval,
+	v_cost_mant number,
+	v_deta_mant nvarchar
+	)
+end
+
+
+create store procedure sp_modificarMantencion
+(
+	v_cost_mant number,
+	v_deta_mant nvarchar
+)
+as
+begin
+	update Mantencion set esta_disp = v_esta_disp
+	where id_mant = v_id_mant
+	
+end
+
+
+---------------------------------------------------------------------------
+
+TABLA RES_MANT
+
+create store procedure sp_eliminarResMant
+(
+	v_id_rmant date
+)
+as
+begin
+	delete res_mant from res_mant where id_rmant = v_id_rmant
+end
+
+
+create store procedure sp_listaRestMant
+
+as
+begin
+	select fec_rmant
+	order v_fec_rmant asc
+end	
+
+
+create store procedure sp_agregarResMant
+(
+	
+	v_fec_rmant date
+)
+as
+begin
+	insert into Mantencion values
+	(
+	v_id_rmant.nextval,
+	v_fec_rmant date
+	)
+end
+
+
+create store procedure sp_modificarResMant
+(
+	v_id_rmant,
+	v_fec_rmant date
+)
+as
+begin
+	update res_mant set fec_rmant = v_fec_rmant
+	where id_rmant = v_id_rmant
+	
+end
