@@ -192,7 +192,8 @@ CREATE TABLE transporte (
     id_serv       NUMBER(10) NOT NULL,
     max_pas       NUMBER(2) NOT NULL,
     asiento_nigno CHAR(2) NOT NULL,
-    per_silla     CHAR(2) NOT NULL
+    per_silla     CHAR(2) NOT NULL,
+    conductor_rut_conduc NUMBER(8) NOT NULL
 );
 
 CREATE TABLE usuario (
@@ -213,7 +214,8 @@ CREATE TABLE conductor (
     appat_conduc NVARCHAR2(50) NOT NULL,
     apmat_conduc NVARCHAR2(50) NOT NULL,
     email_conduc NVARCHAR2(100) NOT NULL,
-    tel_conduc   NUMBER(9) NOT NULL
+    tel_conduc   NUMBER(9) NOT NULL,
+    vehiculo_patente CHAR (8) NOT NULL
 );
 
 CREATE TABLE vehiculo (
@@ -223,6 +225,7 @@ CREATE TABLE vehiculo (
     cant_puertas NUMBER(1) NOT NULL,
     cap_pasaj NUMBER(2) NOT NULL, 
     cap_male NUMBER (4) NOT NULL
+    marca_id_marca NUMBER (3) NOT NULL
 );
 
 CREATE TABLE marca (
