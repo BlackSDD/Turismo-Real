@@ -14,6 +14,8 @@ DROP TABLE comuna CASCADE CONSTRAINTS;
 
 DROP TABLE condominio CASCADE CONSTRAINTS;
 
+DROP TABLE conductor CASCADE CONSTRAINTS;
+
 DROP TABLE cont_serv CASCADE CONSTRAINTS;
 
 DROP TABLE departamento CASCADE CONSTRAINTS;
@@ -23,6 +25,8 @@ DROP TABLE disponibilidad CASCADE CONSTRAINTS;
 DROP TABLE gastos CASCADE CONSTRAINTS;
 
 DROP TABLE mantencion CASCADE CONSTRAINTS;
+
+DROP TABLE marca CASCADE CONSTRAINTS;
 
 DROP TABLE region CASCADE CONSTRAINTS;
 
@@ -38,6 +42,7 @@ DROP TABLE transporte CASCADE CONSTRAINTS;
 
 DROP TABLE usuario CASCADE CONSTRAINTS;
 
+DROP TABLE vehiculo CASCADE CONSTRAINTS;
 
 -- Script para crear las tablas -- 
 
@@ -190,6 +195,17 @@ CREATE TABLE transporte (
     per_silla     CHAR(2) NOT NULL
 );
 
+CREATE TABLE usuario (
+    email_usr NVARCHAR2(100) NOT NULL,
+    contr_usr NVARCHAR2(50) NOT NULL,
+    nom_usr   NVARCHAR2(50) NOT NULL,
+    appat_usr NVARCHAR2(50) NOT NULL,
+    apmat_usr NVARCHAR2(50) NOT NULL,
+    tel_usr   NUMBER(9) NOT NULL,
+    tipo_usr  NVARCHAR2(20) DEFAULT 'cliente' NOT NULL
+);
+
+--Nuevas tablas segun acordado para visualizar documento de acuerdo de transporte --
 CREATE TABLE conductor (
     rut_conduc  NUMBER(8) NOT NULL,    
     dv_conduc   CHAR(1) NOT NULL,
@@ -201,24 +217,18 @@ CREATE TABLE conductor (
 );
 
 CREATE TABLE vehiculo (
-    patente_alfa CHAR(4) NOT NULL,
-    patente_num NUMBER(2) NOT NULL,
+    patente CHAR(8) NOT NULL,
     color NVARCHAR2(30) NOT NULL,
     modelo NVARCHAR2(30) NOT NULL,
     cant_puertas NUMBER(1) NOT NULL,
     cap_pasaj NUMBER(2) NOT NULL, 
-    cap_male NUMBER (4) NOT NULL,
+    cap_male NUMBER (4) NOT NULL
 );
 
-CREATE TABLE usuario (
-    email_usr NVARCHAR2(100) NOT NULL,
-    contr_usr NVARCHAR2(50) NOT NULL,
-    nom_usr   NVARCHAR2(50) NOT NULL,
-    appat_usr NVARCHAR2(50) NOT NULL,
-    apmat_usr NVARCHAR2(50) NOT NULL,
-    tel_usr   NUMBER(9) NOT NULL,
-    tipo_usr  NVARCHAR2(20) DEFAULT 'cliente' NOT NULL
-);
+CREATE TABLE marca (
+    id_marca NUMBER (3) NOT NULL,
+    nombre_marca NVARCHAR2 (50) NOT NULL
+)
 
 -- Se crean las secuencias -- 
 
@@ -330,6 +340,31 @@ ALTER TABLE usuario ADD CONSTRAINT usuario_pk PRIMARY KEY ( email_usr );
 
 ALTER TABLE usuario ADD CONSTRAINT usuario_tel_usr_un UNIQUE ( tel_usr );
 
+ALTER TABLE vehiculo ADD CONSTRAINT vehiculo_pk PRIMARY KEY (patente);
+
+ALTER TABLE conductor ADD CONSTRAINT conductor_pk PRIMARY KEY (rut_conduc);
+
+ALTER TABLE conductor
+    ADD CONSTRAINT dv CHECK ( dv_conduc IN ( '0', '1', '2', '3', '4',
+                                          '5', '6', '7', '8', '9',
+                                          'K', 'k' )
+);
+
+ALTER TABLE conductor ADD CONSTRAINT conductor_email_un UNIQUE (email_conduc);
+
+ALTER TABLE conductor ADD CONSTRAINT conductor_tel_conduc_un UNIQUE (tel_conduc);
+
+ALTER TABLE marca ADD CONSTRAINT marca_pk PRIMARY KEY (id_marca);
+
+ALTER TABLE conductor ADD CONSTRAINT conductor_vehiculo_fk FOREIGN KEY (vehiculo_patente)
+                        REFERENCES vehiculo (patente);
+
+ALTER TABLE vehiculo ADD CONSTRAINT vehiculo_marca_fk FOREIGN KEY (marca_id_marca)
+                        REFERENCES marca ( id_marca);
+
+ALTER transporte ADD CONSTRAINT transporte_conductor_fk FOREIGN KEY (conductor_rut_conduc)
+                    REFERENCES conductor (rut_conduc);
+
 ALTER TABLE agencia_externa
     ADD CONSTRAINT agencia_externa_comuna_fk FOREIGN KEY ( comuna_id_com )
         REFERENCES comuna ( id_com );
@@ -402,9 +437,7 @@ ALTER TABLE transporte
     ADD CONSTRAINT transporte_servextras_fk FOREIGN KEY ( id_serv )
         REFERENCES servextras ( id_serv );
 
-
-
--- Terminan de ejectarse los cambios de las tablas -- 
+-- Triggers para hacer la relacion de supertipo -- 
 
 CREATE OR REPLACE TRIGGER arc_tipo_serv_transporte BEFORE
     INSERT OR UPDATE OF id_serv ON transporte
