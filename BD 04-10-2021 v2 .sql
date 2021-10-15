@@ -107,6 +107,7 @@ CREATE TABLE cont_serv (
     fec_acord          DATE NOT NULL,
     lugar_recogida     NVARCHAR2(100),
     lugar_destino      NVARCHAR2(100),
+    km_rec             NUMBER(100),
     reserva_id_rva     NUMBER(10) NOT NULL,
     servextras_id_serv NUMBER(10) NOT NULL
 );

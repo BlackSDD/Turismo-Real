@@ -11,6 +11,7 @@ DROP SEQUENCE seq_departamento;
 DROP SEQUENCE seq_gastos;
 DROP SEQUENCE seq_mantencion;
 DROP SEQUENCE seq_marca;
+DROP SEQUENCE seq_modelo;
 DROP SEQUENCE seq_region;
 DROP SEQUENCE seq_res_mant;
 DROP SEQUENCE seq_reserva;
@@ -71,6 +72,11 @@ CREATE SEQUENCE seq_mantencion
     NOCYCLE;
 
 CREATE SEQUENCE seq_marca
+    START WITH 1
+    INCREMENT by 1
+    NOCYCLE;
+
+CREATE SEQUENCE seq_modelo
     START WITH 1
     INCREMENT by 1
     NOCYCLE;

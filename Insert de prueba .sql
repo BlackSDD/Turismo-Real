@@ -22,7 +22,7 @@ insert into checkout values (seq_checkout.NEXTVAL,0,'Se devuelve el departamento
 
 
 insert into cliente values (19409965,7,'matias','fuentes','venegas','matias76097795@gmail.com',948821386,'frecuente',6);
-insert into cliente values (19793681,9,'cristian','prieto','fariña','cristian.prieto.f@gmail.com',920503942,'frecuente',9);
+insert into cliente values (19793681,9,'cristian','prieto','fariña','cristian.prieto.f@gmail.com',920503942,'normal',0);
 
 
 insert into comuna values (seq_comuna.NEXTVAL,'Viña del mar',5);
@@ -84,7 +84,7 @@ insert into servextras values (seq_servextras.NEXTVAL,'Ascenso al volcán Villar
 
 insert into transporte values (1,950,1150,500,9212587);
 insert into transporte values (2,870,1070,600,10689445);
-insert into tour values (3,9,0,95000,0,87000,'El Arrayan 760','El Arrayan 760','Si','Si');
+insert into tour values (3,9,30,95000,0,87000,'El Arrayan 760','El Arrayan 760','Si','Si');
 
 
 insert into conductor values (18469230,9,'mario','serrano','cantillana','marioserrano.c@gmail.com',975759027,'AAAA02');
@@ -108,22 +108,4 @@ insert into usuario values ('cristian.prieto.f@gmail.com','1234','cristian','pri
 insert into usuario values ('admin@admin.cl','1234','admin','general','CEO',948821386,'administrador');
 
 
-DROP SEQUENCE seq_agencia_externa;
-DROP SEQUENCE seq_articulo;
-DROP SEQUENCE seq_checkin;
-DROP SEQUENCE seq_checkout;
-DROP SEQUENCE seq_comuna;
-DROP SEQUENCE seq_condominio;
-DROP SEQUENCE seq_cont_serv;
-DROP SEQUENCE seq_departamento;
-DROP SEQUENCE seq_gastos;
-DROP SEQUENCE seq_mantencion;
-DROP SEQUENCE seq_marca;
-DROP SEQUENCE seq_modelo;
-DROP SEQUENCE seq_region;
-DROP SEQUENCE seq_res_mant;
-DROP SEQUENCE seq_reserva;
-DROP SEQUENCE seq_servextras;
-DROP SEQUENCE seq_tour;
-DROP SEQUENCE seq_transporte;
 
