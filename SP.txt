@@ -173,7 +173,7 @@ create store procedure sp_listarCli
 
 as
 begin
-	select v_rut_cli, v_dv_cli, v_nom_cli, v_appat_cli, v_apmat_cli, v_email_cli, v_cel_cli, v_tipo_usr
+	select v_rut_cli, v_dv_cli, v_nom_cli, v_appat_cli, v_apmat_cli, v_email_cli, v_tel_cli, v_tipo_cli, v_cant_res
 	order v_rut_cli asc
 end	
 
@@ -187,8 +187,9 @@ create store procedure sp_agregarCli
 	v_appat_cli nvarchar,
 	v_apmat_cli nvarchar,
 	v_email_cli nvarchar,
-	v_cel_usr number,
-	v_tipo_usr nvarchar
+	v_tel_usr number,
+	v_tipo_usr nvarchar,
+	v_cant_res number
 )
 as
 begin
@@ -200,8 +201,9 @@ begin
 	v_appat_cli nvarchar,
 	v_apmat_cli nvarchar,
 	v_email_cli nvarchar,
-	v_cel_cli number,
-	v_tipo_cli nvarchar
+	v_tel_cli number,
+	v_tipo_cli nvarchar,
+	v_cant_res number
 	)
 end
 
@@ -214,12 +216,13 @@ create store procedure sp_modificarCli
 	v_appat_cli nvarchar,
 	v_apmat_cli nvarchar,
 	v_email_cli nvarchar,
-	v_cel_cli number,
-	v_tipo_cli nvarchar
+	v_tel_cli number,
+	v_tipo_cli nvarchar,
+	v_cant_res number
 )
 as
 begin
-	update Cliente set nom_cli = v_nom_cli, appat_cli = v_appat_cli, apmat_cli = v_apmat_cli, email_cli = v_email_cli, cel_cli = v_cel_cli, tipo_cli = v_tipo_cli
+	update Cliente set nom_cli = v_nom_cli, appat_cli = v_appat_cli, apmat_cli = v_apmat_cli, email_cli = v_email_cli, cel_cli = v_cel_cli, tipo_cli = v_tipo_cli, cant_res = v_cant_res
 	where rut_cli = v_rut_cli 
 	
 end
@@ -243,26 +246,26 @@ create store procedure sp_listarTransporte
 
 as
 begin
-	select v_max_pas, v_asiento_nigno, v_per_silla
-	order v_max_pas asc
+	select v_cost_km_dia, v_cost_km_noc, v_extra_fest
+	order v_cost_km_dia asc
 end	
 
 
 
 create store procedure sp_agregarTransporte
 (
-	v_max_pas number,
-	v_asiento_nigno char,
-	v_per_silla char
+	v_cost_km_dia number,
+	v_cost_km_noc number,
+	v_extra_fest number
 )
 as
 begin
 	insert into Transporte values
 	(
 	v_id_serv.nextval,
-	v_max_pas number,
-	v_asiento_nigno char,
-	v_per_silla char
+	v_cost_km_dia number,
+	v_cost_km_noc number,
+	v_extra_fest number
 	)
 end
 
@@ -270,13 +273,13 @@ end
 create store procedure sp_modificarTransporte
 (
 	v_id_serv number,
-	v_max_pas number,
-	v_asiento_nigno char,
-	v_per_silla char
+	v_cost_km_dia number,
+	v_cost_km_noc number,
+	v_extra_fest number
 )
 as
 begin
-	update Transporte set max_pas = v_max_pas, asiento_nigno = v_asiento_nigno, per_silla = v_per_silla
+	update Transporte set cost_km_dia = v_cost_km_dia, cost_km_noc = v_cost_km_noc, extra_fest = v_extra_fest
 	where id_serv = v_id_serv
 	
 end
@@ -300,8 +303,8 @@ create store procedure sp_listarTour
 
 as
 begin
-	select v_lugar_destino, v_lugar_recogida, v_hora_acor
-	order v_lugar_destino asc
+	select v_dur_hra, v_dur_min, v_cost_adult, v_costo_nigno, v_costo_3ra, v_ubi_partida, v_ubi_fin, v_alimentacion, v_transporte
+	order v_dur_hra asc
 end	
 
 
@@ -309,18 +312,30 @@ end
 create store procedure sp_agregarTour
 (
 	
-	v_lugar_destino number,
-	v_lugar_recogida char,
-	v_hora_acor char
+	v_dur_hra number,
+	v_dur_min number,
+	v_cost_adult number,
+	v_costo_nigno number,
+	v_costo_3ra number,
+	v_ubi_partida nvarchar,
+	v_ubi_fin nvarchar,
+	v_alimentacion char,
+	v_transporte char
 )
 as
 begin
 	insert into Tour values
 	(
 	v_id_serv.nextval,
-	v_lugar_destino nvarchar,
-	v_lugar_recogida nvarchar,
-	v_hora_acor date
+	v_dur_hra number,
+	v_dur_min number,
+	v_cost_adult number,
+	v_costo_nigno number,
+	v_costo_3ra number,
+	v_ubi_partida nvarchar,
+	v_ubi_fin nvarchar,
+	v_alimentacion char,
+	v_transporte char
 	)
 end
 
@@ -329,13 +344,19 @@ end
 create store procedure sp_modificarTour
 (
 	v_id_serv,
-	v_lugar_destino nvarchar,
-	v_lugar_recogida nvarchar,
-	v_hora_acor date
+	v_dur_hra number,
+	v_dur_min number,
+	v_cost_adult number,
+	v_costo_nigno number,
+	v_costo_3ra number,
+	v_ubi_partida nvarchar,
+	v_ubi_fin nvarchar,
+	v_alimentacion char,
+	v_transporte char
 )
 as
 begin
-	update Tour set lugar_destino = v_lugar_destino, lugar_recogida = v_lugar_recogida, hora_acor = v_hora_acor
+	update Tour set dur_hra = v_dur_hra, dur_min = v_dur_min, cost_adult = v_cost_adult, costo_nigno = v_costo_nigno, costo_3ra = v_costo_3ra, ubi_partida = v_ubi_partida, ubi_fin = v_ubi_fin, alimentacion = v_alimentacion, Transporte = v_transporte
 	where id_serv = v_id_serv
 	
 end
@@ -458,7 +479,7 @@ create store procedure sp_listarMantencion
 as
 begin
 	select v_cost_mant, v_deta_mant, v_fec_rmant
-	from Mantencion m inner join res_mant r on m.v_id_rmant = b.v_id_rmant
+	from Mantencion m inner join Res_mant r on m.v_id_rmant = b.v_id_rmant
 end	
 
 
@@ -600,3 +621,255 @@ begin
 	where id_arti = v_id_arti
 	
 end
+
+---------------------------------------------------------------------------
+
+TABLA AGENCIA_EXTERNA
+
+create store procedure sp_eliminarAgenciaExterna
+(
+	v_id_agencia number
+)
+as
+begin
+	delete Agencia_externa from Agencia_externa where id_agencia = v_id_agencia
+end
+
+
+create store procedure sp_listaAgenciaExterna
+
+as
+begin
+	select v_nom_age, v_email_age, v_tel_age
+	order v_nom_age asc
+end	
+
+
+create store procedure sp_agregarAgenciaExterna
+(
+	
+	v_nom_age nvarchar,
+	v_email_age nvarchar,
+	v_tel_age number
+)
+as
+begin
+	insert into Agencia_externa values
+	(
+	v_id_age.nextval,
+	v_nom_age nvarchar,
+	v_email_age nvarchar,
+	v_tel_age number
+	)
+end
+
+
+create store procedure sp_modificarAgenciaExterna
+(
+	v_id_age number,
+	v_nom_age nvarchar,
+	v_email_age nvarchar,
+	v_tel_age number
+)
+as
+begin
+	update Agencia_externa set nom_age = v_nom_age, email_age = v_email_age, tel_age = v_tel_age
+	where id_age = v_id_age
+	
+end
+
+---------------------------------------------------------------------------
+
+TABLA REGION
+
+create store procedure sp_eliminarRegion
+(
+	v_id_rgn number
+)
+as
+begin
+	delete Region from Region where id_rgn = v_id_rgn
+end
+
+
+create store procedure sp_listaRegion
+
+as
+begin
+	select v_nom_rgn
+	order v_nom_rgn asc
+end	
+
+
+create store procedure sp_agregarRegion
+(
+	
+	v_nom_rgn nvarchar,
+	
+)
+as
+begin
+	insert into Region values
+	(
+	v_id_rgn.nextval,
+	v_nom_rgn nvarchar
+	)
+end
+
+
+create store procedure sp_modificarRegion
+(
+	v_id_rgn number,
+	v_nom_rgn nvarchar
+)
+as
+begin
+	update Region set nom_rgn = v_nom_rgn
+	where id_rgn = v_id_rgn
+	
+end
+
+
+---------------------------------------------------------------------------
+
+TABLA COMUNA
+
+create store procedure sp_eliminarComuna
+(
+	v_id_com number
+)
+as
+begin
+	delete Comuna from Comuna where id_com = v_id_com
+end
+
+
+create store procedure sp_listaComuna
+
+as
+begin
+	select v_nom_com, v_nom_rgn
+	from Comuna c inner join Region r on c.v_id_rgn = r.v_id_rgn
+end	
+
+
+create store procedure sp_agregarComuna
+(
+	
+	v_nom_com nvarchar,
+	
+)
+as
+begin
+	insert into Comuna values
+	(
+	v_id_com.nextval,
+	v_nom_com nvarchar
+	)
+end
+
+
+create store procedure sp_modificarComuna
+(
+	v_id_com number,
+	v_nom_com nvarchar
+)
+as
+begin
+	update Comuna set nom_com = v_nom_com
+	where id_com = v_id_com
+	
+end
+
+
+---------------------------------------------------------------------------
+
+TABLA CONDOMINIO
+
+create store procedure sp_eliminarCondominio
+(
+	v_id_cnd number
+)
+as
+begin
+	delete Condominio from Condominio where id_cnd = v_id_cnd
+end
+
+
+create store procedure sp_listaCondominio
+
+as
+begin
+	select v_nom_cnd, v_nom_com
+	from Condominio n inner join Comuna c on n.v_id_com = c.v_id_com
+end	
+
+
+create store procedure sp_agregarCondominio
+(
+	
+	v_nom_cnd nvarchar,
+	
+)
+as
+begin
+	insert into Condominio values
+	(
+	v_id_cnd.nextval,
+	v_nom_cnd nvarchar
+	)
+end
+
+
+create store procedure sp_modificarCondominio
+(
+	v_id_cnd number,
+	v_nom_cnd nvarchar
+)
+as
+begin
+	update Condominio set nom_cnd = v_nom_cnd
+	where id_cnd = v_id_cnd
+	
+end
+
+
+---------------------------------------------------------------------------
+
+TABLA CONT_SERV
+
+
+---------------------------------------------------------------------------
+
+TABLA DEPARTAMENTO
+
+
+---------------------------------------------------------------------------
+
+TABLA RESERVA
+
+
+---------------------------------------------------------------------------
+
+TABLA SERVEXTRAS
+
+
+---------------------------------------------------------------------------
+
+TABLA CONDUCTOR
+
+
+---------------------------------------------------------------------------
+
+TABLA VEHICULO
+
+
+---------------------------------------------------------------------------
+
+TABLA MODELO
+
+
+---------------------------------------------------------------------------
+
+TABLA MARCA
+
