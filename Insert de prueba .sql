@@ -108,6 +108,8 @@ insert into usuario values ('cristian.prieto.f@gmail.com','1234','cristian','pri
 insert into usuario values ('admin@admin.cl','1234','admin','general','CEO',948821386,'administrador');
 
 
+--Depto 1
+
 insert into disponibilidad values ('01/01/2022','No',1);
 insert into disponibilidad values ('02/01/2022','No',1);
 insert into disponibilidad values ('03/01/2022','No',1);
@@ -201,6 +203,8 @@ insert into disponibilidad values ('29/03/2022','Si',1);
 insert into disponibilidad values ('30/03/2022','Si',1);
 insert into disponibilidad values ('31/03/2022','Si',1);
 
+--Depto 2
+
 insert into disponibilidad values ('01/01/2022','No',2);
 insert into disponibilidad values ('02/01/2022','No',2);
 insert into disponibilidad values ('03/01/2022','No',2);
@@ -293,6 +297,8 @@ insert into disponibilidad values ('28/03/2022','Si',2);
 insert into disponibilidad values ('29/03/2022','Si',2);
 insert into disponibilidad values ('30/03/2022','Si',2);
 insert into disponibilidad values ('31/03/2022','Si',2);
+
+--Depto 3
 
 insert into disponibilidad values ('01/01/2022','Si',3);
 insert into disponibilidad values ('02/01/2022','Si',3);

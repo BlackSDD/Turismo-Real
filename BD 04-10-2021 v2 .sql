@@ -182,8 +182,8 @@ CREATE TABLE tour (
     dur_hra      NUMBER(2) NOT NULL,
     dur_min      NUMBER(2) NOT NULL,
     cost_adult   NUMBER(6) NOT NULL,
-    costo_nigno  NUMBER(6) NOT NULL,
-    costo_3ra    NUMBER(6) NOT NULL,
+    cost_nigno  NUMBER(6) NOT NULL,
+    cost_3ra    NUMBER(6) NOT NULL,
     ubi_partida  NVARCHAR2(100) NOT NULL,
     ubi_fin      NVARCHAR2(100) NOT NULL,
     alimentacion CHAR(2) DEFAULT 'No' NOT NULL,
@@ -195,7 +195,6 @@ CREATE TABLE transporte (
     cost_km_dia   NUMBER(5) NOT NULL,
     cost_km_noc   NUMBER(5) NOT NULL,
     extra_fest  NUMBER(5) NOT NULL,
-    conductor_rut_conduc NUMBER(8) NOT NULL
 );
 
 CREATE TABLE usuario (
@@ -217,7 +216,8 @@ CREATE TABLE conductor (
     apmat_conduc NVARCHAR2(50) NOT NULL,
     email_conduc NVARCHAR2(100) NOT NULL,
     tel_conduc   NUMBER(9) NOT NULL,
-    vehiculo_patente CHAR (8) NOT NULL
+    vehiculo_patente CHAR (8) NOT NULL,
+    transporte_id_serv NUMBER(10) NOT NULL
 );
 
 CREATE TABLE vehiculo (
@@ -384,8 +384,8 @@ ALTER TABLE vehiculo ADD CONSTRAINT vehiculo_modelo_fk FOREIGN KEY (modelo_id_mo
 ALTER TABLE modelo ADD CONSTRAINT modelo_marca_fk FOREIGN KEY (marca_id_marca)
                         REFERENCES marca ( id_marca);
 
-ALTER transporte ADD CONSTRAINT transporte_conductor_fk FOREIGN KEY (conductor_rut_conduc)
-                    REFERENCES conductor (rut_conduc);
+ALTER conductor ADD CONSTRAINT conductor_transporte_fk FOREIGN KEY (transporte_id_serv)
+                    REFERENCES transporte (id_serv);
 
 ALTER TABLE agencia_externa
     ADD CONSTRAINT agencia_externa_comuna_fk FOREIGN KEY ( comuna_id_com )
