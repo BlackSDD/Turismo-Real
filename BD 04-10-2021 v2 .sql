@@ -1,51 +1,3 @@
--- Drop de as tablas--
-
-DROP TABLE agencia_externa CASCADE CONSTRAINTS;
-
-DROP TABLE articulo CASCADE CONSTRAINTS;
-
-DROP TABLE checkin CASCADE CONSTRAINTS;
-
-DROP TABLE checkout CASCADE CONSTRAINTS;
-
-DROP TABLE cliente CASCADE CONSTRAINTS;
-
-DROP TABLE comuna CASCADE CONSTRAINTS;
-
-DROP TABLE condominio CASCADE CONSTRAINTS;
-
-DROP TABLE conductor CASCADE CONSTRAINTS;
-
-DROP TABLE cont_serv CASCADE CONSTRAINTS;
-
-DROP TABLE departamento CASCADE CONSTRAINTS;
-
-DROP TABLE disponibilidad CASCADE CONSTRAINTS;
-
-DROP TABLE gastos CASCADE CONSTRAINTS;
-
-DROP TABLE mantencion CASCADE CONSTRAINTS;
-
-DROP TABLE marca CASCADE CONSTRAINTS;
-
-DROP TABLE modelo CASCADE CONSTRAINTS;
-
-DROP TABLE region CASCADE CONSTRAINTS;
-
-DROP TABLE res_mant CASCADE CONSTRAINTS;
-
-DROP TABLE reserva CASCADE CONSTRAINTS;
-
-DROP TABLE servextras CASCADE CONSTRAINTS;
-
-DROP TABLE tour CASCADE CONSTRAINTS;
-
-DROP TABLE transporte CASCADE CONSTRAINTS;
-
-DROP TABLE usuario CASCADE CONSTRAINTS;
-
-DROP TABLE vehiculo CASCADE CONSTRAINTS;
-
 -- Script para crear las tablas -- 
 
 CREATE TABLE agencia_externa (
@@ -66,12 +18,12 @@ CREATE TABLE articulo (
 );
 
 CREATE TABLE checkin (
-    id_chi   NUMBER(10) NOT NULL,
+    reserva_id_rva     NUMBER(10) NOT NULL,
     deta_chi NVARCHAR2(2000) NOT NULL
 );
 
 CREATE TABLE checkout (
-    id_cho     NUMBER(10) NOT NULL,
+    reserva_id_rva     NUMBER(10) NOT NULL,
     cost_multa NUMBER(8),
     deta_cho   NVARCHAR2(2000)
 );
@@ -85,7 +37,8 @@ CREATE TABLE cliente (
     email_cli NVARCHAR2(100) NOT NULL,
     tel_cli   NUMBER(9) NOT NULL,
     tipo_cli  NVARCHAR2(20) DEFAULT 'normal' NOT NULL,
-    cant_res  NUMBER(4) NOT NULL
+    cant_res  NUMBER(4) NOT NULL,
+    estado_cta NVARCHAR2(25) NOT NULL
 );
 
 CREATE TABLE comuna (
@@ -109,7 +62,7 @@ CREATE TABLE cont_serv (
     fec_acord          DATE NOT NULL,
     lugar_recogida     NVARCHAR2(100),
     lugar_destino      NVARCHAR2(100),
-    km_rec             NUMBER(3),
+    km_rec             NUMBER(6,3),
     reserva_id_rva     NUMBER(10) NOT NULL,
     servextras_id_serv NUMBER(10) NOT NULL
 );
@@ -167,8 +120,7 @@ CREATE TABLE reserva (
     fec_ini_rva          DATE NOT NULL,
     fec_fin_rva          DATE NOT NULL,
     num_pers             NUMBER(2) NOT NULL,
-    checkin_id_chi       NUMBER(10) NOT NULL,
-    checkout_id_cho      NUMBER(10) NOT NULL
+    estado_rva           NVARCHAR2(25)  DEFAULT 'En progreso' NOT NULL
 );
 
 CREATE TABLE servextras (
@@ -255,10 +207,6 @@ ALTER TABLE agencia_externa ADD CONSTRAINT agencia_externa_tel_age_un UNIQUE ( t
 
 ALTER TABLE articulo ADD CONSTRAINT articulo_pk PRIMARY KEY ( id_arti );
 
-ALTER TABLE checkin ADD CONSTRAINT checkin_pk PRIMARY KEY ( id_chi );
-
-ALTER TABLE checkout ADD CONSTRAINT checkout_pk PRIMARY KEY ( id_cho );
-
 ALTER TABLE cliente
     ADD CONSTRAINT dv CHECK ( dv_cli IN ( '0', '1', '2', '3', '4',
                                           '5', '6', '7', '8', '9',
@@ -274,6 +222,10 @@ ALTER TABLE cliente ADD CONSTRAINT cliente_pk PRIMARY KEY ( rut_cli );
 ALTER TABLE cliente ADD CONSTRAINT cliente_email_cli_un UNIQUE ( email_cli );
 
 ALTER TABLE cliente ADD CONSTRAINT cliente_tel_cli_un UNIQUE ( tel_cli );
+
+ALTER TABLE cliente
+    ADD CONSTRAINT estado_cta CHECK ( estado_cta IN ( 'activa', 'suspendida', 'en verificacion' ) 
+);
 
 ALTER TABLE comuna ADD CONSTRAINT comuna_pk PRIMARY KEY ( id_com );
 
@@ -324,6 +276,8 @@ ALTER TABLE vehiculo
 ALTER TABLE transporte ADD CONSTRAINT transporte_pk PRIMARY KEY ( id_serv );
 
 ALTER TABLE usuario ADD CONSTRAINT tipo_usr CHECK ( tipo_usr IN ( 'administrador', 'cliente', 'funcionario' ) );
+
+ALTER TABLE reserva ADD CONSTRAINT estado CHECK ( estado_rva IN ( 'en progreso', 'cancelada', 'reservada', 'terminada' ) );
 
 ALTER TABLE usuario ADD CONSTRAINT usuario_pk PRIMARY KEY ( email_usr );
 
@@ -406,14 +360,6 @@ ALTER TABLE res_mant
         REFERENCES departamento ( id_dpto );
 
 ALTER TABLE reserva
-    ADD CONSTRAINT reserva_checkin_fk FOREIGN KEY ( checkin_id_chi )
-        REFERENCES checkin ( id_chi );
-
-ALTER TABLE reserva
-    ADD CONSTRAINT reserva_checkout_fk FOREIGN KEY ( checkout_id_cho )
-        REFERENCES checkout ( id_cho );
-
-ALTER TABLE reserva
     ADD CONSTRAINT reserva_cliente_fk FOREIGN KEY ( cliente_rut_cli )
         REFERENCES cliente ( rut_cli );
 
@@ -433,58 +379,20 @@ ALTER TABLE transporte
     ADD CONSTRAINT transporte_servextras_fk FOREIGN KEY ( id_serv )
         REFERENCES servextras ( id_serv );
 
--- Triggers para hacer la relacion de supertipo -- 
+ALTER TABLE checkin
+    ADD CONSTRAINT reserva_checkin_fk FOREIGN KEY ( reserva_id_rva )
+        REFERENCES reserva (id_rva);
 
-CREATE OR REPLACE TRIGGER arc_tipo_serv_transporte BEFORE
-    INSERT OR UPDATE OF id_serv ON transporte
-    FOR EACH ROW
-DECLARE
-    d CHAR(1);
-BEGIN
-    SELECT
-        a.tipo_serv
-    INTO d
-    FROM
-        servextras a
-    WHERE
-        a.id_serv = :new.id_serv;
+ALTER TABLE checkout
+    ADD CONSTRAINT reserva_checkout_fk FOREIGN KEY ( reserva_id_rva )
+        REFERENCES reserva (id_rva);
 
-    IF ( d IS NULL OR d <> 'V' ) THEN
-        raise_application_error(-20223,
-                               'FK transporte_servextras_FK in Table transporte violates Arc constraint on Table servextras - discriminator column tipo_serv doesn''t have value ''V''');
-    END IF;
+ALTER TABLE checkin
+    ADD CONSTRAINT checkin_pk PRIMARY KEY (reserva_id_rva);
 
-EXCEPTION
-    WHEN no_data_found THEN
-        NULL;
-    WHEN OTHERS THEN
-        RAISE;
-END;
+ALTER TABLE checkout
+    ADD CONSTRAINT checkout_pk PRIMARY KEY (reserva_id_rva);
 
-CREATE OR REPLACE TRIGGER arc_tipo_serv_tour BEFORE
-    INSERT OR UPDATE OF id_serv ON tour
-    FOR EACH ROW
-DECLARE
-    d CHAR(1);
-BEGIN
-    SELECT
-        a.tipo_serv
-    INTO d
-    FROM
-        servextras a
-    WHERE
-        a.id_serv = :new.id_serv;
 
-    IF ( d IS NULL OR d <> 'T' ) THEN
-        raise_application_error(-20223,
-                               'FK tour_servextras_FK in Table tour violates Arc constraint on Table servextras - discriminator column tipo_serv doesn''t have value ''T''');
-    END IF;
-
-EXCEPTION
-    WHEN no_data_found THEN
-        NULL;
-    WHEN OTHERS THEN
-        RAISE;
-END;
 
 commit;
