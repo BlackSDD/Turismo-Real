@@ -28,7 +28,7 @@ CREATE TABLE checkin (
     id_func        NUMBER(10) NOT NULL
 );
 
-CREATE TABLE chekout (
+CREATE TABLE checkout (
     id_rva         NUMBER(10) NOT NULL,
     cost_multa     NUMBER(8) NOT NULL,
     deta_cho       NVARCHAR2(2000) NOT NULL,
