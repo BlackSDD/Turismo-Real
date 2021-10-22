@@ -1,5 +1,4 @@
 -- Drop sequences
-DROP SEQUENCE seq_administrador;
 DROP SEQUENCE seq_agencia_externa;
 DROP SEQUENCE seq_articulo;
 DROP SEQUENCE seq_checkin;
@@ -8,7 +7,6 @@ DROP SEQUENCE seq_comuna;
 DROP SEQUENCE seq_condominio;
 DROP SEQUENCE seq_cont_serv;
 DROP SEQUENCE seq_departamento;
-DROP SEQUENCE seq_funcionario;
 DROP SEQUENCE seq_gastos;
 DROP SEQUENCE seq_mantencion;
 DROP SEQUENCE seq_marca;
@@ -19,6 +17,7 @@ DROP SEQUENCE seq_reserva;
 DROP SEQUENCE seq_servextras;
 DROP SEQUENCE seq_tour;
 DROP SEQUENCE seq_transporte;
+DROP SEQUENCE seq_usuario;
 
 --Create a new Sequence
 
@@ -112,13 +111,10 @@ CREATE SEQUENCE seq_transporte
     INCREMENT by 1
     NOCYCLE;
 
-CREATE SEQUENCE seq_administrador
+CREATE SEQUENCE seq_usuario
     START WITH 1
     INCREMET by 1
     NOCYCLE;
 
-CREATE SEQUENCE seq_funcionario
-    START WITH 1 
-    INCREMENT by 1
-    NOCYCLE;
+
 

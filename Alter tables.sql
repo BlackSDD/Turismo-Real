@@ -1,40 +1,28 @@
-ALTER TABLE usuario ADD CONSTRAINT tipo_usr CHECK ( tipo_usr IN ( 'administrador', 'cliente', 'funcionario' ) );
+ALTER TABLE tipo_usuario ADD CONSTRAINT id_tipo_usr PRIMARY KEY (id_tipo_usr);
+
+ALTER TABLE tipo_usuario ADD CONSTRAINT tipo_usr CHECK ( tipo_usr IN ( 'administrador', 'cliente', 'funcionario' ) );
 
 ALTER TABLE usuario ADD CONSTRAINT usuario_pk PRIMARY KEY ( email_usr );
 
 ALTER TABLE usuario ADD CONSTRAINT usuario_tel_usr_un UNIQUE ( tel_usr );
 
-ALTER TABLE funcionario
-    ADD CONSTRAINT funcionario_usuario_fk FOREIGN KEY ( email_usr )
-        REFERENCES usuario ( email_usr );
+ALTER TABLE usuario ADD CONSTRAINT usuario_email_usr_un UNIQUE ( email_usr );        
 
-ALTER TABLE funcionario ADD CONSTRAINT funcionario_pk PRIMARY KEY ( email_usr, id_func );
+ALTER TABLE usuario ADD CONSTRAINT usuario_rut_usr_un UNIQUE ( rut_usr );
 
-ALTER TABLE administrador 
-    ADD CONSTRAINT administrador_fk FOREIGN KEY (email_usr)
-        REFERENCES usuario (email_usr);
-
-ALTER TABLE administrador ADD CONSTRAINT administrador_pk PRIMARY KEY ( email_usr, id_admin);
-
-ALTER TABLE cliente
-    ADD CONSTRAINT dv_cli CHECK ( dv_cli IN ( '0', '1', '2', '3', '4',
+ALTER TABLE usuario
+    ADD CONSTRAINT dv_usr CHECK ( dv_usr IN ( '0', '1', '2', '3', '4',
                                           '5', '6', '7', '8', '9',
                                           'K', 'k' )
 );
 
-ALTER TABLE cliente
-    ADD CONSTRAINT estado_cta CHECK ( est_cta IN ( 'activa', 'suspendida', 'en verificacion' ) 
+ALTER TABLE usuario
+    ADD CONSTRAINT est_cta CHECK ( est_cta IN ( 'activa', 'suspendida', 'en verificacion' ) 
 );
 
-ALTER TABLE cliente
+ALTER TABLE usuario
     ADD CONSTRAINT val_tipo_cli CHECK ( tipo_cli IN ( 'frecuente', 'normal' )
 );
-
-ALTER TABLE cliente
-    ADD CONSTRAINT cliente_usuario_fk FOREIGN KEY ( email_usr )
-        REFERENCES usuario ( email_usr );
-
-ALTER TABLE cliente ADD CONSTRAINT cliente_pk PRIMARY KEY ( email_usr, rut_cli );
 
 ALTER TABLE region ADD CONSTRAINT region_pk PRIMARY KEY ( id_rgn );
 
@@ -85,8 +73,8 @@ ALTER TABLE res_mant
         REFERENCES departamento ( id_dpto );
 
 ALTER TABLE res_mant
-    ADD CONSTRAINT res_mant_administrador_fk FOREIGN KEY ( id_admin )
-        REFERENCES administrador ( id_admin );
+    ADD CONSTRAINT res_mant_usuario_fk FOREIGN KEY ( id_usr )
+        REFERENCES usuario ( id_usr );
 
 ALTER TABLE mantencion ADD CONSTRAINT mantencion_pk PRIMARY KEY ( id_mant );
 
@@ -99,8 +87,8 @@ ALTER TABLE reserva ADD CONSTRAINT reserva_pk PRIMARY KEY ( id_rva );
 ALTER TABLE reserva ADD CONSTRAINT estado_rva CHECK ( estado_rva IN ( 'en progreso', 'cancelada', 'reservada', 'terminada' ) );
 
 ALTER TABLE reserva
-    ADD CONSTRAINT reserva_cliente_fk FOREIGN KEY ( rut_cli )
-        REFERENCES cliente ( rut_cli );
+    ADD CONSTRAINT reserva_usuario_fk FOREIGN KEY ( id_usr )
+        REFERENCES usuario ( id_usr );
 
 ALTER TABLE reserva
     ADD CONSTRAINT reserva_departamento_fk FOREIGN KEY ( id_dpto )
@@ -111,8 +99,8 @@ ALTER TABLE checkin
         REFERENCES reserva (id_rva);
 
 ALTER Table checkin 
-    ADD CONSTRAINT checkin_funcionario_fk FOREIGN KEY (id_func)
-        REFERENCES funcionario (id_func);
+    ADD CONSTRAINT checkin_usuario_fk FOREIGN KEY (id_usr)
+        REFERENCES usuario (id_usr);
 
 ALTER TABLE checkin
     ADD CONSTRAINT checkin_pk PRIMARY KEY (id_rva);
@@ -122,8 +110,8 @@ ALTER TABLE checkout
         REFERENCES reserva (id_rva);
 
 ALTER TABLE checkout    
-    ADD CONSTRAINT checkout_funcionario_fk FOREIGN KEY (id_func)
-        REFERENCES funcionario (id_func);
+    ADD CONSTRAINT checkout_usuario_fk FOREIGN KEY (id_usr)
+        REFERENCES usuario (id_usr);
 
 ALTER TABLE checkout
     ADD CONSTRAINT checkout_pk PRIMARY KEY (id_rva);

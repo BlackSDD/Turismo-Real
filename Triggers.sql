@@ -135,3 +135,4 @@ EXCEPTION
         RAISE;
 END;
 
+commit;

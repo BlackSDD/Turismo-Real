@@ -1,10 +1,5 @@
 -- Script para crear las tablas -- 
 
-CREATE TABLE administrador (
-    email_usr NVARCHAR2(100) NOT NULL,
-    id_admin  NUMBER(10) NOT NULL
-);
-
 CREATE TABLE agencia_externa (
     id_agencia    NUMBER(10) NOT NULL,
     nom_age       NVARCHAR2(100) NOT NULL,
@@ -23,26 +18,18 @@ CREATE TABLE articulo (
 );
 
 CREATE TABLE checkin (
-    id_rva         NUMBER(10) NOT NULL,
-    deta_chi       NVARCHAR2(2000) NOT NULL,
-    id_func        NUMBER(10) NOT NULL
+    id_rva     NUMBER(10) NOT NULL,
+    deta_chi   NVARCHAR2(2000) NOT NULL,
+    id_usr     NUMBER(10) NOT NULL
 );
 
 CREATE TABLE checkout (
-    id_rva         NUMBER(10) NOT NULL,
-    cost_multa     NUMBER(8) NOT NULL,
-    deta_cho       NVARCHAR2(2000) NOT NULL,
-    id_func        NUMBER(10) NOT NULL
+    id_rva       NUMBER(10) NOT NULL,
+    cost_multa   NUMBER(8) NOT NULL,
+    deta_cho     NVARCHAR2(2000) NOT NULL,
+    id_usr       NUMBER(10) NOT NULL
 );
 
-CREATE TABLE cliente (
-    email_usr  NVARCHAR2(100) NOT NULL,
-    rut_cli    NUMBER(8) NOT NULL,
-    dv_cli     CHAR(1) NOT NULL,
-    tipo_cli   NVARCHAR2(20) DEFAULT 'normal' NOT NULL,
-    cant_res   NUMBER(4) DEFAULT 0 NOT NULL,
-    est_cta    NVARCHAR2(20) DEFAULT 'en verificacion' NOT NULL
-);
 
 CREATE TABLE comuna (
     id_com    NUMBER(4) NOT NULL,
@@ -91,11 +78,6 @@ CREATE TABLE disponibilidad (
     id_dpto      NUMBER(10) NOT NULL
 );
 
-CREATE TABLE funcionario (
-    email_usr NVARCHAR2(100) NOT NULL,
-    id_func   NUMBER(10) NOT NULL
-);
-
 CREATE TABLE gastos (
     id_gastos   NUMBER(10) NOT NULL,
     gast_mes    NUMBER(10) NOT NULL,
@@ -116,20 +98,20 @@ CREATE TABLE region (
 );
 
 CREATE TABLE res_mant (
-    id_rmant             NUMBER(10) NOT NULL,
-    fec_rmant            DATE NOT NULL,
-    id_dpto              NUMBER(10) NOT NULL,
-    id_admin             NUMBER(10) NOT NULL
+    id_rmant   NUMBER(10) NOT NULL,
+    fec_rmant  DATE NOT NULL,
+    id_dpto    NUMBER(10) NOT NULL,
+    id_usr     NUMBER(10) NOT NULL
 );
 
 CREATE TABLE reserva (
-    id_rva               NUMBER(10) NOT NULL,
-    rut_cli              NUMBER(8) NOT NULL,
-    id_dpto              NUMBER(10) NOT NULL,
-    fec_ini_rva          DATE NOT NULL,
-    fec_fin_rva          DATE NOT NULL,
-    num_pers             NUMBER(2) NOT NULL,
-    estado_rva           NVARCHAR2(25)  DEFAULT 'en progreso' NOT NULL
+    id_rva       NUMBER(10) NOT NULL,
+    fec_ini_rva  DATE NOT NULL,
+    fec_fin_rva  DATE NOT NULL,
+    num_pers     NUMBER(2) NOT NULL,
+    estado_rva   NVARCHAR2(25)  DEFAULT 'en progreso' NOT NULL,
+    id_dpto      NUMBER(10) NOT NULL,
+    id_usr       NUMBER(10) NOT NULL  
 );
 
 CREATE TABLE servextras (
@@ -138,6 +120,11 @@ CREATE TABLE servextras (
     tipo_serv      CHAR(1) DEFAULT 'T' NOT NULL,
     desc_serv      NVARCHAR2(2000) NOT NULL,
     id_agencia     NUMBER(10) NOT NULL
+);
+
+CREATE TABLE tipo_usuario (
+    id_tipo_usr NUMBER(1) NOT NULL,
+    tipo_usr    NVARCHAR2(25) DEFAULT 'cliente' NOT NULL
 );
 
 CREATE TABLE tour (
@@ -161,13 +148,19 @@ CREATE TABLE transporte (
 );
 
 CREATE TABLE usuario (
-    email_usr NVARCHAR2(100) NOT NULL,
-    contr_usr NVARCHAR2(50) NOT NULL,
-    nom_usr   NVARCHAR2(50) NOT NULL,
-    appat_usr NVARCHAR2(50) NOT NULL,
-    apmat_usr NVARCHAR2(50) NOT NULL,
-    tel_usr   NUMBER(9) NOT NULL,
-    tipo_usr  NVARCHAR2(20) DEFAULT 'cliente' NOT NULL
+    id_usr      NUMBER(10) NOT NULL,  
+    email_usr   NVARCHAR2(100) NOT NULL,
+    contr_usr   NVARCHAR2(50) NOT NULL,
+    nom_usr     NVARCHAR2(50) NOT NULL,
+    appat_usr   NVARCHAR2(50) NOT NULL,
+    apmat_usr   NVARCHAR2(50) NOT NULL,
+    tel_usr     NUMBER(9) NOT NULL,
+    rut_usr     NUMBER(8) NOT NULL,
+    dv_usr      CHAR(1) NOT NULL,
+    cant_res    NUMBER(4),
+    est_cta     NVARCHAR2(20),
+    tipo_cli    NVARCHAR2(25),
+    id_tipo_usr NUMBER(1) NOT NULL
 );
 
 --Nuevas tablas segun acordado para visualizar documento de acuerdo de transporte --

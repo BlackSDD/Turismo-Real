@@ -1,7 +1,11 @@
-insert into usuario values ('matias76097795@gmail.com','1234','matias','fuentes','venegas',948821386,'cliente');
-insert into usuario values ('cristian.prieto.f@gmail.com','1234','cristian','prieto','fariña',920503942,'cliente');
-insert into usuario values ('admin@admin.cl','1234','admin','general','CEO',976097795,'administrador');
-insert into usuario values ('funcionario@funcionario.cl','1234','funcionario','que','trabaja',981866966,'funcionario');
+insert into tipo_usuario values (1,'administrador');
+insert into tipo_usuario values (2,'funcionario');
+insert into tipo_usuario values (3,'cliente');
+
+insert into usuario values (seq_usuario.NEXTVAL,'matias76097795@gmail.com','1234','matias','fuentes','venegas',948821386,19409965,7,6,'activa','frecuente',3);
+insert into usuario values (seq_usuario.NEXTVAL,'cristian.prieto.f@gmail.com','1234','cristian','prieto','fariña',920503942,19793681,9,0,'activa','normal',3);
+insert into usuario values (seq_usuario.NEXTVAL,'admin@admin.cl','1234','admin','general','CEO',976097795,1111111,1,null,null,null,1);
+insert into usuario values (seq_usuario.NEXTVAL,'funcionario@funcionario.cl','1234','funcionario','que','trabaja',981866966,2222222,2,null,null,null,2);
 
 insert into region values (seq_region.NEXTVAL,'Región de Tarapacá');
 insert into region values (seq_region.NEXTVAL,'Región de Antofagasta');
@@ -29,13 +33,6 @@ insert into comuna values (seq_comuna.NEXTVAL,'Pucón',9);
 insert into condominio values (seq_condominio.NEXTVAL,'Miraflores',1);
 insert into condominio values (seq_condominio.NEXTVAL,'Las camelias',2);
 insert into condominio values (seq_condominio.NEXTVAL,'Entre Lagos',3);
-
-insert into administrador values ('admin@admin.cl',seq_administrador.NEXTVAL);
-
-insert into funcionario values ('funcionario@funcionario.cl',seq_funcionario.NEXTVAL);
-
-insert into cliente values ('matias76097795@gmail.com',19409965,7,'frecuente',6,'activa');
-insert into cliente values ('cristian.prieto.f@gmail.com',19793681,9,'normal',0,'activa');
 
 
 insert into departamento values (seq_departamento.NEXTVAL,'1 Norte 1540',315,3,'Departamento con habitación principal y baño en suite, living-comedor y cocina independiente',58000,empty_blob(),empty_blob(),empty_blob(),empty_blob(),empty_blob(),1);
@@ -396,4 +393,4 @@ insert into checkout values (seq_checkout.NEXTVAL,0,'Se devuelve el departamento
 
 insert into cont_serv values (seq_cont_serv.NEXTVAL,'01/01/2022',15000,'Se solicitó transporte desde el terminal de buses hasta el edificio','01/01/2022','Avenida Valparaíso 1055','1 Norte 1540',24.500,1,1);
 
-
+commit;
