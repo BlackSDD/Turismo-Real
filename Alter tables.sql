@@ -2,7 +2,7 @@ ALTER TABLE tipo_usuario ADD CONSTRAINT id_tipo_usr PRIMARY KEY (id_tipo_usr);
 
 ALTER TABLE tipo_usuario ADD CONSTRAINT tipo_usr CHECK ( tipo_usr IN ( 'administrador', 'cliente', 'funcionario' ) );
 
-ALTER TABLE usuario ADD CONSTRAINT usuario_pk PRIMARY KEY ( email_usr );
+ALTER TABLE usuario ADD CONSTRAINT usuario_pk PRIMARY KEY ( id_usr );
 
 ALTER TABLE usuario ADD CONSTRAINT usuario_tel_usr_un UNIQUE ( tel_usr );
 
@@ -93,6 +93,15 @@ ALTER TABLE reserva
 ALTER TABLE reserva
     ADD CONSTRAINT reserva_departamento_fk FOREIGN KEY ( id_dpto )
         REFERENCES departamento ( id_dpto );
+
+ALTER TABLE pago
+    ADD CONSTRAINT pago_reserva_fk FOREIGN KEY (id_rva)
+        REFERENCES reserva (id_rva);
+
+ALTER TABLE pago ADD CONSTRAINT pago_pk PRIMARY KEY (id_rva);
+
+ALTER TABLE pago
+    ADD CONSTRAINT est_pago CHECK (est_pago IN ('abonado','abono pendiente','pagado totalmente','cancelado'));
 
 ALTER TABLE checkin
     ADD CONSTRAINT checkin_reserva_fk FOREIGN KEY ( id_rva )

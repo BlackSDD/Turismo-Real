@@ -113,7 +113,7 @@ CREATE SEQUENCE seq_transporte
 
 CREATE SEQUENCE seq_usuario
     START WITH 1
-    INCREMET by 1
+    INCREMENT by 1
     NOCYCLE;
 
 

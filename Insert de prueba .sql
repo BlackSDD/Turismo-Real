@@ -2,10 +2,11 @@ insert into tipo_usuario values (1,'administrador');
 insert into tipo_usuario values (2,'funcionario');
 insert into tipo_usuario values (3,'cliente');
 
-insert into usuario values (seq_usuario.NEXTVAL,'matias76097795@gmail.com','1234','matias','fuentes','venegas',948821386,19409965,7,6,'activa','frecuente',3);
-insert into usuario values (seq_usuario.NEXTVAL,'cristian.prieto.f@gmail.com','1234','cristian','prieto','fariña',920503942,19793681,9,0,'activa','normal',3);
 insert into usuario values (seq_usuario.NEXTVAL,'admin@admin.cl','1234','admin','general','CEO',976097795,1111111,1,null,null,null,1);
 insert into usuario values (seq_usuario.NEXTVAL,'funcionario@funcionario.cl','1234','funcionario','que','trabaja',981866966,2222222,2,null,null,null,2);
+insert into usuario values (seq_usuario.NEXTVAL,'matias76097795@gmail.com','1234','matias','fuentes','venegas',948821386,19409965,7,6,'activa','frecuente',3);
+insert into usuario values (seq_usuario.NEXTVAL,'cristian.prieto.f@gmail.com','1234','cristian','prieto','fariña',920503942,19793681,9,0,'activa','normal',3);
+
 
 insert into region values (seq_region.NEXTVAL,'Región de Tarapacá');
 insert into region values (seq_region.NEXTVAL,'Región de Antofagasta');
@@ -376,19 +377,23 @@ insert into conductor values (18469230,9,'mario','serrano','cantillana','mariose
 insert into conductor values (19315176,0,'jesus','aguayo','rojas','jesus.aguayo.06@gmail.com',952346288,'AAAA01',2);
 
 
-insert into reserva values (seq_reserva.NEXTVAL,19409965,1,'01/01/2022','09/01/2022',2,'reservada');
-insert into reserva values (seq_reserva.NEXTVAL,19793681,2,'01/02/2022','09/02/2022',2,'reservada');
-insert into reserva values (seq_reserva.NEXTVAL,19409965,3,'01/03/2022','09/03/2022',4,'reservada');
+insert into reserva values (seq_reserva.NEXTVAL,'01/01/2022','09/01/2022',2,'reservada',1,3);
+insert into reserva values (seq_reserva.NEXTVAL,'01/02/2022','09/02/2022',2,'reservada',2,4);
+insert into reserva values (seq_reserva.NEXTVAL,'01/03/2022','09/03/2022',4,'reservada',3,3);
+
+insert into pago values(1,100000,10000,'abonado');
+insert into pago values(2,100000,10000,'abonado');
+insert into pago values(3,100000,10000,'abonado');
 
 
-insert into checkin values (seq_checkin.NEXTVAL,'Se hace entrega del departamento con el inventario completo',1);
-insert into checkin values (seq_checkin.NEXTVAL,'Se hace entrega del departamento con el inventario completo',1);
-insert into checkin values (seq_checkin.NEXTVAL,'Se hace entrega del departamento, la lavadora está en mantención así que se entregan fichas para lavanderia',1);
+insert into checkin values (1,'Se hace entrega del departamento con el inventario completo',2);
+insert into checkin values (2,'Se hace entrega del departamento con el inventario completo',2);
+insert into checkin values (3,'Se hace entrega del departamento, la lavadora está en mantención así que se entregan fichas para lavanderia',2);
 
 
-insert into checkout values (seq_checkout.NEXTVAL,0,'Se devuelve el departamento en perfecto estado',1);
-insert into checkout values (seq_checkout.NEXTVAL,0,'Se devuelve el departamento en perfecto estado',1);
-insert into checkout values (seq_checkout.NEXTVAL,0,'Se devuelve el departamento en perfecto estado',1);
+insert into checkout values (1,0,'Se devuelve el departamento en perfecto estado',2);
+insert into checkout values (2,0,'Se devuelve el departamento en perfecto estado',2);
+insert into checkout values (3,0,'Se devuelve el departamento en perfecto estado',2);
 
 
 insert into cont_serv values (seq_cont_serv.NEXTVAL,'01/01/2022',15000,'Se solicitó transporte desde el terminal de buses hasta el edificio','01/01/2022','Avenida Valparaíso 1055','1 Norte 1540',24.500,1,1);

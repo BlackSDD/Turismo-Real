@@ -1,11 +1,8 @@
 
 select * from usuario;
-select * from administrador;
-select * from funcionario;
 select * from region;
 select * from comuna;
 select * from condominio;
-select * from cliente;
 select * from departamento;
 select * from disponibilidad;
 select * from articulo;
@@ -24,3 +21,5 @@ select * from reserva;
 select * from checkin;
 select * from checkout;
 select * from cont_serv;
+select * from tipo_usuario;
+select * from pago;

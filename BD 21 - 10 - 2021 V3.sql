@@ -92,6 +92,13 @@ CREATE TABLE mantencion (
     id_rmant    NUMBER(10) NOT NULL
 );
 
+CREATE TABLE pago(
+    id_rva        NUMBER(10) NOT NULL,
+    monto_total   NUMBER(8) NOT NULL,
+    monto_pagado  NUMBER(8) NOT NULL,
+    est_pago      NVARCHAR2(30) NOT NULL
+);
+
 CREATE TABLE region (
     id_rgn  NUMBER(2) NOT NULL,
     nom_rgn NVARCHAR2(100) NOT NULL
