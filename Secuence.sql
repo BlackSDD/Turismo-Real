@@ -1,8 +1,6 @@
 -- Drop sequences
 DROP SEQUENCE seq_agencia_externa;
 DROP SEQUENCE seq_articulo;
-DROP SEQUENCE seq_checkin;
-DROP SEQUENCE seq_checkout;
 DROP SEQUENCE seq_comuna;
 DROP SEQUENCE seq_condominio;
 DROP SEQUENCE seq_cont_serv;
@@ -31,15 +29,6 @@ CREATE SEQUENCE seq_articulo
     INCREMENT by 1
     NOCYCLE;
 
-CREATE SEQUENCE seq_checkin
-    START WITH 1
-    INCREMENT by 1
-    NOCYCLE;
-
-CREATE SEQUENCE seq_checkout
-    START WITH 1
-    INCREMENT by 1
-    NOCYCLE;
 
 CREATE SEQUENCE seq_comuna
     START WITH 1
