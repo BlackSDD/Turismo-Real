@@ -54,7 +54,25 @@ EXCEPTION
         RAISE;
 END;
 
+-- triggers y procedure para insertar disponibilidad de 10 años al crear un depto
 
+create or replace procedure pd_insert_fechas( v_id_depto in departamento.id_dpto%type )
+is
+begin
+insert into disponibilidad (fec_disp, esta_disp, id_dpto)
+      select sysdate + level - 1, 'Si', v_id_depto
+      from dual
+      connect by level <= 3652;
+ end;
+
+
+create or replace trigger insert_fechas 
+after insert on departamento
+for each row
+begin
+ pd_fechas(:new.id_dpto);
+end;
+/
 
 
 commit;
