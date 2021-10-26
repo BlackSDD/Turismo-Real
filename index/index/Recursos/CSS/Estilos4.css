@@ -1,0 +1,31 @@
+﻿.container {
+    font-family: Roboto;
+    color: white;
+}
+
+.btnLogin {
+    background-color: dodgerblue;
+    color: white;
+    border: solid 1px;
+}
+
+    .btnLogin:hover {
+        background-color: darkblue;
+        color: white;
+        opacity: 0.5;
+    }
+
+.fondoLogin {
+    background-image: url("https://wallpaperaccess.com/full/3203345.jpg");
+    background-size: cover;
+}
+
+.fondoRegCuenta {
+    background-image: url("https://wallpaperaccess.com/full/3203345.jpg");
+    background-size: cover;
+    background: fixed;
+}
+
+.banner-box {
+    background-color: aqua;
+}
