@@ -53,6 +53,7 @@ CREATE TABLE cont_serv (
     lugar_recogida     NVARCHAR2(100),
     lugar_destino      NVARCHAR2(100),
     km_rec             NUMBER(6,3),
+    est_cont           NVARCHAR2(25),
     id_rva             NUMBER(10) NOT NULL,
     id_serv            NUMBER(10) NOT NULL
 );
@@ -93,10 +94,13 @@ CREATE TABLE mantencion (
 );
 
 CREATE TABLE pago(
-    id_rva        NUMBER(10) NOT NULL,
-    monto_total   NUMBER(8) NOT NULL,
-    monto_pagado  NUMBER(8) NOT NULL,
-    est_pago      NVARCHAR2(30) NOT NULL
+    id_rva           NUMBER(10) NOT NULL,
+    monto_total      NUMBER(8) NOT NULL,
+    monto_arr        NUMBER(8) NOT NULL,
+    abono_req        NUMBER(8) NOT NULL,
+    monto_serv_extra NUMBER(8) NOT NULL,
+    monto_pagado     NUMBER(8) NOT NULL,
+    est_pago         NVARCHAR2(30) NOT NULL
 );
 
 CREATE TABLE region (

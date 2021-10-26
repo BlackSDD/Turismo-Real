@@ -205,6 +205,11 @@ ALTER TABLE conductor ADD CONSTRAINT conductor_vehiculo_fk FOREIGN KEY (patente)
 ALTER TABLE conductor ADD CONSTRAINT conductor_transporte_fk FOREIGN KEY (id_serv)
                     REFERENCES transporte ( id_serv );
 
+
+ALTER TABLE cont_serv 
+    ADD CONSTRAINT est_cont CHECK (est_cont IN ('cancelado','reservado','realizado')
+);
+
 ALTER TABLE cont_serv ADD CONSTRAINT cont_serv_pk PRIMARY KEY ( id_cont_serv );
 
 ALTER TABLE cont_serv
@@ -214,5 +219,6 @@ ALTER TABLE cont_serv
 ALTER TABLE cont_serv
     ADD CONSTRAINT cont_serv_servextras_fk FOREIGN KEY ( id_serv )
         REFERENCES servextras ( id_serv );
+        
 
 commit;
