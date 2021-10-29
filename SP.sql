@@ -22,7 +22,8 @@ create or replace procedure sp_agregarAgenciaExterna
 	v_nom_age NVARCHAR2,
 	v_email_age NVARCHAR2,
 	v_tel_age number,
-    v_id_com number
+    v_id_com number,
+	v_salida
 )
 as
 begin
@@ -71,14 +72,12 @@ begin
 end;
 
 
-/*create or replace procedure sp_listaArticulo
-
-as
+create or replace procedure sp_listaArticulo(articulo out SYS_REFCURSOR)
+is
 begin
-	select nom_arti, cant_arti, deta_arti, valor_arti from articulo
-	order by nom_arti asc;
-end	; */
-
+	open categorias for select * from core_articulo;
+end	; 
+/
 create or replace procedure sp_agregarArticulo
 (
 	
@@ -87,10 +86,19 @@ create or replace procedure sp_agregarArticulo
 	v_deta_arti NVARCHAR2,
 	v_valor_arti number,
     v_id_depto number
+	v_salida OUT number
 )
 as
 begin
-	insert into Articulo values
+	insert into core_articulo
+	(
+		id_arti,
+		nom_arti
+		cant_arti,
+		deta_arti
+		valor_arti
+		id_dpto
+	)
 	(
 	SEQ_ARTICULO.nextval,
 	v_nom_arti ,
@@ -100,8 +108,11 @@ begin
     v_id_depto
 	);
     commit;
+	v_salida:=1;
+	when others then 
+		v_salida:=0;
 end;
-
+/
 
 create or replace procedure sp_modificarArticulo
 (
