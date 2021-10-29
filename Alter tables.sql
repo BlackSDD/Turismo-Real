@@ -84,7 +84,7 @@ ALTER TABLE mantencion
 
 ALTER TABLE reserva ADD CONSTRAINT reserva_pk PRIMARY KEY ( id_rva );
 
-ALTER TABLE reserva ADD CONSTRAINT estado_rva CHECK ( estado_rva IN ( 'en progreso', 'cancelada', 'reservada', 'terminada' ) );
+ALTER TABLE reserva ADD CONSTRAINT estado_rva CHECK ( estado_rva IN ( 'en progreso', 'cancelada', 'reservada', 'terminada', 'en verificación' ) );
 
 ALTER TABLE reserva
     ADD CONSTRAINT reserva_usuario_fk FOREIGN KEY ( id_usr )
@@ -101,7 +101,7 @@ ALTER TABLE pago
 ALTER TABLE pago ADD CONSTRAINT pago_pk PRIMARY KEY (id_rva);
 
 ALTER TABLE pago
-    ADD CONSTRAINT est_pago CHECK (est_pago IN ('abonado','abono pendiente','pagado totalmente','cancelado'));
+    ADD CONSTRAINT est_pago CHECK (est_pago IN ('abonado','abono pendiente','pagado totalmente','pago cancelado'));
 
 ALTER TABLE checkin
     ADD CONSTRAINT checkin_reserva_fk FOREIGN KEY ( id_rva )

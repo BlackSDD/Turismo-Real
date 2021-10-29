@@ -381,9 +381,9 @@ insert into reserva values (seq_reserva.NEXTVAL,'01/01/2022','09/01/2022',2,'res
 insert into reserva values (seq_reserva.NEXTVAL,'01/02/2022','09/02/2022',2,'reservada',2,4);
 insert into reserva values (seq_reserva.NEXTVAL,'01/03/2022','09/03/2022',4,'reservada',3,3);
 
-insert into pago values(1,115000,100000,10000,15000,10000,'abonado');
-insert into pago values(2,100000,100000,10000,0,10000,'abonado');
-insert into pago values(3,100000,100000,10000,0,10000,'abonado');
+insert into pago values(1,115000,100000,10000,15000,0,10000,'abonado');
+insert into pago values(2,100000,100000,10000,0,0,10000,'abonado');
+insert into pago values(3,100000,100000,10000,0,0,10000,'abonado');
 
 
 insert into checkin values (1,'Se hace entrega del departamento con el inventario completo',2);

@@ -99,6 +99,7 @@ CREATE TABLE pago(
     monto_arr        NUMBER(8) NOT NULL,
     abono_req        NUMBER(8) NOT NULL,
     monto_serv_extra NUMBER(8) NOT NULL,
+    monto_multas     NUMBER(8) NOT NULL,
     monto_pagado     NUMBER(8) NOT NULL,
     est_pago         NVARCHAR2(30) NOT NULL
 );
@@ -120,7 +121,7 @@ CREATE TABLE reserva (
     fec_ini_rva  DATE NOT NULL,
     fec_fin_rva  DATE NOT NULL,
     num_pers     NUMBER(2) NOT NULL,
-    estado_rva   NVARCHAR2(25)  DEFAULT 'en progreso' NOT NULL,
+    estado_rva   NVARCHAR2(30) NOT NULL,
     id_dpto      NUMBER(10) NOT NULL,
     id_usr       NUMBER(10) NOT NULL  
 );
