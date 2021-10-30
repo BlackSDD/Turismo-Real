@@ -396,6 +396,6 @@ insert into checkout values (2,0,'Se devuelve el departamento en perfecto estado
 insert into checkout values (3,0,'Se devuelve el departamento en perfecto estado',2);
 
 
-insert into cont_serv values (seq_cont_serv.NEXTVAL,'01/01/2022',15000,'Se solicitó transporte desde el terminal de buses hasta el edificio','01/01/2022','Avenida Valparaíso 1055','1 Norte 1540',24.500,'reservado',1,1);
+insert into cont_serv values (seq_cont_serv.NEXTVAL,'01/01/2022',15000,'Se solicitó transporte desde el terminal de buses hasta el edificio','01/01/2022','10:30','Avenida Valparaíso 1055','1 Norte 1540',24.500,'reservado',1,1);
 
 commit;
