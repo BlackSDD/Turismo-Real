@@ -50,6 +50,7 @@ CREATE TABLE cont_serv (
     costo_total        NUMBER(7) NOT NULL,
     deta_cont          NVARCHAR2(2000) NOT NULL,
     fec_acord          DATE NOT NULL,
+    hora_acord          Char (5) not null, 
     lugar_recogida     NVARCHAR2(100),
     lugar_destino      NVARCHAR2(100),
     km_rec             NUMBER(6,3),
