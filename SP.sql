@@ -23,7 +23,7 @@ create or replace procedure sp_agregarAgenciaExterna
 	v_email_age NVARCHAR2,
 	v_tel_age number,
     v_id_com number,
-	v_salida
+	v_salida out number
 )
 as
 begin
@@ -70,7 +70,7 @@ begin
 	delete  from articulo where id_arti = v_id_arti;
     commit;
 end;
-
+/
 
 create or replace procedure sp_listaArticulo(articulo out SYS_REFCURSOR)
 is
@@ -78,6 +78,8 @@ begin
 	open categorias for select * from core_articulo;
 end	; 
 /
+
+
 create or replace procedure sp_agregarArticulo
 (
 	
