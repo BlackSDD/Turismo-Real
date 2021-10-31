@@ -1360,20 +1360,15 @@ begin
 end	
 
 
-create store procedure sp_agregarMarca
-(
-	
-	v_nombre_marca nvarchar
-	
-)
-as
+create store procedure sp_agregarMarca (v_nombre_marca marca.nombre_marca%type)
+is
 begin
 	insert into marca values
 	(
-	v_id_marca.nextval,
-	v_nombre_marca nvarchar
-	)
-end
+	seq_marca.nextval,
+	v_nombre_marca
+	);
+end;
 
 
 create store procedure sp_modificarMarca
