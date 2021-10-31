@@ -94,14 +94,16 @@ begin
 if inserting then
     WHILE day <= v_fin
     LOOP 
-           update disponibilidad set
-                esta_disp = 'No'
-                where fec_disp = to_date(day) and 
-                id_dpto = :new.id_dpto;
-           day := day + 1;
+        update disponibilidad set
+            esta_disp = 'No'
+            where fec_disp = to_date(day) and 
+            id_dpto = :new.id_dpto;
+        day := day + 1;
     END LOOP;
+    update usuario set
+            cant_res = cant_res + 1
+            where id_usr = :new.id_usr;
 elsif updating then
-    
     if :new.estado_rva in ('terminada' , 'cancelada') then
         WHILE day <= v_fin
         LOOP 
@@ -112,8 +114,16 @@ elsif updating then
                day := day + 1;
         END LOOP;    
     end if;
+    if :new.estado_rva = 'cancelada' then
+        update usuario set
+            cant_res = cant_res -1
+            where id_usr = :new.id_usr;
+        update pago set
+            est_pago = 'pago cancelado'
+            where id_rva = :new.id_rva;
+    end if;
 end if;    
-end tr_reserva_fechas;
+end;
 /
 
 create or replace trigger tr_checkin_rva 
@@ -136,7 +146,8 @@ begin
         
     update pago set
         monto_total = monto_total + :new.cost_multa,
-        monto_multas = monto_multas + :new.cost_multa
+        monto_multas = monto_multas + :new.cost_multa,
+        est_pago = 'abonado'
         where id_rva = :new.id_rva;
 end tr_checkout_rva;
 /
@@ -214,9 +225,23 @@ create or replace trigger tr_add_costo_extra
 begin
     update pago set 
         monto_total = monto_total + :new.costo_total,
-        monto_serv_extra = monto_serv_extra + :new.costo_total
+        monto_serv_extra = monto_serv_extra + :new.costo_total,
+        est_pago = 'abonado'
     where id_rva = :new.id_rva;
 end tr_add_costo_extra;
+/
+
+-- Calcula el monto a pagar por webpay
+create or replace function fn_monto_pago (v_id_rva reserva.id_rva%type)return number
+as
+ v_monto number;
+begin
+    select monto_total - monto_pagado
+        into v_monto
+        from pago
+        where id_rva = v_id_rva;
+return v_monto;
+end fn_monto_pago;
 /
 
 -- trigger para modificar el estado de un pago segun la cantidad 
@@ -239,6 +264,13 @@ begin
     if v_pago >= v_abono and v_pago < v_total then
         update pago set
             est_pago = 'abonado'
+            where id_rva = v_id;
+        update reserva set
+            estado_rva = 'reservada'
+            where id_rva = v_id;
+    elsif v_pago < v_abono then
+        update pago set
+            est_pago = 'abono pendiente'
             where id_rva = v_id;
     elsif v_pago = v_total then
         update pago set
@@ -263,7 +295,7 @@ cursor cur is
     SELECT * 
     FROM disponibilidad
     where fec_disp between v_fec_ini_rva and v_fec_fin_rva and id_dpto = v_id_dpto and esta_disp ='No'; 
-  cur_rec disponibilidad%rowtype;    
+cur_rec disponibilidad%rowtype;    
 begin
     OPEN cur;
         LOOP

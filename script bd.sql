@@ -416,6 +416,8 @@ ALTER TABLE departamento
     ADD CONSTRAINT departamento_condominio_fk FOREIGN KEY ( id_cnd )
         REFERENCES condominio ( id_cnd );
 
+ALTER TABLE departamento ADD CONSTRAINT departamento__un UNIQUE ( dir_dpto, num_dpto );    
+
 ALTER TABLE disponibilidad
     ADD CONSTRAINT val_disp CHECK ( esta_disp IN ( 'No', 'Si', 'no', 'si' ) 
 );
@@ -593,7 +595,6 @@ ALTER TABLE cont_serv
         REFERENCES servextras ( id_serv );
         
 
--- Deben hacerse por separado
 
 -- Triggers para hacer la relacion de supertipo -- 
 
@@ -622,7 +623,7 @@ EXCEPTION
         NULL;
     WHEN OTHERS THEN
         RAISE;
-END;
+END arc_transporte;
 /
 
 CREATE OR REPLACE TRIGGER arc_tour BEFORE
@@ -649,10 +650,11 @@ EXCEPTION
         NULL;
     WHEN OTHERS THEN
         RAISE;
-END;
+END arc_tour;
 /
 
 --Trigger y procedimiento para poder insertar 10 años de fechas al registrar un departamento
+
 create or replace procedure pd_insert_fechas( v_id_depto in departamento.id_dpto%type )
 is
     v_fecha date := to_date(sysdate);
@@ -664,10 +666,9 @@ begin
 end pd_insert_fechas;
 /
 
-
 create or replace trigger tr_insert_fechas 
-    after insert on departamento
-    for each row
+after insert on departamento
+for each row
 begin
  pd_insert_fechas(:new.id_dpto);
 end tr_insert_fechas;
@@ -675,6 +676,7 @@ end tr_insert_fechas;
 
 -- Trigger que se ejecuta cuando se inserta o modifica una reserva
 -- De acuerdo al estado se cambia la fecha de disponibilidad del departamento
+
 create or replace trigger tr_reserva_fechas 
     after insert or update on reserva 
     for each row
@@ -689,14 +691,16 @@ begin
 if inserting then
     WHILE day <= v_fin
     LOOP 
-           update disponibilidad set
-                esta_disp = 'No'
-                where fec_disp = to_date(day) and 
-                id_dpto = :new.id_dpto;
-           day := day + 1;
+        update disponibilidad set
+            esta_disp = 'No'
+            where fec_disp = to_date(day) and 
+            id_dpto = :new.id_dpto;
+        day := day + 1;
     END LOOP;
+    update usuario set
+            cant_res = cant_res + 1
+            where id_usr = :new.id_usr;
 elsif updating then
-    
     if :new.estado_rva in ('terminada' , 'cancelada') then
         WHILE day <= v_fin
         LOOP 
@@ -707,11 +711,19 @@ elsif updating then
                day := day + 1;
         END LOOP;    
     end if;
+    if :new.estado_rva = 'cancelada' then
+        update usuario set
+            cant_res = cant_res -1
+            where id_usr = :new.id_usr;
+        update pago set
+            est_pago = 'pago cancelado'
+            where id_rva = :new.id_rva;
+    end if;
 end if;    
 end;
 /
 
--- trigger para modificar el estado de la reserva 
+
 create or replace trigger tr_checkin_rva 
     after insert on checkin
     for each row
@@ -722,7 +734,6 @@ begin
 end tr_checkin_rva;
 /
 
---trigger que cambia el estado de la reserva y añade el precio de la multa al pago
 create or replace trigger tr_checkout_rva 
     after insert on checkout
     for each row
@@ -733,38 +744,14 @@ begin
         
     update pago set
         monto_total = monto_total + :new.cost_multa,
-        monto_multas = monto_multas + :new.cost_multa
+        monto_multas = monto_multas + :new.cost_multa,
+        est_pago = 'abonado'
         where id_rva = :new.id_rva;
 end tr_checkout_rva;
 /
 
-create or replace trigger tr_add_costo_extra
-    after insert on cont_serv
-    for each row
-begin
-    update pago set 
-        monto_total = monto_total + :new.costo_total,
-        monto_serv_extra = monto_serv_extra + :new.costo_total
-    where id_rva = :new.id_rva;
-end tr_add_costo_extra;
-/
 
-create or replace trigger tr_abono_reserva
-    for insert on reserva compound trigger
-    v_arriendo number;
-    v_id number;    
-after each row is
-begin
-    v_id := :new.id_rva;
-end after each row;
-after statement is
-begin 
-    v_arriendo := fn_arriendo(v_id);
-    insert into pago values (v_id,v_arriendo,v_arriendo,v_arriendo*0.1,0,0,0,'abono pendiente');
-end after statement;
-end tr_abono_reserva;
-/
-
+-- funciones para calcular valor arriendo, costos de servicios y multas
 create or replace function fn_arriendo( v_id_rva in reserva.id_rva%type) return number
 is
     v_arriendo number;
@@ -780,6 +767,8 @@ exception when no_data_found then
     return v_arriendo;
 end fn_arriendo;
 /
+
+
 
 create or replace function fn_servicios( v_id_rva in reserva.id_rva%type) return number
 is
@@ -797,6 +786,8 @@ exception when no_data_found then
 end fn_servicios;
 /
 
+
+
 create or replace function fn_multa( v_id_rva in reserva.id_rva%type) return number
 is
     v_multa number;
@@ -812,6 +803,55 @@ exception when no_data_found then
 end fn_multa;
 /
 
+
+-- trigger para cargar el abono en la tabla pago al momento de generar una reserva
+create or replace trigger tr_abono_reserva
+    for insert on reserva compound trigger
+    v_arriendo number;
+    v_id number;    
+after each row is
+begin
+    v_id := :new.id_rva;    
+end after each row;
+after statement is
+begin 
+    v_arriendo := fn_arriendo(v_id);
+    insert into pago values (v_id,v_arriendo,v_arriendo,v_arriendo*0.1,0,0,0,'abono pendiente');
+end after statement;
+end tr_abono_reserva;
+/
+
+
+--trigger para sumar los costos extra por cada servicio que se adquiera
+create or replace trigger tr_add_costo_extra
+    after insert on cont_serv
+    for each row
+begin
+    update pago set 
+        monto_total = monto_total + :new.costo_total,
+        monto_serv_extra = monto_serv_extra + :new.costo_total,
+        est_pago = 'abonado'
+    where id_rva = :new.id_rva;
+end tr_add_costo_extra;
+/
+
+
+-- Calcula el monto a pagar por webpay
+create or replace function fn_monto_pago (v_id_rva reserva.id_rva%type)return number
+as
+ v_monto number;
+begin
+    select monto_total - monto_pagado
+        into v_monto
+        from pago
+        where id_rva = v_id_rva;
+return v_monto;
+end fn_monto_pago;
+/
+
+
+-- trigger para modificar el estado de un pago segun la cantidad 
+--que se pague hasta el momento
 create or replace trigger tr_estado_pago
 for update of monto_pagado on pago compound trigger 
     v_pago number;
@@ -831,6 +871,13 @@ begin
         update pago set
             est_pago = 'abonado'
             where id_rva = v_id;
+        update reserva set
+            estado_rva = 'reservada'
+            where id_rva = v_id;
+    elsif v_pago < v_abono then
+        update pago set
+            est_pago = 'abono pendiente'
+            where id_rva = v_id;
     elsif v_pago = v_total then
         update pago set
             est_pago = 'pagado totalmente'
@@ -840,7 +887,51 @@ end after statement;
 end tr_estado_pago;
 /
 
+
+create or replace procedure sp_agregarReserva
+(
+	v_fec_ini_rva date,
+	v_fec_fin_rva date,
+	v_num_pers number, 
+    v_id_dpto number,
+    v_id_usr number
+)
+as
+cursor cur is 
+    SELECT * 
+    FROM disponibilidad
+    where fec_disp between v_fec_ini_rva and v_fec_fin_rva and id_dpto = v_id_dpto and esta_disp ='No'; 
+cur_rec disponibilidad%rowtype;    
+begin
+    OPEN cur;
+        LOOP
+            FETCH cur INTO cur_rec;  
+            EXIT WHEN cur%notfound;
+        END LOOP;
+        if cur%rowcount >= 1 then
+            dbms_output.put_line('fechas no disponibles para reservar');  
+        else
+            insert into reserva values
+            (
+            SEQ_RESERVA.nextval,
+            v_fec_ini_rva ,
+            v_fec_fin_rva ,
+            v_num_pers ,
+            'en verificación',
+            v_id_dpto,
+            v_id_usr
+            );
+            commit;
+        end if;
+    close cur;
+end sp_agregarReserva;
+/
+
+
+
 commit;
+
+
 
 
 

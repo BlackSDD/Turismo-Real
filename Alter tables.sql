@@ -44,6 +44,8 @@ ALTER TABLE departamento
     ADD CONSTRAINT departamento_condominio_fk FOREIGN KEY ( id_cnd )
         REFERENCES condominio ( id_cnd );
 
+ALTER TABLE departamento ADD CONSTRAINT departamento__un UNIQUE ( dir_dpto, num_dpto );    
+
 ALTER TABLE disponibilidad
     ADD CONSTRAINT val_disp CHECK ( esta_disp IN ( 'No', 'Si', 'no', 'si' ) 
 );
