@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b057ea29d272441d9aff2e35fe1cfbac" Name="Diagram1">
+        <EntityTypeShape EntityType="Model.AGENCIA_EXTERNA" Width="1.5" PointX="3.75" PointY="17.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ARTICULO" Width="1.5" PointX="6" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.CHECKIN" Width="1.5" PointX="3" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.CHECKOUT" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.COMUNA" Width="1.5" PointX="1.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.CONDOMINIO" Width="1.5" PointX="1.5" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.CONDUCTOR" Width="1.5" PointX="12.5" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.CONT_SERV" Width="1.5" PointX="8.25" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.DEPARTAMENTO" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.DISPONIBILIDAD" Width="1.5" PointX="6" PointY="21.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.GASTOS" Width="1.5" PointX="6" PointY="23.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MANTENCION" Width="1.5" PointX="5.25" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MARCA" Width="1.5" PointX="5.75" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MODELO" Width="1.5" PointX="8" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.PAGO" Width="1.5" PointX="8.25" PointY="14.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.REGION" Width="1.5" PointX="1.5" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.RES_MANT" Width="1.5" PointX="3" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.RESERVA" Width="1.5" PointX="6" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.SERVEXTRAS" Width="1.5" PointX="6" PointY="17.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.TIPO_USUARIO" Width="1.5" PointX="10.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.TOUR" Width="1.5" PointX="8.25" PointY="21.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.TRANSPORTE" Width="1.5" PointX="10.25" PointY="17.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.USUARIO" Width="1.5" PointX="0.75" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.VEHICULO" Width="1.5" PointX="10.25" PointY="2.375" IsExpanded="true" />
+        <AssociationConnector Association="Model.AGENCIA_COMUNA_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.SERVEXTRAS_AGENCIA_EXTERNA_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.ARTICULO_DEPARTAMENTO_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.CHECKIN_RESERVA_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.CHECKIN_USUARIO_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.CHECKOUT_RESERVA_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.CHECKOUT_USUARIO_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.COMUNA_REGION_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.CONDOMINIO_COMUNA_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.DEPARTAMENTO_CONDOMINIO_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.CONDUCTOR_TRANSPORTE_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.CONDUCTOR_VEHICULO_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.CONT_SERV_RESERVA_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.CONT_SERV_SERVEXTRAS_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.DISPONIBILIDAD_DEPARTAMENTO_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.GASTOS_DEPARTAMENTO_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.RES_MANT_DEPARTAMENTO_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.RESERVA_DEPARTAMENTO_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.MANTENCION_RES_MANT_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.MODELO_MARCA_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.VEHICULO_MODELO_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.PAGO_RESERVA_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.RES_MANT_USUARIO_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.RESERVA_USUARIO_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.TOUR_SERVEXTRAS_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.TRANSPORTE_SERVEXTRAS_FK" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,47 @@
+﻿@using TurismoReal.Negocio
+
+
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Listado de Agencias Asociadas</h2>
+
+@{ List<AgenciaExterna> agenciaExternas = (List<AgenciaExterna>)ViewBag.agenciaExternas;}
+
+<table>
+    <tr>
+        <th>Nombre de la agencias</th>
+        <th></th>
+        <th>Correo de Contanto</th>
+        <th></th>
+        <th>Telefono de Contacto</th>
+        <th></th>
+        <th>Comuna</th>
+        <th></th>
+        <th>Region</th>
+    </tr>
+
+    @foreach (var AgenciaExterna in agenciaExternas)
+    {
+    <tr>
+        <td>@AgenciaExterna.Nom_age</td>
+        <td></td>
+        <td>@AgenciaExterna.Email_age</td>
+        <td></td>
+        <td>@AgenciaExterna.Tel_age</td>
+        <td></td>
+        <td>@AgenciaExterna.Comuna.Nom_com</td>
+        <td></td>
+        <td>@AgenciaExterna.Comuna.Region.Nombre</td>
+        <td></td>
+        <td>@Html.ActionLink("ELIMINAR", "Delete", new { id = AgenciaExterna.Id_age })</td>
+        <td>@Html.ActionLink("MODIFICAR", "Edit", new { id = AgenciaExterna.Id_age })</td>
+    </tr>
+    }
+</table>
+
+@TempData["mensaje"]
+

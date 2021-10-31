@@ -1,0 +1,17 @@
+﻿@model TurismoReal.Negocio.Marca
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Agregar Nueva Marca</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.LabelFor(mar => mar.Nom_marca, "NOMBRE")
+    @Html.TextBoxFor(mar => mar.Nom_marca)
+    <br />
+    <button>Guardar</button>
+
+}
+

@@ -1,0 +1,1032 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model.Store" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="18.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AGENCIA_EXTERNA">
+    <Key>
+      <PropertyRef Name="ID_AGENCIA" />
+    </Key>
+    <Property Name="ID_AGENCIA" Type="number" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="NOM_AGE" Type="nvarchar2" MaxLength="100" Nullable="false" />
+    <Property Name="EMAIL_AGE" Type="nvarchar2" MaxLength="100" Nullable="false" />
+    <Property Name="TEL_AGE" Type="number" Precision="9" Scale="0" Nullable="false" />
+    <Property Name="ID_COM" Type="number" Precision="4" Scale="0" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ARTICULO">
+    <Key>
+      <PropertyRef Name="ID_ARTI" />
+    </Key>
+    <Property Name="ID_ARTI" Type="number" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="NOM_ARTI" Type="nvarchar2" MaxLength="100" Nullable="false" />
+    <Property Name="CANT_ARTI" Type="number" Precision="2" Scale="0" />
+    <Property Name="DETA_ARTI" Type="nvarchar2" MaxLength="2000" Nullable="false" />
+    <Property Name="VALOR_ARTI" Type="number" Precision="8" Scale="0" Nullable="false" />
+    <Property Name="ID_DPTO" Type="number" Precision="10" Scale="0" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CHECKIN">
+    <Key>
+      <PropertyRef Name="ID_RVA" />
+    </Key>
+    <Property Name="ID_RVA" Type="number" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="DETA_CHI" Type="nvarchar2" MaxLength="2000" Nullable="false" />
+    <Property Name="ID_USR" Type="number" Precision="10" Scale="0" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CHECKOUT">
+    <Key>
+      <PropertyRef Name="ID_RVA" />
+    </Key>
+    <Property Name="ID_RVA" Type="number" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="COST_MULTA" Type="number" Precision="8" Scale="0" Nullable="false" />
+    <Property Name="DETA_CHO" Type="nvarchar2" MaxLength="2000" Nullable="false" />
+    <Property Name="ID_USR" Type="number" Precision="10" Scale="0" Nullable="false" />
+  </EntityType>
+  <EntityType Name="COMUNA">
+    <Key>
+      <PropertyRef Name="ID_COM" />
+    </Key>
+    <Property Name="ID_COM" Type="number" Precision="4" Scale="0" Nullable="false" />
+    <Property Name="NOM_COM" Type="nvarchar2" MaxLength="100" Nullable="false" />
+    <Property Name="ID_RGN" Type="number" Precision="2" Scale="0" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CONDOMINIO">
+    <Key>
+      <PropertyRef Name="ID_CND" />
+    </Key>
+    <Property Name="ID_CND" Type="number" Precision="4" Scale="0" Nullable="false" />
+    <Property Name="NOM_CND" Type="nvarchar2" MaxLength="100" Nullable="false" />
+    <Property Name="ID_COM" Type="number" Precision="4" Scale="0" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CONDUCTOR">
+    <Key>
+      <PropertyRef Name="RUT_CONDUC" />
+    </Key>
+    <Property Name="RUT_CONDUC" Type="number" Precision="8" Scale="0" Nullable="false" />
+    <Property Name="DV_CONDUC" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="NOM_CONDUC" Type="nvarchar2" MaxLength="50" Nullable="false" />
+    <Property Name="APPAT_CONDUC" Type="nvarchar2" MaxLength="50" Nullable="false" />
+    <Property Name="APMAT_CONDUC" Type="nvarchar2" MaxLength="50" Nullable="false" />
+    <Property Name="EMAIL_CONDUC" Type="nvarchar2" MaxLength="100" Nullable="false" />
+    <Property Name="TEL_CONDUC" Type="number" Precision="9" Scale="0" Nullable="false" />
+    <Property Name="PATENTE" Type="char" MaxLength="8" Nullable="false" />
+    <Property Name="ID_SERV" Type="number" Precision="10" Scale="0" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CONT_SERV">
+    <Key>
+      <PropertyRef Name="ID_CONT_SERV" />
+    </Key>
+    <Property Name="ID_CONT_SERV" Type="number" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="FEC_CONT" Type="date" Nullable="false" />
+    <Property Name="COSTO_TOTAL" Type="number" Precision="7" Scale="0" Nullable="false" />
+    <Property Name="DETA_CONT" Type="nvarchar2" MaxLength="2000" Nullable="false" />
+    <Property Name="FEC_ACORD" Type="date" Nullable="false" />
+    <Property Name="HORA_ACORD" Type="char" MaxLength="5" Nullable="false" />
+    <Property Name="LUGAR_RECOGIDA" Type="nvarchar2" MaxLength="100" />
+    <Property Name="LUGAR_DESTINO" Type="nvarchar2" MaxLength="100" />
+    <Property Name="KM_REC" Type="number" Precision="6" Scale="3" />
+    <Property Name="EST_CONT" Type="nvarchar2" MaxLength="25" />
+    <Property Name="ID_RVA" Type="number" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="ID_SERV" Type="number" Precision="10" Scale="0" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DEPARTAMENTO">
+    <Key>
+      <PropertyRef Name="ID_DPTO" />
+    </Key>
+    <Property Name="ID_DPTO" Type="number" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="DIR_DPTO" Type="nvarchar2" MaxLength="100" Nullable="false" />
+    <Property Name="NUM_DPTO" Type="number" Precision="4" Scale="0" Nullable="false" />
+    <Property Name="N_AMB_DPTO" Type="number" Precision="1" Scale="0" Nullable="false" />
+    <Property Name="DESC_DPTO" Type="nvarchar2" MaxLength="2000" Nullable="false" />
+    <Property Name="COSTO_ARRI_DPTO" Type="number" Precision="6" Scale="0" Nullable="false" />
+    <Property Name="IMG_1_DPTO" Type="blob" Nullable="false" />
+    <Property Name="IMG_2_DPTO" Type="blob" />
+    <Property Name="IMG_3_DPTO" Type="blob" />
+    <Property Name="IMG_4_DPTO" Type="blob" />
+    <Property Name="IMG_5_DPTO" Type="blob" />
+    <Property Name="ID_CND" Type="number" Precision="4" Scale="0" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DISPONIBILIDAD">
+    <Key>
+      <PropertyRef Name="FEC_DISP" />
+      <PropertyRef Name="ID_DPTO" />
+    </Key>
+    <Property Name="FEC_DISP" Type="date" Nullable="false" />
+    <Property Name="ESTA_DISP" Type="char" MaxLength="2" Nullable="false" />
+    <Property Name="ID_DPTO" Type="number" Precision="10" Scale="0" Nullable="false" />
+  </EntityType>
+  <EntityType Name="GASTOS">
+    <Key>
+      <PropertyRef Name="ID_GASTOS" />
+    </Key>
+    <Property Name="ID_GASTOS" Type="number" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="GAST_MES" Type="number" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="GAST_AGNO" Type="number" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="ID_DPTO" Type="number" Precision="10" Scale="0" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MANTENCION">
+    <Key>
+      <PropertyRef Name="ID_MANT" />
+    </Key>
+    <Property Name="ID_MANT" Type="number" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="COST_MANT" Type="number" Precision="8" Scale="0" Nullable="false" />
+    <Property Name="DETA_MANT" Type="nvarchar2" MaxLength="2000" Nullable="false" />
+    <Property Name="ID_RMANT" Type="number" Precision="10" Scale="0" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MARCA">
+    <Key>
+      <PropertyRef Name="ID_MARCA" />
+    </Key>
+    <Property Name="ID_MARCA" Type="number" Precision="3" Scale="0" Nullable="false" />
+    <Property Name="NOMBRE_MARCA" Type="nvarchar2" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MODELO">
+    <Key>
+      <PropertyRef Name="ID_MODELO" />
+    </Key>
+    <Property Name="ID_MODELO" Type="number" Precision="4" Scale="0" Nullable="false" />
+    <Property Name="NOMBRE_MODELO" Type="nvarchar2" MaxLength="100" Nullable="false" />
+    <Property Name="ID_MARCA" Type="number" Precision="3" Scale="0" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PAGO">
+    <Key>
+      <PropertyRef Name="ID_RVA" />
+    </Key>
+    <Property Name="ID_RVA" Type="number" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="MONTO_TOTAL" Type="number" Precision="8" Scale="0" Nullable="false" />
+    <Property Name="MONTO_ARR" Type="number" Precision="8" Scale="0" Nullable="false" />
+    <Property Name="ABONO_REQ" Type="number" Precision="8" Scale="0" Nullable="false" />
+    <Property Name="MONTO_SERV_EXTRA" Type="number" Precision="8" Scale="0" Nullable="false" />
+    <Property Name="MONTO_MULTAS" Type="number" Precision="8" Scale="0" Nullable="false" />
+    <Property Name="MONTO_PAGADO" Type="number" Precision="8" Scale="0" Nullable="false" />
+    <Property Name="EST_PAGO" Type="nvarchar2" MaxLength="30" Nullable="false" />
+  </EntityType>
+  <EntityType Name="REGION">
+    <Key>
+      <PropertyRef Name="ID_RGN" />
+    </Key>
+    <Property Name="ID_RGN" Type="number" Precision="2" Scale="0" Nullable="false" />
+    <Property Name="NOM_RGN" Type="nvarchar2" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RES_MANT">
+    <Key>
+      <PropertyRef Name="ID_RMANT" />
+    </Key>
+    <Property Name="ID_RMANT" Type="number" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="FEC_RMANT" Type="date" Nullable="false" />
+    <Property Name="ID_DPTO" Type="number" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="ID_USR" Type="number" Precision="10" Scale="0" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RESERVA">
+    <Key>
+      <PropertyRef Name="ID_RVA" />
+    </Key>
+    <Property Name="ID_RVA" Type="number" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="FEC_INI_RVA" Type="date" Nullable="false" />
+    <Property Name="FEC_FIN_RVA" Type="date" Nullable="false" />
+    <Property Name="NUM_PERS" Type="number" Precision="2" Scale="0" Nullable="false" />
+    <Property Name="ESTADO_RVA" Type="nvarchar2" MaxLength="30" Nullable="false" />
+    <Property Name="ID_DPTO" Type="number" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="ID_USR" Type="number" Precision="10" Scale="0" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SERVEXTRAS">
+    <Key>
+      <PropertyRef Name="ID_SERV" />
+    </Key>
+    <Property Name="ID_SERV" Type="number" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="NOM_SERV" Type="nvarchar2" MaxLength="100" Nullable="false" />
+    <Property Name="TIPO_SERV" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="DESC_SERV" Type="nvarchar2" MaxLength="2000" Nullable="false" />
+    <Property Name="ID_AGENCIA" Type="number" Precision="10" Scale="0" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TIPO_USUARIO">
+    <Key>
+      <PropertyRef Name="ID_TIPO_USR" />
+    </Key>
+    <Property Name="ID_TIPO_USR" Type="number" Precision="1" Scale="0" Nullable="false" />
+    <Property Name="TIPO_USR" Type="nvarchar2" MaxLength="25" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TOUR">
+    <Key>
+      <PropertyRef Name="ID_SERV" />
+    </Key>
+    <Property Name="ID_SERV" Type="number" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="DUR_HRA" Type="number" Precision="2" Scale="0" Nullable="false" />
+    <Property Name="DUR_MIN" Type="number" Precision="2" Scale="0" Nullable="false" />
+    <Property Name="COST_ADULT" Type="number" Precision="6" Scale="0" Nullable="false" />
+    <Property Name="COST_NIGNO" Type="number" Precision="6" Scale="0" Nullable="false" />
+    <Property Name="COST_3RA" Type="number" Precision="6" Scale="0" Nullable="false" />
+    <Property Name="UBI_PARTIDA" Type="nvarchar2" MaxLength="100" Nullable="false" />
+    <Property Name="UBI_FIN" Type="nvarchar2" MaxLength="100" Nullable="false" />
+    <Property Name="ALIMENTACION" Type="char" MaxLength="2" Nullable="false" />
+    <Property Name="TRANSPORTE" Type="char" MaxLength="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TRANSPORTE">
+    <Key>
+      <PropertyRef Name="ID_SERV" />
+    </Key>
+    <Property Name="ID_SERV" Type="number" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="COST_KM_DIA" Type="number" Precision="5" Scale="0" Nullable="false" />
+    <Property Name="COST_KM_NOC" Type="number" Precision="5" Scale="0" Nullable="false" />
+    <Property Name="EXTRA_FEST" Type="number" Precision="5" Scale="0" Nullable="false" />
+  </EntityType>
+  <EntityType Name="USUARIO">
+    <Key>
+      <PropertyRef Name="ID_USR" />
+    </Key>
+    <Property Name="ID_USR" Type="number" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="EMAIL_USR" Type="nvarchar2" MaxLength="100" Nullable="false" />
+    <Property Name="CONTR_USR" Type="nvarchar2" MaxLength="50" Nullable="false" />
+    <Property Name="NOM_USR" Type="nvarchar2" MaxLength="50" Nullable="false" />
+    <Property Name="APPAT_USR" Type="nvarchar2" MaxLength="50" Nullable="false" />
+    <Property Name="APMAT_USR" Type="nvarchar2" MaxLength="50" Nullable="false" />
+    <Property Name="TEL_USR" Type="number" Precision="9" Scale="0" Nullable="false" />
+    <Property Name="RUT_USR" Type="number" Precision="8" Scale="0" Nullable="false" />
+    <Property Name="DV_USR" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="CANT_RES" Type="number" Precision="4" Scale="0" />
+    <Property Name="EST_CTA" Type="nvarchar2" MaxLength="20" />
+    <Property Name="TIPO_CLI" Type="nvarchar2" MaxLength="25" />
+    <Property Name="ID_TIPO_USR" Type="number" Precision="1" Scale="0" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VEHICULO">
+    <Key>
+      <PropertyRef Name="PATENTE" />
+    </Key>
+    <Property Name="PATENTE" Type="char" MaxLength="8" Nullable="false" />
+    <Property Name="COLOR" Type="nvarchar2" MaxLength="30" Nullable="false" />
+    <Property Name="AGNO" Type="date" Nullable="false" />
+    <Property Name="CANT_PUERTAS" Type="number" Precision="1" Scale="0" Nullable="false" />
+    <Property Name="CAP_PASAJ" Type="number" Precision="2" Scale="0" Nullable="false" />
+    <Property Name="CAP_MALE" Type="number" Precision="4" Scale="0" Nullable="false" />
+    <Property Name="ASIENTO_NIGNO" Type="char" MaxLength="2" Nullable="false" />
+    <Property Name="PER_SILLA" Type="char" MaxLength="2" Nullable="false" />
+    <Property Name="ID_MODELO" Type="number" Precision="4" Scale="0" Nullable="false" />
+  </EntityType>
+  <Association Name="AGENCIA_COMUNA_FK">
+    <End Role="COMUNA" Type="Self.COMUNA" Multiplicity="1" />
+    <End Role="AGENCIA_EXTERNA" Type="Self.AGENCIA_EXTERNA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COMUNA">
+        <PropertyRef Name="ID_COM" />
+      </Principal>
+      <Dependent Role="AGENCIA_EXTERNA">
+        <PropertyRef Name="ID_COM" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ARTICULO_DEPARTAMENTO_FK">
+    <End Role="DEPARTAMENTO" Type="Self.DEPARTAMENTO" Multiplicity="1" />
+    <End Role="ARTICULO" Type="Self.ARTICULO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DEPARTAMENTO">
+        <PropertyRef Name="ID_DPTO" />
+      </Principal>
+      <Dependent Role="ARTICULO">
+        <PropertyRef Name="ID_DPTO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CHECKIN_RESERVA_FK">
+    <End Role="RESERVA" Type="Self.RESERVA" Multiplicity="1" />
+    <End Role="CHECKIN" Type="Self.CHECKIN" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="RESERVA">
+        <PropertyRef Name="ID_RVA" />
+      </Principal>
+      <Dependent Role="CHECKIN">
+        <PropertyRef Name="ID_RVA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CHECKIN_USUARIO_FK">
+    <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+    <End Role="CHECKIN" Type="Self.CHECKIN" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USUARIO">
+        <PropertyRef Name="ID_USR" />
+      </Principal>
+      <Dependent Role="CHECKIN">
+        <PropertyRef Name="ID_USR" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CHECKOUT_RESERVA_FK">
+    <End Role="RESERVA" Type="Self.RESERVA" Multiplicity="1" />
+    <End Role="CHECKOUT" Type="Self.CHECKOUT" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="RESERVA">
+        <PropertyRef Name="ID_RVA" />
+      </Principal>
+      <Dependent Role="CHECKOUT">
+        <PropertyRef Name="ID_RVA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CHECKOUT_USUARIO_FK">
+    <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+    <End Role="CHECKOUT" Type="Self.CHECKOUT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USUARIO">
+        <PropertyRef Name="ID_USR" />
+      </Principal>
+      <Dependent Role="CHECKOUT">
+        <PropertyRef Name="ID_USR" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="COMUNA_REGION_FK">
+    <End Role="REGION" Type="Self.REGION" Multiplicity="1" />
+    <End Role="COMUNA" Type="Self.COMUNA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="REGION">
+        <PropertyRef Name="ID_RGN" />
+      </Principal>
+      <Dependent Role="COMUNA">
+        <PropertyRef Name="ID_RGN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CONDOMINIO_COMUNA_FK">
+    <End Role="COMUNA" Type="Self.COMUNA" Multiplicity="1" />
+    <End Role="CONDOMINIO" Type="Self.CONDOMINIO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COMUNA">
+        <PropertyRef Name="ID_COM" />
+      </Principal>
+      <Dependent Role="CONDOMINIO">
+        <PropertyRef Name="ID_COM" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CONDUCTOR_TRANSPORTE_FK">
+    <End Role="TRANSPORTE" Type="Self.TRANSPORTE" Multiplicity="1" />
+    <End Role="CONDUCTOR" Type="Self.CONDUCTOR" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TRANSPORTE">
+        <PropertyRef Name="ID_SERV" />
+      </Principal>
+      <Dependent Role="CONDUCTOR">
+        <PropertyRef Name="ID_SERV" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CONDUCTOR_VEHICULO_FK">
+    <End Role="VEHICULO" Type="Self.VEHICULO" Multiplicity="1" />
+    <End Role="CONDUCTOR" Type="Self.CONDUCTOR" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="VEHICULO">
+        <PropertyRef Name="PATENTE" />
+      </Principal>
+      <Dependent Role="CONDUCTOR">
+        <PropertyRef Name="PATENTE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CONT_SERV_RESERVA_FK">
+    <End Role="RESERVA" Type="Self.RESERVA" Multiplicity="1" />
+    <End Role="CONT_SERV" Type="Self.CONT_SERV" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RESERVA">
+        <PropertyRef Name="ID_RVA" />
+      </Principal>
+      <Dependent Role="CONT_SERV">
+        <PropertyRef Name="ID_RVA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CONT_SERV_SERVEXTRAS_FK">
+    <End Role="SERVEXTRAS" Type="Self.SERVEXTRAS" Multiplicity="1" />
+    <End Role="CONT_SERV" Type="Self.CONT_SERV" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SERVEXTRAS">
+        <PropertyRef Name="ID_SERV" />
+      </Principal>
+      <Dependent Role="CONT_SERV">
+        <PropertyRef Name="ID_SERV" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DEPARTAMENTO_CONDOMINIO_FK">
+    <End Role="CONDOMINIO" Type="Self.CONDOMINIO" Multiplicity="1" />
+    <End Role="DEPARTAMENTO" Type="Self.DEPARTAMENTO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CONDOMINIO">
+        <PropertyRef Name="ID_CND" />
+      </Principal>
+      <Dependent Role="DEPARTAMENTO">
+        <PropertyRef Name="ID_CND" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DISPONIBILIDAD_DEPARTAMENTO_FK">
+    <End Role="DEPARTAMENTO" Type="Self.DEPARTAMENTO" Multiplicity="1" />
+    <End Role="DISPONIBILIDAD" Type="Self.DISPONIBILIDAD" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DEPARTAMENTO">
+        <PropertyRef Name="ID_DPTO" />
+      </Principal>
+      <Dependent Role="DISPONIBILIDAD">
+        <PropertyRef Name="ID_DPTO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="GASTOS_DEPARTAMENTO_FK">
+    <End Role="DEPARTAMENTO" Type="Self.DEPARTAMENTO" Multiplicity="1" />
+    <End Role="GASTOS" Type="Self.GASTOS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DEPARTAMENTO">
+        <PropertyRef Name="ID_DPTO" />
+      </Principal>
+      <Dependent Role="GASTOS">
+        <PropertyRef Name="ID_DPTO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MANTENCION_RES_MANT_FK">
+    <End Role="RES_MANT" Type="Self.RES_MANT" Multiplicity="1" />
+    <End Role="MANTENCION" Type="Self.MANTENCION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RES_MANT">
+        <PropertyRef Name="ID_RMANT" />
+      </Principal>
+      <Dependent Role="MANTENCION">
+        <PropertyRef Name="ID_RMANT" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MODELO_MARCA_FK">
+    <End Role="MARCA" Type="Self.MARCA" Multiplicity="1" />
+    <End Role="MODELO" Type="Self.MODELO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MARCA">
+        <PropertyRef Name="ID_MARCA" />
+      </Principal>
+      <Dependent Role="MODELO">
+        <PropertyRef Name="ID_MARCA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PAGO_RESERVA_FK">
+    <End Role="RESERVA" Type="Self.RESERVA" Multiplicity="1" />
+    <End Role="PAGO" Type="Self.PAGO" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="RESERVA">
+        <PropertyRef Name="ID_RVA" />
+      </Principal>
+      <Dependent Role="PAGO">
+        <PropertyRef Name="ID_RVA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RES_MANT_DEPARTAMENTO_FK">
+    <End Role="DEPARTAMENTO" Type="Self.DEPARTAMENTO" Multiplicity="1" />
+    <End Role="RES_MANT" Type="Self.RES_MANT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DEPARTAMENTO">
+        <PropertyRef Name="ID_DPTO" />
+      </Principal>
+      <Dependent Role="RES_MANT">
+        <PropertyRef Name="ID_DPTO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RES_MANT_USUARIO_FK">
+    <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+    <End Role="RES_MANT" Type="Self.RES_MANT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USUARIO">
+        <PropertyRef Name="ID_USR" />
+      </Principal>
+      <Dependent Role="RES_MANT">
+        <PropertyRef Name="ID_USR" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RESERVA_DEPARTAMENTO_FK">
+    <End Role="DEPARTAMENTO" Type="Self.DEPARTAMENTO" Multiplicity="1" />
+    <End Role="RESERVA" Type="Self.RESERVA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DEPARTAMENTO">
+        <PropertyRef Name="ID_DPTO" />
+      </Principal>
+      <Dependent Role="RESERVA">
+        <PropertyRef Name="ID_DPTO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RESERVA_USUARIO_FK">
+    <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+    <End Role="RESERVA" Type="Self.RESERVA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USUARIO">
+        <PropertyRef Name="ID_USR" />
+      </Principal>
+      <Dependent Role="RESERVA">
+        <PropertyRef Name="ID_USR" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SERVEXTRAS_AGENCIA_EXTERNA_FK">
+    <End Role="AGENCIA_EXTERNA" Type="Self.AGENCIA_EXTERNA" Multiplicity="1" />
+    <End Role="SERVEXTRAS" Type="Self.SERVEXTRAS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AGENCIA_EXTERNA">
+        <PropertyRef Name="ID_AGENCIA" />
+      </Principal>
+      <Dependent Role="SERVEXTRAS">
+        <PropertyRef Name="ID_AGENCIA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TOUR_SERVEXTRAS_FK">
+    <End Role="SERVEXTRAS" Type="Self.SERVEXTRAS" Multiplicity="1" />
+    <End Role="TOUR" Type="Self.TOUR" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="SERVEXTRAS">
+        <PropertyRef Name="ID_SERV" />
+      </Principal>
+      <Dependent Role="TOUR">
+        <PropertyRef Name="ID_SERV" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TRANSPORTE_SERVEXTRAS_FK">
+    <End Role="SERVEXTRAS" Type="Self.SERVEXTRAS" Multiplicity="1" />
+    <End Role="TRANSPORTE" Type="Self.TRANSPORTE" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="SERVEXTRAS">
+        <PropertyRef Name="ID_SERV" />
+      </Principal>
+      <Dependent Role="TRANSPORTE">
+        <PropertyRef Name="ID_SERV" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="VEHICULO_MODELO_FK">
+    <End Role="MODELO" Type="Self.MODELO" Multiplicity="1" />
+    <End Role="VEHICULO" Type="Self.VEHICULO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MODELO">
+        <PropertyRef Name="ID_MODELO" />
+      </Principal>
+      <Dependent Role="VEHICULO">
+        <PropertyRef Name="ID_MODELO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="FN_ARRIENDO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO" ReturnType="number">
+    <Parameter Name="V_ID_RVA" Type="number" Mode="In" />
+  </Function>
+  <Function Name="FN_MULTA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO" ReturnType="number">
+    <Parameter Name="V_ID_RVA" Type="number" Mode="In" />
+  </Function>
+  <Function Name="FN_SERVICIOS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO" ReturnType="number">
+    <Parameter Name="V_ID_RVA" Type="number" Mode="In" />
+  </Function>
+  <Function Name="PD_INSERT_FECHAS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_DEPTO" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_AGREGARAGENCIAEXTERNA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_NOM_AGE" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_EMAIL_AGE" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_TEL_AGE" Type="number" Mode="In" />
+    <Parameter Name="V_ID_COM" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_AGREGARCOMUNA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_NOM_COM" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_ID_RGN" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_AGREGARCONDOMINIO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_NOM_CND" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_ID_COM" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_AGREGARCONDUCTOR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_RUT_CONDUC" Type="number" Mode="In" />
+    <Parameter Name="V_DV_CONDUC" Type="char" Mode="In" />
+    <Parameter Name="V_NOM_CONDUC" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_APPAT_CONDUC" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_APMAT_CONDUC" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_EMAIL_CONDUC" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_TEL_CONDUC" Type="number" Mode="In" />
+    <Parameter Name="V_PATENTE" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_ID_SERV" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_AGREGARDEPARTAMENTO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_DIR_DPTO" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_NUM_DPTO" Type="number" Mode="In" />
+    <Parameter Name="V_N_AMB_DPTO" Type="number" Mode="In" />
+    <Parameter Name="V_DESC_DPTO" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_COSTO_ARRI_DPTO" Type="number" Mode="In" />
+    <Parameter Name="V_IMG_1_DPTO" Type="blob" Mode="In" />
+    <Parameter Name="V_IMG_2_DPTO" Type="blob" Mode="In" />
+    <Parameter Name="V_IMG_3_DPTO" Type="blob" Mode="In" />
+    <Parameter Name="V_IMG_4_DPTO" Type="blob" Mode="In" />
+    <Parameter Name="V_IMG_5_DPTO" Type="blob" Mode="In" />
+    <Parameter Name="V_ID_CND" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_AGREGARDISPONIBILIDAD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_FEC_DISP" Type="date" Mode="In" />
+    <Parameter Name="V_ESTA_DISP" Type="char" Mode="In" />
+    <Parameter Name="V_ID_DPTO" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_AGREGARGASTOS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_GAST_MES" Type="number" Mode="In" />
+    <Parameter Name="V_GAST_AGNO" Type="number" Mode="In" />
+    <Parameter Name="V_ID_DPTO" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_AGREGARMANTENCION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_COST_MANT" Type="number" Mode="In" />
+    <Parameter Name="V_DETA_MANT" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_ID_RMANT" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_AGREGARMARCA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_NOMBRE_MARCA" Type="nvarchar2" Mode="In" />
+  </Function>
+  <Function Name="SP_AGREGARMODELO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_NOMBRE_MODELO" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_ID_MARCA" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_AGREGARPAGO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_RVA" Type="number" Mode="In" />
+    <Parameter Name="V_MONTO_TOTAL" Type="number" Mode="In" />
+    <Parameter Name="V_MONTO_PAGADO" Type="number" Mode="In" />
+    <Parameter Name="V_ESTA_PAGO" Type="nvarchar2" Mode="In" />
+  </Function>
+  <Function Name="SP_AGREGARRESMANT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_FEC_RMANT" Type="date" Mode="In" />
+    <Parameter Name="V_ID_DPTO" Type="number" Mode="In" />
+    <Parameter Name="V_ID_USR" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_AGREGARSERVEXTRAS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_NOM_SERV" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_TIPO_SERV" Type="char" Mode="In" />
+    <Parameter Name="V_DESC_SERV" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_ID_AGENCIA" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_AGREGARTOUR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_DUR_HRA" Type="number" Mode="In" />
+    <Parameter Name="V_DUR_MIN" Type="number" Mode="In" />
+    <Parameter Name="V_COST_ADULT" Type="number" Mode="In" />
+    <Parameter Name="V_COSTO_NIGNO" Type="number" Mode="In" />
+    <Parameter Name="V_COSTO_3RA" Type="number" Mode="In" />
+    <Parameter Name="V_UBI_PARTIDA" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_UBI_FIN" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_ALIMENTACION" Type="char" Mode="In" />
+    <Parameter Name="V_TRANSPORTE" Type="char" Mode="In" />
+  </Function>
+  <Function Name="SP_AGREGARTRANSPORTE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_COST_KM_DIA" Type="number" Mode="In" />
+    <Parameter Name="V_COST_KM_NOC" Type="number" Mode="In" />
+    <Parameter Name="V_EXTRA_FEST" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_AGREGARUSR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_EMAIL_USR" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_CONTR_USR" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_NOM_USR" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_APPAT_USR" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_APMAT_USR" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_TEL_USR" Type="number" Mode="In" />
+    <Parameter Name="V_RUT_USR" Type="number" Mode="In" />
+    <Parameter Name="V_DV_USR" Type="char" Mode="In" />
+    <Parameter Name="V_CANT_RES" Type="number" Mode="In" />
+    <Parameter Name="V_EST_CTA" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_TIPO_CLI" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_ID_TIPO_USR" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_AGREGARVEHICULO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_PATENTE" Type="char" Mode="In" />
+    <Parameter Name="V_COLOR" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_AGNO" Type="date" Mode="In" />
+    <Parameter Name="V_CANT_PUERTAS" Type="number" Mode="In" />
+    <Parameter Name="V_CAP_PASAJ" Type="number" Mode="In" />
+    <Parameter Name="V_CAP_MALE" Type="number" Mode="In" />
+    <Parameter Name="V_ASIENTO_NIGNO" Type="char" Mode="In" />
+    <Parameter Name="V_PER_SILLA" Type="char" Mode="In" />
+    <Parameter Name="V_ID_MODELO" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_ELIMINARAGENCIAEXTERNA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_AGENCIA" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_ELIMINARARTICULO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_ARTI" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_ELIMINARCOMUNA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_COM" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_ELIMINARCONDOMINIO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_CND" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_ELIMINARCONDUCTOR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_RUT_CONDUC" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_ELIMINARCONTSERV" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_CONT_SERV" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_ELIMINARDEPARTAMENTO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_DPTO" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_ELIMINARGASTOS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_GASTOS" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_ELIMINARMANTENCION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_MANT" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_ELIMINARMARCA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_MARCA" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_ELIMINARMODELO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_MODELO" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_ELIMINARPAGO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_RVA" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_ELIMINARREGION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_RGN" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_ELIMINARRESERVA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_RVA" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_ELIMINARRESMANT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_RMANT" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_ELIMINARSEREXTRAS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_SERV" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_ELIMINARTOUR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_SERV" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_ELIMINARTRANSPORTE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_SERV" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_ELIMINARUSR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_USR" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_ELIMINARVEHICULO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_PATENTE" Type="char" Mode="In" />
+  </Function>
+  <Function Name="SP_MODIFICARAGENCIAEXTERNA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_AGE" Type="number" Mode="In" />
+    <Parameter Name="V_NOM_AGE" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_EMAIL_AGE" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_TEL_AGE" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_MODIFICARARTICULO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_ARTI" Type="number" Mode="In" />
+    <Parameter Name="V_NOM_ARTI" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_CANT_ARTI" Type="number" Mode="In" />
+    <Parameter Name="V_DETA_ARTI" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_VALOR_ARTI" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_MODIFICARCOMUNA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_COM" Type="number" Mode="In" />
+    <Parameter Name="V_NOM_COM" Type="nvarchar2" Mode="In" />
+  </Function>
+  <Function Name="SP_MODIFICARCONDOMINIO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_CND" Type="number" Mode="In" />
+    <Parameter Name="V_NOM_CND" Type="nvarchar2" Mode="In" />
+  </Function>
+  <Function Name="SP_MODIFICARCONDUCTOR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_RUT_CONDUC" Type="number" Mode="In" />
+    <Parameter Name="V_DV_CONDUC" Type="char" Mode="In" />
+    <Parameter Name="V_NOM_CONDUC" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_APPAT_CONDUC" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_APMAT_CONDUC" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_EMAIL_CONDUC" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_TEL_CONDUC" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_MODIFICARCONTSERV" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_CONT_SERV" Type="number" Mode="In" />
+    <Parameter Name="V_FEC_CONT" Type="date" Mode="In" />
+    <Parameter Name="V_COSTO_TOTAL" Type="number" Mode="In" />
+    <Parameter Name="V_DETA_CONT" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_FEC_ACORD" Type="date" Mode="In" />
+    <Parameter Name="V_LUGAR_RECOGIDA" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_LUGAR_DESTINO" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_KM_REC" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_MODIFICARDEPARTAMENTO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_DPTO" Type="number" Mode="In" />
+    <Parameter Name="V_DIR_DPTO" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_NUM_DPTO" Type="number" Mode="In" />
+    <Parameter Name="V_N_AMB_DPTO" Type="number" Mode="In" />
+    <Parameter Name="V_DESC_DPTO" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_COSTO_ARRI_DPTO" Type="number" Mode="In" />
+    <Parameter Name="V_IMG_1_DPTO" Type="blob" Mode="In" />
+    <Parameter Name="V_IMG_2_DPTO" Type="blob" Mode="In" />
+    <Parameter Name="V_IMG_3_DPTO" Type="blob" Mode="In" />
+    <Parameter Name="V_IMG_4_DPTO" Type="blob" Mode="In" />
+    <Parameter Name="V_IMG_5_DPTO" Type="blob" Mode="In" />
+  </Function>
+  <Function Name="SP_MODIFICARDISPONIBILIDAD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_FEC_DISP" Type="date" Mode="In" />
+    <Parameter Name="V_ESTA_DISP" Type="char" Mode="In" />
+  </Function>
+  <Function Name="SP_MODIFICARGASTOS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_GASTOS" Type="number" Mode="In" />
+    <Parameter Name="V_GAST_MES" Type="number" Mode="In" />
+    <Parameter Name="V_GAST_AGNO" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_MODIFICARMANTENCION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_RVA" Type="number" Mode="In" />
+    <Parameter Name="V_MONTO_TOTAL" Type="number" Mode="In" />
+    <Parameter Name="V_MONTO_PAGADO" Type="number" Mode="In" />
+    <Parameter Name="V_EST_PAGO" Type="nvarchar2" Mode="In" />
+  </Function>
+  <Function Name="SP_MODIFICARMARCA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_MARCA" Type="number" Mode="In" />
+    <Parameter Name="V_NOMBRE_MARCA" Type="nvarchar2" Mode="In" />
+  </Function>
+  <Function Name="SP_MODIFICARMODELO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_MODELO" Type="number" Mode="In" />
+    <Parameter Name="V_NOMBRE_MODELO" Type="nvarchar2" Mode="In" />
+  </Function>
+  <Function Name="SP_MODIFICARREGION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_RGN" Type="number" Mode="In" />
+    <Parameter Name="V_NOM_RGN" Type="nvarchar2" Mode="In" />
+  </Function>
+  <Function Name="SP_MODIFICARRESERVA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_RVA" Type="number" Mode="In" />
+    <Parameter Name="V_FEC_INI_RVA" Type="date" Mode="In" />
+    <Parameter Name="V_FEC_FIN_RVA" Type="date" Mode="In" />
+    <Parameter Name="V_NUM_PERS" Type="number" Mode="In" />
+    <Parameter Name="V_ESTADO_RVA" Type="nvarchar2" Mode="In" />
+  </Function>
+  <Function Name="SP_MODIFICARRESMANT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_RMANT" Type="number" Mode="In" />
+    <Parameter Name="V_FEC_RMANT" Type="date" Mode="In" />
+  </Function>
+  <Function Name="SP_MODIFICARSERVEXTRAS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_SERV" Type="number" Mode="In" />
+    <Parameter Name="V_NOM_SERV" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_TIPO_SERV" Type="char" Mode="In" />
+    <Parameter Name="V_DESC_SERV" Type="nvarchar2" Mode="In" />
+  </Function>
+  <Function Name="SP_MODIFICARTOUR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_SERV" Type="number" Mode="In" />
+    <Parameter Name="V_DUR_HRA" Type="number" Mode="In" />
+    <Parameter Name="V_DUR_MIN" Type="number" Mode="In" />
+    <Parameter Name="V_COST_ADULT" Type="number" Mode="In" />
+    <Parameter Name="V_COST_NIGNO" Type="number" Mode="In" />
+    <Parameter Name="V_COST_3RA" Type="number" Mode="In" />
+    <Parameter Name="V_UBI_PARTIDA" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_UBI_FIN" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_ALIMENTACION" Type="char" Mode="In" />
+    <Parameter Name="V_TRANSPORTE" Type="char" Mode="In" />
+  </Function>
+  <Function Name="SP_MODIFICARTRANSPORTE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_SERV" Type="number" Mode="In" />
+    <Parameter Name="V_COST_KM_DIA" Type="number" Mode="In" />
+    <Parameter Name="V_COST_KM_NOC" Type="number" Mode="In" />
+    <Parameter Name="V_EXTRA_FEST" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_MODIFICARUSR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_USR" Type="number" Mode="In" />
+    <Parameter Name="V_EMAIL_USR" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_CONTR_USR" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_NOM_USR" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_APPAT_USR" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_APMAT_USR" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_TEL_USR" Type="number" Mode="In" />
+    <Parameter Name="V_RUT_USR" Type="number" Mode="In" />
+    <Parameter Name="V_DV_USR" Type="char" Mode="In" />
+    <Parameter Name="V_CANT_RES" Type="number" Mode="In" />
+    <Parameter Name="V_EST_CTA" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_TIPO_CLI" Type="nvarchar2" Mode="In" />
+  </Function>
+  <Function Name="SP_MODIFICARVEHICULO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_PATENTE" Type="char" Mode="In" />
+    <Parameter Name="V_COLOR" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_AGNO" Type="date" Mode="In" />
+    <Parameter Name="V_CANT_PUERTAS" Type="number" Mode="In" />
+    <Parameter Name="V_CAP_PASAJ" Type="number" Mode="In" />
+    <Parameter Name="V_CAP_MALE" Type="number" Mode="In" />
+    <Parameter Name="V_ASIENTO_NIGNO" Type="char" Mode="In" />
+    <Parameter Name="V_PER_SILLA" Type="char" Mode="In" />
+  </Function>
+  <EntityContainer Name="ModelStoreContainer">
+    <EntitySet Name="AGENCIA_EXTERNA" EntityType="Self.AGENCIA_EXTERNA" Schema="C##TURISMO" store:Type="Tables" />
+    <EntitySet Name="ARTICULO" EntityType="Self.ARTICULO" Schema="C##TURISMO" store:Type="Tables" />
+    <EntitySet Name="CHECKIN" EntityType="Self.CHECKIN" Schema="C##TURISMO" store:Type="Tables" />
+    <EntitySet Name="CHECKOUT" EntityType="Self.CHECKOUT" Schema="C##TURISMO" store:Type="Tables" />
+    <EntitySet Name="COMUNA" EntityType="Self.COMUNA" Schema="C##TURISMO" store:Type="Tables" />
+    <EntitySet Name="CONDOMINIO" EntityType="Self.CONDOMINIO" Schema="C##TURISMO" store:Type="Tables" />
+    <EntitySet Name="CONDUCTOR" EntityType="Self.CONDUCTOR" Schema="C##TURISMO" store:Type="Tables" />
+    <EntitySet Name="CONT_SERV" EntityType="Self.CONT_SERV" Schema="C##TURISMO" store:Type="Tables" />
+    <EntitySet Name="DEPARTAMENTO" EntityType="Self.DEPARTAMENTO" Schema="C##TURISMO" store:Type="Tables" />
+    <EntitySet Name="DISPONIBILIDAD" EntityType="Self.DISPONIBILIDAD" Schema="C##TURISMO" store:Type="Tables" />
+    <EntitySet Name="GASTOS" EntityType="Self.GASTOS" Schema="C##TURISMO" store:Type="Tables" />
+    <EntitySet Name="MANTENCION" EntityType="Self.MANTENCION" Schema="C##TURISMO" store:Type="Tables" />
+    <EntitySet Name="MARCA" EntityType="Self.MARCA" Schema="C##TURISMO" store:Type="Tables" />
+    <EntitySet Name="MODELO" EntityType="Self.MODELO" Schema="C##TURISMO" store:Type="Tables" />
+    <EntitySet Name="PAGO" EntityType="Self.PAGO" Schema="C##TURISMO" store:Type="Tables" />
+    <EntitySet Name="REGION" EntityType="Self.REGION" Schema="C##TURISMO" store:Type="Tables" />
+    <EntitySet Name="RES_MANT" EntityType="Self.RES_MANT" Schema="C##TURISMO" store:Type="Tables" />
+    <EntitySet Name="RESERVA" EntityType="Self.RESERVA" Schema="C##TURISMO" store:Type="Tables" />
+    <EntitySet Name="SERVEXTRAS" EntityType="Self.SERVEXTRAS" Schema="C##TURISMO" store:Type="Tables" />
+    <EntitySet Name="TIPO_USUARIO" EntityType="Self.TIPO_USUARIO" Schema="C##TURISMO" store:Type="Tables" />
+    <EntitySet Name="TOUR" EntityType="Self.TOUR" Schema="C##TURISMO" store:Type="Tables" />
+    <EntitySet Name="TRANSPORTE" EntityType="Self.TRANSPORTE" Schema="C##TURISMO" store:Type="Tables" />
+    <EntitySet Name="USUARIO" EntityType="Self.USUARIO" Schema="C##TURISMO" store:Type="Tables" />
+    <EntitySet Name="VEHICULO" EntityType="Self.VEHICULO" Schema="C##TURISMO" store:Type="Tables" />
+    <AssociationSet Name="AGENCIA_COMUNA_FK" Association="Self.AGENCIA_COMUNA_FK">
+      <End Role="COMUNA" EntitySet="COMUNA" />
+      <End Role="AGENCIA_EXTERNA" EntitySet="AGENCIA_EXTERNA" />
+    </AssociationSet>
+    <AssociationSet Name="ARTICULO_DEPARTAMENTO_FK" Association="Self.ARTICULO_DEPARTAMENTO_FK">
+      <End Role="DEPARTAMENTO" EntitySet="DEPARTAMENTO" />
+      <End Role="ARTICULO" EntitySet="ARTICULO" />
+    </AssociationSet>
+    <AssociationSet Name="CHECKIN_RESERVA_FK" Association="Self.CHECKIN_RESERVA_FK">
+      <End Role="RESERVA" EntitySet="RESERVA" />
+      <End Role="CHECKIN" EntitySet="CHECKIN" />
+    </AssociationSet>
+    <AssociationSet Name="CHECKIN_USUARIO_FK" Association="Self.CHECKIN_USUARIO_FK">
+      <End Role="USUARIO" EntitySet="USUARIO" />
+      <End Role="CHECKIN" EntitySet="CHECKIN" />
+    </AssociationSet>
+    <AssociationSet Name="CHECKOUT_RESERVA_FK" Association="Self.CHECKOUT_RESERVA_FK">
+      <End Role="RESERVA" EntitySet="RESERVA" />
+      <End Role="CHECKOUT" EntitySet="CHECKOUT" />
+    </AssociationSet>
+    <AssociationSet Name="CHECKOUT_USUARIO_FK" Association="Self.CHECKOUT_USUARIO_FK">
+      <End Role="USUARIO" EntitySet="USUARIO" />
+      <End Role="CHECKOUT" EntitySet="CHECKOUT" />
+    </AssociationSet>
+    <AssociationSet Name="COMUNA_REGION_FK" Association="Self.COMUNA_REGION_FK">
+      <End Role="REGION" EntitySet="REGION" />
+      <End Role="COMUNA" EntitySet="COMUNA" />
+    </AssociationSet>
+    <AssociationSet Name="CONDOMINIO_COMUNA_FK" Association="Self.CONDOMINIO_COMUNA_FK">
+      <End Role="COMUNA" EntitySet="COMUNA" />
+      <End Role="CONDOMINIO" EntitySet="CONDOMINIO" />
+    </AssociationSet>
+    <AssociationSet Name="CONDUCTOR_TRANSPORTE_FK" Association="Self.CONDUCTOR_TRANSPORTE_FK">
+      <End Role="TRANSPORTE" EntitySet="TRANSPORTE" />
+      <End Role="CONDUCTOR" EntitySet="CONDUCTOR" />
+    </AssociationSet>
+    <AssociationSet Name="CONDUCTOR_VEHICULO_FK" Association="Self.CONDUCTOR_VEHICULO_FK">
+      <End Role="VEHICULO" EntitySet="VEHICULO" />
+      <End Role="CONDUCTOR" EntitySet="CONDUCTOR" />
+    </AssociationSet>
+    <AssociationSet Name="CONT_SERV_RESERVA_FK" Association="Self.CONT_SERV_RESERVA_FK">
+      <End Role="RESERVA" EntitySet="RESERVA" />
+      <End Role="CONT_SERV" EntitySet="CONT_SERV" />
+    </AssociationSet>
+    <AssociationSet Name="CONT_SERV_SERVEXTRAS_FK" Association="Self.CONT_SERV_SERVEXTRAS_FK">
+      <End Role="SERVEXTRAS" EntitySet="SERVEXTRAS" />
+      <End Role="CONT_SERV" EntitySet="CONT_SERV" />
+    </AssociationSet>
+    <AssociationSet Name="DEPARTAMENTO_CONDOMINIO_FK" Association="Self.DEPARTAMENTO_CONDOMINIO_FK">
+      <End Role="CONDOMINIO" EntitySet="CONDOMINIO" />
+      <End Role="DEPARTAMENTO" EntitySet="DEPARTAMENTO" />
+    </AssociationSet>
+    <AssociationSet Name="DISPONIBILIDAD_DEPARTAMENTO_FK" Association="Self.DISPONIBILIDAD_DEPARTAMENTO_FK">
+      <End Role="DEPARTAMENTO" EntitySet="DEPARTAMENTO" />
+      <End Role="DISPONIBILIDAD" EntitySet="DISPONIBILIDAD" />
+    </AssociationSet>
+    <AssociationSet Name="GASTOS_DEPARTAMENTO_FK" Association="Self.GASTOS_DEPARTAMENTO_FK">
+      <End Role="DEPARTAMENTO" EntitySet="DEPARTAMENTO" />
+      <End Role="GASTOS" EntitySet="GASTOS" />
+    </AssociationSet>
+    <AssociationSet Name="MANTENCION_RES_MANT_FK" Association="Self.MANTENCION_RES_MANT_FK">
+      <End Role="RES_MANT" EntitySet="RES_MANT" />
+      <End Role="MANTENCION" EntitySet="MANTENCION" />
+    </AssociationSet>
+    <AssociationSet Name="MODELO_MARCA_FK" Association="Self.MODELO_MARCA_FK">
+      <End Role="MARCA" EntitySet="MARCA" />
+      <End Role="MODELO" EntitySet="MODELO" />
+    </AssociationSet>
+    <AssociationSet Name="PAGO_RESERVA_FK" Association="Self.PAGO_RESERVA_FK">
+      <End Role="RESERVA" EntitySet="RESERVA" />
+      <End Role="PAGO" EntitySet="PAGO" />
+    </AssociationSet>
+    <AssociationSet Name="RES_MANT_DEPARTAMENTO_FK" Association="Self.RES_MANT_DEPARTAMENTO_FK">
+      <End Role="DEPARTAMENTO" EntitySet="DEPARTAMENTO" />
+      <End Role="RES_MANT" EntitySet="RES_MANT" />
+    </AssociationSet>
+    <AssociationSet Name="RES_MANT_USUARIO_FK" Association="Self.RES_MANT_USUARIO_FK">
+      <End Role="USUARIO" EntitySet="USUARIO" />
+      <End Role="RES_MANT" EntitySet="RES_MANT" />
+    </AssociationSet>
+    <AssociationSet Name="RESERVA_DEPARTAMENTO_FK" Association="Self.RESERVA_DEPARTAMENTO_FK">
+      <End Role="DEPARTAMENTO" EntitySet="DEPARTAMENTO" />
+      <End Role="RESERVA" EntitySet="RESERVA" />
+    </AssociationSet>
+    <AssociationSet Name="RESERVA_USUARIO_FK" Association="Self.RESERVA_USUARIO_FK">
+      <End Role="USUARIO" EntitySet="USUARIO" />
+      <End Role="RESERVA" EntitySet="RESERVA" />
+    </AssociationSet>
+    <AssociationSet Name="SERVEXTRAS_AGENCIA_EXTERNA_FK" Association="Self.SERVEXTRAS_AGENCIA_EXTERNA_FK">
+      <End Role="AGENCIA_EXTERNA" EntitySet="AGENCIA_EXTERNA" />
+      <End Role="SERVEXTRAS" EntitySet="SERVEXTRAS" />
+    </AssociationSet>
+    <AssociationSet Name="TOUR_SERVEXTRAS_FK" Association="Self.TOUR_SERVEXTRAS_FK">
+      <End Role="SERVEXTRAS" EntitySet="SERVEXTRAS" />
+      <End Role="TOUR" EntitySet="TOUR" />
+    </AssociationSet>
+    <AssociationSet Name="TRANSPORTE_SERVEXTRAS_FK" Association="Self.TRANSPORTE_SERVEXTRAS_FK">
+      <End Role="SERVEXTRAS" EntitySet="SERVEXTRAS" />
+      <End Role="TRANSPORTE" EntitySet="TRANSPORTE" />
+    </AssociationSet>
+    <AssociationSet Name="VEHICULO_MODELO_FK" Association="Self.VEHICULO_MODELO_FK">
+      <End Role="MODELO" EntitySet="MODELO" />
+      <End Role="VEHICULO" EntitySet="VEHICULO" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

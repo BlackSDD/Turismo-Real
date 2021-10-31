@@ -1,0 +1,24 @@
+﻿@using TurismoReal.Negocio
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Regiones disponibles</h2>
+
+@{ List<Region> regiones = (List<Region>)ViewBag.regiones;}
+
+<table>
+    <tr>
+        <th>Nombre</th>
+    </tr>
+
+    @foreach(var region in regiones )
+    {
+        <tr>
+            <td>@region.Nombre</td>
+        </tr>
+    }
+</table>
+

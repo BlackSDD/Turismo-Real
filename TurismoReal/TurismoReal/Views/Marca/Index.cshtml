@@ -1,0 +1,27 @@
+﻿@using TurismoReal.Negocio
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Regiones disponibles</h2>
+
+@{ List<Marca> marcas = (List<Marca>)ViewBag.marcas;}
+
+<table>
+    <tr>
+        <th>Nombre</th>
+    </tr>
+
+    @foreach (var marca in marcas)
+    {
+    <tr>
+        <td>@marca.Nom_marca</td>
+        <td>@Html.ActionLink("ELIMINAR", "Delete", new { id = marca.Id_marca })</td>
+        <td>@Html.ActionLink("MODIFICAR", "Edit", new { id = marca.Id_marca })</td>
+    </tr>
+    }
+
+</table>
+

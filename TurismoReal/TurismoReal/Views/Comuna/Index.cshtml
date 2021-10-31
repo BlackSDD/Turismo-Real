@@ -1,0 +1,38 @@
+﻿@using TurismoReal.Negocio
+
+
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Regiones disponibles</h2>
+
+@{ List<Comuna> comunas = (List<Comuna>)ViewBag.comunas;}
+
+<table>
+    <tr>
+        <th>Nombre</th>
+        <th>
+        </th>
+        <th>Region</th>
+        <th></th>
+        <th>Opciones</th>
+    </tr>
+
+    @foreach(var Comuna in comunas)
+    {
+    <tr>
+        <td>@Comuna.Nom_com</td>
+        <td></td>
+        <td>@Comuna.Region.Nombre</td>
+        <td></td>
+        <td>@Html.ActionLink("ELIMINAR", "Delete", new { id = Comuna.Id_com })</td>
+        <td>@Html.ActionLink("MODIFICAR", "Edit", new { id = Comuna.Id_com })</td>
+    </tr>
+    }
+</table>
+
+@TempData["mensaje"]
+

@@ -1,0 +1,42 @@
+﻿@using TurismoReal.Negocio
+
+
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Regiones disponibles</h2>
+
+@{ List<Condominio> condominios = (List<Condominio>)ViewBag.condominios;}
+
+<table>
+    <tr>
+        <th>Nombre</th>
+        <th>
+        </th>
+        <th>Comuna</th>
+        <th></th>
+        <th>Region</th>
+        <th></th>
+        <th>Opciones</th>
+    </tr>
+
+    @foreach (var Condominio in condominios)
+    {
+    <tr>
+        <td>@Condominio.Nom_con</td>
+        <td></td>
+        <td>@Condominio.Comuna.Nom_com</td>
+        <td></td>
+        <td>@Condominio.Comuna.Region.Nombre</td>
+        <td></td>
+        <td>@Html.ActionLink("ELIMINAR", "Delete", new { id = Condominio.Id_con })</td>
+        <td>@Html.ActionLink("MODIFICAR", "Edit", new { id = Condominio.Id_con })</td>
+    </tr>
+    }
+</table>
+
+@TempData["mensaje"]
+

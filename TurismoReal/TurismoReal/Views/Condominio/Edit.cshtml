@@ -1,0 +1,21 @@
+﻿@model TurismoReal.Negocio.Condominio
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Editar condominio</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.LabelFor(c => c.Nom_con, "NOMBRE")
+    @Html.TextBoxFor(c => c.Nom_con)
+    <br />
+
+    @Html.LabelFor(c => c.Id_com, "Comuna")
+    @Html.DropDownListFor(c => c.Id_com, new SelectList(ViewBag.comunas, "Id_com", "Nom_com"))
+    <br />
+    <button>Guardar</button>
+
+}
+
