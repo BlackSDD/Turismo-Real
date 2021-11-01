@@ -6,8 +6,7 @@ create  or replace procedure sp_eliminarAgenciaExterna
 )
 as
 begin
-	delete  from agencia_externa w
-	here id_agencia = v_id_agencia;
+	delete  from agencia_externa where id_agencia = v_id_agencia;
 	commit;
 end;
 /
@@ -79,7 +78,7 @@ create or replace procedure sp_agregarArticulo
 )
 as
 begin
-	insert into core_articulo
+	insert into articulo
 	(
 		id_arti,
 		nom_arti,
@@ -184,11 +183,12 @@ v_id_rva number
 as
 begin
     update checkout set 
-        costo_multa = v_costo_multa, 
-        v_deta_cho = v_deta_cho
-        where id_cho = v_id_cho;
+        cost_multa = v_cost_multa, 
+        deta_cho = v_deta_cho
+        where id_rva = v_id_rva;
 end;
 /
+
 
 ---------------------------------------------------------------------------
 
@@ -277,14 +277,13 @@ end;
 ---------------------------------------------------------------------------
 
 --TABLA CONT_SERV
-select * from cont_serv;
+
 create or replace procedure sp_agregarContServ
 (
-	v_fec_cont date,
 	v_costo_total number,
 	v_deta_cont NVARCHAR2,
 	v_fec_acord date,
-    v_hora_acrod char,
+    v_hora_acord char,
 	v_lugar_recogida NVARCHAR2,
 	v_lugar_destino NVARCHAR2,
 	v_km_rec number,
@@ -292,7 +291,8 @@ create or replace procedure sp_agregarContServ
     v_id_rva number,
     v_id_serv number
 )
-as
+as  
+    v_fec_cont date := sysdate;
 begin
 	insert into cont_serv values
 	(
@@ -312,6 +312,7 @@ begin
     commit;
 end;
 /
+
 
 
 create or replace procedure sp_modificarContServ
@@ -511,6 +512,8 @@ begin
 	);
     commit;
 end;
+/
+
 
 create or replace procedure sp_modificarMantencion
 (
@@ -521,8 +524,8 @@ create or replace procedure sp_modificarMantencion
 as
 begin
 	update mantencion set 
-    cost_mant = v_cost_mant,
-    deta_mant = v_deta_mant
+        cost_mant = v_cost_mant,
+        deta_mant = v_deta_mant
 	where id_rmant = v_id_rmant;
     commit;
 end;
@@ -533,63 +536,20 @@ end;
 
 --TABLA PAGO
 
-create or replace procedure sp_eliminarPago
-(
-	v_id_rva number
-)
-as
-begin
-	delete from pago where 
-    id_rva = v_id_rva;
-    commit;
-end;
-
-
-/*create or replace procedure sp_listarPago
-
-as
-begin
-	select monto_total, monto_pagado, esta_pago from pago
-	order by esta_pago asc;
-end	;*/
-
 
 create or replace procedure sp_agregarPago
 (
 	v_id_rva number,
-	v_monto_total number,
-	v_monto_pagado number,
-	v_esta_pago nvarchar2
+	v_monto_pagado number
 )
 as
 begin
-	insert into mantencion values
-	(
-    v_id_rva,
-	v_monto_total,
-	v_monto_pagado,
-	v_esta_pago
-    
-	);
+	update pago set
+        monto_pagado = v_monto_pagado
+        where id_rva = v_id_rva;
     commit;
 end;
-
-
-create or replace procedure sp_modificarPago
-(
-	v_id_rva number,
-    v_monto_total number,
-    v_monto_pagado number,
-    v_est_pago nvarchar2
-)
-as
-begin
-	update pago set monto_total = v_monto_total,
-                    monto_pagado = v_monto_pagado,
-                    est_pago = v_est_pago
-	where id_rva = v_id_rva;
-	commit;
-end;
+/
 
 ---------------------------------------------------------------------------
 
@@ -601,25 +561,15 @@ create or replace procedure sp_eliminarRegion
 )
 as
 begin
-	delete from Region where id_rgn = v_id_rgn;
+	delete from Region 
+        where id_rgn = v_id_rgn;
     commit;
 end;
-
-
-/*create or replace procedure sp_listaRegion
-
-as
-begin
-	select nom_rgn from region
-	order by nom_rgn asc;
-end	;*/
-
+/
 
 create or replace procedure sp_agregarRegion
 (
-	
-	v_nom_rgn NVARCHAR2
-	
+	v_nom_rgn NVARCHAR2	
 )
 as
 begin
@@ -630,7 +580,7 @@ begin
 	);
     commit;
 end;
-
+/
 
 create or replace procedure sp_modificarRegion
 (
@@ -639,15 +589,16 @@ create or replace procedure sp_modificarRegion
 )
 as
 begin
-	update region set nom_rgn = v_nom_rgn
-	where id_rgn = v_id_rgn;
+	update region set 
+        nom_rgn = v_nom_rgn
+        where id_rgn = v_id_rgn;
 	commit;
 end;
+/
 
 ---------------------------------------------------------------------------
 
 --TABLA RES_MANT
-
 
 create or replace procedure sp_eliminarMantencion
 (
@@ -662,18 +613,8 @@ begin
 end;
 /
 
-/*create or replace procedure sp_listaRestMant
-
-as
-begin
-	select v_fec_rmant from res_mant
-	order by v_fec_rmant asc;
-end	;*/
-
-
 create or replace procedure sp_agregarResMant
 (
-	
 	v_fec_rmant date,
     v_id_dpto number,
     v_id_usr number
@@ -684,12 +625,13 @@ begin
 	(
 	SEQ_RES_MANT.nextval,
 	v_fec_rmant,
+    'agendada',
     v_id_dpto,
     v_id_usr
 	);
     commit;
 end;
-
+/
 
 create or replace procedure sp_modificarResMant
 (
@@ -698,15 +640,15 @@ create or replace procedure sp_modificarResMant
 )
 as
 begin
-	update Res_mant set fec_rmant = v_fec_rmant
+	update Res_mant set 
+        fec_rmant = v_fec_rmant
 	where id_rmant = v_id_rmant;
 	commit;
 end;
-
+/
 ---------------------------------------------------------------------------
 
 --TABLA RESERVA
-
 
 create or replace procedure sp_eliminarReserva
 (
@@ -714,12 +656,12 @@ create or replace procedure sp_eliminarReserva
 )
 as
 begin
-	delete from reserva where id_rva = v_id_rva;
+	update reserva set
+        estado_rva = 'cancelada'
+    where id_rva = v_id_rva;
     commit;
 end;
-
-
-
+/
 
 
 create or replace procedure sp_agregarReserva
@@ -749,8 +691,8 @@ begin
             insert into reserva values
             (
             SEQ_RESERVA.nextval,
-            v_fec_ini_rva ,
-            v_fec_fin_rva ,
+            to_date(v_fec_ini_rva) ,
+            to_date(v_fec_fin_rva ),
             v_num_pers ,
             'en verificación',
             v_id_dpto,
@@ -766,17 +708,14 @@ end sp_agregarReserva;
 create or replace procedure sp_modificarReserva
 (
 	v_id_rva number,
-	v_fec_ini_rva date,
-	v_fec_fin_rva date,
 	v_num_pers number,
 	v_estado_rva NVARCHAR2
 )
 as
 begin
-	update Reserva set fec_ini_rva = v_fec_ini_rva, 
-    fec_fin_rva = v_fec_fin_rva, 
-    num_pers = v_num_pers,
-    estado_rva = v_estado_rva
+	update Reserva set 
+        num_pers = v_num_pers,
+        estado_rva = v_estado_rva
 	where id_rva = v_id_rva;
 	commit;
 end;
@@ -786,149 +725,85 @@ end;
 
 --TABLA SERVEXTRAS
 
-
-create or replace procedure sp_eliminarSerExtras
+create or replace procedure sp_eliminarServExtras
 (
 	v_id_serv number
 )
 as
+    v_tipo char(1) ;
+    cursor cond is 
+        select * from conductor 
+        where id_serv = v_id_serv;
 begin
-	delete from servExtras where id_serv = v_id_serv;
+    select tipo_serv
+        into v_tipo
+        from servextras
+        where id_serv = v_id_serv;
+if v_tipo = 'T' then
+	delete from tour where id_serv = v_id_serv;
+    update servextras set
+        desc_serv = 'Servicio no disponible'
+        where id_serv = v_id_serv;
+elsif v_tipo = 'V' then
+    delete from conductor where id_serv = v_id_serv;
+    for fila in cond loop
+            delete vehiculo where patente = fila.patente;
+    end loop;
+    delete transporte where id_serv = v_id_serv;
+    update servextras set
+        desc_serv = 'Servicio no disponible'
+        where id_serv = v_id_serv;
+end if;
     commit;
 end;
-
-
-/*create or replace procedure sp_listaServExtras
-
-as
-begin
-	select nom_serv, tipo_serv, desc_serv from servExtras
-	order by v_nom_serv asc;
-end	;*/
-
+/
 
 create or replace procedure sp_agregarServExtras
 (
-	
 	v_nom_serv NVARCHAR2,
 	v_tipo_serv char,
 	v_desc_serv NVARCHAR2,
-    v_id_agencia number
-	
+    v_id_agencia number	
 )
 as
 begin
 	insert into servExtras values
 	(
 	SEQ_SERVEXTRAS.nextval,
-	v_nom_serv ,
-	v_tipo_serv ,
+	v_nom_serv,
+	v_tipo_serv,
 	v_desc_serv,
     v_id_agencia
 	);
     commit;
 end;
+/
 
 
 create or replace procedure sp_modificarServExtras
 (
 	v_id_serv number,
 	v_nom_serv NVARCHAR2,
-	v_tipo_serv char,
 	v_desc_serv NVARCHAR2
 )
 as
 begin
-	update servExtras set nom_serv = v_nom_serv, tipo_serv = v_tipo_serv, desc_serv = v_desc_serv
+	update servExtras set 
+        nom_serv = v_nom_serv,  
+        desc_serv = v_desc_serv
 	where id_serv = v_id_serv;
 	commit;
 end;
-
-
----------------------------------------------------------------------------
-
--- TABLA TIPO USUARIO
-
-
--- create or replace procedure sp_eliminarTipoUsr
--- (
--- 	v_id_tipo_usr number
--- )
--- as
--- begin
--- 	delete from tipo_usuario where id_tipo_usr = v_id_tipo_usr;
---     commit:
--- end;
-
-
--- create or replace procedure sp_listaTipoUsr
-
--- as
--- begin
--- 	select tipo_usr from tipo_usuario
--- 	order by tipo_usr asc;
--- end	;
-
-
--- create or replace procedure sp_agregarTipoUsr
--- (
--- 	v_id_tipo_usr number,
--- 	v_tipo_usr NVARCHAR2
-	
--- )
--- as
--- begin
--- 	insert into tipo_usuario values
--- 	(
--- 	v_id_tipo_usr,
--- 	v_tipo_usr 
--- 	);
--- end;
-
-
--- create or replace procedure sp_modificarTipoUsr
--- (
--- 	v_id_tipo_usr number,
--- 	v_tipo_usr nvarchar
--- )
--- as
--- begin
--- 	update tipo_usuario set tipo_usr = v_tipo_usr
--- 	where id_tipo_usr = v_id_tipo_usr;
--- 	commit;
--- end;
+/
 
 ---------------------------------------------------------------------------
 
----------------------------------------------------------------------------
 
 --TABLA TOUR
 
-create or replace procedure sp_eliminarTour
-(
-	v_id_serv number
-)
-as
-begin
-	delete from tour where id_serv = v_id_serv;
-    commit;
-end;
-
-
-
-/*create or replace procedure sp_listarTour
-
-as
-begin
-	select dur_hra, dur_min, cost_adult, costo_nigno, costo_3ra, ubi_partida, ubi_fin, alimentacion, transporte from tour
-	order by v_dur_hra asc;
-end	;*/
-
-
-
 create or replace procedure sp_agregarTour
 (
-	
+	v_id_serv number,
 	v_dur_hra number,
 	v_dur_min number,
 	v_cost_adult number,
@@ -943,21 +818,20 @@ as
 begin
 	insert into Tour values
 	(
-	SEQ_SERVEXTRAS.nextval,
-	v_dur_hra ,
-	v_dur_min ,
-	v_cost_adult ,
-	v_costo_nigno ,
-	v_costo_3ra ,
-	v_ubi_partida ,
-	v_ubi_fin ,
-	v_alimentacion ,
+	v_id_serv,
+	v_dur_hra,
+	v_dur_min,
+	v_cost_adult,
+	v_costo_nigno,
+	v_costo_3ra,
+	v_ubi_partida,
+	v_ubi_fin,
+	v_alimentacion,
 	v_transporte 
 	);
     commit;
 end;
-
-
+/
 
 create or replace procedure sp_modificarTour
 (
@@ -974,93 +848,77 @@ create or replace procedure sp_modificarTour
 )
 as
 begin
-	update Tour set dur_hra = v_dur_hra, dur_min = v_dur_min, cost_adult = v_cost_adult, cost_nigno = v_cost_nigno, cost_3ra = v_cost_3ra, ubi_partida = v_ubi_partida, ubi_fin = v_ubi_fin, alimentacion = v_alimentacion, Transporte = v_transporte
+	update Tour set 
+        dur_hra = v_dur_hra,
+        dur_min = v_dur_min,
+        cost_adult = v_cost_adult,
+        cost_nigno = v_cost_nigno, 
+        cost_3ra = v_cost_3ra, 
+        ubi_partida = v_ubi_partida, 
+        ubi_fin = v_ubi_fin, 
+        alimentacion = v_alimentacion, 
+        Transporte = v_transporte
 	where id_serv = v_id_serv;
 	commit;
 end;
+/
 
 ---------------------------------------------------------------------------
 
 --TABLA TRANSPORTE
 
-create or replace procedure sp_eliminarTransporte
-(
-	v_id_serv number
-)
-as
-begin
-	delete from transporte where id_serv = v_id_serv;
-    commit;
-end;
-
-
-
-/*create or replace procedure sp_listarTransporte
-
-as
-begin
-	select cost_km_dia, cost_km_noc, extra_fest from transporte
-	order by cost_km_dia asc;
-end	;*/
-
-
-
 create or replace procedure sp_agregarTransporte
 (
+    v_id_serv  number,
 	v_cost_km_dia number,
-	v_cost_km_noc number,
-	v_extra_fest number
+	v_cost_km_noc number
 )
 as
 begin
 	insert into Transporte values
 	(
-	SEQ_SERVEXTRAS.nextval,
+	v_id_serv,
 	v_cost_km_dia ,
-	v_cost_km_noc ,
-	v_extra_fest
+	v_cost_km_noc
 	);
     commit;
 end;
- 
+/
+
 
 create or replace procedure sp_modificarTransporte
 (
 	v_id_serv number,
 	v_cost_km_dia number,
-	v_cost_km_noc number,
-	v_extra_fest number
+	v_cost_km_noc number
 )
 as
 begin
-	update Transporte set cost_km_dia = v_cost_km_dia, cost_km_noc = v_cost_km_noc, extra_fest = v_extra_fest
+	update Transporte set 
+        cost_km_dia = v_cost_km_dia,
+        cost_km_noc = v_cost_km_noc
 	where id_serv = v_id_serv;
 	commit;
 end;
+/
+
 
 ---------------------------------------------------------------------------
 
 --TABLA USUARIO
 
-create or replace procedure sp_eliminarUsr
+create or replace procedure sp_suspenderUsr
 (
 	v_id_usr number
 )
 as
 begin
-	delete  from usuario where id_usr = v_id_usr;
+	update usuario set
+        est_cta = 'suspendida',
+        tipo_cli = 'inhabilitado'
+    where id_usr = v_id_usr;
 end;
-
-
-
-/*create or replace procedure sp_listarUsr
-
-as
-begin
-	select email_usr, contr_usr, nom_usr, appat_usr, apmat_usr, tel_usr, rut_usr, dv_usr, cant_res, est_cta, tipo_cli from usuario
-	order by tipo_cli asc;
-end	;*/
-
+/
 
 
 create or replace procedure sp_agregarUsr
@@ -1098,284 +956,61 @@ begin
 	);
     commit;
 end;
+/
 
 
-
-create or replace procedure sp_modificarUsr
+create or replace procedure sp_modificarDatosUsr
 (
 	v_id_usr number,
 	v_email_usr nvarchar2,
 	v_contr_usr nvarchar2,
-	v_nom_usr nvarchar2,
-	v_appat_usr nvarchar2,
-	v_apmat_usr nvarchar2,
-	v_tel_usr number,
-	v_rut_usr number,
-	v_dv_usr char,
-	v_cant_res number,
-	v_est_cta nvarchar2,
-	v_tipo_cli nvarchar2 
+	v_tel_usr number
 )
 as
 begin
-	update usuario set email_usr = v_email_usr, contr_usr = v_contr_usr, nom_usr = v_nom_usr, appat_usr = v_appat_usr, apmat_usr = v_apmat_usr, tel_usr = v_tel_usr,
-	rut_usr = v_rut_usr, dv_usr = v_dv_usr, cant_res = v_cant_res, est_cta = v_est_cta, tipo_cli = v_tipo_cli
+	update usuario set 
+        email_usr = v_email_usr, 
+        contr_usr = v_contr_usr, 
+        tel_usr = v_tel_usr
 	where id_usr = v_id_usr;
 	commit;
 end;
-
----------------------------------------------------------------------------
-
---TABLA CONDUCTOR
+/
 
 
-create or replace procedure sp_eliminarConductor
+create or replace procedure sp_validarUsr
 (
-	v_rut_conduc number
+    v_id_usr number
 )
 as
 begin
-	delete from conductor where rut_conduc = v_rut_conduc;
+    update usuario set
+        est_cta = 'activa',
+        tipo_cli = 'normal'
+    where id_usr = v_id_usr;
 end;
+/
 
-
-/*create or replace procedure sp_listaConductor
-
-as
-begin
-	select rut_conduc, dv_conduc, nom_conduc, appat_conduc, apmat_conduc, email_conduc, tel_conduc, patente from conductor
-	order by appat_conduc asc;
-end	;*/
-
-
-create or replace procedure sp_agregarConductor
+create or replace procedure sp_cambiarTipoCliente
 (
-	
-	v_rut_conduc number,
-	v_dv_conduc char,
-	v_nom_conduc nvarchar2,
-	v_appat_conduc nvarchar2,
-	v_apmat_conduc nvarchar2,
-	v_email_conduc nvarchar2,
-	v_tel_conduc number,
-	v_patente nvarchar2,
-    v_id_serv number
-	
+    v_id_usr number
 )
 as
+    v_tipo nvarchar2(30);
 begin
-	insert into Conductor values
-	(
-	v_rut_conduc ,
-	v_dv_conduc ,
-	v_nom_conduc ,
-	v_appat_conduc ,
-	v_apmat_conduc ,
-	v_email_conduc ,
-	v_tel_conduc,
-	v_patente,
-    v_id_serv
-	);
+    select tipo_cli
+        into v_tipo
+        from usuario
+        where id_usr = v_id_usr;
+    if v_tipo = 'normal' then
+        update usuario set 
+            tipo_cli = 'frecuente'
+        where id_usr = v_id_usr;
+    elsif v_tipo = 'frecuente' then
+        update usuario set
+            tipo_cli = 'normal'
+        where id_usr = v_id_usr;
+    end if;
     commit;
 end;
-
-
-create or replace procedure sp_modificarConductor
-(
-	v_rut_conduc number,
-	v_dv_conduc char,
-	v_nom_conduc nvarchar2,
-	v_appat_conduc nvarchar2,
-	v_apmat_conduc nvarchar2,
-	v_email_conduc nvarchar2,
-	v_tel_conduc number
-	
-)
-as
-begin
-	update Conductor set rut_conduc = v_rut_conduc, dv_conduc = v_dv_conduc, nom_conduc = v_nom_conduc, appat_conduc = v_appat_conduc,
-	apmat_conduc = v_apmat_conduc, email_conduc = v_email_conduc, tel_conduc = v_tel_conduc
-	where rut_conduc = v_rut_conduc;
-    commit;
-end;
-
----------------------------------------------------------------------------
-
---TABLA VEHICULO
-
-
-create or replace procedure sp_eliminarVehiculo
-(
-	v_patente char
-)
-as
-begin
-	delete from vehiculo where patente = v_patente;
-end;
-
-
-/*create or replace procedure sp_listaVehiculo
-
-as
-begin
-	select patente, color, agno, cant_puertas, cap_pasaj, cap_male, asiento_nigno, per_silla from vehiculo
-	order by cap_pasaj asc;
-end	;*/
-
-
-create or replace procedure sp_agregarVehiculo
-(
-	
-	v_patente char, 
-	v_color nvarchar2, 
-	v_agno date, 
-	v_cant_puertas number, 
-	v_cap_pasaj number, 
-	v_cap_male number, 
-	v_asiento_nigno char, 
-	v_per_silla char,
-    v_id_modelo number
-	
-)
-as
-begin
-	insert into vehiculo values
-	(
-	v_patente , 
-	v_color, 
-	v_agno , 
-	v_cant_puertas , 
-	v_cap_pasaj , 
-	v_cap_male , 
-	v_asiento_nigno , 
-	v_per_silla,
-    v_id_modelo
-	);
-    commit;
-end;
-
-
-create or replace procedure sp_modificarVehiculo
-(
-	v_patente char, 
-	v_color nvarchar2, 
-	v_agno date, 
-	v_cant_puertas number, 
-	v_cap_pasaj number, 
-	v_cap_male number, 
-	v_asiento_nigno char, 
-	v_per_silla char
-)
-as
-begin
-	update vehiculo set patente = v_patente, color = v_color, agno = v_agno, cant_puertas = v_cant_puertas, cap_pasaj = v_cap_pasaj, cap_male = v_cap_male,
-	asiento_nigno = v_asiento_nigno, per_silla = v_per_silla
-	where patente = v_patente;
-	commit;
-end;
-
----------------------------------------------------------------------------
-
---TABLA MODELO
-
-
-create or replace procedure sp_eliminarModelo
-(
-	v_id_modelo number
-)
-as
-begin
-	delete  from modelo where id_modelo = v_id_modelo;
-    commit;
-end;
-
-
-/*create or replace procedure sp_listaModelo
-
-as
-begin
-	select nombre_modelo from modelo
-	order by nombre_modelo asc;
-end	;*/
-
-
-create or replace procedure sp_agregarModelo
-(
-	
-	v_nombre_modelo nvarchar2,
-    v_id_marca number
-	
-)
-as
-begin
-	insert into modelo values
-	(
-	SEQ_MODELO.nextval,
-	v_nombre_modelo,
-    v_id_marca
-	);
-end;
-
-
-create or replace procedure sp_modificarModelo
-(
-	v_id_modelo number,
-	v_nombre_modelo nvarchar2
-)
-as
-begin
-	update modelo set nombre_modelo = v_nombre_modelo
-	where id_modelo = v_id_modelo;
-	commit;
-end;
----------------------------------------------------------------------------
-
---TABLA MARCA
-
-create or replace procedure sp_eliminarMarca
-(
-	v_id_marca number
-)
-as
-begin
-	delete from marca where id_marca = v_id_marca;
-end;
-
-
-/*create or replace procedure sp_listaMarca
-
-as
-begin
-	select nombre_marca from marca
-	order by nombre_marca asc;
-end	;*/
-
-
-create or replace procedure sp_agregarMarca
-(
-	
-	v_nombre_marca nvarchar2
-	
-)
-as
-begin
-	insert into marca values
-	(
-	SEQ_MARCA.nextval,
-	v_nombre_marca
-	);
-    commit;
-end;
-
-
-create or replace procedure sp_modificarMarca
-(
-	v_id_marca number,
-	v_nombre_marca nvarchar2
-)
-as
-begin
-	update marca set nombre_marca = v_nombre_marca
-	where id_marca = v_id_marca;
-	commit;
-end;
+/

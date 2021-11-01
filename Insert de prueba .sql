@@ -69,8 +69,8 @@ insert into servextras values (seq_servextras.NEXTVAL,'Movilizate','V','Servicio
 insert into servextras values (seq_servextras.NEXTVAL,'Ascenso al volcán Villarica','T','Expedición al volcán villarica a más de 2000 metros de altura, disfrute de las vistas únicas hacia la cordillera, bosques y lagos, para mayores de 13 años, incluye seguro contra accidentes, transporte y colación',3);
 
 
-insert into transporte values (1,950,1150,500);
-insert into transporte values (2,870,1070,600);
+insert into transporte values (1,950,1150);
+insert into transporte values (2,870,1070);
 insert into tour values (3,9,30,95000,0,87000,'El Arrayan 760','El Arrayan 760','Si','Si');
 
 

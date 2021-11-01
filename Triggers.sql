@@ -321,6 +321,38 @@ begin
 end sp_agregarReserva;
 /
 
+create or replace procedure sp_eliminarServExtras
+(
+	v_id_serv number
+)
+as
+    v_tipo char(1) ;
+    cursor cond is 
+        select * from conductor 
+        where id_serv = v_id_serv;
+begin
+    select tipo_serv
+        into v_tipo
+        from servextras
+        where id_serv = v_id_serv;
+if v_tipo = 'T' then
+	delete from tour where id_serv = v_id_serv;
+    update servextras set
+        desc_serv = 'Servicio no disponible'
+        where id_serv = v_id_serv;
+elsif v_tipo = 'V' then
+    delete from conductor where id_serv = v_id_serv;
+    for fila in cond loop
+            delete vehiculo where patente = fila.patente;
+    end loop;
+    delete transporte where id_serv = v_id_serv;
+    update servextras set
+        desc_serv = 'Servicio no disponible'
+        where id_serv = v_id_serv;
+end if;
+    commit;
+end;
+/
 
 
 commit;

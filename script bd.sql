@@ -300,8 +300,7 @@ CREATE TABLE tour (
 CREATE TABLE transporte (
     id_serv       NUMBER(10) NOT NULL,
     cost_km_dia   NUMBER(5) NOT NULL,
-    cost_km_noc   NUMBER(5) NOT NULL,
-    extra_fest    NUMBER(5) NOT NULL
+    cost_km_noc   NUMBER(5) NOT NULL
 );
 
 CREATE TABLE usuario (
@@ -887,11 +886,12 @@ create or replace procedure sp_agregarReserva
     v_id_usr number
 )
 as
-cursor cur is 
-    SELECT * 
-    FROM disponibilidad
-    where fec_disp between v_fec_ini_rva and v_fec_fin_rva and id_dpto = v_id_dpto and esta_disp ='No'; 
-cur_rec disponibilidad%rowtype;    
+    cursor cur is 
+        SELECT * 
+        FROM disponibilidad
+        where fec_disp between v_fec_ini_rva and v_fec_fin_rva and id_dpto = v_id_dpto and esta_disp ='No'; 
+    cur_rec disponibilidad%rowtype;   
+    msg varchar2(100);
 begin
     OPEN cur;
         LOOP
@@ -899,13 +899,13 @@ begin
             EXIT WHEN cur%notfound;
         END LOOP;
         if cur%rowcount >= 1 then
-            dbms_output.put_line('fechas no disponibles para reservar');  
+            msg := 'las fechas de la reserva no están disponibles';  
         else
             insert into reserva values
             (
             SEQ_RESERVA.nextval,
-            v_fec_ini_rva ,
-            v_fec_fin_rva ,
+            to_date(v_fec_ini_rva) ,
+            to_date(v_fec_fin_rva ),
             v_num_pers ,
             'en verificación',
             v_id_dpto,
