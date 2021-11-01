@@ -55,8 +55,6 @@ DROP SEQUENCE seq_comuna;
 DROP SEQUENCE seq_condominio;
 DROP SEQUENCE seq_cont_serv;
 DROP SEQUENCE seq_departamento;
-DROP SEQUENCE seq_gastos;
-DROP SEQUENCE seq_mantencion;
 DROP SEQUENCE seq_marca;
 DROP SEQUENCE seq_modelo;
 DROP SEQUENCE seq_region;
@@ -100,15 +98,6 @@ CREATE SEQUENCE seq_departamento
     INCREMENT by 1
     NOCYCLE;
 
-CREATE SEQUENCE seq_gastos
-    START WITH 1
-    INCREMENT by 1
-    NOCYCLE;
-
-CREATE SEQUENCE seq_mantencion
-    START WITH 1
-    INCREMENT by 1
-    NOCYCLE;
 
 CREATE SEQUENCE seq_marca
     START WITH 1
@@ -194,7 +183,6 @@ CREATE TABLE comuna (
     id_rgn    NUMBER(2) NOT NULL
 );
 
-
 CREATE TABLE condominio (
     id_cnd        NUMBER(4) NOT NULL,
     nom_cnd       NVARCHAR2(100) NOT NULL,
@@ -238,17 +226,15 @@ CREATE TABLE disponibilidad (
 );
 
 CREATE TABLE gastos (
-    id_gastos   NUMBER(10) NOT NULL,
+    id_dpto     NUMBER(10) NOT NULL,
     gast_mes    NUMBER(10) NOT NULL,
-    gast_agno   NUMBER(10) NOT NULL,
-    id_dpto     NUMBER(10) NOT NULL
+    gast_agno   NUMBER(10) NOT NULL
 );
 
 CREATE TABLE mantencion (
-    id_mant     NUMBER(10) NOT NULL,
+    id_rmant    NUMBER(10) NOT NULL,
     cost_mant   NUMBER(8) NOT NULL,
-    deta_mant   NVARCHAR2(2000) NOT NULL,
-    id_rmant    NUMBER(10) NOT NULL
+    deta_mant   NVARCHAR2(2000) NOT NULL    
 );
 
 CREATE TABLE pago(
@@ -270,6 +256,7 @@ CREATE TABLE region (
 CREATE TABLE res_mant (
     id_rmant   NUMBER(10) NOT NULL,
     fec_rmant  DATE NOT NULL,
+    est_man    NVARCHAR2(30) NOT NULL,
     id_dpto    NUMBER(10) NOT NULL,
     id_usr     NUMBER(10) NOT NULL
 );
@@ -428,11 +415,11 @@ ALTER TABLE disponibilidad
 
 ALTER TABLE disponibilidad ADD CONSTRAINT disponibilidad_pk PRIMARY KEY ( fec_disp , id_dpto );
 
-ALTER TABLE gastos ADD CONSTRAINT gastos_pk PRIMARY KEY ( id_gastos );
-
 ALTER TABLE gastos
     ADD CONSTRAINT gastos_departamento_fk FOREIGN KEY ( id_dpto )
         REFERENCES departamento ( id_dpto );
+
+ALTER TABLE gastos ADD CONSTRAINT gastos_pk PRIMARY KEY ( id_dpto );
 
 ALTER TABLE articulo ADD CONSTRAINT articulo_pk PRIMARY KEY ( id_arti );
 
@@ -450,11 +437,14 @@ ALTER TABLE res_mant
     ADD CONSTRAINT res_mant_usuario_fk FOREIGN KEY ( id_usr )
         REFERENCES usuario ( id_usr );
 
-ALTER TABLE mantencion ADD CONSTRAINT mantencion_pk PRIMARY KEY ( id_mant );
+ALTER TABLE res_mant
+    ADD CONSTRAINT est_man CHECK ( est_man IN ( 'agendada', 'cancelada', 'realizada', 'en progreso' ) );
 
 ALTER TABLE mantencion
     ADD CONSTRAINT mantencion_res_mant_fk FOREIGN KEY ( id_rmant )
         REFERENCES res_mant ( id_rmant );
+        
+ALTER TABLE mantencion ADD CONSTRAINT mantencion_pk PRIMARY KEY ( id_rmant );
 
 ALTER TABLE reserva ADD CONSTRAINT reserva_pk PRIMARY KEY ( id_rva );
 
@@ -927,7 +917,40 @@ begin
 end sp_agregarReserva;
 /
 
+create or replace trigger tr_mantencion
+after insert or update on res_mant
+for each row 
+begin
+    if inserting then
+        update disponibilidad set 
+            esta_disp = 'No'
+            where id_dpto = :new.id_dpto and fec_disp = :new.fec_rmant;
+    elsif updating then
+        if :new.est_man in ('cancelada','realizada') then
+            update disponibilidad set 
+                esta_disp = 'Si'
+                where id_dpto = :new.id_dpto and fec_disp = :old.fec_rmant;
+        elsif :old.fec_rmant != :new.fec_rmant then
+            update disponibilidad set 
+                    esta_disp = 'No'
+                    where id_dpto = :new.id_dpto and fec_disp = :new.fec_rmant;
+            update disponibilidad set 
+                esta_disp = 'Si'
+                where id_dpto = :new.id_dpto and fec_disp = :old.fec_rmant;
+        end if;
+    end if;
+end tr_mantencion;
+/
 
+create or replace trigger tr_ingreso_mantencion
+after insert on mantencion
+for each row
+begin
+    update res_mant set
+        est_man = 'realizada'
+    where id_rmant = :new.id_rmant;
+end tr_ingreso_mantencion;
+/
 
 commit;
 
