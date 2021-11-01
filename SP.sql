@@ -6,15 +6,12 @@ create  or replace procedure sp_eliminarAgenciaExterna
 )
 as
 begin
-	delete  from agencia_externa where id_agencia = v_id_agencia;
+	delete  from agencia_externa w
+	here id_agencia = v_id_agencia;
 	commit;
 end;
+/
 
-/*create or replace procedure sp_listaAgenciaExterna
-AS
-	select email_age, nom_age  from agencia_externa
-	order b4 nom_age asc;
-end;*/
 
 create or replace procedure sp_agregarAgenciaExterna
 (
@@ -22,8 +19,7 @@ create or replace procedure sp_agregarAgenciaExterna
 	v_nom_age NVARCHAR2,
 	v_email_age NVARCHAR2,
 	v_tel_age number,
-    v_id_com number,
-	v_salida out number
+    v_id_com number
 )
 as
 begin
@@ -37,7 +33,7 @@ begin
 	);
     commit;
 end;
-
+/
 
 create or replace procedure sp_modificarAgenciaExterna
 (
@@ -56,7 +52,7 @@ begin
     commit;
 	
 end;
-
+/
 ---------------------------------------------------------------------------
 
 ----TABLA ARTICULO
@@ -72,14 +68,6 @@ begin
 end;
 /
 
-create or replace procedure sp_listaArticulo(articulo out SYS_REFCURSOR)
-is
-begin
-	open categorias for select * from core_articulo;
-end	; 
-/
-
-
 create or replace procedure sp_agregarArticulo
 (
 	
@@ -88,20 +76,19 @@ create or replace procedure sp_agregarArticulo
 	v_deta_arti NVARCHAR2,
 	v_valor_arti number,
     v_id_depto number
-	v_salida OUT number
 )
 as
 begin
 	insert into core_articulo
 	(
 		id_arti,
-		nom_arti
+		nom_arti,
 		cant_arti,
-		deta_arti
-		valor_arti
+		deta_arti,
+		valor_arti,
 		id_dpto
 	)
-	(
+	values (
 	SEQ_ARTICULO.nextval,
 	v_nom_arti ,
 	v_cant_arti,
@@ -110,9 +97,6 @@ begin
     v_id_depto
 	);
     commit;
-	v_salida:=1;
-	when others then 
-		v_salida:=0;
 end;
 /
 
@@ -129,122 +113,89 @@ begin
 	update articulo set nom_arti = v_nom_arti, cant_arti = v_cant_arti, deta_arti = v_deta_arti, valor_arti = v_valor_arti
 	where id_arti = v_id_arti;
     commit;
-	
 end;
-
+/
 ---------------------------------------------------------------------------
 
 --TABLA CHECK IN
 
 
--- create store procedure sp_agregarCheckin
--- (
--- 	v_deta_chi NVARCHAR2,	
--- )
--- as
--- begin
--- 	insert into checkin values
--- 	(
--- 	v_id_rva.nextval
--- 	v_deta_chi NVARCHAR2
--- 	);
--- end
+create or replace procedure sp_agregarCheckin
+(
+    v_id_rva number,
+ 	v_deta_chi NVARCHAR2,
+    v_id_usr number
+)
+as
+begin
+	insert into checkin values
+	(
+	v_id_rva,
+ 	v_deta_chi,
+    v_id_usr
+    );
+end;
+/
 
 
--- create store procedure sp_listarCheckin
 
--- as
--- begin
--- 	select deta_chi from checkin
--- 	order by deta_chi asc;
--- end;	
-
-
--- create store procedure sp_modificarCheckin
--- (
--- 	v_id_rva number,
--- 	v_deta_chi NVARCHAR2
-	
--- )
--- as
--- begin
--- 	update checkin set deta_chi = v_deta_chi
--- 	where id_rva = v_id_rva
-	
--- end
+create or replace procedure sp_modificarCheckin
+(
+ 	v_id_rva number,
+	v_deta_chi NVARCHAR2	
+)
+as
+begin
+ 	update checkin set deta_chi = v_deta_chi
+ 	where id_rva = v_id_rva;	
+end;
+/
 
 ---------------------------------------------------------------------------
 
 -- TABLA CHECK OUT
 
--- create store procedure sp_listarCheckout
 
--- as
--- begin
--- 	select v_cost_multa, v_deta_cho
--- 	order v_deta_cho asc
--- end	
+create or replace procedure sp_agregarCheckout
+(
+    v_cost_multa number,
+    v_deta_cho nvarchar2,
+    v_id_rva number,
+    v_id_usr number
+)
+as
+begin
+    insert into checkout values
+    (
+        v_id_rva,
+        v_cost_multa,
+        v_deta_cho,
+        v_id_usr
+    );
+end;
+/
 
-
-
--- create store procedure sp_agregarCheckout
--- (
--- 	v_cost_multa number,
--- 	v_deta_cho nvarchar,
-	
--- )
--- as
--- begin
--- 	insert into Checkout values
--- 	(
--- 	v_id_rva.nextval,
--- 	v_cost_multa number,
--- 	v_deta_cho nvarchar
--- 	)
--- end
-
-
-
--- create store procedure sp_modificarCheckout
--- (
--- 	v_cost_multa number,
--- 	v_deta_cho nvarchar
-	
--- )
--- as
--- begin
--- 	update checkout set costo_multa = v_costo_multa , v_deta_cho = v_deta_cho
--- 	where id_cho = v_id_cho
-	
--- end
+create or replace procedure sp_modificarCheckout
+(
+v_cost_multa number,
+v_deta_cho nvarchar2,
+v_id_rva number
+)
+as
+begin
+    update checkout set 
+        costo_multa = v_costo_multa, 
+        v_deta_cho = v_deta_cho
+        where id_cho = v_id_cho;
+end;
+/
 
 ---------------------------------------------------------------------------
 
 --TABLA COMUNA
 
-create or replace procedure sp_eliminarComuna
-(
-	v_id_com number
-)
-as
-begin
-	delete  from comuna where id_com = v_id_com;
-    commit;
-end;
-
-
-/*create or replace procedure sp_listaComuna
-
-as
-begin
-	select nom_com, nom_rgn
-	from comuna c inner join region r on c.id_rgn = r.id_rgn;
-end	;*/
-
-
 create or replace procedure sp_agregarComuna
 (
-	
 	v_nom_com NVARCHAR2,
     v_id_rgn NUMBER
 )
@@ -256,8 +207,9 @@ begin
 	v_nom_com,
     v_id_rgn
 	);
-    commit;
+commit;
 end;
+/
 
 
 create or replace procedure sp_modificarComuna
@@ -267,11 +219,12 @@ create or replace procedure sp_modificarComuna
 )
 as
 begin
-	update comuna set nom_com = v_nom_com
-	where id_com = v_id_com;
+	update comuna set
+        nom_com = v_nom_com
+        where id_com = v_id_com;
 	commit;
 end;
-
+/
 ---------------------------------------------------------------------------
 
 --TABLA CONDOMINIO
@@ -282,18 +235,10 @@ create or replace procedure sp_eliminarCondominio
 )
 as
 begin
-	delete  from condominio where id_cnd = v_id_cnd;
+	delete from condominio where id_cnd = v_id_cnd;
 	commit;
 end;
-
-
-/*create or replace procedure sp_listaCondominio
-
-as
-begin
-	select nom_cnd, nom_com
-	from condominio n inner join comuna c on n.v_id_com = c.v_id_com;
-end	;*/
+/
 
 
 create or replace procedure sp_agregarCondominio
@@ -312,7 +257,7 @@ begin
 	);
     commit;
 end;
-
+/
 
 create or replace procedure sp_modificarCondominio
 (
@@ -321,67 +266,52 @@ create or replace procedure sp_modificarCondominio
 )
 as
 begin
-	update condominio set nom_cnd = v_nom_cnd
-	where id_cnd = v_id_cnd;
+	update condominio set
+        nom_cnd = v_nom_cnd
+        where id_cnd = v_id_cnd;
 	commit;
 end;
+/
 
 
 ---------------------------------------------------------------------------
 
 --TABLA CONT_SERV
-
-create or replace procedure sp_eliminarContServ
-(
-	v_id_cont_serv number
-)
-as
-begin
-	delete  from cont_serv where id_cont_serv = v_id_cont_serv;
-    commit;
-end;
-
-
-/*create or replace procedure sp_listaContServ
-
-as
-begin
-	select fec_cont, costo_total, deta_cont, fec_acord, lugar_recogida, lugar_destino, km_rec from cont_serv
-	order by fec_cont asc;
-end	;*/
-
-
+select * from cont_serv;
 create or replace procedure sp_agregarContServ
 (
-	
 	v_fec_cont date,
 	v_costo_total number,
 	v_deta_cont NVARCHAR2,
 	v_fec_acord date,
+    v_hora_acrod char,
 	v_lugar_recogida NVARCHAR2,
 	v_lugar_destino NVARCHAR2,
 	v_km_rec number,
+    v_est_cont nvarchar2,
     v_id_rva number,
     v_id_serv number
-	
 )
 as
 begin
 	insert into cont_serv values
 	(
 	SEQ_CONT_SERV.nextval,
-	v_fec_cont ,
+	v_fec_cont,
 	v_costo_total ,
 	v_deta_cont ,
 	v_fec_acord ,
-	v_lugar_recogida ,
-	v_lugar_destino ,
+    v_hora_acord,
+	v_lugar_recogida,
+	v_lugar_destino,
 	v_km_rec,
+    v_est_cont,
     v_id_rva,
     v_id_serv
 	);
     commit;
 end;
+/
 
 
 create or replace procedure sp_modificarContServ
@@ -391,18 +321,28 @@ create or replace procedure sp_modificarContServ
 	v_costo_total number,
 	v_deta_cont NVARCHAR2,
 	v_fec_acord date,
+    v_hora_acord char,
 	v_lugar_recogida NVARCHAR2,
 	v_lugar_destino NVARCHAR2,
-	v_km_rec number
+	v_km_rec number,
+    v_est_cont nvarchar2
 )
 as
 begin
-	update Cont_serv set fec_cont = v_fec_cont, costo_total = v_costo_total, deta_cont = v_deta_cont, fec_acord = v_fec_acord, lugar_recogida = v_lugar_recogida,
-	lugar_destino = v_lugar_destino, km_rec = v_km_rec
+	update Cont_serv set 
+    fec_cont = v_fec_cont, 
+    costo_total = v_costo_total, 
+    deta_cont = v_deta_cont, 
+    fec_acord = v_fec_acord, 
+    hora_acord = v_hora_acord,
+    lugar_recogida = v_lugar_recogida,
+	lugar_destino = v_lugar_destino,
+    km_rec = v_km_rec,
+    est_cont = v_est_cont
 	where id_cont_serv = v_id_cont_serv;
 	commit;
 end;
-
+/
 ---------------------------------------------------------------------------
 
 ---------------------------------------------------------------------------
@@ -415,23 +355,27 @@ create or replace procedure sp_eliminarDepartamento
 )
 as
 begin
-	delete  from Departamento where id_dpto = v_id_dpto;
+    delete from disponibilidad where id_dpto = v_id_dpto;
+    delete from articulo where id_dpto = v_id_dpto;
+    delete from gastos where id_dpto = v_id_dpto;
+	update departamento set
+        desc_dpto = 'departamento no disponible',
+        costo_arri_dpto = '0',
+        img_1_dpto = empty_blob(),
+        img_2_dpto = empty_blob(),
+        img_3_dpto = empty_blob(),
+        img_4_dpto = empty_blob(),
+        img_5_dpto = empty_blob()
+        where id_dpto = v_id_dpto;        
     commit;
 end;
+/
 
 
-/*create or replace procedure sp_listaDepartamento
-
-as
-begin
-	select dir_dpto, num_dpto, n_amb_dpto, desc_dpto, costo_arri_dpto, img_1_dpto, img_2_dpto, img_3_dpto, img_4_dpto, img_5_dpto from departamento
-	order by dir_dpto asc;
-end;*/
 
 
 create  or replace procedure sp_agregarDepartamento
 (
-	
 	v_dir_dpto NVARCHAR2, 
 	v_num_dpto number, 
 	v_n_amb_dpto number, 
@@ -442,8 +386,7 @@ create  or replace procedure sp_agregarDepartamento
 	v_img_3_dpto blob,
 	v_img_4_dpto blob, 
 	v_img_5_dpto blob,
-    v_id_cnd number
-	
+    v_id_cnd number	
 )
 as
 begin
@@ -464,7 +407,7 @@ begin
 	);
     commit;
 end;
-
+/
 
 create or replace procedure sp_modificarDepartamento
 (
@@ -482,58 +425,21 @@ create or replace procedure sp_modificarDepartamento
 )
 as
 begin
-	update departamento set dir_dpto = v_dir_dpto, num_dpto = v_num_dpto, n_amb_dpto = v_n_amb_dpto, desc_dpto = v_desc_dpto, costo_arri_dpto = v_costo_arri_dpto,
-	img_1_dpto = v_img_1_dpto, img_2_dpto = v_img_2_dpto, img_3_dpto = v_img_3_dpto, img_4_dpto = v_img_4_dpto, img_5_dpto = v_img_5_dpto
+	update departamento set 
+    dir_dpto = v_dir_dpto,
+    num_dpto = v_num_dpto,
+    n_amb_dpto = v_n_amb_dpto,
+    desc_dpto = v_desc_dpto,
+    costo_arri_dpto = v_costo_arri_dpto,
+	img_1_dpto = v_img_1_dpto,
+    img_2_dpto = v_img_2_dpto,
+    img_3_dpto = v_img_3_dpto,
+    img_4_dpto = v_img_4_dpto,
+    img_5_dpto = v_img_5_dpto
 	where id_dpto = v_id_dpto;
     commit;
-	
 end;
-
-
----------------------------------------------------------------------------
---TABLA DISPONIBILIDAD
-
- /*create or replace procedure sp_listarDisponibilidad
-
-as
-begin
-	select fec_disp, esta_disp from disponibilidad
-	order esta_disp asc;
-end	;*/
-
-
-
-create or replace procedure sp_agregarDisponibilidad
-(
-	
-	v_fec_disp date,
-	v_esta_disp char,
-    v_id_dpto number
-)
-as
-begin
-	insert into disponibilidad values
-	(
-	v_fec_disp ,
-	v_esta_disp,
-    v_id_dpto
-	);
-    commit;
-end;
-
-
-
-create OR REPLACE procedure sp_modificarDisponibilidad
-(
-	v_fec_disp date,
-	v_esta_disp char
-)
-as
-begin
-	update disponibilidad set esta_disp = v_esta_disp
-	where fec_disp = v_fec_disp;
-	commit;
-end;
+/
 
 ---------------------------------------------------------------------------
 
@@ -541,30 +447,18 @@ end;
 
 create or replace procedure sp_eliminarGastos
 (
-	v_id_gastos number
+	v_id_dpto number
 )
 as
 begin
-	delete  from Gastos where id_gastos = v_id_gastos;
+	delete  from Gastos where id_dpto = v_id_dpto;
     commit;
 end;
-
-
-
-/*create or replace procedure sp_listarGastos
-
-as
-begin
-	select gast_mes, gast_agno from gastos
-	order by gast_agno asc;
-    commit;
-end	;*/
-
+/
 
 
 create or replace procedure sp_agregarGastos
 (
-	
 	v_gast_mes number,
 	v_gast_agno number,
     v_id_dpto number
@@ -573,52 +467,32 @@ as
 begin
 	insert into gastos values
 	(
-	SEQ_GASTOS.nextval,
+	v_id_dpto,
 	v_gast_mes ,
-	v_gast_agno,
-    v_id_dpto
+	v_gast_agno
 	);
     commit;
 end;
-
-
+/
 
 create or replace procedure sp_modificarGastos
 (
-	v_id_gastos number,
+	v_id_dpto number,
 	v_gast_mes number,
 	v_gast_agno number
 )
 as
 begin
-	update gastos set gast_mes = v_gast_mes, gast_agno = v_gast_agno
-	where id_gastos = v_id_gastos;
+	update gastos set gast_mes = v_gast_mes,
+    gast_agno = v_gast_agno
+	where id_dpto = v_id_dpto;
 	commit;
 end;
+/
 
 ---------------------------------------------------------------------------
 
 --TABLA MANTENCION
-
-create or replace procedure sp_eliminarMantencion
-(
-	v_id_mant number
-)
-as
-begin
-	delete from Mantencion where id_mant = v_id_mant;
-    commit;
-end;
-
-
-/*create or replace procedure sp_listarMantencion
-
-as
-begin
-	select cost_mant, deta_mant, fec_rmant
-	from mantencion m inner join Res_mant r on m.id_rmant = b.id_rmant;
-end	;*/
-
 
 create or replace procedure sp_agregarMantencion
 (
@@ -631,29 +505,30 @@ as
 begin
 	insert into mantencion values
 	(
-	SEQ_MANTENCION.nextval,
+	v_id_rmant,
 	v_cost_mant ,
-	v_deta_mant ,
-    v_id_rmant
+	v_deta_mant 
 	);
     commit;
 end;
 
-
 create or replace procedure sp_modificarMantencion
 (
-    v_id_mant number,
+    v_id_rmant number,
 	v_cost_mant number,
 	v_deta_mant NVARCHAR2
 )
 as
 begin
-	update mantencion set deta_mant = v_deta_mant
-	where id_mant = v_id_mant;
+	update mantencion set 
+    cost_mant = v_cost_mant,
+    deta_mant = v_deta_mant
+	where id_rmant = v_id_rmant;
     commit;
 end;
+/
 
-
+---------------------------------------------------------------------------
 ---------------------------------------------------------------------------
 
 --TABLA PAGO
@@ -664,7 +539,8 @@ create or replace procedure sp_eliminarPago
 )
 as
 begin
-	delete from pago where id_rva = v_id_rva;
+	delete from pago where 
+    id_rva = v_id_rva;
     commit;
 end;
 
@@ -699,7 +575,7 @@ begin
 end;
 
 
-create or replace procedure sp_modificarMantencion
+create or replace procedure sp_modificarPago
 (
 	v_id_rva number,
     v_monto_total number,
@@ -772,16 +648,19 @@ end;
 
 --TABLA RES_MANT
 
-create or replace procedure sp_eliminarResMant
+
+create or replace procedure sp_eliminarMantencion
 (
 	v_id_rmant number
 )
 as
 begin
-	delete from res_mant where id_rmant = v_id_rmant;
+	update res_mant set
+        est_man = 'cancelada'
+    where id_rmant = v_id_rmant;
     commit;
 end;
-
+/
 
 /*create or replace procedure sp_listaRestMant
 
@@ -840,39 +719,48 @@ begin
 end;
 
 
-/*create or replace procedure sp_listaReserva
 
-as
-begin
-	select fec_ini_rva, fec_fin_rva, num_pers, estado_rva from reserva
-	order by estado_rva asc;
-end	;*/
 
 
 create or replace procedure sp_agregarReserva
 (
-	
 	v_fec_ini_rva date,
 	v_fec_fin_rva date,
 	v_num_pers number, 
-	v_estado_rva NVARCHAR2,
     v_id_dpto number,
     v_id_usr number
 )
 as
+    cursor cur is 
+        SELECT * 
+        FROM disponibilidad
+        where fec_disp between v_fec_ini_rva and v_fec_fin_rva and id_dpto = v_id_dpto and esta_disp ='No'; 
+    cur_rec disponibilidad%rowtype;   
+    msg varchar2(100);
 begin
-	insert into reserva values
-	(
-	SEQ_RESERVA.nextval,
-	v_fec_ini_rva ,
-	v_fec_fin_rva ,
-	v_num_pers ,
-	v_estado_rva,
-    v_id_dpto,
-    v_id_usr
-	);
-    commit;
-end;
+    OPEN cur;
+        LOOP
+            FETCH cur INTO cur_rec;  
+            EXIT WHEN cur%notfound;
+        END LOOP;
+        if cur%rowcount >= 1 then
+            msg := 'las fechas de la reserva no están disponibles';  
+        else
+            insert into reserva values
+            (
+            SEQ_RESERVA.nextval,
+            v_fec_ini_rva ,
+            v_fec_fin_rva ,
+            v_num_pers ,
+            'en verificación',
+            v_id_dpto,
+            v_id_usr
+            );
+            commit;
+        end if;
+    close cur;
+end sp_agregarReserva;
+/
 
 
 create or replace procedure sp_modificarReserva
@@ -885,10 +773,14 @@ create or replace procedure sp_modificarReserva
 )
 as
 begin
-	update Reserva set fec_ini_rva = v_fec_ini_rva, fec_fin_rva = v_fec_fin_rva, num_pers = v_num_pers, estado_rva = v_estado_rva
+	update Reserva set fec_ini_rva = v_fec_ini_rva, 
+    fec_fin_rva = v_fec_fin_rva, 
+    num_pers = v_num_pers,
+    estado_rva = v_estado_rva
 	where id_rva = v_id_rva;
 	commit;
 end;
+/
 
 ---------------------------------------------------------------------------
 
