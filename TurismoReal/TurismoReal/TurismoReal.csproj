@@ -119,10 +119,12 @@
     <Compile Include="Controllers\AgenciaExternaController.cs" />
     <Compile Include="Controllers\ComunaController.cs" />
     <Compile Include="Controllers\CondominioController.cs" />
+    <Compile Include="Controllers\ConductorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MarcaController.cs" />
     <Compile Include="Controllers\ModeloController.cs" />
     <Compile Include="Controllers\RegionController.cs" />
+    <Compile Include="Controllers\VehiculoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -142,8 +144,9 @@
     <Content Include="Views\AgenciaExterna\Create.cshtml" />
     <Content Include="Views\AgenciaExterna\Edit.cshtml" />
     <Content Include="Views\Marca\Index.cshtml" />
-    <Content Include="Views\Marca\Create.cshtml" />
-    <Content Include="Views\Marca\Edit.cshtml" />
+    <Content Include="Views\Modelo\Index.cshtml" />
+    <Content Include="Views\Vehiculo\Index.cshtml" />
+    <Content Include="Views\Conductor\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -154,7 +157,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Modelo\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TurismoReal.Negocio\TurismoReal.Negocio.csproj">

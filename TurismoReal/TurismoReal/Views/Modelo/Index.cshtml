@@ -1,0 +1,36 @@
+﻿@using TurismoReal.Negocio
+
+
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Regiones disponibles</h2>
+
+@{List<Modelo> modelos = (List<Modelo>)ViewBag.modelos;}
+
+<table>
+    <tr>
+        <th>Nombre</th>
+        <th>
+        </th>
+        <th>Marca</th>
+        <th></th>
+        <th>Opciones</th>
+    </tr>
+
+    @foreach (var modelo in modelos)
+    {
+        <tr>
+            <td>@modelo.Nom_modelo</td>
+            <td></td>
+            <td>@modelo.Marca.Nom_marca</td>
+            <td></td>
+        </tr>
+    }
+</table>
+
+@TempData["mensaje"]
+

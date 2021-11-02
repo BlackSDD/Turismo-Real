@@ -7,53 +7,50 @@ using TurismoReal.Negocio;
 
 namespace TurismoReal.Controllers
 {
-    public class ModeloController : Controller
+    public class ConductorController : Controller
     {
-        // GET: Modelo
+        // GET: Conductor
         public ActionResult Index()
         {
-            ViewBag.modelos = new Modelo().ReadAll();
+            ViewBag.conductores = new Conductor().ReadAll();
             return View();
         }
 
-        // GET: Modelo/Details/5
+        // GET: Conductor/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: Modelo/Create
+        // GET: Conductor/Create
         public ActionResult Create()
         {
-            EnviarMarcas();
-
             return View();
         }
 
-        // POST: Modelo/Create
+        // POST: Conductor/Create
         [HttpPost]
-        public ActionResult Create(Modelo modelo)
+        public ActionResult Create(FormCollection collection)
         {
             try
             {
                 // TODO: Add insert logic here
-                modelo.Save();
-                TempData["mensaje"] = "Modelo añadido";
+
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View(modelo);
+                return View();
             }
         }
 
-        // GET: Modelo/Edit/5
+        // GET: Conductor/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Modelo/Edit/5
+        // POST: Conductor/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
@@ -69,13 +66,13 @@ namespace TurismoReal.Controllers
             }
         }
 
-        // GET: Modelo/Delete/5
+        // GET: Conductor/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: Modelo/Delete/5
+        // POST: Conductor/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
@@ -90,12 +87,5 @@ namespace TurismoReal.Controllers
                 return View();
             }
         }
-
-        private void EnviarMarcas()
-        {
-            ViewBag.marcas = new Marca().ReadAll();
-        }
-
-
     }
 }

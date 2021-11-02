@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{97608CBA-152E-4BA9-9A31-7EE7496D87D9}</ProjectGuid>
+    <ProjectGuid>{D4872BB5-97BE-46C8-882C-77E709454273}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TurismoReal.DALC</RootNamespace>

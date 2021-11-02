@@ -18,7 +18,6 @@ namespace TurismoReal.DALC
         {
             this.ARTICULO = new HashSet<ARTICULO>();
             this.DISPONIBILIDAD = new HashSet<DISPONIBILIDAD>();
-            this.GASTOS = new HashSet<GASTOS>();
             this.RES_MANT = new HashSet<RES_MANT>();
             this.RESERVA = new HashSet<RESERVA>();
         }
@@ -39,7 +38,7 @@ namespace TurismoReal.DALC
         public virtual ICollection<ARTICULO> ARTICULO { get; set; }
         public virtual CONDOMINIO CONDOMINIO { get; set; }
         public virtual ICollection<DISPONIBILIDAD> DISPONIBILIDAD { get; set; }
-        public virtual ICollection<GASTOS> GASTOS { get; set; }
+        public virtual GASTOS GASTOS { get; set; }
         public virtual ICollection<RES_MANT> RES_MANT { get; set; }
         public virtual ICollection<RESERVA> RESERVA { get; set; }
     }

@@ -8,13 +8,15 @@
 
 @using (Html.BeginForm())
 {
+    @Html.HiddenFor(c => c.Id_com)
+
     @Html.LabelFor(c => c.Nom_com, "NOMBRE")
     @Html.TextBoxFor(c => c.Nom_com)
     <br />
-    @Html.LabelFor(c => c.Region_id ,"Region")
-    @Html.DropDownListFor(c => c.Region_id ,new SelectList(ViewBag.regiones, "Region_id", "Nombre"))
+    @Html.LabelFor(c => c.Region_id, "Region")
+    @Html.DropDownListFor(c => c.Region_id, new SelectList(ViewBag.regiones, "Region_id", "Nombre"))
     <br />
-    <button>Guardar</button>
+    <button>Guardar Cambios</button>
 
 }
 

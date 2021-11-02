@@ -91,7 +91,7 @@ namespace TurismoReal.Negocio
         {
             try
             {
-                db.SP_ELIMINARCOMUNA(id);
+                db.SP_ELIMINARMODELO(id);
                 return true;
             }
             catch (Exception)

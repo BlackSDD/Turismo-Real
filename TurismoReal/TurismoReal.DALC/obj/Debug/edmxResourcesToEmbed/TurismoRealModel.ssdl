@@ -113,21 +113,19 @@
   </EntityType>
   <EntityType Name="GASTOS">
     <Key>
-      <PropertyRef Name="ID_GASTOS" />
+      <PropertyRef Name="ID_DPTO" />
     </Key>
-    <Property Name="ID_GASTOS" Type="number" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="ID_DPTO" Type="number" Precision="10" Scale="0" Nullable="false" />
     <Property Name="GAST_MES" Type="number" Precision="10" Scale="0" Nullable="false" />
     <Property Name="GAST_AGNO" Type="number" Precision="10" Scale="0" Nullable="false" />
-    <Property Name="ID_DPTO" Type="number" Precision="10" Scale="0" Nullable="false" />
   </EntityType>
   <EntityType Name="MANTENCION">
     <Key>
-      <PropertyRef Name="ID_MANT" />
+      <PropertyRef Name="ID_RMANT" />
     </Key>
-    <Property Name="ID_MANT" Type="number" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="ID_RMANT" Type="number" Precision="10" Scale="0" Nullable="false" />
     <Property Name="COST_MANT" Type="number" Precision="8" Scale="0" Nullable="false" />
     <Property Name="DETA_MANT" Type="nvarchar2" MaxLength="2000" Nullable="false" />
-    <Property Name="ID_RMANT" Type="number" Precision="10" Scale="0" Nullable="false" />
   </EntityType>
   <EntityType Name="MARCA">
     <Key>
@@ -170,6 +168,7 @@
     </Key>
     <Property Name="ID_RMANT" Type="number" Precision="10" Scale="0" Nullable="false" />
     <Property Name="FEC_RMANT" Type="date" Nullable="false" />
+    <Property Name="EST_MAN" Type="nvarchar2" MaxLength="30" Nullable="false" />
     <Property Name="ID_DPTO" Type="number" Precision="10" Scale="0" Nullable="false" />
     <Property Name="ID_USR" Type="number" Precision="10" Scale="0" Nullable="false" />
   </EntityType>
@@ -224,7 +223,6 @@
     <Property Name="ID_SERV" Type="number" Precision="10" Scale="0" Nullable="false" />
     <Property Name="COST_KM_DIA" Type="number" Precision="5" Scale="0" Nullable="false" />
     <Property Name="COST_KM_NOC" Type="number" Precision="5" Scale="0" Nullable="false" />
-    <Property Name="EXTRA_FEST" Type="number" Precision="5" Scale="0" Nullable="false" />
   </EntityType>
   <EntityType Name="USUARIO">
     <Key>
@@ -428,7 +426,7 @@
   </Association>
   <Association Name="GASTOS_DEPARTAMENTO_FK">
     <End Role="DEPARTAMENTO" Type="Self.DEPARTAMENTO" Multiplicity="1" />
-    <End Role="GASTOS" Type="Self.GASTOS" Multiplicity="*" />
+    <End Role="GASTOS" Type="Self.GASTOS" Multiplicity="0..1" />
     <ReferentialConstraint>
       <Principal Role="DEPARTAMENTO">
         <PropertyRef Name="ID_DPTO" />
@@ -440,7 +438,7 @@
   </Association>
   <Association Name="MANTENCION_RES_MANT_FK">
     <End Role="RES_MANT" Type="Self.RES_MANT" Multiplicity="1" />
-    <End Role="MANTENCION" Type="Self.MANTENCION" Multiplicity="*" />
+    <End Role="MANTENCION" Type="Self.MANTENCION" Multiplicity="0..1" />
     <ReferentialConstraint>
       <Principal Role="RES_MANT">
         <PropertyRef Name="ID_RMANT" />
@@ -573,6 +571,9 @@
   <Function Name="FN_ARRIENDO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO" ReturnType="number">
     <Parameter Name="V_ID_RVA" Type="number" Mode="In" />
   </Function>
+  <Function Name="FN_MONTO_PAGO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO" ReturnType="number">
+    <Parameter Name="V_ID_RVA" Type="number" Mode="In" />
+  </Function>
   <Function Name="FN_MULTA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO" ReturnType="number">
     <Parameter Name="V_ID_RVA" Type="number" Mode="In" />
   </Function>
@@ -587,6 +588,24 @@
     <Parameter Name="V_EMAIL_AGE" Type="nvarchar2" Mode="In" />
     <Parameter Name="V_TEL_AGE" Type="number" Mode="In" />
     <Parameter Name="V_ID_COM" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_AGREGARARTICULO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_NOM_ARTI" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_CANT_ARTI" Type="number" Mode="In" />
+    <Parameter Name="V_DETA_ARTI" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_VALOR_ARTI" Type="number" Mode="In" />
+    <Parameter Name="V_ID_DEPTO" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_AGREGARCHECKIN" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_RVA" Type="number" Mode="In" />
+    <Parameter Name="V_DETA_CHI" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_ID_USR" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_AGREGARCHECKOUT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_COST_MULTA" Type="number" Mode="In" />
+    <Parameter Name="V_DETA_CHO" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_ID_RVA" Type="number" Mode="In" />
+    <Parameter Name="V_ID_USR" Type="number" Mode="In" />
   </Function>
   <Function Name="SP_AGREGARCOMUNA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
     <Parameter Name="V_NOM_COM" Type="nvarchar2" Mode="In" />
@@ -605,6 +624,18 @@
     <Parameter Name="V_EMAIL_CONDUC" Type="nvarchar2" Mode="In" />
     <Parameter Name="V_TEL_CONDUC" Type="number" Mode="In" />
     <Parameter Name="V_PATENTE" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_ID_SERV" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_AGREGARCONTSERV" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_COSTO_TOTAL" Type="number" Mode="In" />
+    <Parameter Name="V_DETA_CONT" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_FEC_ACORD" Type="date" Mode="In" />
+    <Parameter Name="V_HORA_ACORD" Type="char" Mode="In" />
+    <Parameter Name="V_LUGAR_RECOGIDA" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_LUGAR_DESTINO" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_KM_REC" Type="number" Mode="In" />
+    <Parameter Name="V_EST_CONT" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_ID_RVA" Type="number" Mode="In" />
     <Parameter Name="V_ID_SERV" Type="number" Mode="In" />
   </Function>
   <Function Name="SP_AGREGARDEPARTAMENTO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
@@ -644,9 +675,17 @@
   </Function>
   <Function Name="SP_AGREGARPAGO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
     <Parameter Name="V_ID_RVA" Type="number" Mode="In" />
-    <Parameter Name="V_MONTO_TOTAL" Type="number" Mode="In" />
     <Parameter Name="V_MONTO_PAGADO" Type="number" Mode="In" />
-    <Parameter Name="V_ESTA_PAGO" Type="nvarchar2" Mode="In" />
+  </Function>
+  <Function Name="SP_AGREGARREGION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_NOM_RGN" Type="nvarchar2" Mode="In" />
+  </Function>
+  <Function Name="SP_AGREGARRESERVA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_FEC_INI_RVA" Type="date" Mode="In" />
+    <Parameter Name="V_FEC_FIN_RVA" Type="date" Mode="In" />
+    <Parameter Name="V_NUM_PERS" Type="number" Mode="In" />
+    <Parameter Name="V_ID_DPTO" Type="number" Mode="In" />
+    <Parameter Name="V_ID_USR" Type="number" Mode="In" />
   </Function>
   <Function Name="SP_AGREGARRESMANT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
     <Parameter Name="V_FEC_RMANT" Type="date" Mode="In" />
@@ -660,6 +699,7 @@
     <Parameter Name="V_ID_AGENCIA" Type="number" Mode="In" />
   </Function>
   <Function Name="SP_AGREGARTOUR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_SERV" Type="number" Mode="In" />
     <Parameter Name="V_DUR_HRA" Type="number" Mode="In" />
     <Parameter Name="V_DUR_MIN" Type="number" Mode="In" />
     <Parameter Name="V_COST_ADULT" Type="number" Mode="In" />
@@ -671,9 +711,9 @@
     <Parameter Name="V_TRANSPORTE" Type="char" Mode="In" />
   </Function>
   <Function Name="SP_AGREGARTRANSPORTE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_SERV" Type="number" Mode="In" />
     <Parameter Name="V_COST_KM_DIA" Type="number" Mode="In" />
     <Parameter Name="V_COST_KM_NOC" Type="number" Mode="In" />
-    <Parameter Name="V_EXTRA_FEST" Type="number" Mode="In" />
   </Function>
   <Function Name="SP_AGREGARUSR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
     <Parameter Name="V_EMAIL_USR" Type="nvarchar2" Mode="In" />
@@ -700,6 +740,9 @@
     <Parameter Name="V_PER_SILLA" Type="char" Mode="In" />
     <Parameter Name="V_ID_MODELO" Type="number" Mode="In" />
   </Function>
+  <Function Name="SP_CAMBIARTIPOCLIENTE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_USR" Type="number" Mode="In" />
+  </Function>
   <Function Name="SP_ELIMINARAGENCIAEXTERNA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
     <Parameter Name="V_ID_AGENCIA" Type="number" Mode="In" />
   </Function>
@@ -722,10 +765,10 @@
     <Parameter Name="V_ID_DPTO" Type="number" Mode="In" />
   </Function>
   <Function Name="SP_ELIMINARGASTOS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
-    <Parameter Name="V_ID_GASTOS" Type="number" Mode="In" />
+    <Parameter Name="V_ID_DPTO" Type="number" Mode="In" />
   </Function>
   <Function Name="SP_ELIMINARMANTENCION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
-    <Parameter Name="V_ID_MANT" Type="number" Mode="In" />
+    <Parameter Name="V_ID_RMANT" Type="number" Mode="In" />
   </Function>
   <Function Name="SP_ELIMINARMARCA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
     <Parameter Name="V_ID_MARCA" Type="number" Mode="In" />
@@ -746,6 +789,9 @@
     <Parameter Name="V_ID_RMANT" Type="number" Mode="In" />
   </Function>
   <Function Name="SP_ELIMINARSEREXTRAS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_SERV" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_ELIMINARSERVEXTRAS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
     <Parameter Name="V_ID_SERV" Type="number" Mode="In" />
   </Function>
   <Function Name="SP_ELIMINARTOUR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
@@ -773,6 +819,15 @@
     <Parameter Name="V_DETA_ARTI" Type="nvarchar2" Mode="In" />
     <Parameter Name="V_VALOR_ARTI" Type="number" Mode="In" />
   </Function>
+  <Function Name="SP_MODIFICARCHECKIN" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_RVA" Type="number" Mode="In" />
+    <Parameter Name="V_DETA_CHI" Type="nvarchar2" Mode="In" />
+  </Function>
+  <Function Name="SP_MODIFICARCHECKOUT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_COST_MULTA" Type="number" Mode="In" />
+    <Parameter Name="V_DETA_CHO" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_ID_RVA" Type="number" Mode="In" />
+  </Function>
   <Function Name="SP_MODIFICARCOMUNA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
     <Parameter Name="V_ID_COM" Type="number" Mode="In" />
     <Parameter Name="V_NOM_COM" Type="nvarchar2" Mode="In" />
@@ -796,9 +851,17 @@
     <Parameter Name="V_COSTO_TOTAL" Type="number" Mode="In" />
     <Parameter Name="V_DETA_CONT" Type="nvarchar2" Mode="In" />
     <Parameter Name="V_FEC_ACORD" Type="date" Mode="In" />
+    <Parameter Name="V_HORA_ACORD" Type="char" Mode="In" />
     <Parameter Name="V_LUGAR_RECOGIDA" Type="nvarchar2" Mode="In" />
     <Parameter Name="V_LUGAR_DESTINO" Type="nvarchar2" Mode="In" />
     <Parameter Name="V_KM_REC" Type="number" Mode="In" />
+    <Parameter Name="V_EST_CONT" Type="nvarchar2" Mode="In" />
+  </Function>
+  <Function Name="SP_MODIFICARDATOSUSR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_USR" Type="number" Mode="In" />
+    <Parameter Name="V_EMAIL_USR" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_CONTR_USR" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_TEL_USR" Type="number" Mode="In" />
   </Function>
   <Function Name="SP_MODIFICARDEPARTAMENTO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
     <Parameter Name="V_ID_DPTO" Type="number" Mode="In" />
@@ -818,15 +881,14 @@
     <Parameter Name="V_ESTA_DISP" Type="char" Mode="In" />
   </Function>
   <Function Name="SP_MODIFICARGASTOS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
-    <Parameter Name="V_ID_GASTOS" Type="number" Mode="In" />
+    <Parameter Name="V_ID_DPTO" Type="number" Mode="In" />
     <Parameter Name="V_GAST_MES" Type="number" Mode="In" />
     <Parameter Name="V_GAST_AGNO" Type="number" Mode="In" />
   </Function>
   <Function Name="SP_MODIFICARMANTENCION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
-    <Parameter Name="V_ID_RVA" Type="number" Mode="In" />
-    <Parameter Name="V_MONTO_TOTAL" Type="number" Mode="In" />
-    <Parameter Name="V_MONTO_PAGADO" Type="number" Mode="In" />
-    <Parameter Name="V_EST_PAGO" Type="nvarchar2" Mode="In" />
+    <Parameter Name="V_ID_RMANT" Type="number" Mode="In" />
+    <Parameter Name="V_COST_MANT" Type="number" Mode="In" />
+    <Parameter Name="V_DETA_MANT" Type="nvarchar2" Mode="In" />
   </Function>
   <Function Name="SP_MODIFICARMARCA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
     <Parameter Name="V_ID_MARCA" Type="number" Mode="In" />
@@ -842,8 +904,6 @@
   </Function>
   <Function Name="SP_MODIFICARRESERVA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
     <Parameter Name="V_ID_RVA" Type="number" Mode="In" />
-    <Parameter Name="V_FEC_INI_RVA" Type="date" Mode="In" />
-    <Parameter Name="V_FEC_FIN_RVA" Type="date" Mode="In" />
     <Parameter Name="V_NUM_PERS" Type="number" Mode="In" />
     <Parameter Name="V_ESTADO_RVA" Type="nvarchar2" Mode="In" />
   </Function>
@@ -854,7 +914,6 @@
   <Function Name="SP_MODIFICARSERVEXTRAS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
     <Parameter Name="V_ID_SERV" Type="number" Mode="In" />
     <Parameter Name="V_NOM_SERV" Type="nvarchar2" Mode="In" />
-    <Parameter Name="V_TIPO_SERV" Type="char" Mode="In" />
     <Parameter Name="V_DESC_SERV" Type="nvarchar2" Mode="In" />
   </Function>
   <Function Name="SP_MODIFICARTOUR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
@@ -873,7 +932,6 @@
     <Parameter Name="V_ID_SERV" Type="number" Mode="In" />
     <Parameter Name="V_COST_KM_DIA" Type="number" Mode="In" />
     <Parameter Name="V_COST_KM_NOC" Type="number" Mode="In" />
-    <Parameter Name="V_EXTRA_FEST" Type="number" Mode="In" />
   </Function>
   <Function Name="SP_MODIFICARUSR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
     <Parameter Name="V_ID_USR" Type="number" Mode="In" />
@@ -898,6 +956,12 @@
     <Parameter Name="V_CAP_MALE" Type="number" Mode="In" />
     <Parameter Name="V_ASIENTO_NIGNO" Type="char" Mode="In" />
     <Parameter Name="V_PER_SILLA" Type="char" Mode="In" />
+  </Function>
+  <Function Name="SP_SUSPENDERUSR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_USR" Type="number" Mode="In" />
+  </Function>
+  <Function Name="SP_VALIDARUSR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##TURISMO">
+    <Parameter Name="V_ID_USR" Type="number" Mode="In" />
   </Function>
   <EntityContainer Name="ModelStoreContainer">
     <EntitySet Name="AGENCIA_EXTERNA" EntityType="Self.AGENCIA_EXTERNA" Schema="C##TURISMO" store:Type="Tables" />

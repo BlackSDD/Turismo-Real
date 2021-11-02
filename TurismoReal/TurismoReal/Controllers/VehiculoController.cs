@@ -7,53 +7,58 @@ using TurismoReal.Negocio;
 
 namespace TurismoReal.Controllers
 {
-    public class ModeloController : Controller
+    public class VehiculoController : Controller
     {
-        // GET: Modelo
+        // GET: Vehiculo
         public ActionResult Index()
         {
-            ViewBag.modelos = new Modelo().ReadAll();
+
+            ViewBag.vehiculos = new Vehiculo().ReadAll();
             return View();
         }
 
-        // GET: Modelo/Details/5
-        public ActionResult Details(int id)
+        // GET: Vehiculo/Details/5
+        public ActionResult Details(string patente)
         {
-            return View();
+            Vehiculo veh = new Vehiculo().find(patente);
+            if (veh == null)
+            {
+                TempData["mensaje"] = "El vehiculo no se encuentra";
+                return RedirectToAction("Index");
+            }
+            
+            return View(veh);
         }
 
-        // GET: Modelo/Create
+        // GET: Vehiculo/Create
         public ActionResult Create()
         {
-            EnviarMarcas();
-
             return View();
         }
 
-        // POST: Modelo/Create
+        // POST: Vehiculo/Create
         [HttpPost]
-        public ActionResult Create(Modelo modelo)
+        public ActionResult Create(FormCollection collection)
         {
             try
             {
                 // TODO: Add insert logic here
-                modelo.Save();
-                TempData["mensaje"] = "Modelo añadido";
+
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View(modelo);
+                return View();
             }
         }
 
-        // GET: Modelo/Edit/5
+        // GET: Vehiculo/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Modelo/Edit/5
+        // POST: Vehiculo/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
@@ -69,13 +74,13 @@ namespace TurismoReal.Controllers
             }
         }
 
-        // GET: Modelo/Delete/5
+        // GET: Vehiculo/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: Modelo/Delete/5
+        // POST: Vehiculo/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
@@ -90,12 +95,5 @@ namespace TurismoReal.Controllers
                 return View();
             }
         }
-
-        private void EnviarMarcas()
-        {
-            ViewBag.marcas = new Marca().ReadAll();
-        }
-
-
     }
 }
