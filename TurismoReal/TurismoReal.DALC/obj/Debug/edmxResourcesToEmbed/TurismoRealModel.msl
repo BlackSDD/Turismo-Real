@@ -124,20 +124,18 @@
     <EntitySetMapping Name="GASTOS">
       <EntityTypeMapping TypeName="Model.GASTOS">
         <MappingFragment StoreEntitySet="GASTOS">
-          <ScalarProperty Name="ID_GASTOS" ColumnName="ID_GASTOS" />
+          <ScalarProperty Name="ID_DPTO" ColumnName="ID_DPTO" />
           <ScalarProperty Name="GAST_MES" ColumnName="GAST_MES" />
           <ScalarProperty Name="GAST_AGNO" ColumnName="GAST_AGNO" />
-          <ScalarProperty Name="ID_DPTO" ColumnName="ID_DPTO" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="MANTENCION">
       <EntityTypeMapping TypeName="Model.MANTENCION">
         <MappingFragment StoreEntitySet="MANTENCION">
-          <ScalarProperty Name="ID_MANT" ColumnName="ID_MANT" />
+          <ScalarProperty Name="ID_RMANT" ColumnName="ID_RMANT" />
           <ScalarProperty Name="COST_MANT" ColumnName="COST_MANT" />
           <ScalarProperty Name="DETA_MANT" ColumnName="DETA_MANT" />
-          <ScalarProperty Name="ID_RMANT" ColumnName="ID_RMANT" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -185,6 +183,7 @@
         <MappingFragment StoreEntitySet="RES_MANT">
           <ScalarProperty Name="ID_RMANT" ColumnName="ID_RMANT" />
           <ScalarProperty Name="FEC_RMANT" ColumnName="FEC_RMANT" />
+          <ScalarProperty Name="EST_MAN" ColumnName="EST_MAN" />
           <ScalarProperty Name="ID_DPTO" ColumnName="ID_DPTO" />
           <ScalarProperty Name="ID_USR" ColumnName="ID_USR" />
         </MappingFragment>
@@ -244,7 +243,6 @@
           <ScalarProperty Name="ID_SERV" ColumnName="ID_SERV" />
           <ScalarProperty Name="COST_KM_DIA" ColumnName="COST_KM_DIA" />
           <ScalarProperty Name="COST_KM_NOC" ColumnName="COST_KM_NOC" />
-          <ScalarProperty Name="EXTRA_FEST" ColumnName="EXTRA_FEST" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -284,9 +282,13 @@
     </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="PD_INSERT_FECHAS" FunctionName="Model.Store.PD_INSERT_FECHAS" />
     <FunctionImportMapping FunctionImportName="SP_AGREGARAGENCIAEXTERNA" FunctionName="Model.Store.SP_AGREGARAGENCIAEXTERNA" />
+    <FunctionImportMapping FunctionImportName="SP_AGREGARARTICULO" FunctionName="Model.Store.SP_AGREGARARTICULO" />
+    <FunctionImportMapping FunctionImportName="SP_AGREGARCHECKIN" FunctionName="Model.Store.SP_AGREGARCHECKIN" />
+    <FunctionImportMapping FunctionImportName="SP_AGREGARCHECKOUT" FunctionName="Model.Store.SP_AGREGARCHECKOUT" />
     <FunctionImportMapping FunctionImportName="SP_AGREGARCOMUNA" FunctionName="Model.Store.SP_AGREGARCOMUNA" />
     <FunctionImportMapping FunctionImportName="SP_AGREGARCONDOMINIO" FunctionName="Model.Store.SP_AGREGARCONDOMINIO" />
     <FunctionImportMapping FunctionImportName="SP_AGREGARCONDUCTOR" FunctionName="Model.Store.SP_AGREGARCONDUCTOR" />
+    <FunctionImportMapping FunctionImportName="SP_AGREGARCONTSERV" FunctionName="Model.Store.SP_AGREGARCONTSERV" />
     <FunctionImportMapping FunctionImportName="SP_AGREGARDEPARTAMENTO" FunctionName="Model.Store.SP_AGREGARDEPARTAMENTO" />
     <FunctionImportMapping FunctionImportName="SP_AGREGARDISPONIBILIDAD" FunctionName="Model.Store.SP_AGREGARDISPONIBILIDAD" />
     <FunctionImportMapping FunctionImportName="SP_AGREGARGASTOS" FunctionName="Model.Store.SP_AGREGARGASTOS" />
@@ -294,12 +296,15 @@
     <FunctionImportMapping FunctionImportName="SP_AGREGARMARCA" FunctionName="Model.Store.SP_AGREGARMARCA" />
     <FunctionImportMapping FunctionImportName="SP_AGREGARMODELO" FunctionName="Model.Store.SP_AGREGARMODELO" />
     <FunctionImportMapping FunctionImportName="SP_AGREGARPAGO" FunctionName="Model.Store.SP_AGREGARPAGO" />
+    <FunctionImportMapping FunctionImportName="SP_AGREGARREGION" FunctionName="Model.Store.SP_AGREGARREGION" />
+    <FunctionImportMapping FunctionImportName="SP_AGREGARRESERVA" FunctionName="Model.Store.SP_AGREGARRESERVA" />
     <FunctionImportMapping FunctionImportName="SP_AGREGARRESMANT" FunctionName="Model.Store.SP_AGREGARRESMANT" />
     <FunctionImportMapping FunctionImportName="SP_AGREGARSERVEXTRAS" FunctionName="Model.Store.SP_AGREGARSERVEXTRAS" />
     <FunctionImportMapping FunctionImportName="SP_AGREGARTOUR" FunctionName="Model.Store.SP_AGREGARTOUR" />
     <FunctionImportMapping FunctionImportName="SP_AGREGARTRANSPORTE" FunctionName="Model.Store.SP_AGREGARTRANSPORTE" />
     <FunctionImportMapping FunctionImportName="SP_AGREGARUSR" FunctionName="Model.Store.SP_AGREGARUSR" />
     <FunctionImportMapping FunctionImportName="SP_AGREGARVEHICULO" FunctionName="Model.Store.SP_AGREGARVEHICULO" />
+    <FunctionImportMapping FunctionImportName="SP_CAMBIARTIPOCLIENTE" FunctionName="Model.Store.SP_CAMBIARTIPOCLIENTE" />
     <FunctionImportMapping FunctionImportName="SP_ELIMINARAGENCIAEXTERNA" FunctionName="Model.Store.SP_ELIMINARAGENCIAEXTERNA" />
     <FunctionImportMapping FunctionImportName="SP_ELIMINARARTICULO" FunctionName="Model.Store.SP_ELIMINARARTICULO" />
     <FunctionImportMapping FunctionImportName="SP_ELIMINARCOMUNA" FunctionName="Model.Store.SP_ELIMINARCOMUNA" />
@@ -316,16 +321,20 @@
     <FunctionImportMapping FunctionImportName="SP_ELIMINARRESERVA" FunctionName="Model.Store.SP_ELIMINARRESERVA" />
     <FunctionImportMapping FunctionImportName="SP_ELIMINARRESMANT" FunctionName="Model.Store.SP_ELIMINARRESMANT" />
     <FunctionImportMapping FunctionImportName="SP_ELIMINARSEREXTRAS" FunctionName="Model.Store.SP_ELIMINARSEREXTRAS" />
+    <FunctionImportMapping FunctionImportName="SP_ELIMINARSERVEXTRAS" FunctionName="Model.Store.SP_ELIMINARSERVEXTRAS" />
     <FunctionImportMapping FunctionImportName="SP_ELIMINARTOUR" FunctionName="Model.Store.SP_ELIMINARTOUR" />
     <FunctionImportMapping FunctionImportName="SP_ELIMINARTRANSPORTE" FunctionName="Model.Store.SP_ELIMINARTRANSPORTE" />
     <FunctionImportMapping FunctionImportName="SP_ELIMINARUSR" FunctionName="Model.Store.SP_ELIMINARUSR" />
     <FunctionImportMapping FunctionImportName="SP_ELIMINARVEHICULO" FunctionName="Model.Store.SP_ELIMINARVEHICULO" />
     <FunctionImportMapping FunctionImportName="SP_MODIFICARAGENCIAEXTERNA" FunctionName="Model.Store.SP_MODIFICARAGENCIAEXTERNA" />
     <FunctionImportMapping FunctionImportName="SP_MODIFICARARTICULO" FunctionName="Model.Store.SP_MODIFICARARTICULO" />
+    <FunctionImportMapping FunctionImportName="SP_MODIFICARCHECKIN" FunctionName="Model.Store.SP_MODIFICARCHECKIN" />
+    <FunctionImportMapping FunctionImportName="SP_MODIFICARCHECKOUT" FunctionName="Model.Store.SP_MODIFICARCHECKOUT" />
     <FunctionImportMapping FunctionImportName="SP_MODIFICARCOMUNA" FunctionName="Model.Store.SP_MODIFICARCOMUNA" />
     <FunctionImportMapping FunctionImportName="SP_MODIFICARCONDOMINIO" FunctionName="Model.Store.SP_MODIFICARCONDOMINIO" />
     <FunctionImportMapping FunctionImportName="SP_MODIFICARCONDUCTOR" FunctionName="Model.Store.SP_MODIFICARCONDUCTOR" />
     <FunctionImportMapping FunctionImportName="SP_MODIFICARCONTSERV" FunctionName="Model.Store.SP_MODIFICARCONTSERV" />
+    <FunctionImportMapping FunctionImportName="SP_MODIFICARDATOSUSR" FunctionName="Model.Store.SP_MODIFICARDATOSUSR" />
     <FunctionImportMapping FunctionImportName="SP_MODIFICARDEPARTAMENTO" FunctionName="Model.Store.SP_MODIFICARDEPARTAMENTO" />
     <FunctionImportMapping FunctionImportName="SP_MODIFICARDISPONIBILIDAD" FunctionName="Model.Store.SP_MODIFICARDISPONIBILIDAD" />
     <FunctionImportMapping FunctionImportName="SP_MODIFICARGASTOS" FunctionName="Model.Store.SP_MODIFICARGASTOS" />
@@ -340,5 +349,7 @@
     <FunctionImportMapping FunctionImportName="SP_MODIFICARTRANSPORTE" FunctionName="Model.Store.SP_MODIFICARTRANSPORTE" />
     <FunctionImportMapping FunctionImportName="SP_MODIFICARUSR" FunctionName="Model.Store.SP_MODIFICARUSR" />
     <FunctionImportMapping FunctionImportName="SP_MODIFICARVEHICULO" FunctionName="Model.Store.SP_MODIFICARVEHICULO" />
+    <FunctionImportMapping FunctionImportName="SP_SUSPENDERUSR" FunctionName="Model.Store.SP_SUSPENDERUSR" />
+    <FunctionImportMapping FunctionImportName="SP_VALIDARUSR" FunctionName="Model.Store.SP_VALIDARUSR" />
   </EntityContainerMapping>
 </Mapping>

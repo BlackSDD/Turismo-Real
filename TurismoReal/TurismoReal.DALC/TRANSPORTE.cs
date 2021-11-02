@@ -22,7 +22,6 @@ namespace TurismoReal.DALC
         public int ID_SERV { get; set; }
         public short COST_KM_DIA { get; set; }
         public short COST_KM_NOC { get; set; }
-        public short EXTRA_FEST { get; set; }
     
         public virtual ICollection<CONDUCTOR> CONDUCTOR { get; set; }
         public virtual SERVEXTRAS SERVEXTRAS { get; set; }

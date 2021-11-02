@@ -83,6 +83,69 @@ namespace TurismoReal.DALC
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_AGREGARAGENCIAEXTERNA", v_NOM_AGEParameter, v_EMAIL_AGEParameter, v_TEL_AGEParameter, v_ID_COMParameter);
         }
     
+        public virtual int SP_AGREGARARTICULO(string v_NOM_ARTI, Nullable<decimal> v_CANT_ARTI, string v_DETA_ARTI, Nullable<decimal> v_VALOR_ARTI, Nullable<decimal> v_ID_DEPTO)
+        {
+            var v_NOM_ARTIParameter = v_NOM_ARTI != null ?
+                new ObjectParameter("V_NOM_ARTI", v_NOM_ARTI) :
+                new ObjectParameter("V_NOM_ARTI", typeof(string));
+    
+            var v_CANT_ARTIParameter = v_CANT_ARTI.HasValue ?
+                new ObjectParameter("V_CANT_ARTI", v_CANT_ARTI) :
+                new ObjectParameter("V_CANT_ARTI", typeof(decimal));
+    
+            var v_DETA_ARTIParameter = v_DETA_ARTI != null ?
+                new ObjectParameter("V_DETA_ARTI", v_DETA_ARTI) :
+                new ObjectParameter("V_DETA_ARTI", typeof(string));
+    
+            var v_VALOR_ARTIParameter = v_VALOR_ARTI.HasValue ?
+                new ObjectParameter("V_VALOR_ARTI", v_VALOR_ARTI) :
+                new ObjectParameter("V_VALOR_ARTI", typeof(decimal));
+    
+            var v_ID_DEPTOParameter = v_ID_DEPTO.HasValue ?
+                new ObjectParameter("V_ID_DEPTO", v_ID_DEPTO) :
+                new ObjectParameter("V_ID_DEPTO", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_AGREGARARTICULO", v_NOM_ARTIParameter, v_CANT_ARTIParameter, v_DETA_ARTIParameter, v_VALOR_ARTIParameter, v_ID_DEPTOParameter);
+        }
+    
+        public virtual int SP_AGREGARCHECKIN(Nullable<decimal> v_ID_RVA, string v_DETA_CHI, Nullable<decimal> v_ID_USR)
+        {
+            var v_ID_RVAParameter = v_ID_RVA.HasValue ?
+                new ObjectParameter("V_ID_RVA", v_ID_RVA) :
+                new ObjectParameter("V_ID_RVA", typeof(decimal));
+    
+            var v_DETA_CHIParameter = v_DETA_CHI != null ?
+                new ObjectParameter("V_DETA_CHI", v_DETA_CHI) :
+                new ObjectParameter("V_DETA_CHI", typeof(string));
+    
+            var v_ID_USRParameter = v_ID_USR.HasValue ?
+                new ObjectParameter("V_ID_USR", v_ID_USR) :
+                new ObjectParameter("V_ID_USR", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_AGREGARCHECKIN", v_ID_RVAParameter, v_DETA_CHIParameter, v_ID_USRParameter);
+        }
+    
+        public virtual int SP_AGREGARCHECKOUT(Nullable<decimal> v_COST_MULTA, string v_DETA_CHO, Nullable<decimal> v_ID_RVA, Nullable<decimal> v_ID_USR)
+        {
+            var v_COST_MULTAParameter = v_COST_MULTA.HasValue ?
+                new ObjectParameter("V_COST_MULTA", v_COST_MULTA) :
+                new ObjectParameter("V_COST_MULTA", typeof(decimal));
+    
+            var v_DETA_CHOParameter = v_DETA_CHO != null ?
+                new ObjectParameter("V_DETA_CHO", v_DETA_CHO) :
+                new ObjectParameter("V_DETA_CHO", typeof(string));
+    
+            var v_ID_RVAParameter = v_ID_RVA.HasValue ?
+                new ObjectParameter("V_ID_RVA", v_ID_RVA) :
+                new ObjectParameter("V_ID_RVA", typeof(decimal));
+    
+            var v_ID_USRParameter = v_ID_USR.HasValue ?
+                new ObjectParameter("V_ID_USR", v_ID_USR) :
+                new ObjectParameter("V_ID_USR", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_AGREGARCHECKOUT", v_COST_MULTAParameter, v_DETA_CHOParameter, v_ID_RVAParameter, v_ID_USRParameter);
+        }
+    
         public virtual int SP_AGREGARCOMUNA(string v_NOM_COM, Nullable<decimal> v_ID_RGN)
         {
             var v_NOM_COMParameter = v_NOM_COM != null ?
@@ -148,6 +211,51 @@ namespace TurismoReal.DALC
                 new ObjectParameter("V_ID_SERV", typeof(decimal));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_AGREGARCONDUCTOR", v_RUT_CONDUCParameter, v_DV_CONDUCParameter, v_NOM_CONDUCParameter, v_APPAT_CONDUCParameter, v_APMAT_CONDUCParameter, v_EMAIL_CONDUCParameter, v_TEL_CONDUCParameter, v_PATENTEParameter, v_ID_SERVParameter);
+        }
+    
+        public virtual int SP_AGREGARCONTSERV(Nullable<decimal> v_COSTO_TOTAL, string v_DETA_CONT, Nullable<System.DateTime> v_FEC_ACORD, string v_HORA_ACORD, string v_LUGAR_RECOGIDA, string v_LUGAR_DESTINO, Nullable<decimal> v_KM_REC, string v_EST_CONT, Nullable<decimal> v_ID_RVA, Nullable<decimal> v_ID_SERV)
+        {
+            var v_COSTO_TOTALParameter = v_COSTO_TOTAL.HasValue ?
+                new ObjectParameter("V_COSTO_TOTAL", v_COSTO_TOTAL) :
+                new ObjectParameter("V_COSTO_TOTAL", typeof(decimal));
+    
+            var v_DETA_CONTParameter = v_DETA_CONT != null ?
+                new ObjectParameter("V_DETA_CONT", v_DETA_CONT) :
+                new ObjectParameter("V_DETA_CONT", typeof(string));
+    
+            var v_FEC_ACORDParameter = v_FEC_ACORD.HasValue ?
+                new ObjectParameter("V_FEC_ACORD", v_FEC_ACORD) :
+                new ObjectParameter("V_FEC_ACORD", typeof(System.DateTime));
+    
+            var v_HORA_ACORDParameter = v_HORA_ACORD != null ?
+                new ObjectParameter("V_HORA_ACORD", v_HORA_ACORD) :
+                new ObjectParameter("V_HORA_ACORD", typeof(string));
+    
+            var v_LUGAR_RECOGIDAParameter = v_LUGAR_RECOGIDA != null ?
+                new ObjectParameter("V_LUGAR_RECOGIDA", v_LUGAR_RECOGIDA) :
+                new ObjectParameter("V_LUGAR_RECOGIDA", typeof(string));
+    
+            var v_LUGAR_DESTINOParameter = v_LUGAR_DESTINO != null ?
+                new ObjectParameter("V_LUGAR_DESTINO", v_LUGAR_DESTINO) :
+                new ObjectParameter("V_LUGAR_DESTINO", typeof(string));
+    
+            var v_KM_RECParameter = v_KM_REC.HasValue ?
+                new ObjectParameter("V_KM_REC", v_KM_REC) :
+                new ObjectParameter("V_KM_REC", typeof(decimal));
+    
+            var v_EST_CONTParameter = v_EST_CONT != null ?
+                new ObjectParameter("V_EST_CONT", v_EST_CONT) :
+                new ObjectParameter("V_EST_CONT", typeof(string));
+    
+            var v_ID_RVAParameter = v_ID_RVA.HasValue ?
+                new ObjectParameter("V_ID_RVA", v_ID_RVA) :
+                new ObjectParameter("V_ID_RVA", typeof(decimal));
+    
+            var v_ID_SERVParameter = v_ID_SERV.HasValue ?
+                new ObjectParameter("V_ID_SERV", v_ID_SERV) :
+                new ObjectParameter("V_ID_SERV", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_AGREGARCONTSERV", v_COSTO_TOTALParameter, v_DETA_CONTParameter, v_FEC_ACORDParameter, v_HORA_ACORDParameter, v_LUGAR_RECOGIDAParameter, v_LUGAR_DESTINOParameter, v_KM_RECParameter, v_EST_CONTParameter, v_ID_RVAParameter, v_ID_SERVParameter);
         }
     
         public virtual int SP_AGREGARDEPARTAMENTO(string v_DIR_DPTO, Nullable<decimal> v_NUM_DPTO, Nullable<decimal> v_N_AMB_DPTO, string v_DESC_DPTO, Nullable<decimal> v_COSTO_ARRI_DPTO, byte[] v_IMG_1_DPTO, byte[] v_IMG_2_DPTO, byte[] v_IMG_3_DPTO, byte[] v_IMG_4_DPTO, byte[] v_IMG_5_DPTO, Nullable<decimal> v_ID_CND)
@@ -272,25 +380,51 @@ namespace TurismoReal.DALC
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_AGREGARMODELO", v_NOMBRE_MODELOParameter, v_ID_MARCAParameter);
         }
     
-        public virtual int SP_AGREGARPAGO(Nullable<decimal> v_ID_RVA, Nullable<decimal> v_MONTO_TOTAL, Nullable<decimal> v_MONTO_PAGADO, string v_ESTA_PAGO)
+        public virtual int SP_AGREGARPAGO(Nullable<decimal> v_ID_RVA, Nullable<decimal> v_MONTO_PAGADO)
         {
             var v_ID_RVAParameter = v_ID_RVA.HasValue ?
                 new ObjectParameter("V_ID_RVA", v_ID_RVA) :
                 new ObjectParameter("V_ID_RVA", typeof(decimal));
     
-            var v_MONTO_TOTALParameter = v_MONTO_TOTAL.HasValue ?
-                new ObjectParameter("V_MONTO_TOTAL", v_MONTO_TOTAL) :
-                new ObjectParameter("V_MONTO_TOTAL", typeof(decimal));
-    
             var v_MONTO_PAGADOParameter = v_MONTO_PAGADO.HasValue ?
                 new ObjectParameter("V_MONTO_PAGADO", v_MONTO_PAGADO) :
                 new ObjectParameter("V_MONTO_PAGADO", typeof(decimal));
     
-            var v_ESTA_PAGOParameter = v_ESTA_PAGO != null ?
-                new ObjectParameter("V_ESTA_PAGO", v_ESTA_PAGO) :
-                new ObjectParameter("V_ESTA_PAGO", typeof(string));
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_AGREGARPAGO", v_ID_RVAParameter, v_MONTO_PAGADOParameter);
+        }
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_AGREGARPAGO", v_ID_RVAParameter, v_MONTO_TOTALParameter, v_MONTO_PAGADOParameter, v_ESTA_PAGOParameter);
+        public virtual int SP_AGREGARREGION(string v_NOM_RGN)
+        {
+            var v_NOM_RGNParameter = v_NOM_RGN != null ?
+                new ObjectParameter("V_NOM_RGN", v_NOM_RGN) :
+                new ObjectParameter("V_NOM_RGN", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_AGREGARREGION", v_NOM_RGNParameter);
+        }
+    
+        public virtual int SP_AGREGARRESERVA(Nullable<System.DateTime> v_FEC_INI_RVA, Nullable<System.DateTime> v_FEC_FIN_RVA, Nullable<decimal> v_NUM_PERS, Nullable<decimal> v_ID_DPTO, Nullable<decimal> v_ID_USR)
+        {
+            var v_FEC_INI_RVAParameter = v_FEC_INI_RVA.HasValue ?
+                new ObjectParameter("V_FEC_INI_RVA", v_FEC_INI_RVA) :
+                new ObjectParameter("V_FEC_INI_RVA", typeof(System.DateTime));
+    
+            var v_FEC_FIN_RVAParameter = v_FEC_FIN_RVA.HasValue ?
+                new ObjectParameter("V_FEC_FIN_RVA", v_FEC_FIN_RVA) :
+                new ObjectParameter("V_FEC_FIN_RVA", typeof(System.DateTime));
+    
+            var v_NUM_PERSParameter = v_NUM_PERS.HasValue ?
+                new ObjectParameter("V_NUM_PERS", v_NUM_PERS) :
+                new ObjectParameter("V_NUM_PERS", typeof(decimal));
+    
+            var v_ID_DPTOParameter = v_ID_DPTO.HasValue ?
+                new ObjectParameter("V_ID_DPTO", v_ID_DPTO) :
+                new ObjectParameter("V_ID_DPTO", typeof(decimal));
+    
+            var v_ID_USRParameter = v_ID_USR.HasValue ?
+                new ObjectParameter("V_ID_USR", v_ID_USR) :
+                new ObjectParameter("V_ID_USR", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_AGREGARRESERVA", v_FEC_INI_RVAParameter, v_FEC_FIN_RVAParameter, v_NUM_PERSParameter, v_ID_DPTOParameter, v_ID_USRParameter);
         }
     
         public virtual int SP_AGREGARRESMANT(Nullable<System.DateTime> v_FEC_RMANT, Nullable<decimal> v_ID_DPTO, Nullable<decimal> v_ID_USR)
@@ -331,8 +465,12 @@ namespace TurismoReal.DALC
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_AGREGARSERVEXTRAS", v_NOM_SERVParameter, v_TIPO_SERVParameter, v_DESC_SERVParameter, v_ID_AGENCIAParameter);
         }
     
-        public virtual int SP_AGREGARTOUR(Nullable<decimal> v_DUR_HRA, Nullable<decimal> v_DUR_MIN, Nullable<decimal> v_COST_ADULT, Nullable<decimal> v_COSTO_NIGNO, Nullable<decimal> v_COSTO_3RA, string v_UBI_PARTIDA, string v_UBI_FIN, string v_ALIMENTACION, string v_TRANSPORTE)
+        public virtual int SP_AGREGARTOUR(Nullable<decimal> v_ID_SERV, Nullable<decimal> v_DUR_HRA, Nullable<decimal> v_DUR_MIN, Nullable<decimal> v_COST_ADULT, Nullable<decimal> v_COSTO_NIGNO, Nullable<decimal> v_COSTO_3RA, string v_UBI_PARTIDA, string v_UBI_FIN, string v_ALIMENTACION, string v_TRANSPORTE)
         {
+            var v_ID_SERVParameter = v_ID_SERV.HasValue ?
+                new ObjectParameter("V_ID_SERV", v_ID_SERV) :
+                new ObjectParameter("V_ID_SERV", typeof(decimal));
+    
             var v_DUR_HRAParameter = v_DUR_HRA.HasValue ?
                 new ObjectParameter("V_DUR_HRA", v_DUR_HRA) :
                 new ObjectParameter("V_DUR_HRA", typeof(decimal));
@@ -369,11 +507,15 @@ namespace TurismoReal.DALC
                 new ObjectParameter("V_TRANSPORTE", v_TRANSPORTE) :
                 new ObjectParameter("V_TRANSPORTE", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_AGREGARTOUR", v_DUR_HRAParameter, v_DUR_MINParameter, v_COST_ADULTParameter, v_COSTO_NIGNOParameter, v_COSTO_3RAParameter, v_UBI_PARTIDAParameter, v_UBI_FINParameter, v_ALIMENTACIONParameter, v_TRANSPORTEParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_AGREGARTOUR", v_ID_SERVParameter, v_DUR_HRAParameter, v_DUR_MINParameter, v_COST_ADULTParameter, v_COSTO_NIGNOParameter, v_COSTO_3RAParameter, v_UBI_PARTIDAParameter, v_UBI_FINParameter, v_ALIMENTACIONParameter, v_TRANSPORTEParameter);
         }
     
-        public virtual int SP_AGREGARTRANSPORTE(Nullable<decimal> v_COST_KM_DIA, Nullable<decimal> v_COST_KM_NOC, Nullable<decimal> v_EXTRA_FEST)
+        public virtual int SP_AGREGARTRANSPORTE(Nullable<decimal> v_ID_SERV, Nullable<decimal> v_COST_KM_DIA, Nullable<decimal> v_COST_KM_NOC)
         {
+            var v_ID_SERVParameter = v_ID_SERV.HasValue ?
+                new ObjectParameter("V_ID_SERV", v_ID_SERV) :
+                new ObjectParameter("V_ID_SERV", typeof(decimal));
+    
             var v_COST_KM_DIAParameter = v_COST_KM_DIA.HasValue ?
                 new ObjectParameter("V_COST_KM_DIA", v_COST_KM_DIA) :
                 new ObjectParameter("V_COST_KM_DIA", typeof(decimal));
@@ -382,11 +524,7 @@ namespace TurismoReal.DALC
                 new ObjectParameter("V_COST_KM_NOC", v_COST_KM_NOC) :
                 new ObjectParameter("V_COST_KM_NOC", typeof(decimal));
     
-            var v_EXTRA_FESTParameter = v_EXTRA_FEST.HasValue ?
-                new ObjectParameter("V_EXTRA_FEST", v_EXTRA_FEST) :
-                new ObjectParameter("V_EXTRA_FEST", typeof(decimal));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_AGREGARTRANSPORTE", v_COST_KM_DIAParameter, v_COST_KM_NOCParameter, v_EXTRA_FESTParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_AGREGARTRANSPORTE", v_ID_SERVParameter, v_COST_KM_DIAParameter, v_COST_KM_NOCParameter);
         }
     
         public virtual int SP_AGREGARUSR(string v_EMAIL_USR, string v_CONTR_USR, string v_NOM_USR, string v_APPAT_USR, string v_APMAT_USR, Nullable<decimal> v_TEL_USR, Nullable<decimal> v_RUT_USR, string v_DV_USR, Nullable<decimal> v_CANT_RES, string v_EST_CTA, string v_TIPO_CLI, Nullable<decimal> v_ID_TIPO_USR)
@@ -483,6 +621,15 @@ namespace TurismoReal.DALC
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_AGREGARVEHICULO", v_PATENTEParameter, v_COLORParameter, v_AGNOParameter, v_CANT_PUERTASParameter, v_CAP_PASAJParameter, v_CAP_MALEParameter, v_ASIENTO_NIGNOParameter, v_PER_SILLAParameter, v_ID_MODELOParameter);
         }
     
+        public virtual int SP_CAMBIARTIPOCLIENTE(Nullable<decimal> v_ID_USR)
+        {
+            var v_ID_USRParameter = v_ID_USR.HasValue ?
+                new ObjectParameter("V_ID_USR", v_ID_USR) :
+                new ObjectParameter("V_ID_USR", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_CAMBIARTIPOCLIENTE", v_ID_USRParameter);
+        }
+    
         public virtual int SP_ELIMINARAGENCIAEXTERNA(Nullable<decimal> v_ID_AGENCIA)
         {
             var v_ID_AGENCIAParameter = v_ID_AGENCIA.HasValue ?
@@ -546,22 +693,22 @@ namespace TurismoReal.DALC
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ELIMINARDEPARTAMENTO", v_ID_DPTOParameter);
         }
     
-        public virtual int SP_ELIMINARGASTOS(Nullable<decimal> v_ID_GASTOS)
+        public virtual int SP_ELIMINARGASTOS(Nullable<decimal> v_ID_DPTO)
         {
-            var v_ID_GASTOSParameter = v_ID_GASTOS.HasValue ?
-                new ObjectParameter("V_ID_GASTOS", v_ID_GASTOS) :
-                new ObjectParameter("V_ID_GASTOS", typeof(decimal));
+            var v_ID_DPTOParameter = v_ID_DPTO.HasValue ?
+                new ObjectParameter("V_ID_DPTO", v_ID_DPTO) :
+                new ObjectParameter("V_ID_DPTO", typeof(decimal));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ELIMINARGASTOS", v_ID_GASTOSParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ELIMINARGASTOS", v_ID_DPTOParameter);
         }
     
-        public virtual int SP_ELIMINARMANTENCION(Nullable<decimal> v_ID_MANT)
+        public virtual int SP_ELIMINARMANTENCION(Nullable<decimal> v_ID_RMANT)
         {
-            var v_ID_MANTParameter = v_ID_MANT.HasValue ?
-                new ObjectParameter("V_ID_MANT", v_ID_MANT) :
-                new ObjectParameter("V_ID_MANT", typeof(decimal));
+            var v_ID_RMANTParameter = v_ID_RMANT.HasValue ?
+                new ObjectParameter("V_ID_RMANT", v_ID_RMANT) :
+                new ObjectParameter("V_ID_RMANT", typeof(decimal));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ELIMINARMANTENCION", v_ID_MANTParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ELIMINARMANTENCION", v_ID_RMANTParameter);
         }
     
         public virtual int SP_ELIMINARMARCA(Nullable<decimal> v_ID_MARCA)
@@ -625,6 +772,15 @@ namespace TurismoReal.DALC
                 new ObjectParameter("V_ID_SERV", typeof(decimal));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ELIMINARSEREXTRAS", v_ID_SERVParameter);
+        }
+    
+        public virtual int SP_ELIMINARSERVEXTRAS(Nullable<decimal> v_ID_SERV)
+        {
+            var v_ID_SERVParameter = v_ID_SERV.HasValue ?
+                new ObjectParameter("V_ID_SERV", v_ID_SERV) :
+                new ObjectParameter("V_ID_SERV", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ELIMINARSERVEXTRAS", v_ID_SERVParameter);
         }
     
         public virtual int SP_ELIMINARTOUR(Nullable<decimal> v_ID_SERV)
@@ -709,6 +865,36 @@ namespace TurismoReal.DALC
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MODIFICARARTICULO", v_ID_ARTIParameter, v_NOM_ARTIParameter, v_CANT_ARTIParameter, v_DETA_ARTIParameter, v_VALOR_ARTIParameter);
         }
     
+        public virtual int SP_MODIFICARCHECKIN(Nullable<decimal> v_ID_RVA, string v_DETA_CHI)
+        {
+            var v_ID_RVAParameter = v_ID_RVA.HasValue ?
+                new ObjectParameter("V_ID_RVA", v_ID_RVA) :
+                new ObjectParameter("V_ID_RVA", typeof(decimal));
+    
+            var v_DETA_CHIParameter = v_DETA_CHI != null ?
+                new ObjectParameter("V_DETA_CHI", v_DETA_CHI) :
+                new ObjectParameter("V_DETA_CHI", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MODIFICARCHECKIN", v_ID_RVAParameter, v_DETA_CHIParameter);
+        }
+    
+        public virtual int SP_MODIFICARCHECKOUT(Nullable<decimal> v_COST_MULTA, string v_DETA_CHO, Nullable<decimal> v_ID_RVA)
+        {
+            var v_COST_MULTAParameter = v_COST_MULTA.HasValue ?
+                new ObjectParameter("V_COST_MULTA", v_COST_MULTA) :
+                new ObjectParameter("V_COST_MULTA", typeof(decimal));
+    
+            var v_DETA_CHOParameter = v_DETA_CHO != null ?
+                new ObjectParameter("V_DETA_CHO", v_DETA_CHO) :
+                new ObjectParameter("V_DETA_CHO", typeof(string));
+    
+            var v_ID_RVAParameter = v_ID_RVA.HasValue ?
+                new ObjectParameter("V_ID_RVA", v_ID_RVA) :
+                new ObjectParameter("V_ID_RVA", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MODIFICARCHECKOUT", v_COST_MULTAParameter, v_DETA_CHOParameter, v_ID_RVAParameter);
+        }
+    
         public virtual int SP_MODIFICARCOMUNA(Nullable<decimal> v_ID_COM, string v_NOM_COM)
         {
             var v_ID_COMParameter = v_ID_COM.HasValue ?
@@ -768,7 +954,7 @@ namespace TurismoReal.DALC
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MODIFICARCONDUCTOR", v_RUT_CONDUCParameter, v_DV_CONDUCParameter, v_NOM_CONDUCParameter, v_APPAT_CONDUCParameter, v_APMAT_CONDUCParameter, v_EMAIL_CONDUCParameter, v_TEL_CONDUCParameter);
         }
     
-        public virtual int SP_MODIFICARCONTSERV(Nullable<decimal> v_ID_CONT_SERV, Nullable<System.DateTime> v_FEC_CONT, Nullable<decimal> v_COSTO_TOTAL, string v_DETA_CONT, Nullable<System.DateTime> v_FEC_ACORD, string v_LUGAR_RECOGIDA, string v_LUGAR_DESTINO, Nullable<decimal> v_KM_REC)
+        public virtual int SP_MODIFICARCONTSERV(Nullable<decimal> v_ID_CONT_SERV, Nullable<System.DateTime> v_FEC_CONT, Nullable<decimal> v_COSTO_TOTAL, string v_DETA_CONT, Nullable<System.DateTime> v_FEC_ACORD, string v_HORA_ACORD, string v_LUGAR_RECOGIDA, string v_LUGAR_DESTINO, Nullable<decimal> v_KM_REC, string v_EST_CONT)
         {
             var v_ID_CONT_SERVParameter = v_ID_CONT_SERV.HasValue ?
                 new ObjectParameter("V_ID_CONT_SERV", v_ID_CONT_SERV) :
@@ -790,6 +976,10 @@ namespace TurismoReal.DALC
                 new ObjectParameter("V_FEC_ACORD", v_FEC_ACORD) :
                 new ObjectParameter("V_FEC_ACORD", typeof(System.DateTime));
     
+            var v_HORA_ACORDParameter = v_HORA_ACORD != null ?
+                new ObjectParameter("V_HORA_ACORD", v_HORA_ACORD) :
+                new ObjectParameter("V_HORA_ACORD", typeof(string));
+    
             var v_LUGAR_RECOGIDAParameter = v_LUGAR_RECOGIDA != null ?
                 new ObjectParameter("V_LUGAR_RECOGIDA", v_LUGAR_RECOGIDA) :
                 new ObjectParameter("V_LUGAR_RECOGIDA", typeof(string));
@@ -802,7 +992,32 @@ namespace TurismoReal.DALC
                 new ObjectParameter("V_KM_REC", v_KM_REC) :
                 new ObjectParameter("V_KM_REC", typeof(decimal));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MODIFICARCONTSERV", v_ID_CONT_SERVParameter, v_FEC_CONTParameter, v_COSTO_TOTALParameter, v_DETA_CONTParameter, v_FEC_ACORDParameter, v_LUGAR_RECOGIDAParameter, v_LUGAR_DESTINOParameter, v_KM_RECParameter);
+            var v_EST_CONTParameter = v_EST_CONT != null ?
+                new ObjectParameter("V_EST_CONT", v_EST_CONT) :
+                new ObjectParameter("V_EST_CONT", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MODIFICARCONTSERV", v_ID_CONT_SERVParameter, v_FEC_CONTParameter, v_COSTO_TOTALParameter, v_DETA_CONTParameter, v_FEC_ACORDParameter, v_HORA_ACORDParameter, v_LUGAR_RECOGIDAParameter, v_LUGAR_DESTINOParameter, v_KM_RECParameter, v_EST_CONTParameter);
+        }
+    
+        public virtual int SP_MODIFICARDATOSUSR(Nullable<decimal> v_ID_USR, string v_EMAIL_USR, string v_CONTR_USR, Nullable<decimal> v_TEL_USR)
+        {
+            var v_ID_USRParameter = v_ID_USR.HasValue ?
+                new ObjectParameter("V_ID_USR", v_ID_USR) :
+                new ObjectParameter("V_ID_USR", typeof(decimal));
+    
+            var v_EMAIL_USRParameter = v_EMAIL_USR != null ?
+                new ObjectParameter("V_EMAIL_USR", v_EMAIL_USR) :
+                new ObjectParameter("V_EMAIL_USR", typeof(string));
+    
+            var v_CONTR_USRParameter = v_CONTR_USR != null ?
+                new ObjectParameter("V_CONTR_USR", v_CONTR_USR) :
+                new ObjectParameter("V_CONTR_USR", typeof(string));
+    
+            var v_TEL_USRParameter = v_TEL_USR.HasValue ?
+                new ObjectParameter("V_TEL_USR", v_TEL_USR) :
+                new ObjectParameter("V_TEL_USR", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MODIFICARDATOSUSR", v_ID_USRParameter, v_EMAIL_USRParameter, v_CONTR_USRParameter, v_TEL_USRParameter);
         }
     
         public virtual int SP_MODIFICARDEPARTAMENTO(Nullable<decimal> v_ID_DPTO, string v_DIR_DPTO, Nullable<decimal> v_NUM_DPTO, Nullable<decimal> v_N_AMB_DPTO, string v_DESC_DPTO, Nullable<decimal> v_COSTO_ARRI_DPTO, byte[] v_IMG_1_DPTO, byte[] v_IMG_2_DPTO, byte[] v_IMG_3_DPTO, byte[] v_IMG_4_DPTO, byte[] v_IMG_5_DPTO)
@@ -867,11 +1082,11 @@ namespace TurismoReal.DALC
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MODIFICARDISPONIBILIDAD", v_FEC_DISPParameter, v_ESTA_DISPParameter);
         }
     
-        public virtual int SP_MODIFICARGASTOS(Nullable<decimal> v_ID_GASTOS, Nullable<decimal> v_GAST_MES, Nullable<decimal> v_GAST_AGNO)
+        public virtual int SP_MODIFICARGASTOS(Nullable<decimal> v_ID_DPTO, Nullable<decimal> v_GAST_MES, Nullable<decimal> v_GAST_AGNO)
         {
-            var v_ID_GASTOSParameter = v_ID_GASTOS.HasValue ?
-                new ObjectParameter("V_ID_GASTOS", v_ID_GASTOS) :
-                new ObjectParameter("V_ID_GASTOS", typeof(decimal));
+            var v_ID_DPTOParameter = v_ID_DPTO.HasValue ?
+                new ObjectParameter("V_ID_DPTO", v_ID_DPTO) :
+                new ObjectParameter("V_ID_DPTO", typeof(decimal));
     
             var v_GAST_MESParameter = v_GAST_MES.HasValue ?
                 new ObjectParameter("V_GAST_MES", v_GAST_MES) :
@@ -881,28 +1096,24 @@ namespace TurismoReal.DALC
                 new ObjectParameter("V_GAST_AGNO", v_GAST_AGNO) :
                 new ObjectParameter("V_GAST_AGNO", typeof(decimal));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MODIFICARGASTOS", v_ID_GASTOSParameter, v_GAST_MESParameter, v_GAST_AGNOParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MODIFICARGASTOS", v_ID_DPTOParameter, v_GAST_MESParameter, v_GAST_AGNOParameter);
         }
     
-        public virtual int SP_MODIFICARMANTENCION(Nullable<decimal> v_ID_RVA, Nullable<decimal> v_MONTO_TOTAL, Nullable<decimal> v_MONTO_PAGADO, string v_EST_PAGO)
+        public virtual int SP_MODIFICARMANTENCION(Nullable<decimal> v_ID_RMANT, Nullable<decimal> v_COST_MANT, string v_DETA_MANT)
         {
-            var v_ID_RVAParameter = v_ID_RVA.HasValue ?
-                new ObjectParameter("V_ID_RVA", v_ID_RVA) :
-                new ObjectParameter("V_ID_RVA", typeof(decimal));
+            var v_ID_RMANTParameter = v_ID_RMANT.HasValue ?
+                new ObjectParameter("V_ID_RMANT", v_ID_RMANT) :
+                new ObjectParameter("V_ID_RMANT", typeof(decimal));
     
-            var v_MONTO_TOTALParameter = v_MONTO_TOTAL.HasValue ?
-                new ObjectParameter("V_MONTO_TOTAL", v_MONTO_TOTAL) :
-                new ObjectParameter("V_MONTO_TOTAL", typeof(decimal));
+            var v_COST_MANTParameter = v_COST_MANT.HasValue ?
+                new ObjectParameter("V_COST_MANT", v_COST_MANT) :
+                new ObjectParameter("V_COST_MANT", typeof(decimal));
     
-            var v_MONTO_PAGADOParameter = v_MONTO_PAGADO.HasValue ?
-                new ObjectParameter("V_MONTO_PAGADO", v_MONTO_PAGADO) :
-                new ObjectParameter("V_MONTO_PAGADO", typeof(decimal));
+            var v_DETA_MANTParameter = v_DETA_MANT != null ?
+                new ObjectParameter("V_DETA_MANT", v_DETA_MANT) :
+                new ObjectParameter("V_DETA_MANT", typeof(string));
     
-            var v_EST_PAGOParameter = v_EST_PAGO != null ?
-                new ObjectParameter("V_EST_PAGO", v_EST_PAGO) :
-                new ObjectParameter("V_EST_PAGO", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MODIFICARMANTENCION", v_ID_RVAParameter, v_MONTO_TOTALParameter, v_MONTO_PAGADOParameter, v_EST_PAGOParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MODIFICARMANTENCION", v_ID_RMANTParameter, v_COST_MANTParameter, v_DETA_MANTParameter);
         }
     
         public virtual int SP_MODIFICARMARCA(Nullable<decimal> v_ID_MARCA, string v_NOMBRE_MARCA)
@@ -944,19 +1155,11 @@ namespace TurismoReal.DALC
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MODIFICARREGION", v_ID_RGNParameter, v_NOM_RGNParameter);
         }
     
-        public virtual int SP_MODIFICARRESERVA(Nullable<decimal> v_ID_RVA, Nullable<System.DateTime> v_FEC_INI_RVA, Nullable<System.DateTime> v_FEC_FIN_RVA, Nullable<decimal> v_NUM_PERS, string v_ESTADO_RVA)
+        public virtual int SP_MODIFICARRESERVA(Nullable<decimal> v_ID_RVA, Nullable<decimal> v_NUM_PERS, string v_ESTADO_RVA)
         {
             var v_ID_RVAParameter = v_ID_RVA.HasValue ?
                 new ObjectParameter("V_ID_RVA", v_ID_RVA) :
                 new ObjectParameter("V_ID_RVA", typeof(decimal));
-    
-            var v_FEC_INI_RVAParameter = v_FEC_INI_RVA.HasValue ?
-                new ObjectParameter("V_FEC_INI_RVA", v_FEC_INI_RVA) :
-                new ObjectParameter("V_FEC_INI_RVA", typeof(System.DateTime));
-    
-            var v_FEC_FIN_RVAParameter = v_FEC_FIN_RVA.HasValue ?
-                new ObjectParameter("V_FEC_FIN_RVA", v_FEC_FIN_RVA) :
-                new ObjectParameter("V_FEC_FIN_RVA", typeof(System.DateTime));
     
             var v_NUM_PERSParameter = v_NUM_PERS.HasValue ?
                 new ObjectParameter("V_NUM_PERS", v_NUM_PERS) :
@@ -966,7 +1169,7 @@ namespace TurismoReal.DALC
                 new ObjectParameter("V_ESTADO_RVA", v_ESTADO_RVA) :
                 new ObjectParameter("V_ESTADO_RVA", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MODIFICARRESERVA", v_ID_RVAParameter, v_FEC_INI_RVAParameter, v_FEC_FIN_RVAParameter, v_NUM_PERSParameter, v_ESTADO_RVAParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MODIFICARRESERVA", v_ID_RVAParameter, v_NUM_PERSParameter, v_ESTADO_RVAParameter);
         }
     
         public virtual int SP_MODIFICARRESMANT(Nullable<decimal> v_ID_RMANT, Nullable<System.DateTime> v_FEC_RMANT)
@@ -982,7 +1185,7 @@ namespace TurismoReal.DALC
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MODIFICARRESMANT", v_ID_RMANTParameter, v_FEC_RMANTParameter);
         }
     
-        public virtual int SP_MODIFICARSERVEXTRAS(Nullable<decimal> v_ID_SERV, string v_NOM_SERV, string v_TIPO_SERV, string v_DESC_SERV)
+        public virtual int SP_MODIFICARSERVEXTRAS(Nullable<decimal> v_ID_SERV, string v_NOM_SERV, string v_DESC_SERV)
         {
             var v_ID_SERVParameter = v_ID_SERV.HasValue ?
                 new ObjectParameter("V_ID_SERV", v_ID_SERV) :
@@ -992,15 +1195,11 @@ namespace TurismoReal.DALC
                 new ObjectParameter("V_NOM_SERV", v_NOM_SERV) :
                 new ObjectParameter("V_NOM_SERV", typeof(string));
     
-            var v_TIPO_SERVParameter = v_TIPO_SERV != null ?
-                new ObjectParameter("V_TIPO_SERV", v_TIPO_SERV) :
-                new ObjectParameter("V_TIPO_SERV", typeof(string));
-    
             var v_DESC_SERVParameter = v_DESC_SERV != null ?
                 new ObjectParameter("V_DESC_SERV", v_DESC_SERV) :
                 new ObjectParameter("V_DESC_SERV", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MODIFICARSERVEXTRAS", v_ID_SERVParameter, v_NOM_SERVParameter, v_TIPO_SERVParameter, v_DESC_SERVParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MODIFICARSERVEXTRAS", v_ID_SERVParameter, v_NOM_SERVParameter, v_DESC_SERVParameter);
         }
     
         public virtual int SP_MODIFICARTOUR(Nullable<decimal> v_ID_SERV, Nullable<decimal> v_DUR_HRA, Nullable<decimal> v_DUR_MIN, Nullable<decimal> v_COST_ADULT, Nullable<decimal> v_COST_NIGNO, Nullable<decimal> v_COST_3RA, string v_UBI_PARTIDA, string v_UBI_FIN, string v_ALIMENTACION, string v_TRANSPORTE)
@@ -1048,7 +1247,7 @@ namespace TurismoReal.DALC
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MODIFICARTOUR", v_ID_SERVParameter, v_DUR_HRAParameter, v_DUR_MINParameter, v_COST_ADULTParameter, v_COST_NIGNOParameter, v_COST_3RAParameter, v_UBI_PARTIDAParameter, v_UBI_FINParameter, v_ALIMENTACIONParameter, v_TRANSPORTEParameter);
         }
     
-        public virtual int SP_MODIFICARTRANSPORTE(Nullable<decimal> v_ID_SERV, Nullable<decimal> v_COST_KM_DIA, Nullable<decimal> v_COST_KM_NOC, Nullable<decimal> v_EXTRA_FEST)
+        public virtual int SP_MODIFICARTRANSPORTE(Nullable<decimal> v_ID_SERV, Nullable<decimal> v_COST_KM_DIA, Nullable<decimal> v_COST_KM_NOC)
         {
             var v_ID_SERVParameter = v_ID_SERV.HasValue ?
                 new ObjectParameter("V_ID_SERV", v_ID_SERV) :
@@ -1062,11 +1261,7 @@ namespace TurismoReal.DALC
                 new ObjectParameter("V_COST_KM_NOC", v_COST_KM_NOC) :
                 new ObjectParameter("V_COST_KM_NOC", typeof(decimal));
     
-            var v_EXTRA_FESTParameter = v_EXTRA_FEST.HasValue ?
-                new ObjectParameter("V_EXTRA_FEST", v_EXTRA_FEST) :
-                new ObjectParameter("V_EXTRA_FEST", typeof(decimal));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MODIFICARTRANSPORTE", v_ID_SERVParameter, v_COST_KM_DIAParameter, v_COST_KM_NOCParameter, v_EXTRA_FESTParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MODIFICARTRANSPORTE", v_ID_SERVParameter, v_COST_KM_DIAParameter, v_COST_KM_NOCParameter);
         }
     
         public virtual int SP_MODIFICARUSR(Nullable<decimal> v_ID_USR, string v_EMAIL_USR, string v_CONTR_USR, string v_NOM_USR, string v_APPAT_USR, string v_APMAT_USR, Nullable<decimal> v_TEL_USR, Nullable<decimal> v_RUT_USR, string v_DV_USR, Nullable<decimal> v_CANT_RES, string v_EST_CTA, string v_TIPO_CLI)
@@ -1157,6 +1352,24 @@ namespace TurismoReal.DALC
                 new ObjectParameter("V_PER_SILLA", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MODIFICARVEHICULO", v_PATENTEParameter, v_COLORParameter, v_AGNOParameter, v_CANT_PUERTASParameter, v_CAP_PASAJParameter, v_CAP_MALEParameter, v_ASIENTO_NIGNOParameter, v_PER_SILLAParameter);
+        }
+    
+        public virtual int SP_SUSPENDERUSR(Nullable<decimal> v_ID_USR)
+        {
+            var v_ID_USRParameter = v_ID_USR.HasValue ?
+                new ObjectParameter("V_ID_USR", v_ID_USR) :
+                new ObjectParameter("V_ID_USR", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SUSPENDERUSR", v_ID_USRParameter);
+        }
+    
+        public virtual int SP_VALIDARUSR(Nullable<decimal> v_ID_USR)
+        {
+            var v_ID_USRParameter = v_ID_USR.HasValue ?
+                new ObjectParameter("V_ID_USR", v_ID_USR) :
+                new ObjectParameter("V_ID_USR", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_VALIDARUSR", v_ID_USRParameter);
         }
     }
 }

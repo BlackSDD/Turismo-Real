@@ -4,18 +4,38 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Agregar nuevo Condominio</h2>
+<div class="col-md-12 col-sm-12 text-white">
 
-@using (Html.BeginForm())
-{
-    @Html.LabelFor(c => c.Nom_con, "NOMBRE")
-    @Html.TextBoxFor(c => c.Nom_con)
-    <br />
+    <!--Titulo-->
+    <div class="mt-5 mb-5 text-center">
+        <h2>Agregar nuevo Condominio</h2>
+    </div>
 
-    @Html.LabelFor(c => c.Id_com, "Comuna")
-    @Html.DropDownListFor(c => c.Id_com, new SelectList(ViewBag.comunas, "Id_com", "Nom_com"))
-    <br />
-    <button>Guardar</button>
+    <div class="row text-center mx-5">
+        <div class="col-6 form-text text-white text-start">
 
-}
+            @using (Html.BeginForm())
+            {
+                <div class="mt-4 mb-2">
+                    @Html.LabelFor(c => c.Nom_con, "NOMBRE")
+                </div>
+                <div class="mt-4 mb-2">
+                    @Html.TextBoxFor(c => c.Nom_con)
+                </div>
 
+                <br />
+
+                <div class="mt-4 mb-2">
+                    @Html.LabelFor(c => c.Id_com, "Comuna")
+                </div>
+                <div class="mt-4 mb-2">
+                    @Html.DropDownListFor(c => c.Id_com, new SelectList(ViewBag.comunas, "Id_com", "Nom_com"))
+                </div>
+                <br />
+                <button>Guardar</button>
+
+            }
+        </div>
+
+    </div>
+</div>

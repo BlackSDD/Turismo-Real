@@ -14,10 +14,9 @@ namespace TurismoReal.DALC
     
     public partial class GASTOS
     {
-        public int ID_GASTOS { get; set; }
+        public int ID_DPTO { get; set; }
         public int GAST_MES { get; set; }
         public int GAST_AGNO { get; set; }
-        public int ID_DPTO { get; set; }
     
         public virtual DEPARTAMENTO DEPARTAMENTO { get; set; }
     }

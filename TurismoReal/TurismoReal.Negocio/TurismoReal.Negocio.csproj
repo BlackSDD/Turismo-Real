@@ -49,20 +49,26 @@
     <Compile Include="AgenciaExterna.cs" />
     <Compile Include="Comuna.cs" />
     <Compile Include="Condominio.cs" />
+    <Compile Include="Conductor.cs" />
+    <Compile Include="Departamento.cs" />
     <Compile Include="Marca.cs" />
     <Compile Include="Modelo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Region.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\TurismoReal.DALC\TurismoReal.DALC.csproj">
-      <Project>{97608cba-152e-4ba9-9a31-7ee7496d87d9}</Project>
-      <Name>TurismoReal.DALC</Name>
-    </ProjectReference>
+    <Compile Include="ServExtra.cs" />
+    <Compile Include="Tour.cs" />
+    <Compile Include="Transporte.cs" />
+    <Compile Include="Vehiculo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TurismoReal.DALC\TurismoReal.DALC.csproj">
+      <Project>{d4872bb5-97be-46c8-882c-77e709454273}</Project>
+      <Name>TurismoReal.DALC</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

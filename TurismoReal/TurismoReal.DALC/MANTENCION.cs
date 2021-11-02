@@ -14,10 +14,9 @@ namespace TurismoReal.DALC
     
     public partial class MANTENCION
     {
-        public int ID_MANT { get; set; }
+        public int ID_RMANT { get; set; }
         public int COST_MANT { get; set; }
         public string DETA_MANT { get; set; }
-        public int ID_RMANT { get; set; }
     
         public virtual RES_MANT RES_MANT { get; set; }
     }

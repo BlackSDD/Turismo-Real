@@ -1,21 +1,43 @@
 ﻿@model TurismoReal.Negocio.Condominio
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Edit";
 }
 
-<h2>Editar condominio</h2>
+<!--2da Forma Revisar-->
+<div class="col-md-12 col-sm-12 text-white">
 
-@using (Html.BeginForm())
-{
-    @Html.LabelFor(c => c.Nom_con, "NOMBRE")
-    @Html.TextBoxFor(c => c.Nom_con)
-    <br />
+    <!--Titulo-->
+    <div class="mt-5 mb-5 text-center">
+        <h2>Editar Condominio</h2>
+    </div>
 
-    @Html.LabelFor(c => c.Id_com, "Comuna")
-    @Html.DropDownListFor(c => c.Id_com, new SelectList(ViewBag.comunas, "Id_com", "Nom_com"))
-    <br />
-    <button>Guardar</button>
+    @using (Html.BeginForm())
+    {
+        <!--Labels-->
+        <div class="row text-center mx-5">
+            <div class="col-6 form-text text-white text-start">
+                <div class="mt-4 mb-2">
+                    @Html.LabelFor(c => c.Nom_con, "NOMBRE")
+                </div>
+                <div class="mt-4 mb-2">
+                    @Html.LabelFor(c => c.Id_com, "Comuna")
+                </div>
+            </div>
 
-}
+            <!--TextBox-->
+            <div class="col-6 text-start">
+                <div class="mt-4 mb-2">
+                    @Html.TextBoxFor(c => c.Nom_con)
+                </div>
+                <div class="mt-3 mb-2">
+                    @Html.DropDownListFor(c => c.Id_com, new SelectList(ViewBag.comunas, "Id_com", "Nom_com"))
+                </div>
+            </div>
+            <br />
+            <button>Guardar</button>
+        </div>
+    }
+</div>
+
 

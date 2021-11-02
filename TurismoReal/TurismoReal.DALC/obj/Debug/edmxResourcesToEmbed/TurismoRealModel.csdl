@@ -136,22 +136,20 @@
   </EntityType>
   <EntityType Name="GASTOS">
     <Key>
-      <PropertyRef Name="ID_GASTOS" />
+      <PropertyRef Name="ID_DPTO" />
     </Key>
-    <Property Name="ID_GASTOS" Type="Int32" Nullable="false" />
+    <Property Name="ID_DPTO" Type="Int32" Nullable="false" />
     <Property Name="GAST_MES" Type="Int32" Nullable="false" />
     <Property Name="GAST_AGNO" Type="Int32" Nullable="false" />
-    <Property Name="ID_DPTO" Type="Int32" Nullable="false" />
     <NavigationProperty Name="DEPARTAMENTO" Relationship="Self.GASTOS_DEPARTAMENTO_FK" FromRole="GASTOS" ToRole="DEPARTAMENTO" />
   </EntityType>
   <EntityType Name="MANTENCION">
     <Key>
-      <PropertyRef Name="ID_MANT" />
+      <PropertyRef Name="ID_RMANT" />
     </Key>
-    <Property Name="ID_MANT" Type="Int32" Nullable="false" />
+    <Property Name="ID_RMANT" Type="Int32" Nullable="false" />
     <Property Name="COST_MANT" Type="Int32" Nullable="false" />
     <Property Name="DETA_MANT" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="ID_RMANT" Type="Int32" Nullable="false" />
     <NavigationProperty Name="RES_MANT" Relationship="Self.MANTENCION_RES_MANT_FK" FromRole="MANTENCION" ToRole="RES_MANT" />
   </EntityType>
   <EntityType Name="MARCA">
@@ -200,6 +198,7 @@
     </Key>
     <Property Name="ID_RMANT" Type="Int32" Nullable="false" />
     <Property Name="FEC_RMANT" Type="DateTime" Nullable="false" />
+    <Property Name="EST_MAN" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="ID_DPTO" Type="Int32" Nullable="false" />
     <Property Name="ID_USR" Type="Int32" Nullable="false" />
     <NavigationProperty Name="DEPARTAMENTO" Relationship="Self.RES_MANT_DEPARTAMENTO_FK" FromRole="RES_MANT" ToRole="DEPARTAMENTO" />
@@ -268,7 +267,6 @@
     <Property Name="ID_SERV" Type="Int32" Nullable="false" />
     <Property Name="COST_KM_DIA" Type="Int16" Nullable="false" />
     <Property Name="COST_KM_NOC" Type="Int16" Nullable="false" />
-    <Property Name="EXTRA_FEST" Type="Int16" Nullable="false" />
     <NavigationProperty Name="CONDUCTOR" Relationship="Self.CONDUCTOR_TRANSPORTE_FK" FromRole="TRANSPORTE" ToRole="CONDUCTOR" />
     <NavigationProperty Name="SERVEXTRAS" Relationship="Self.TRANSPORTE_SERVEXTRAS_FK" FromRole="TRANSPORTE" ToRole="SERVEXTRAS" />
   </EntityType>
@@ -492,7 +490,7 @@
   </Association>
   <Association Name="GASTOS_DEPARTAMENTO_FK">
     <End Role="DEPARTAMENTO" Type="Self.DEPARTAMENTO" Multiplicity="1" />
-    <End Role="GASTOS" Type="Self.GASTOS" Multiplicity="*" />
+    <End Role="GASTOS" Type="Self.GASTOS" Multiplicity="0..1" />
     <ReferentialConstraint>
       <Principal Role="DEPARTAMENTO">
         <PropertyRef Name="ID_DPTO" />
@@ -528,7 +526,7 @@
   </Association>
   <Association Name="MANTENCION_RES_MANT_FK">
     <End Role="RES_MANT" Type="Self.RES_MANT" Multiplicity="1" />
-    <End Role="MANTENCION" Type="Self.MANTENCION" Multiplicity="*" />
+    <End Role="MANTENCION" Type="Self.MANTENCION" Multiplicity="0..1" />
     <ReferentialConstraint>
       <Principal Role="RES_MANT">
         <PropertyRef Name="ID_RMANT" />
@@ -760,6 +758,24 @@
       <Parameter Name="V_TEL_AGE" Mode="In" Type="Decimal" />
       <Parameter Name="V_ID_COM" Mode="In" Type="Decimal" />
     </FunctionImport>
+    <FunctionImport Name="SP_AGREGARARTICULO">
+      <Parameter Name="V_NOM_ARTI" Mode="In" Type="String" />
+      <Parameter Name="V_CANT_ARTI" Mode="In" Type="Decimal" />
+      <Parameter Name="V_DETA_ARTI" Mode="In" Type="String" />
+      <Parameter Name="V_VALOR_ARTI" Mode="In" Type="Decimal" />
+      <Parameter Name="V_ID_DEPTO" Mode="In" Type="Decimal" />
+    </FunctionImport>
+    <FunctionImport Name="SP_AGREGARCHECKIN">
+      <Parameter Name="V_ID_RVA" Mode="In" Type="Decimal" />
+      <Parameter Name="V_DETA_CHI" Mode="In" Type="String" />
+      <Parameter Name="V_ID_USR" Mode="In" Type="Decimal" />
+    </FunctionImport>
+    <FunctionImport Name="SP_AGREGARCHECKOUT">
+      <Parameter Name="V_COST_MULTA" Mode="In" Type="Decimal" />
+      <Parameter Name="V_DETA_CHO" Mode="In" Type="String" />
+      <Parameter Name="V_ID_RVA" Mode="In" Type="Decimal" />
+      <Parameter Name="V_ID_USR" Mode="In" Type="Decimal" />
+    </FunctionImport>
     <FunctionImport Name="SP_AGREGARCOMUNA">
       <Parameter Name="V_NOM_COM" Mode="In" Type="String" />
       <Parameter Name="V_ID_RGN" Mode="In" Type="Decimal" />
@@ -777,6 +793,18 @@
       <Parameter Name="V_EMAIL_CONDUC" Mode="In" Type="String" />
       <Parameter Name="V_TEL_CONDUC" Mode="In" Type="Decimal" />
       <Parameter Name="V_PATENTE" Mode="In" Type="String" />
+      <Parameter Name="V_ID_SERV" Mode="In" Type="Decimal" />
+    </FunctionImport>
+    <FunctionImport Name="SP_AGREGARCONTSERV">
+      <Parameter Name="V_COSTO_TOTAL" Mode="In" Type="Decimal" />
+      <Parameter Name="V_DETA_CONT" Mode="In" Type="String" />
+      <Parameter Name="V_FEC_ACORD" Mode="In" Type="DateTime" />
+      <Parameter Name="V_HORA_ACORD" Mode="In" Type="String" />
+      <Parameter Name="V_LUGAR_RECOGIDA" Mode="In" Type="String" />
+      <Parameter Name="V_LUGAR_DESTINO" Mode="In" Type="String" />
+      <Parameter Name="V_KM_REC" Mode="In" Type="Decimal" />
+      <Parameter Name="V_EST_CONT" Mode="In" Type="String" />
+      <Parameter Name="V_ID_RVA" Mode="In" Type="Decimal" />
       <Parameter Name="V_ID_SERV" Mode="In" Type="Decimal" />
     </FunctionImport>
     <FunctionImport Name="SP_AGREGARDEPARTAMENTO">
@@ -816,9 +844,17 @@
     </FunctionImport>
     <FunctionImport Name="SP_AGREGARPAGO">
       <Parameter Name="V_ID_RVA" Mode="In" Type="Decimal" />
-      <Parameter Name="V_MONTO_TOTAL" Mode="In" Type="Decimal" />
       <Parameter Name="V_MONTO_PAGADO" Mode="In" Type="Decimal" />
-      <Parameter Name="V_ESTA_PAGO" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SP_AGREGARREGION">
+      <Parameter Name="V_NOM_RGN" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SP_AGREGARRESERVA">
+      <Parameter Name="V_FEC_INI_RVA" Mode="In" Type="DateTime" />
+      <Parameter Name="V_FEC_FIN_RVA" Mode="In" Type="DateTime" />
+      <Parameter Name="V_NUM_PERS" Mode="In" Type="Decimal" />
+      <Parameter Name="V_ID_DPTO" Mode="In" Type="Decimal" />
+      <Parameter Name="V_ID_USR" Mode="In" Type="Decimal" />
     </FunctionImport>
     <FunctionImport Name="SP_AGREGARRESMANT">
       <Parameter Name="V_FEC_RMANT" Mode="In" Type="DateTime" />
@@ -832,6 +868,7 @@
       <Parameter Name="V_ID_AGENCIA" Mode="In" Type="Decimal" />
     </FunctionImport>
     <FunctionImport Name="SP_AGREGARTOUR">
+      <Parameter Name="V_ID_SERV" Mode="In" Type="Decimal" />
       <Parameter Name="V_DUR_HRA" Mode="In" Type="Decimal" />
       <Parameter Name="V_DUR_MIN" Mode="In" Type="Decimal" />
       <Parameter Name="V_COST_ADULT" Mode="In" Type="Decimal" />
@@ -843,9 +880,9 @@
       <Parameter Name="V_TRANSPORTE" Mode="In" Type="String" />
     </FunctionImport>
     <FunctionImport Name="SP_AGREGARTRANSPORTE">
+      <Parameter Name="V_ID_SERV" Mode="In" Type="Decimal" />
       <Parameter Name="V_COST_KM_DIA" Mode="In" Type="Decimal" />
       <Parameter Name="V_COST_KM_NOC" Mode="In" Type="Decimal" />
-      <Parameter Name="V_EXTRA_FEST" Mode="In" Type="Decimal" />
     </FunctionImport>
     <FunctionImport Name="SP_AGREGARUSR">
       <Parameter Name="V_EMAIL_USR" Mode="In" Type="String" />
@@ -872,6 +909,9 @@
       <Parameter Name="V_PER_SILLA" Mode="In" Type="String" />
       <Parameter Name="V_ID_MODELO" Mode="In" Type="Decimal" />
     </FunctionImport>
+    <FunctionImport Name="SP_CAMBIARTIPOCLIENTE">
+      <Parameter Name="V_ID_USR" Mode="In" Type="Decimal" />
+    </FunctionImport>
     <FunctionImport Name="SP_ELIMINARAGENCIAEXTERNA">
       <Parameter Name="V_ID_AGENCIA" Mode="In" Type="Decimal" />
     </FunctionImport>
@@ -894,10 +934,10 @@
       <Parameter Name="V_ID_DPTO" Mode="In" Type="Decimal" />
     </FunctionImport>
     <FunctionImport Name="SP_ELIMINARGASTOS">
-      <Parameter Name="V_ID_GASTOS" Mode="In" Type="Decimal" />
+      <Parameter Name="V_ID_DPTO" Mode="In" Type="Decimal" />
     </FunctionImport>
     <FunctionImport Name="SP_ELIMINARMANTENCION">
-      <Parameter Name="V_ID_MANT" Mode="In" Type="Decimal" />
+      <Parameter Name="V_ID_RMANT" Mode="In" Type="Decimal" />
     </FunctionImport>
     <FunctionImport Name="SP_ELIMINARMARCA">
       <Parameter Name="V_ID_MARCA" Mode="In" Type="Decimal" />
@@ -918,6 +958,9 @@
       <Parameter Name="V_ID_RMANT" Mode="In" Type="Decimal" />
     </FunctionImport>
     <FunctionImport Name="SP_ELIMINARSEREXTRAS">
+      <Parameter Name="V_ID_SERV" Mode="In" Type="Decimal" />
+    </FunctionImport>
+    <FunctionImport Name="SP_ELIMINARSERVEXTRAS">
       <Parameter Name="V_ID_SERV" Mode="In" Type="Decimal" />
     </FunctionImport>
     <FunctionImport Name="SP_ELIMINARTOUR">
@@ -945,6 +988,15 @@
       <Parameter Name="V_DETA_ARTI" Mode="In" Type="String" />
       <Parameter Name="V_VALOR_ARTI" Mode="In" Type="Decimal" />
     </FunctionImport>
+    <FunctionImport Name="SP_MODIFICARCHECKIN">
+      <Parameter Name="V_ID_RVA" Mode="In" Type="Decimal" />
+      <Parameter Name="V_DETA_CHI" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SP_MODIFICARCHECKOUT">
+      <Parameter Name="V_COST_MULTA" Mode="In" Type="Decimal" />
+      <Parameter Name="V_DETA_CHO" Mode="In" Type="String" />
+      <Parameter Name="V_ID_RVA" Mode="In" Type="Decimal" />
+    </FunctionImport>
     <FunctionImport Name="SP_MODIFICARCOMUNA">
       <Parameter Name="V_ID_COM" Mode="In" Type="Decimal" />
       <Parameter Name="V_NOM_COM" Mode="In" Type="String" />
@@ -968,9 +1020,17 @@
       <Parameter Name="V_COSTO_TOTAL" Mode="In" Type="Decimal" />
       <Parameter Name="V_DETA_CONT" Mode="In" Type="String" />
       <Parameter Name="V_FEC_ACORD" Mode="In" Type="DateTime" />
+      <Parameter Name="V_HORA_ACORD" Mode="In" Type="String" />
       <Parameter Name="V_LUGAR_RECOGIDA" Mode="In" Type="String" />
       <Parameter Name="V_LUGAR_DESTINO" Mode="In" Type="String" />
       <Parameter Name="V_KM_REC" Mode="In" Type="Decimal" />
+      <Parameter Name="V_EST_CONT" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SP_MODIFICARDATOSUSR">
+      <Parameter Name="V_ID_USR" Mode="In" Type="Decimal" />
+      <Parameter Name="V_EMAIL_USR" Mode="In" Type="String" />
+      <Parameter Name="V_CONTR_USR" Mode="In" Type="String" />
+      <Parameter Name="V_TEL_USR" Mode="In" Type="Decimal" />
     </FunctionImport>
     <FunctionImport Name="SP_MODIFICARDEPARTAMENTO">
       <Parameter Name="V_ID_DPTO" Mode="In" Type="Decimal" />
@@ -990,15 +1050,14 @@
       <Parameter Name="V_ESTA_DISP" Mode="In" Type="String" />
     </FunctionImport>
     <FunctionImport Name="SP_MODIFICARGASTOS">
-      <Parameter Name="V_ID_GASTOS" Mode="In" Type="Decimal" />
+      <Parameter Name="V_ID_DPTO" Mode="In" Type="Decimal" />
       <Parameter Name="V_GAST_MES" Mode="In" Type="Decimal" />
       <Parameter Name="V_GAST_AGNO" Mode="In" Type="Decimal" />
     </FunctionImport>
     <FunctionImport Name="SP_MODIFICARMANTENCION">
-      <Parameter Name="V_ID_RVA" Mode="In" Type="Decimal" />
-      <Parameter Name="V_MONTO_TOTAL" Mode="In" Type="Decimal" />
-      <Parameter Name="V_MONTO_PAGADO" Mode="In" Type="Decimal" />
-      <Parameter Name="V_EST_PAGO" Mode="In" Type="String" />
+      <Parameter Name="V_ID_RMANT" Mode="In" Type="Decimal" />
+      <Parameter Name="V_COST_MANT" Mode="In" Type="Decimal" />
+      <Parameter Name="V_DETA_MANT" Mode="In" Type="String" />
     </FunctionImport>
     <FunctionImport Name="SP_MODIFICARMARCA">
       <Parameter Name="V_ID_MARCA" Mode="In" Type="Decimal" />
@@ -1014,8 +1073,6 @@
     </FunctionImport>
     <FunctionImport Name="SP_MODIFICARRESERVA">
       <Parameter Name="V_ID_RVA" Mode="In" Type="Decimal" />
-      <Parameter Name="V_FEC_INI_RVA" Mode="In" Type="DateTime" />
-      <Parameter Name="V_FEC_FIN_RVA" Mode="In" Type="DateTime" />
       <Parameter Name="V_NUM_PERS" Mode="In" Type="Decimal" />
       <Parameter Name="V_ESTADO_RVA" Mode="In" Type="String" />
     </FunctionImport>
@@ -1026,7 +1083,6 @@
     <FunctionImport Name="SP_MODIFICARSERVEXTRAS">
       <Parameter Name="V_ID_SERV" Mode="In" Type="Decimal" />
       <Parameter Name="V_NOM_SERV" Mode="In" Type="String" />
-      <Parameter Name="V_TIPO_SERV" Mode="In" Type="String" />
       <Parameter Name="V_DESC_SERV" Mode="In" Type="String" />
     </FunctionImport>
     <FunctionImport Name="SP_MODIFICARTOUR">
@@ -1045,7 +1101,6 @@
       <Parameter Name="V_ID_SERV" Mode="In" Type="Decimal" />
       <Parameter Name="V_COST_KM_DIA" Mode="In" Type="Decimal" />
       <Parameter Name="V_COST_KM_NOC" Mode="In" Type="Decimal" />
-      <Parameter Name="V_EXTRA_FEST" Mode="In" Type="Decimal" />
     </FunctionImport>
     <FunctionImport Name="SP_MODIFICARUSR">
       <Parameter Name="V_ID_USR" Mode="In" Type="Decimal" />
@@ -1070,6 +1125,12 @@
       <Parameter Name="V_CAP_MALE" Mode="In" Type="Decimal" />
       <Parameter Name="V_ASIENTO_NIGNO" Mode="In" Type="String" />
       <Parameter Name="V_PER_SILLA" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SP_SUSPENDERUSR">
+      <Parameter Name="V_ID_USR" Mode="In" Type="Decimal" />
+    </FunctionImport>
+    <FunctionImport Name="SP_VALIDARUSR">
+      <Parameter Name="V_ID_USR" Mode="In" Type="Decimal" />
     </FunctionImport>
   </EntityContainer>
 </Schema>

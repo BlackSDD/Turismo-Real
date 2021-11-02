@@ -14,18 +14,14 @@ namespace TurismoReal.DALC
     
     public partial class RES_MANT
     {
-        public RES_MANT()
-        {
-            this.MANTENCION = new HashSet<MANTENCION>();
-        }
-    
         public int ID_RMANT { get; set; }
         public System.DateTime FEC_RMANT { get; set; }
+        public string EST_MAN { get; set; }
         public int ID_DPTO { get; set; }
         public int ID_USR { get; set; }
     
         public virtual DEPARTAMENTO DEPARTAMENTO { get; set; }
-        public virtual ICollection<MANTENCION> MANTENCION { get; set; }
+        public virtual MANTENCION MANTENCION { get; set; }
         public virtual USUARIO USUARIO { get; set; }
     }
 }

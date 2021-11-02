@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TurismoReal.Negocio;
+
 
 namespace TurismoReal.Controllers
 {
@@ -11,6 +13,7 @@ namespace TurismoReal.Controllers
         // GET: Modelo
         public ActionResult Index()
         {
+            ViewBag.modelos = new Modelo().ReadAll();
             return View();
         }
 
@@ -23,22 +26,25 @@ namespace TurismoReal.Controllers
         // GET: Modelo/Create
         public ActionResult Create()
         {
+            EnviarMarcas();
+
             return View();
         }
 
         // POST: Modelo/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Modelo modelo)
         {
             try
             {
                 // TODO: Add insert logic here
-
+                modelo.Save();
+                TempData["mensaje"] = "Modelo añadido";
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return View(modelo);
             }
         }
 
@@ -85,5 +91,12 @@ namespace TurismoReal.Controllers
                 return View();
             }
         }
+
+        private void EnviarMarcas()
+        {
+            ViewBag.marcas = new Marca().ReadAll();
+        }
+
+
     }
 }
