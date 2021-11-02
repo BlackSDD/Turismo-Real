@@ -58,3 +58,80 @@ select
     --v_id es la que se solicita al "usuario" / sistema     
     where c.id_rva = v_id
     order by "Fecha realización de servicio";
+
+
+-- Informe de ganancia por zona
+
+--Por semana ganancia
+SELECT 
+        to_char(r.fec_ini_rva - 7/24,'IYYY')as "Año", 
+        to_char(r.fec_ini_rva  - 7/24,'IW') as "Semana" ,
+        SUM(p.monto_pagado) as "Ganancia semanal"
+    FROM reserva r join pago p
+        on r.id_rva = p.id_rva
+    GROUP BY to_char(r.fec_ini_rva  - 7/24,'IYYY'), to_char(r.fec_ini_rva  - 7/24,'IW')
+    order by "Año","Semana" asc
+
+create table informe_zona
+(
+    id_rgn number(2),
+    region varchar2(100),
+    ganancia_promedio number(10)
+);
+
+create or replace procedure pd_informe_semanal_zona
+as
+    cursor regiones is select * from region;
+    region_f regiones%rowtype;
+    promedio number;
+begin
+    delete from informe_zona;
+    for region_f in regiones loop
+            SELECT 
+                avg(SUM(p.monto_pagado)) as "Ganancia semanal"
+            into promedio
+                FROM reserva r join pago p
+                    on r.id_rva = p.id_rva 
+                join departamento d 
+                    on d.id_dpto = r.id_dpto
+                join condominio cn
+                    on cn.id_cnd = d.id_cnd
+                join comuna cm
+                    on cm.id_com = cn.id_com
+                join region rg
+                    on rg.id_rgn = cm.id_rgn
+        GROUP BY rg.id_rgn, rg.nom_rgn,to_char(r.fec_ini_rva  - 7/24,'IYYY'), to_char(r.fec_ini_rva  - 7/24,'IW')
+        having rg.id_rgn = region_f.id_rgn;
+        insert into informe_zona values(region_f.id_rgn, region_f.nom_rgn, promedio);
+    end loop;
+end pd_informe_semanal_zona;
+/
+
+create or replace procedure pd_informe_diario_zona
+as
+    cursor regiones is select * from region;
+    region_f regiones%rowtype;
+    promedio number;
+begin
+    delete from informe_zona;
+    for region_f in regiones loop
+            SELECT  avg(SUM(p.monto_pagado))
+                into promedio
+                FROM reserva r join pago p
+                        on r.id_rva = p.id_rva
+                    join departamento d 
+                        on d.id_dpto = r.id_dpto
+                    join condominio cn
+                        on cn.id_cnd = d.id_cnd
+                    join comuna cm
+                        on cm.id_com = cn.id_com
+                    join region rg
+                        on rg.id_rgn = cm.id_rgn
+                GROUP BY  rg.id_rgn,r.fec_ini_rva
+                HAVING rg.id_rgn=region_f.id_rgn;
+        insert into informe_zona values(region_f.id_rgn, region_f.nom_rgn, promedio);
+    end loop;
+end pd_informe_diario_zona;
+/
+
+-- ganan
