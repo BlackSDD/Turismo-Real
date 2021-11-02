@@ -1,5 +1,6 @@
 -- Drop de as tablas--
 
+
 DROP TABLE agencia_externa CASCADE CONSTRAINTS;
 
 DROP TABLE articulo CASCADE CONSTRAINTS;
@@ -2025,6 +2026,8 @@ begin
     commit;
 end;
 /
+
+----
 
 commit;
 
