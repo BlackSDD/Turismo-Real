@@ -280,20 +280,38 @@ end;
 
 create or replace procedure sp_agregarContServ
 (
-	v_costo_total number,
 	v_deta_cont NVARCHAR2,
 	v_fec_acord date,
     v_hora_acord char,
 	v_lugar_recogida NVARCHAR2,
 	v_lugar_destino NVARCHAR2,
-	v_km_rec number,
-    v_est_cont nvarchar2,
+	v_km_rec nvarchar2,
     v_id_rva number,
-    v_id_serv number
+    v_id_serv number,
+    v_cant_adult number,
+    v_cant_nino number,
+    v_cant_3ra number
 )
 as  
     v_fec_cont date := sysdate;
+    v_costo_total number;
+    v_tipo char(1);
+    v_rec number;
 begin
+    v_rec := to_number(v_km_rec);
+
+    select tipo_serv
+        into v_tipo
+    from servextras
+    where id_serv = v_id_serv;
+    
+    if v_tipo = 'T' then
+        v_costo_total := fn_costo_tour(v_cant_adult, v_cant_nino, v_cant_3ra, v_id_serv);
+        
+    elsif v_tipo = 'V' then
+        v_costo_total := fn_costo_transporte(v_id_serv, v_hora_acord,v_rec);
+    end if;
+    
 	insert into cont_serv values
 	(
 	SEQ_CONT_SERV.nextval,
@@ -305,7 +323,7 @@ begin
 	v_lugar_recogida,
 	v_lugar_destino,
 	v_km_rec,
-    v_est_cont,
+    'reservado',
     v_id_rva,
     v_id_serv
 	);
@@ -315,35 +333,62 @@ end;
 
 
 
-create or replace procedure sp_modificarContServ
+create or replace function fn_costo_tour (c_adult number , c_ninos number, c_3ra number ,v_id_serv number)
+return number
+as 
+    v_costo number;
+    p_adult number;
+    p_nino number;
+    p_3ra number;
+begin
+    select cost_adult, cost_nigno, cost_3ra
+        into p_adult, p_nino, p_3ra
+        from tour
+        where id_serv = v_id_serv;
+    v_costo := (p_adult * c_adult) + (p_nino * c_ninos) + (p_3ra * c_3ra);
+return v_costo;
+end fn_costo_tour;
+/
+
+
+create or replace function fn_costo_transporte (v_id_serv number, v_hora char , v_km_rec number)
+return number
+as
+    v_costo number;
+    v_km number;
+begin
+    if to_number(substr(v_hora,0,2)) < 19 then
+        select cost_km_dia
+            into v_km
+            from transporte 
+            where id_serv = v_id_serv;
+    elsif to_number(substr(v_hora,0,2)) >= 19 then
+        select cost_km_noc
+            into v_km
+            from transporte
+            where id_serv = v_id_serv;
+    end if;
+    v_costo := v_km_rec * v_km;
+return v_costo;
+end fn_costo_transporte;
+/
+
+
+
+create or replace procedure sp_eliminarContServ
 (
-	v_id_cont_serv number,
-	v_fec_cont date,
-	v_costo_total number,
-	v_deta_cont NVARCHAR2,
-	v_fec_acord date,
-    v_hora_acord char,
-	v_lugar_recogida NVARCHAR2,
-	v_lugar_destino NVARCHAR2,
-	v_km_rec number,
-    v_est_cont nvarchar2
+	v_id_cont_serv number
 )
 as
 begin
-	update Cont_serv set 
-    fec_cont = v_fec_cont, 
-    costo_total = v_costo_total, 
-    deta_cont = v_deta_cont, 
-    fec_acord = v_fec_acord, 
-    hora_acord = v_hora_acord,
-    lugar_recogida = v_lugar_recogida,
-	lugar_destino = v_lugar_destino,
-    km_rec = v_km_rec,
-    est_cont = v_est_cont
+	update cont_serv set 
+    est_cont = 'cancelado',
+    costo_total = 0
 	where id_cont_serv = v_id_cont_serv;
 	commit;
 end;
 /
+
 
 ---------------------------------------------------------------------------
 
