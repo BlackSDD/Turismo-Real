@@ -12,7 +12,7 @@ namespace TurismoReal.Negocio
         public decimal Id_con { get; set; }
         public string Nom_con { get; set; }
         public decimal Id_com { get; set; }
-        public decimal Region_id { get; set; }
+
 
         public Comuna Comuna { get; set; }
         public Region Region { get; set; }

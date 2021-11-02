@@ -5,56 +5,54 @@ using System.Web;
 using System.Web.Mvc;
 using TurismoReal.Negocio;
 
-
 namespace TurismoReal.Controllers
 {
-    public class ModeloController : Controller
+    public class ServicioExtraController : Controller
     {
-        // GET: Modelo
+        // GET: ServicioExtra
         public ActionResult Index()
         {
-            ViewBag.modelos = new Modelo().ReadAll();
+            EnviarServicio();
             return View();
         }
 
-        // GET: Modelo/Details/5
+        // GET: ServicioExtra/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: Modelo/Create
+        // GET: ServicioExtra/Create
         public ActionResult Create()
         {
-            EnviarMarcas();
-
+            EnviarAgencias();
             return View();
         }
 
-        // POST: Modelo/Create
+        // POST: ServicioExtra/Create
         [HttpPost]
-        public ActionResult Create(Modelo modelo)
+        public ActionResult Create(ServExtra serv)
         {
             try
             {
                 // TODO: Add insert logic here
-                modelo.Save();
-                TempData["mensaje"] = "Modelo añadido";
+                serv.Save();
+                TempData["mensaje"] = "Condominio Creada";
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View(modelo);
+                return View("Index");
             }
         }
 
-        // GET: Modelo/Edit/5
+        // GET: ServicioExtra/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Modelo/Edit/5
+        // POST: ServicioExtra/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
@@ -70,13 +68,13 @@ namespace TurismoReal.Controllers
             }
         }
 
-        // GET: Modelo/Delete/5
+        // GET: ServicioExtra/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: Modelo/Delete/5
+        // POST: ServicioExtra/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
@@ -92,11 +90,15 @@ namespace TurismoReal.Controllers
             }
         }
 
-        private void EnviarMarcas()
+        private void EnviarServicio()
         {
-            ViewBag.marcas = new Marca().ReadAll();
+            ViewBag.servicios = new ServExtra().ReadAll();
         }
 
+        private void EnviarAgencias()
+        {
+            ViewBag.agencias = new AgenciaExterna().ReadAll();
+        }
 
     }
 }

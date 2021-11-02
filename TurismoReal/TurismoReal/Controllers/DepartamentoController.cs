@@ -5,56 +5,55 @@ using System.Web;
 using System.Web.Mvc;
 using TurismoReal.Negocio;
 
-
 namespace TurismoReal.Controllers
 {
-    public class ModeloController : Controller
+    public class DepartamentoController : Controller
     {
-        // GET: Modelo
+        // GET: Departamento
         public ActionResult Index()
         {
-            ViewBag.modelos = new Modelo().ReadAll();
+            ViewBag.departamentos = new Departamento().ReadAll();
             return View();
         }
 
-        // GET: Modelo/Details/5
+        // GET: Departamento/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: Modelo/Create
+        // GET: Departamento/Create
         public ActionResult Create()
         {
-            EnviarMarcas();
-
+            ViewBag.condominios = new Condominio().ReadAll();
             return View();
         }
 
-        // POST: Modelo/Create
+        // POST: Departamento/Create
         [HttpPost]
-        public ActionResult Create(Modelo modelo)
+        public ActionResult Create(Departamento departamento)
         {
             try
             {
-                // TODO: Add insert logic here
-                modelo.Save();
-                TempData["mensaje"] = "Modelo añadido";
+                departamento.Save();
+                TempData["mensaje"] = "Marca Agregada";
+                
+
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View(modelo);
+                return View();
             }
         }
 
-        // GET: Modelo/Edit/5
+        // GET: Departamento/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Modelo/Edit/5
+        // POST: Departamento/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
@@ -70,13 +69,13 @@ namespace TurismoReal.Controllers
             }
         }
 
-        // GET: Modelo/Delete/5
+        // GET: Departamento/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: Modelo/Delete/5
+        // POST: Departamento/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
@@ -91,12 +90,5 @@ namespace TurismoReal.Controllers
                 return View();
             }
         }
-
-        private void EnviarMarcas()
-        {
-            ViewBag.marcas = new Marca().ReadAll();
-        }
-
-
     }
 }
