@@ -369,7 +369,7 @@ ALTER TABLE usuario ADD CONSTRAINT usuario_email_usr_un UNIQUE ( email_usr );
 
 ALTER TABLE usuario ADD CONSTRAINT usuario_rut_usr_un UNIQUE ( rut_usr );
 
-ALTER TABLE usuario ADD CONSTRAINT usuario_tipo_fk UNIQUE (id_tipo_usr)
+ALTER TABLE usuario ADD CONSTRAINT usuario_tipo_fk FOREIGN KEY (id_tipo_usr)
                     REFERENCES tipo_usuario (id_tipo_usr);
 
 ALTER TABLE usuario
