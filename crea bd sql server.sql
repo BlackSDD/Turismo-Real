@@ -375,7 +375,7 @@ ALTER TABLE pago
 ALTER TABLE pago ADD CONSTRAINT pago_pk PRIMARY KEY (id_rva);
 
 ALTER TABLE pago
-    ADD CONSTRAINT est_pago CHECK (est_pago IN ('abonado','abono pendiente','pagado totalmente','pago cancelado'));
+    ADD CONSTRAINT est_pago CHECK (est_pago IN ('abonado','abono pendiente','pagado totalmente','pago cancelado', 'pago pendiente'));
 
 ALTER TABLE checkin
     ADD CONSTRAINT checkin_reserva_fk FOREIGN KEY ( id_rva )

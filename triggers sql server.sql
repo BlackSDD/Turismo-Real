@@ -81,3 +81,170 @@ begin
 end;   
 go
 
+
+-- Cambia el estado de la reserva cuando se agrega el checkin respectivo
+create or ALTER trigger tr_insert_checkin_rva  on checkin
+after insert
+as
+	declare @id_rva int = (select id_rva from inserted);
+begin
+    update reserva set
+        estado_rva = 'en progreso'
+        where id_rva = @id_rva;
+end;
+go
+
+
+-- Cambia el estado de la reserva y el monto del pago al ingresar un checkout
+create or alter trigger tr_insert_checkout_rva on checkout
+after insert
+as
+	declare @id_reserva int = (select id_rva from inserted);
+	declare @multa int = (select cost_multa from inserted);
+	declare @estado nvarchar(30);
+begin
+	if @multa = 0 
+	begin
+		set @estado = (select est_pago from pago where id_rva = @id_reserva); 
+	end;
+	else
+	begin
+		set @estado = 'pago pendiente';
+	end;
+
+		update reserva set
+			estado_rva = 'terminada'
+			where id_rva = @id_reserva;
+
+		update pago set
+			monto_total = monto_total + @multa,
+			monto_multas = monto_multas + @multa,
+			est_pago = @estado
+			where id_rva = @id_reserva;
+end;
+go
+
+
+-- Trigger que inserta el monto del pago inicial (abono y costo por reserva) al realizar una reserva
+create or alter trigger tr_insert_abono_reserva on reserva
+for insert
+as
+	declare @total int;  
+	declare @id int = (select id_rva from inserted);
+	declare @arriendo int = (select dbo.fn_arriendo(@id));
+	declare @abono int = (@arriendo*0.1);
+	set @total = @arriendo;
+begin
+	insert into pago values (@id,@total,@arriendo,@abono,0,0,0,'abono pendiente');
+end;
+go
+
+
+-- Trigger que modifica la disponibilidad cuando se ingresa una reserva de mantención
+create trigger tr_ingreso_mantencion_res_mant on res_mant
+after insert 
+as 
+	declare @fec_rmant date = (select fec_rmant from inserted);
+	declare @id_dpto int = (select id_dpto from inserted);
+begin
+	update disponibilidad 
+		set esta_disp = 'No' 
+		where id_dpto = @id_dpto and fec_disp = @fec_rmant;
+end;
+go
+
+
+-- Trigger que modifica la disponibildad según el estado actualizado de una reserva de mantención
+create  trigger tr_update_mantencion_res_mant on res_mant
+after update 
+as
+	declare @id_dpto int = (select id_dpto from inserted);
+	declare @est_man nvarchar(30) = (select est_man from inserted);
+	declare @new_fec_rmant date = (select fec_rmant from inserted);
+	declare @old_fec_rmant date = (select fec_rmant from deleted);
+begin
+		if @est_man in ('cancelada','realizada')
+			begin
+				update disponibilidad set 
+					esta_disp = 'Si'
+					where id_dpto = @id_dpto and fec_disp = @old_fec_rmant;
+			end;
+		else
+			begin
+				if @old_fec_rmant != @new_fec_rmant 
+				begin
+				update disponibilidad set 
+						esta_disp = 'No'
+						where id_dpto = @id_dpto and fec_disp = @new_fec_rmant;
+				update disponibilidad set 
+					esta_disp = 'Si'
+					where id_dpto = @id_dpto and fec_disp = @old_fec_rmant;
+			end;
+		 end;
+end;
+go
+
+
+-- Trigger que cambia el estado de la reserva de mantención al insertar una mantención en detalle
+create  trigger tr_ingreso_mantencion on mantencion
+after insert 
+AS
+		DECLARE @id INT = (SELECT id_rmant FROM inserted)
+begin
+		update res_mant set
+			est_man = 'realizada'
+		where id_rmant = @id;
+end;
+go
+
+
+-- trigger que añade el costo de un servicio extra en el pago de la reserva
+create or alter trigger tr_insert_costo_extra on cont_serv
+after insert 
+as
+	declare @new_costo_total int = (select costo_total from inserted);
+	declare @id int = (select id_rva from inserted); 
+begin
+    update pago set 
+        monto_total = monto_total + @new_costo_total,
+        monto_serv_extra = monto_serv_extra + @new_costo_total,
+        est_pago = 'pago pendiente'
+    where id_rva = @id;
+end;
+go
+
+-- Trigger que actualiza el estado de los pagos según el monto que se pague
+create or alter trigger tr_estado_pago on pago
+after update
+as
+	declare @pago int = (select monto_pagado from inserted);
+    declare @id int = (select id_rva from deleted);
+    declare @abono int =(select abono_req from deleted) ;    
+    declare @total int = (select monto_total from deleted);
+begin
+
+
+		if @pago >= @abono and @pago < @total 
+        begin
+			update pago set
+				est_pago = 'abonado'
+				where id_rva = @id;
+			update reserva set
+				estado_rva = 'reservada'
+				where id_rva = @id;
+		end;
+		else if @pago < @abono 
+        begin
+			update pago set
+				est_pago = 'pago pendiente'
+				where id_rva = @id;
+		end;
+		else if @pago = @total 
+        begin
+			update pago set
+				est_pago = 'pagado totalmente'
+				where id_rva = @id;    
+		end;
+end;
+go
+

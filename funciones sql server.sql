@@ -1,3 +1,6 @@
+-- Funciones que calculan los costos
+
+-- Calcula el costo de arriendo del depto en la fecha de la reserva ( dias * costo por dia)
 create or ALTER function fn_arriendo (@id_rva int) returns int
 as 
 BEGIN
@@ -10,6 +13,8 @@ BEGIN
 end;
 go
 
+
+-- Calcula el monto que falta por pagar 
 create or ALTER FUNCTION fn_monto_pago ( @ID_RVA INT) RETURNS INT
 AS 
    BEGIN
@@ -21,6 +26,8 @@ AS
    END 
 go
 
+
+-- Calcula el monto de los costos de servicios extras
 create or ALTER  function fn_servicios (@id_rva int) returns int
 as
 begin
