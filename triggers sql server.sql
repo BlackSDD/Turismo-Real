@@ -141,7 +141,7 @@ go
 
 
 -- Trigger que modifica la disponibilidad cuando se ingresa una reserva de mantención
-create trigger tr_ingreso_mantencion_res_mant on res_mant
+create or alter trigger tr_ingreso_mantencion_res_mant on res_mant
 after insert 
 as 
 	declare @fec_rmant date = (select fec_rmant from inserted);
@@ -155,7 +155,7 @@ go
 
 
 -- Trigger que modifica la disponibildad según el estado actualizado de una reserva de mantención
-create  trigger tr_update_mantencion_res_mant on res_mant
+create or alter trigger tr_update_mantencion_res_mant on res_mant
 after update 
 as
 	declare @id_dpto int = (select id_dpto from inserted);
@@ -186,7 +186,7 @@ go
 
 
 -- Trigger que cambia el estado de la reserva de mantención al insertar una mantención en detalle
-create  trigger tr_ingreso_mantencion on mantencion
+create or alter trigger tr_ingreso_mantencion on mantencion
 after insert 
 AS
 		DECLARE @id INT = (SELECT id_rmant FROM inserted)

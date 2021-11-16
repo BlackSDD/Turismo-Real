@@ -40,3 +40,40 @@ declare @v_servicio int
     return @v_servicio;
 end;
 go
+
+-- Funcion que calcula el costo del contrato de un tour según cantidad de personas y tipo
+create or alter function fn_costo_tour (@c_adult int , @c_ninos int, @c_3ra int , @id_serv int) returns int
+as 
+begin
+    declare @costo int;
+    declare @p_adult int = (select cost_adult from tour where id_serv = @id_serv);
+    declare @p_nino int = (select cost_nigno from tour where id_serv = @id_serv);
+    declare @p_3ra int = (select cost_3ra from tour where id_serv = @id_serv);
+    set @costo = (@p_adult * @c_adult) + (@p_nino * @c_ninos) + (@p_3ra * @c_3ra);
+	return @costo;
+end;
+go
+
+-- Funcion que calcula el costo de un servicio de transporte según la hora 
+create or alter function fn_costo_transporte (@id_serv int, @hora char(5) , @km_rec decimal(6,3)) returns int
+as 
+begin
+	declare @costo int;
+    declare @km int;
+	declare @compare int = (cast(SUBSTRING(@hora,1,2)as int));
+    if @compare between 06 and 18
+    begin
+		set @km = (select cost_km_dia
+					from transporte 
+					where id_serv = @id_serv);
+    end;
+    else if @compare between 00 and 05 or @compare >= 19
+    begin
+		set @km = (select cost_km_noc
+					from transporte
+					where id_serv = @id_serv);
+    end;
+	set @costo = @km_rec * @km;
+	return @costo;
+end;
+go
