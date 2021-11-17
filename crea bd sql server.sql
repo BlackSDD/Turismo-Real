@@ -96,6 +96,18 @@ CREATE TABLE condominio (
     id_com        INT NOT NULL
 );
 
+CREATE TABLE conductor (
+    rut_conduc   INT NOT NULL,    
+    dv_conduc    CHAR(1) NOT NULL,
+    nom_conduc   NVARCHAR(50) NOT NULL,
+    appat_conduc NVARCHAR(50) NOT NULL,
+    apmat_conduc NVARCHAR(50) NOT NULL,
+    email_conduc NVARCHAR(100) NOT NULL,
+    tel_conduc   INT NOT NULL,
+    patente      CHAR (8) NOT NULL,
+    id_serv      INT NOT NULL
+);
+
 CREATE TABLE cont_serv (
     id_cont_serv       INT IDENTITY(1,1) NOT NULL,
     fec_cont           DATE NOT NULL,
@@ -145,6 +157,17 @@ CREATE TABLE mantencion (
     id_rmant    INT NOT NULL,
     cost_mant   INT NOT NULL,
     deta_mant   NVARCHAR(2000) NOT NULL    
+);
+
+CREATE TABLE marca (
+    id_marca INT IDENTITY(1,1) NOT NULL,
+    nombre_marca NVARCHAR (100) NOT NULL
+);
+
+CREATE TABLE modelo (
+    id_modelo      INT IDENTITY(1,1) NOT NULL,
+    nombre_modelo  NVARCHAR(100) NOT NULL,
+    id_marca       INT NOT NULL
 );
 
 CREATE TABLE pago(
@@ -229,18 +252,6 @@ CREATE TABLE usuario (
     id_tipo_usr INT NOT NULL
 );
 
-CREATE TABLE conductor (
-    rut_conduc   INT NOT NULL,    
-    dv_conduc    CHAR(1) NOT NULL,
-    nom_conduc   NVARCHAR(50) NOT NULL,
-    appat_conduc NVARCHAR(50) NOT NULL,
-    apmat_conduc NVARCHAR(50) NOT NULL,
-    email_conduc NVARCHAR(100) NOT NULL,
-    tel_conduc   INT NOT NULL,
-    patente      CHAR (8) NOT NULL,
-    id_serv      INT NOT NULL
-);
-
 CREATE TABLE vehiculo (
     patente          CHAR(8) NOT NULL,
     color            NVARCHAR(30) NOT NULL,
@@ -253,16 +264,9 @@ CREATE TABLE vehiculo (
     id_modelo        INT NOT NULL    
 );
 
-CREATE TABLE modelo (
-    id_modelo      INT IDENTITY(1,1) NOT NULL,
-    nombre_modelo  NVARCHAR(100) NOT NULL,
-    id_marca       INT NOT NULL
-);
 
-CREATE TABLE marca (
-    id_marca INT IDENTITY(1,1) NOT NULL,
-    nombre_marca NVARCHAR (100) NOT NULL
-);
+
+
 
 ALTER TABLE tipo_usuario ADD CONSTRAINT id_tipo_usr PRIMARY KEY (id_tipo_usr);
 

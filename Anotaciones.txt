@@ -1,2 +1,3 @@
 Un departamento deshabilitado tiene en descripción: 'departamento no disponible'
 
+Un servextra deshabilitado: 'Servicio no disponible'
