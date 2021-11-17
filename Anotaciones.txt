@@ -1,0 +1,2 @@
+Un departamento deshabilitado tiene en descripción: 'departamento no disponible'
+

@@ -1,7 +1,7 @@
----TABLA AGENCIA_EXTERNA
+-- TABLA AGENCIA_EXTERNA
 
---Eliminar
-create or alter procedure sp_eliminarAgenciaExterna
+-- Eliminar
+create or alter procedure pd_eliminarAgenciaExterna
 (
 	@id_agencia INT
 )
@@ -10,30 +10,31 @@ begin
 	delete  from agencia_externa where id_agencia = @id_agencia;
 	commit;
 end;
+go
 
---Agregar
-create or alter procedure sp_agregarAgenciaExterna
+-- Agregar
+create or alter procedure pd_agregarAgenciaExterna
 (
-	
 	@nom_age NVARCHAR(100),
 	@email_age NVARCHAR(100),
 	@tel_age INT,
-        @id_com INT
+    @id_com INT
 )
 as
 begin
-	insert into agencia_externa values
-	(
-	@nom_age ,
+	insert into agencia_externa (nom_age, email_age, tel_age, id_com)
+	values(
+	@nom_age,
 	@email_age ,
 	@tel_age,
     @id_com
 	);
     commit;
 end;
+go
 
---Modificar
-create or alter procedure sp_modificarAgenciaExterna
+-- Modificar
+create or alter procedure pd_modificarAgenciaExterna
 (
 	@id_age INT,
 	@nom_age NVARCHAR(100),
@@ -44,16 +45,18 @@ as
 begin
 	update agencia_externa 
     set nom_age = @nom_age,
-        email_age = @email_age,
+		email_age = @email_age,
         tel_age = @tel_age
 	where ID_AGENCIA = @id_age;
     commit;
-	
 end;
+go
+
 ------------------------------------------------------
-----TABLA ARTICULO
---Eliminar
-create or alter procedure sp_eliminarArticulo
+
+-- TABLA ARTICULO
+-- Eliminar
+create or alter procedure pd_eliminarArticulo
 (
 	@id_arti INT
 )
@@ -62,11 +65,11 @@ begin
 	delete  from articulo where id_arti = @id_arti;
     commit;
 end;
+go
 
----Agregar
-create or alter procedure sp_agregarArticulo
+-- Agregar
+create or alter procedure pd_agregarArticulo
 (
-	
 	@nom_arti NVARCHAR(100),
 	@cant_arti INT,
 	@deta_arti NVARCHAR(2000),
@@ -75,8 +78,8 @@ create or alter procedure sp_agregarArticulo
 )
 as
 begin
-	insert into articulo values
-	(
+	insert into articulo (nom_arti, cant_arti, deta_arti, valor_arti, id_dpto)
+	values(
 	@nom_arti ,
 	@cant_arti ,
 	@deta_arti,
@@ -85,9 +88,10 @@ begin
 	);
     commit;
 end;
+go
 
----Modificar
-create or alter procedure sp_modificarArticulo
+-- Modificar
+create or alter procedure pd_modificarArticulo
 (
 	@id_arti INT,
 	@nom_arti NVARCHAR(100),
@@ -97,17 +101,22 @@ create or alter procedure sp_modificarArticulo
 )
 as
 begin
-	update articulo set nom_arti = @nom_arti, cant_arti = @cant_arti, deta_arti = @deta_arti, valor_arti = @valor_arti
+	update articulo set 
+		nom_arti = @nom_arti, 
+		cant_arti = @cant_arti, 
+		deta_arti = @deta_arti, 
+		valor_arti = @valor_arti
 	where id_arti = @id_arti;
     commit;
 end;
+go
 
 ---------------------------------------------------------------------------
 
 --TABLA CHECK IN
 
-
-create or alter procedure sp_agregarCheckin
+-- Agregar
+create or alter procedure pd_agregarCheckin
 (
     @id_rva INT,
  	@deta_chi NVARCHAR(2000),
@@ -115,33 +124,34 @@ create or alter procedure sp_agregarCheckin
 )
 as
 begin
-	insert into checkin values
-	(
+	insert into checkin (id_rva, deta_chi, id_usr) 
+	values(
 	@id_rva,
  	@deta_chi,
     @id_usr
     );
 end;
+go
 
 --Modificar
-
-create or alter procedure sp_modificarCheckin
+create or alter procedure pd_modificarCheckin
 (
  	@id_rva INT,
 	@deta_chi NVARCHAR(2000)	
 )
 as
 begin
- 	update checkin set deta_chi = @deta_chi
+ 	update checkin set
+	deta_chi = @deta_chi
  	where id_rva = @id_rva;	
 end;
+go
 
 ---------------------------------------------------------------------------
 
 -- TABLA CHECK OUT
 
-
-create or alter procedure sp_agregarCheckout
+create or alter procedure pd_agregarCheckout
 (
     @cost_multa INT,
     @deta_cho NVARCHAR(2000),
@@ -150,17 +160,18 @@ create or alter procedure sp_agregarCheckout
 )
 as
 begin
-    insert into checkout values
-    (
+    insert into checkout (id_rva, cost_multa, deta_cho, id_usr)
+	values(
         @id_rva,
         @cost_multa,
         @deta_cho,
         @id_usr
     );
 end;
+go
 
---modificar
-create or alter procedure sp_modificarCheckout
+-- Modificar
+create or alter procedure pd_modificarCheckout
 (
 	@cost_multa INT,
 	@deta_cho NVARCHAR(2000),
@@ -173,28 +184,31 @@ begin
         deta_cho = @deta_cho
         where id_rva = @id_rva;
 end;
+go
 
 ---------------------------------------------------------------------------
 
---TABLA COMUNA
---Agregar
-create or alter procedure sp_agregarComuna
+-- TABLA COMUNA
+
+-- Agregar
+create or alter procedure pd_agregarComuna
 (
 	@nom_com NVARCHAR(100),
     @id_rgn INT
 )
 as
 begin
-	insert into Comuna values
-	(
+	insert into Comuna (nom_com, id_rgn)
+	values(
 	@nom_com,
     @id_rgn
 	);
 commit;
 end;
+go
 
---Modificar
-create or alter procedure sp_modificarComuna
+-- Modificar
+create or alter procedure pd_modificarComuna
 (
 	@id_com INT,
 	@nom_com NVARCHAR(100)
@@ -206,51 +220,57 @@ begin
         where id_com = @id_com;
 	commit;
 end;
+go
 
---eliminar
-
-create or alter procedure sp_eliminarComuna
+-- Eliminar
+create or alter procedure pd_eliminarComuna
 (
 	@id_com INT
 )
 as
 begin
-	delete from comuna where id_com = @id_com;
+	delete from comuna 
+	where id_com = @id_com;
 	commit;
 end;
+go
+
 ---------------------------------------------------------------------------
 
---TABLA CONDOMINIO
---Eliminar
-create or alter procedure sp_eliminarCondominio
+-- TABLA CONDOMINIO
+
+-- Eliminar
+create or alter procedure pd_eliminarCondominio
 (
 	@id_cnd INT
 )
 as
 begin
-	delete from condominio where id_cnd = @id_cnd;
+	delete from condominio 
+	where id_cnd = @id_cnd;
 	commit;
 end;
+go
 
---agregar
-create or alter procedure sp_agregarCondominio
+-- Agregar
+create or alter procedure pd_agregarCondominio
 (
-	
 	@nom_cnd NVARCHAR(100),
 	@id_com INT
 )
 as
 begin
-	insert into condominio values
-	(
+	insert into condominio (nom_cnd, id_com)
+	values(
 	@nom_cnd,
     @id_com
 	);
     commit;
 end;
+go
 
---modificar
-create or alter procedure sp_modificarCondominio
+-- Modificar
+create or alter procedure pd_modificarCondominio
 (
 	@id_cnd INT,
 	@nom_cnd NVARCHAR(100)
@@ -262,86 +282,132 @@ begin
         where id_cnd = @id_cnd;
 	commit;
 end;
+go
 
 ---------------------------------------------------------------------------
 
 --TABLA CONT_SERV
 
---Eliminar
-create or alter procedure sp_eliminarContServ
+-- Eliminar
+-- Se cambia a estado contrato cancelado
+create or alter procedure pd_eliminarContServ
 (
 	@id_cont_serv INT
 )
 as
 begin
 	update cont_serv set 
-    deta_cont = 'Se canceló la reserva del servicio',
-    est_cont = 'cancelado',
-    km_rec = 0,
-    lugar_recogida = ' ',
-    lugar_destino = ' ',
-    hora_acord = ' ' ,
-    costo_total = 0
+		deta_cont = 'Se canceló la reserva del servicio',
+		est_cont = 'cancelado',
+		km_rec = 0,
+		lugar_recogida = ' ',
+		lugar_destino = ' ',
+		hora_acord = ' ' ,
+		costo_total = 0
 	where id_cont_serv = @id_cont_serv;
 	commit;
 end;
+go
 
+-- Agregar 
+-- al verificar que tipo de servicio es, llama a la funcion respectiva para calcular el monto total el contrato
+create or alter procedure pd_agregarContServ
+(
+	@deta_cont NVARCHAR(100),
+	@fec_acord date,
+    @hora_acord char(5),
+	@lugar_recogida NVARCHAR(100),
+	@lugar_destino NVARCHAR(100),
+	@km_rec decimal(6,3),
+    @id_rva int,
+    @id_serv int,
+    @cant_adult int,
+    @cant_nino int,
+    @cant_3ra int
+)
+as  
+    declare @fec_cont date = getdate();
+    declare @costo_total int;
+    declare @tipo char(1) = (select tipo_serv from servextras where id_serv = @id_serv);
+begin
+    if @tipo = 'T' 
+		begin
+			set @costo_total = dbo.[fn_costo_tour](@cant_adult, @cant_nino, @cant_3ra, @id_serv);
+		end;
+    else if @tipo = 'V' 
+		begin
+			set @costo_total = dbo.[fn_costo_transporte](@id_serv, @hora_acord, @km_rec);
+		end;
+	insert into cont_serv (fec_cont, costo_total, deta_cont, fec_acord, hora_acord, lugar_recogida, lugar_destino, km_rec, cant_adult, cant_nigno, cant_3ra, est_cont, id_rva, id_serv)
+    values
+	(
+	@fec_cont,
+	@costo_total ,
+	@deta_cont,
+	@fec_acord ,
+    @hora_acord,
+	@lugar_recogida,
+	@lugar_destino,
+	@km_rec,
+	@cant_adult,
+    @cant_nino,
+    @cant_3ra,
+    'reservado',
+    @id_rva,
+    @id_serv
+	);
+end;
+go
 
-------------------Agregar Contrato Servicio
-CREATE or alter PROCEDURE sp_agregarContServ
+-- Modificar
+create or alter procedure pd_modificarContServ
+(
+	@id_cont int,
+	@deta_cont NVARCHAR(100),
+	@fec_acord date,
+    @hora_acord char(5),
+	@lugar_recogida NVARCHAR(100),
+	@lugar_destino NVARCHAR(100),
+	@km_rec decimal(6,3),
+    @cant_adult int,
+    @cant_nigno int,
+    @cant_3ra int
+)
+as
+begin
+	declare @costo_total int;
+	declare @id_serv int  = (select id_serv from cont_serv where id_cont_serv = @id_cont);
+    declare @tipo char(1) = (select tipo_serv from servextras where id_serv = @id_serv );
+	if @tipo = 'T' 
+		begin
+			set @costo_total = dbo.[fn_costo_tour](@cant_adult, @cant_nigno, @cant_3ra, @id_serv);
+		end;
+    else if @tipo = 'V' 
+		begin
+			set @costo_total = dbo.[fn_costo_transporte](@id_serv, @hora_acord, @km_rec);
+		end;
+	update cont_serv set
+		deta_cont = @deta_cont,
+		fec_acord = @fec_acord,
+		hora_acord = @hora_acord,
+		lugar_recogida = @lugar_recogida,
+		lugar_destino = @lugar_destino,
+		km_rec = @km_rec,
+		cant_adult = @cant_adult,
+		cant_nigno = @cant_nigno,
+		cant_3ra = @cant_3ra
+	where id_cont_serv = @id_cont;
 
-   @costo_total int,
-   @deta_cont nvarchar(2000),
-   @fec_acord date,
-   @hora_acord char(5),
-   @lugar_recogida nvarchar(100),
-   @lugar_destino nvarchar(100),
-   @km_rec decimal(6,3),
-   @est_cont nvarchar(30),
-   @id_rva int,
-   @id_serv int
-AS 
-   BEGIN
+end;
+go
 
-      DECLARE
-         @fec_cont date = sysdatetime()
-
-      INSERT cont_serv
-	  ( 
-         FEC_CONT, 
-         COSTO_TOTAL, 
-         DETA_CONT, 
-         FEC_ACORD, 
-         HORA_ACORD, 
-         LUGAR_RECOGIDA, 
-         LUGAR_DESTINO, 
-         KM_REC, 
-         EST_CONT, 
-         ID_RVA, 
-         ID_SERV)
-         VALUES (
-            @fec_cont, 
-			@costo_total, 
-			@deta_cont, 
-			@fec_acord, 
-			@hora_acord, 
-			@lugar_recogida, 
-			@lugar_destino, 
-			@km_rec, 
-			'reservado', 
-			@id_rva, 
-			@id_serv
-			)
-
-      IF @@TRANCOUNT > 0
-         COMMIT TRANSACTION 
-
-   END
 ---------------------------------------------------------------------------
 
---TABLA DEPARTAMENTO
---eliminar
-create or alter procedure sp_eliminarDepartamento
+-- TABLA DEPARTAMENTO
+
+-- Eliminar
+-- No se elimina de la base de datos sino que se deja inhabilitado
+create or alter procedure pd_eliminarDepartamento
 (
 	@id_dpto INT
 )
@@ -359,11 +425,15 @@ begin
         img_4_dpto = 0x,
         img_5_dpto = 0x
         where id_dpto = @id_dpto;        
+	update disponibilidad set
+		esta_disp = 'No'
+		where id_dpto = @id_dpto;
     commit;
 end;
+go
 
---agregar
-create or alter procedure sp_agregarDepartamento
+-- Agregar
+create or alter procedure pd_agregarDepartamento
 (
 	@dir_dpto NVARCHAR(100), 
 	@num_dpto INT, 
@@ -379,7 +449,8 @@ create or alter procedure sp_agregarDepartamento
 )
 as
 begin
-	insert into departamento values
+	insert into departamento (dir_dpto, num_dpto, n_amb_dpto, desc_dpto, costo_arri_dpto, img_1_dpto, img_2_dpto, img_3_dpto, img_4_dpto, img_5_dpto, id_cnd)
+	values
 	(
 	@dir_dpto , 
 	@num_dpto , 
@@ -395,9 +466,10 @@ begin
 	);
     commit;
 end;
+go
 
---Modificar
-create or alter procedure sp_modificarDepartamento
+-- Modificar
+create or alter procedure pd_modificarDepartamento
 (
 	@id_dpto INT,
 	@dir_dpto NVARCHAR(100), 
@@ -414,25 +486,27 @@ create or alter procedure sp_modificarDepartamento
 as
 begin
 	update departamento set 
-    dir_dpto = @dir_dpto,
-    num_dpto = @num_dpto,
-    n_amb_dpto = @n_amb_dpto,
-    desc_dpto = @desc_dpto,
-    costo_arri_dpto = @costo_arri_dpto,
-	img_1_dpto = @img_1_dpto,
-    img_2_dpto = @img_2_dpto,
-    img_3_dpto = @img_3_dpto,
-    img_4_dpto = @img_4_dpto,
-    img_5_dpto = @img_5_dpto
+		dir_dpto = @dir_dpto,
+		num_dpto = @num_dpto,
+		n_amb_dpto = @n_amb_dpto,
+		desc_dpto = @desc_dpto,
+		costo_arri_dpto = @costo_arri_dpto,
+		img_1_dpto = @img_1_dpto,
+		img_2_dpto = @img_2_dpto,
+		img_3_dpto = @img_3_dpto,
+		img_4_dpto = @img_4_dpto,
+		img_5_dpto = @img_5_dpto
 	where id_dpto = @id_dpto;
     commit;
 end;
+go
 
 ---------------------------------------------------------------------------
 
---TABLA GASTOS
---eliminar
-create or alter procedure sp_eliminarGastos
+-- TABLA GASTOS
+
+-- Eliminar
+create or alter procedure pd_eliminarGastos
 (
 	@id_dpto INT
 )
@@ -441,9 +515,10 @@ begin
 	delete  from Gastos where id_dpto = @id_dpto;
     commit;
 end;
+go
 
---agregar
-create or alter procedure sp_agregarGastos
+-- Agregar
+create or alter procedure pd_agregarGastos
 (
 	@gast_mes INT,
 	@gast_agno INT,
@@ -451,7 +526,8 @@ create or alter procedure sp_agregarGastos
 )
 as
 begin
-	insert into gastos values
+	insert into gastos (id_dpto, gast_mes, gast_agno) 
+	values
 	(
 	@id_dpto,
 	@gast_mes ,
@@ -459,9 +535,10 @@ begin
 	);
     commit;
 end;
+go
 
---Modificar
-create or alter procedure sp_modificarGastos
+-- Modificar
+create or alter procedure pd_modificarGastos
 (
 	@id_dpto INT,
 	@gast_mes INT,
@@ -469,26 +546,29 @@ create or alter procedure sp_modificarGastos
 )
 as
 begin
-	update gastos set gast_mes = @gast_mes,
-    gast_agno = @gast_agno
+	update gastos set 
+		gast_mes = @gast_mes,
+		gast_agno = @gast_agno
 	where id_dpto = @id_dpto;
 	commit;
 end;
+go
 
 ---------------------------------------------------------------------------
 
---TABLA MANTENCION
---agregar
-create or alter procedure sp_agregarMantencion
+-- TABLA MANTENCION
+
+-- Agregar
+create or alter procedure pd_agregarMantencion
 (
-	
 	@cost_mant INT,
 	@deta_mant NVARCHAR(2000),
     @id_rmant INT
 )
 as
 begin
-	insert into mantencion values
+	insert into mantencion (id_rmant, cost_mant, deta_mant)
+	values
 	(
 	@id_rmant,
 	@cost_mant ,
@@ -496,9 +576,10 @@ begin
 	);
     commit;
 end;
+go
 
---Modificar
-create or alter procedure sp_modificarMantencion
+-- Modificar
+create or alter procedure pd_modificarMantencion
 (
     @id_rmant INT,
 	@cost_mant INT,
@@ -512,14 +593,14 @@ begin
 	where id_rmant = @id_rmant;
     commit;
 end;
+go
 
----------------------------------------------------------------------------
 ---------------------------------------------------------------------------
 
 --TABLA PAGO
 
 
-create or alter procedure sp_agregarPago
+create or alter procedure pd_agregarPago
 (
 	@id_rva INT,
 	@monto_pagado INT
@@ -528,15 +609,17 @@ as
 begin
 	update pago set
         monto_pagado = @monto_pagado
-        where id_rva = @id_rva;
+	where id_rva = @id_rva;
     commit;
 end;
+go
 
 ---------------------------------------------------------------------------
 
 --TABLA REGION
---eliminar
-create or alter procedure sp_eliminarRegion
+
+-- Eliminar
+create or alter procedure pd_eliminarRegion
 (
 	@id_rgn INT
 )
@@ -546,23 +629,25 @@ begin
         where id_rgn = @id_rgn;
     commit;
 end;
+go
 
---agregar
-create or alter procedure sp_agregarRegion
+-- Agregar
+create or alter procedure pd_agregarRegion
 (
 	@nom_rgn NVARCHAR(100)	
 )
 as
 begin
-	insert into region values
+	insert into region (nom_rgn) values
 	(
 	@nom_rgn 
 	);
     commit;
 end;
+go
 
 --modificar
-create or alter procedure sp_modificarRegion
+create or alter procedure pd_modificarRegion
 (
 	@id_rgn INT,
 	@nom_rgn NVARCHAR(100)
@@ -571,15 +656,17 @@ as
 begin
 	update region set 
         nom_rgn = @nom_rgn
-        where id_rgn = @id_rgn;
+    where id_rgn = @id_rgn;
 	commit;
 end;
+go
 
 ---------------------------------------------------------------------------
 
---TABLA RES_MANT
---eliminar
-create or alter procedure sp_eliminarMantencion
+-- TABLA RES_MANT
+
+-- Eliminar
+create or alter procedure pd_eliminarMantencion
 (
 	@id_rmant INT
 )
@@ -590,9 +677,10 @@ begin
     where id_rmant = @id_rmant;
     commit;
 end;
+go
 
---agregar
-create or alter procedure sp_agregarResMant
+-- Agregar
+create or alter procedure pd_agregarResMant
 (
 	@fec_rmant date,
     @id_dpto INT,
@@ -600,7 +688,8 @@ create or alter procedure sp_agregarResMant
 )
 as
 begin
-	insert into Res_mant values
+	insert into Res_mant (fec_rmant, est_man, id_dpto, id_usr)
+	values
 	(
 	@fec_rmant,
     'agendada',
@@ -609,9 +698,10 @@ begin
 	);
     commit;
 end;
+go
 
---modificar
-create or alter procedure sp_modificarResMant
+-- Modificar
+create or alter procedure pd_modificarResMant
 (
 	@id_rmant INT,
 	@fec_rmant date
@@ -623,87 +713,82 @@ begin
 	where id_rmant = @id_rmant;
 	commit;
 end;
+go
 
 ---------------------------------------------------------------------------
 
 --TABLA RESERVA
-create or ALTER PROCEDURE sp_agregarReserva  
+
+-- Agregar
+create or ALTER PROCEDURE pd_agregarReserva  
    @FEC_INI_RVA date,
    @FEC_FIN_RVA date,
    @NUM_PERS INT,
    @ID_DPTO INT,
    @ID_USR INT
 AS 
-   BEGIN
-      DECLARE
-         @CUR_ROWCOUNT int
-      DECLARE
-         @CUR_REC$FEC_DISP date, 
-         @CUR_REC$ESTA_DISP nvarchar(30), 
-         @CUR_REC$ID_DPTO INT, 
-         @MSG varchar(100)
-
-      DECLARE
-          CUR CURSOR LOCAL FOR 
-            SELECT DISPONIBILIDAD.FEC_DISP, DISPONIBILIDAD.ESTA_DISP, DISPONIBILIDAD.ID_DPTO
+BEGIN
+	DECLARE
+		@CUR_ROWCOUNT int;
+    DECLARE
+        @CUR_REC$FEC_DISP date, 
+        @CUR_REC$ESTA_DISP nvarchar(30), 
+        @CUR_REC$ID_DPTO INT, 
+        @MSG varchar(100);
+    DECLARE
+        CUR CURSOR LOCAL FOR 
+		    SELECT DISPONIBILIDAD.FEC_DISP, DISPONIBILIDAD.ESTA_DISP, DISPONIBILIDAD.ID_DPTO
             FROM DISPONIBILIDAD
-            WHERE 
-               FEC_DISP BETWEEN @FEC_INI_RVA AND @FEC_FIN_RVA AND 
-               ID_DPTO = @ID_DPTO AND 
-               ESTA_DISP = 'No'
-
-      SET @CUR_ROWCOUNT = 0
-
-      OPEN CUR
-
-      WHILE 1 = 1
-      
-         BEGIN
-
+            WHERE	FEC_DISP BETWEEN @FEC_INI_RVA AND @FEC_FIN_RVA AND 
+					ID_DPTO = @ID_DPTO AND 
+					ESTA_DISP = 'No'
+	SET @CUR_ROWCOUNT = 0
+    OPEN CUR;
+		WHILE @CUR_ROWCOUNT < 1
+        BEGIN
             FETCH CUR
-                INTO @CUR_REC$FEC_DISP, @CUR_REC$ESTA_DISP, @CUR_REC$ID_DPTO
+                INTO @CUR_REC$FEC_DISP, @CUR_REC$ESTA_DISP, @CUR_REC$ID_DPTO;
+            IF @@FETCH_STATUS = 0 begin
+				SET @CUR_ROWCOUNT = @CUR_ROWCOUNT + 1;
+			end;
+			IF @@FETCH_STATUS <> 0 begin
+				BREAK;
+			end;
+        END;
+		IF @CUR_ROWCOUNT >= 1
+		begin
+			 SET @MSG = 'Las fechas de la reserva no están disponibles';
+			 print @MSG;
+		end;
+		ELSE 
+		BEGIN
+			INSERT into RESERVA( 
+				FEC_INI_RVA, 
+				FEC_FIN_RVA, 
+				NUM_PERS, 
+				ESTADO_RVA, 
+				ID_DPTO, 
+				ID_USR)
+				VALUES ( 
+					CAST(@FEC_INI_RVA AS DATETIME), 
+					CAST(@FEC_FIN_RVA AS DATETIME), 
+					@NUM_PERS, 
+					'en verificación', 
+					@ID_DPTO, 
+					@ID_USR);
+				IF @@TRANCOUNT > 0
+				begin
+				   COMMIT TRANSACTION ;
+				END;
+		end;
+    CLOSE CUR;
+    DEALLOCATE CUR;
+END;
+go
 
-            IF @@FETCH_STATUS = 0
-               SET @CUR_ROWCOUNT = @CUR_ROWCOUNT + 1
-
-            IF @@FETCH_STATUS <> 0
-               BREAK
-
-         END
-
-      IF @CUR_ROWCOUNT >= 1
-         SET @MSG = 'las fechas de la reserva no están disponibles'
-      ELSE 
-         BEGIN
-
-            INSERT RESERVA( 
-               FEC_INI_RVA, 
-               FEC_FIN_RVA, 
-               NUM_PERS, 
-               ESTADO_RVA, 
-               ID_DPTO, 
-               ID_USR)
-               VALUES ( 
-                  CAST(@FEC_INI_RVA AS DATETIME), 
-                  CAST(@FEC_FIN_RVA AS DATETIME), 
-                  @NUM_PERS, 
-                  'en verificación', 
-                  @ID_DPTO, 
-                  @ID_USR)
-
-            IF @@TRANCOUNT > 0
-               COMMIT TRANSACTION 
-
-         END
-
-      CLOSE CUR
-
-      DEALLOCATE CUR
-
-   END
-
---eliminar
-create or alter procedure sp_eliminarReserva
+-- Eliminar
+-- No se elimina, se pasa a estado cancelada
+create or alter procedure pd_eliminarReserva
 (
 	@id_rva INT
 )
@@ -714,9 +799,10 @@ begin
     where id_rva = @id_rva;
     commit;
 end;
+go
 
---modificar
-create or alter procedure sp_modificarReserva
+-- Modificar
+create or alter procedure pd_modificarReserva
 (
 	@id_rva INT,
 	@num_pers INT,
@@ -730,122 +816,91 @@ begin
 	where id_rva = @id_rva;
 	commit;
 end;
+go
 
 
 ---------------------------------------------------------------------------
 
 --TABLA SERVEXTRAS
 
-create or ALTER PROCEDURE sp_eliminarServExtras  
-
+-- Eliminar
+-- Elimina los conductores, tours , vehiculos y servicio de transporte
+-- Cambia de estado el servextra a 'Servicio no disponible'
+create or ALTER PROCEDURE pd_eliminarServExtras  
    @id_serv int
 AS 
-   BEGIN
+BEGIN
+	DECLARE @tipo char(1) = (SELECT tipo_serv FROM servextras WHERE id_serv = @id_serv);
+	IF @tipo = 'T'
+	BEGIN
+		DELETE tour
+		WHERE id_serv = @id_serv;
+        UPDATE servextras SET 
+	        desc_serv = 'Servicio no disponible'
+		WHERE id_serv = @id_serv;
+	END;
+	ELSE IF @tipo = 'V'
+    BEGIN
+		DECLARE @rut_conduc int; 
+        DECLARE @dv_conduc char(1); 
+        DECLARE @nom_conduc nvarchar(50); 
+        DECLARE @appat_conduc nvarchar(50); 
+        DECLARE @apmat_conduc nvarchar(50);
+		DECLARE @email_conduc nvarchar(100); 
+        DECLARE @tel_conduc int; 
+		DECLARE @patente char(8);
+        DECLARE
+			COND CURSOR LOCAL FORWARD_ONLY FOR 
+				SELECT 
+					CONDUCTOR.RUT_CONDUC, 
+					CONDUCTOR.DV_CONDUC, 
+					CONDUCTOR.NOM_CONDUC, 
+					CONDUCTOR.APPAT_CONDUC,	
+					CONDUCTOR.APMAT_CONDUC, 
+					CONDUCTOR.EMAIL_CONDUC, 
+					CONDUCTOR.TEL_CONDUC, 
+					CONDUCTOR.PATENTE, 
+					CONDUCTOR.ID_SERV
+				FROM CONDUCTOR
+					WHERE ID_SERV = @ID_SERV;
+			OPEN COND;
+				WHILE 1 = 1
+				BEGIN
+					FETCH COND INTO 
+				        @rut_conduc, 
+						@dv_conduc, 
+						@nom_conduc, 
+						@appat_conduc, 
+						@apmat_conduc, 
+						@email_conduc, 
+						@tel_conduc, 
+						@patente, 
+						@id_serv 
+						IF @@FETCH_STATUS = -1 BEGIN
+							BREAK
+						END;
+					DELETE conductor
+						WHERE id_serv = @id_serv;
+					DELETE vehiculo
+						WHERE patente = @patente;
+				END;
+			CLOSE COND;
+			DEALLOCATE COND;
+			DELETE transporte
+				WHERE id_serv = @id_serv
+			UPDATE servextras SET 
+				desc_serv = 'Servicio no disponible'
+			WHERE id_serv = @id_serv;
+	END;
+    IF @@TRANCOUNT > 0 
+	BEGIN
+		COMMIT TRANSACTION 
+	END;
+END;
+go
 
-      DECLARE
-         @tipo char(1)
-
-      SELECT @tipo = tipo_serv
-      FROM servextras
-      WHERE id_serv = @id_serv
-
-      IF @tipo = 'T'
-         BEGIN
-
-            DELETE tour
-            WHERE id_serv = @id_serv
-
-            UPDATE servextras
-               SET 
-                  desc_serv = 'Servicio no disponible'
-            WHERE id_serv = @id_serv
-
-         END
-      ELSE 
-         BEGIN
-            IF @tipo = 'V'
-               BEGIN
-
-                  DELETE conductor
-                  WHERE id_serv = @id_serv
-
-                  BEGIN
-
-                     DECLARE
-                        @rut_conduc int, 
-                        @dv_conduc char(1), 
-                        @nom_conduc nvarchar(50), 
-                        @appat_conduc nvarchar(50), 
-                        @apmat_conduc nvarchar(50), 
-                        @email_conduc nvarchar(100), 
-                        @tel_conduc int, 
-                        @patente char(8)
-
-                     DECLARE
-                         COND CURSOR LOCAL FORWARD_ONLY FOR 
-                           SELECT 
-                              CONDUCTOR.RUT_CONDUC, 
-                              CONDUCTOR.DV_CONDUC, 
-                              CONDUCTOR.NOM_CONDUC, 
-                              CONDUCTOR.APPAT_CONDUC, 
-                              CONDUCTOR.APMAT_CONDUC, 
-                              CONDUCTOR.EMAIL_CONDUC, 
-                              CONDUCTOR.TEL_CONDUC, 
-                              CONDUCTOR.PATENTE, 
-                              CONDUCTOR.ID_SERV
-                           FROM CONDUCTOR
-                           WHERE ID_SERV = @ID_SERV
-
-                     OPEN COND
-
-                     WHILE 1 = 1
-                     
-                        BEGIN
-
-                           FETCH COND
-                               INTO 
-                                 @rut_conduc, 
-								@dv_conduc , 
-								@nom_conduc , 
-								@appat_conduc , 
-								@apmat_conduc , 
-								@email_conduc, 
-								@tel_conduc , 
-								@patente , 
-								@id_serv 
-
-                           IF @@FETCH_STATUS = -1
-                              BREAK
-
-                           DELETE vehiculo
-                           WHERE patente = @patente
-
-                        END
-
-                     CLOSE COND
-
-                     DEALLOCATE COND
-
-                  END
-
-                  DELETE transporte
-                  WHERE id_serv = @id_serv
-
-                  UPDATE servextras
-                     SET 
-                        desc_serv = 'Servicio no disponible'
-                  WHERE id_serv = @id_serv
-
-               END
-         END
-
-      IF @@TRANCOUNT > 0
-         COMMIT TRANSACTION 
-
-   END
-
----agregar
-create or alter procedure sp_agregarServExtras
+--- Agregar
+create or alter procedure pd_agregarServExtras
 (
 	@nom_serv NVARCHAR(100),
 	@tipo_serv char,
@@ -854,7 +909,8 @@ create or alter procedure sp_agregarServExtras
 )
 as
 begin
-	insert into servExtras values
+	insert into servExtras (nom_serv, tipo_serv, desc_serv, id_agencia)
+	values
 	(
 	@nom_serv,
 	@tipo_serv,
@@ -863,9 +919,10 @@ begin
 	);
     commit;
 end;
+go
 
---modificar
-create or alter procedure sp_modificarServExtras
+-- Modificar
+create or alter procedure pd_modificarServExtras
 (
 	@id_serv INT,
 	@nom_serv NVARCHAR(100),
@@ -879,13 +936,14 @@ begin
 	where id_serv = @id_serv;
 	commit;
 end;
+go
 
 ---------------------------------------------------------------------------
 
+-- TABLA TOUR
 
---TABLA TOUR
---agregar
-create or alter procedure sp_agregarTour
+-- Agregar
+create or alter procedure pd_agregarTour
 (
 	@id_serv INT,
 	@dur_hra INT,
@@ -900,7 +958,8 @@ create or alter procedure sp_agregarTour
 )
 as
 begin
-	insert into Tour values
+	insert into Tour (id_serv, dur_hra, dur_min, cost_adult, cost_nigno, cost_3ra, ubi_partida, ubi_fin, alimentacion, transporte)
+	values
 	(
 	@id_serv,
 	@dur_hra,
@@ -915,8 +974,10 @@ begin
 	);
     commit;
 end;
----modificar
-create or alter procedure sp_modificarTour
+go
+
+-- Modificar
+create or alter procedure pd_modificarTour
 (
 	@id_serv INT,
 	@dur_hra INT,
@@ -932,7 +993,7 @@ create or alter procedure sp_modificarTour
 as
 begin
 	update Tour set 
-        dur_hra = @dur_hra,
+		dur_hra = @dur_hra,
         dur_min = @dur_min,
         cost_adult = @cost_adult,
         cost_nigno = @cost_nigno, 
@@ -944,12 +1005,14 @@ begin
 	where id_serv = @id_serv;
 	commit;
 end;
+go
 
 ---------------------------------------------------------------------------
 
 --TABLA TRANSPORTE
---agregar
-create or alter procedure sp_agregarTransporte
+
+-- Agregar
+create or alter procedure pd_agregarTransporte
 (
     @id_serv  INT,
 	@cost_km_dia INT,
@@ -957,7 +1020,8 @@ create or alter procedure sp_agregarTransporte
 )
 as
 begin
-	insert into Transporte values
+	insert into Transporte (id_serv, cost_km_dia, cost_km_noc)
+	values
 	(
 	@id_serv,
 	@cost_km_dia ,
@@ -965,9 +1029,10 @@ begin
 	);
     commit;
 end;
+go
 
---modificar
-create or alter procedure sp_modificarTransporte
+-- Modificar
+create or alter procedure pd_modificarTransporte
 (
 	@id_serv INT,
 	@cost_km_dia INT,
@@ -981,12 +1046,14 @@ begin
 	where id_serv = @id_serv;
 	commit;
 end;
+go
 
 ---------------------------------------------------------------------------
 
 --TABLA USUARIO
 
-create or alter procedure sp_suspenderUsr
+-- Suspender usuario
+create or alter procedure pd_suspenderUsr
 (
 	@id_usr INT
 )
@@ -997,9 +1064,10 @@ begin
         tipo_cli = 'inhabilitado'
     where id_usr = @id_usr;
 end;
+go
 
----Agregar Usuario
-create or alter procedure sp_agregarUsr
+-- Agregar Usuario
+create or alter procedure pd_agregarUsr
 (
 	@email_usr NVARCHAR(100),
 	@contr_usr NVARCHAR(50),
@@ -1016,7 +1084,8 @@ create or alter procedure sp_agregarUsr
 )
 as
 begin
-	insert into usuario values
+	insert into usuario (email_usr, contr_usr, nom_usr, appat_usr, apmat_usr, tel_usr, rut_usr, dv_usr, cant_res, est_cta, tipo_cli, id_tipo_usr )
+	values
 	(
 	@email_usr ,
 	@contr_usr ,
@@ -1033,10 +1102,10 @@ begin
 	);
     commit;
 end;
+go
 
-
---modificar
-create or alter procedure sp_modificarDatosUsr
+-- Modificar
+create or alter procedure pd_modificarDatosUsr
 (
 	@id_usr INT,
 	@email_usr NVARCHAR(100),
@@ -1052,9 +1121,10 @@ begin
 	where id_usr = @id_usr;
 	commit;
 end;
+go
 
---validar
-create or alter procedure sp_validarUsr
+-- Validar
+create or alter procedure pd_validarUsr
 (
     @id_usr INT
 )
@@ -1065,66 +1135,30 @@ begin
         tipo_cli = 'normal'
     where id_usr = @id_usr;
 end;
+go
 
--------------Cambiar Tipo Cliente
-create or ALTER PROCEDURE sp_cambiarTipoCliente
-
+-- Cambiar Tipo Cliente
+create or ALTER PROCEDURE pd_cambiarTipoCliente
    @id_usr int
 AS 
-   BEGIN
+BEGIN
+	DECLARE @tipo nvarchar(30) = (SELECT tipo_cli FROM usuario WHERE id_usr = @id_usr);
+    IF @tipo = 'normal' 
+	begin
+		UPDATE usuario SET 
+			tipo_cli = 'frecuente'
+        WHERE id_usr = @id_usr
+	END;
+    ELSE if @tipo = 'frecuente'
+    BEGIN
+		UPDATE usuario SET 
+			tipo_cli = 'normal'
+        WHERE id_usr = @id_usr
+    END;
+    IF @@TRANCOUNT > 0
+	BEGIN
+		COMMIT TRANSACTION 
+	END;
+END;
+go
 
-      DECLARE
-         @tipo nvarchar(30)
-
-      SELECT @tipo = tipo_cli
-      FROM usuario
-      WHERE id_usr = @id_usr
-
-      IF @tipo = 'normal'
-         UPDATE usuario
-            SET 
-               tipo_cli = 'frecuente'
-         WHERE id_usr = @id_usr
-      ELSE 
-         BEGIN
-            IF @tipo = 'frecuente'
-               UPDATE usuario
-                  SET 
-                     tipo_cli = 'normal'
-               WHERE id_usr = @id_usr
-         END
-
-      IF @@TRANCOUNT > 0
-         COMMIT TRANSACTION 
-   END
-
-------TRIGGER + PROCEDIMIENTOS insertar fechas------------------------------------------
-
----TR insertar fechas
-create or alter trigger tr_insert_fechas 
- On departamento
-after insert
-as
-declare @id_depto int
-set @id_depto = (select max(id_dpto) from departamento)
- exec sp_insert_fechas @id_depto
-
-
---PD insertar fechas
-CREATE OR ALTER PROCEDURE sp_insert_fechas
-   (@ID_DEPTO INT)
-AS 
-   BEGIN
-      DECLARE
-         @FECHA datetime2(0) = CAST(sysdatetime() AS DATETIME)
-      DECLARE
-         @I int
-      SET @I = 0
-      WHILE @I <= 3652
-         BEGIN
-            INSERT disponibilidad(FEC_DISP, ESTA_DISP, ID_DPTO)
-               VALUES (@FECHA, 'Si', @ID_DEPTO)
-            SET @FECHA = CAST(DATEADD(D, 1, @FECHA) AS DATETIME)
-            SET @I = @I + 1
-         END
-   END

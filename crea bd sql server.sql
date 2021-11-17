@@ -106,6 +106,9 @@ CREATE TABLE cont_serv (
     lugar_recogida     NVARCHAR(100),
     lugar_destino      NVARCHAR(100),
     km_rec             DECIMAL(6,3),
+    cant_adult         INT,
+    cant_nigno         INT,
+    cant_3ra           INT,     
     est_cont           NVARCHAR(30),
     id_rva             INT NOT NULL,
     id_serv            INT NOT NULL
