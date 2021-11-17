@@ -226,8 +226,6 @@ CREATE TABLE usuario (
     id_tipo_usr INT NOT NULL
 );
 
---Nuevas tablas segun acordado para visualizar documento de acuerdo de transporte --
-
 CREATE TABLE conductor (
     rut_conduc   INT NOT NULL,    
     dv_conduc    CHAR(1) NOT NULL,
