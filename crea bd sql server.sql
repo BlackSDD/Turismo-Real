@@ -121,7 +121,7 @@ CREATE TABLE cont_serv (
     cant_adult         INT,
     cant_nigno         INT,
     cant_3ra           INT,     
-    est_cont           NVARCHAR(30),
+    est_cont           NVARCHAR(30) NOT NULL,
     id_rva             INT NOT NULL,
     id_serv            INT NOT NULL
 );
