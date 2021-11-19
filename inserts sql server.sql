@@ -41,16 +41,16 @@ insert into departamento (dir_dpto, num_dpto, n_amb_dpto, desc_dpto, costo_arri_
 insert into departamento (dir_dpto, num_dpto, n_amb_dpto, desc_dpto, costo_arri_dpto, img_1_dpto, img_2_dpto, img_3_dpto, img_4_dpto, img_5_dpto, id_cnd) values ('El Arrayan 760',708,4,'Departamento amplio con vista al lago Villarica, habitación principal con baño en suite, habitación secundaria con 2 camas, baño de visitas living - comedor y concina independiente',115000,0x,0x,0x,0x,0x,3);
 
 
-insert into articulo (nom_arti, cant_arti, deta_arti, valor_arti, id_dpto) values ('cama king', 1,'cama habitación principal, nueva',750000,1);
-insert into articulo (nom_arti, cant_arti, deta_arti, valor_arti, id_dpto) values ('refrigerador', 1,'refrigerador de 2 puertas, semi-nuevo',380000,1);
-insert into articulo (nom_arti, cant_arti, deta_arti, valor_arti, id_dpto) values ('cama de 2 plazas', 1,'cama habitación principal, nueva',450000,2);
-insert into articulo (nom_arti, cant_arti, deta_arti, valor_arti, id_dpto) values ('set copas de vino', 6,'copas de vidrio, nuevos', 10000,2);
-insert into articulo (nom_arti, cant_arti, deta_arti, valor_arti, id_dpto) values ('refrigerador', 1,'refrigerador de 2 puertas, semi-nuevo',380000,3);
-insert into articulo (nom_arti, cant_arti, deta_arti, valor_arti, id_dpto) values ('lavadora', 1,'lavadora convencional, en reparación',160000,3);
+insert into articulo (nom_arti, cant_arti, deta_arti, valor_arti, fec_compra, id_dpto) values ('cama king', 1,'cama habitación principal, nueva',750000, getdate(), 1);
+insert into articulo (nom_arti, cant_arti, deta_arti, valor_arti, fec_compra, id_dpto) values ('refrigerador', 1,'refrigerador de 2 puertas, semi-nuevo',380000, getdate(), 1);
+insert into articulo (nom_arti, cant_arti, deta_arti, valor_arti, fec_compra, id_dpto) values ('cama de 2 plazas', 1,'cama habitación principal, nueva',450000, getdate(),2);
+insert into articulo (nom_arti, cant_arti, deta_arti, valor_arti, fec_compra, id_dpto) values ('set copas de vino', 6,'copas de vidrio, nuevos', 10000, getdate(),2);
+insert into articulo (nom_arti, cant_arti, deta_arti, valor_arti, fec_compra, id_dpto) values ('refrigerador', 1,'refrigerador de 2 puertas, semi-nuevo',380000, getdate(),3);
+insert into articulo (nom_arti, cant_arti, deta_arti, valor_arti, fec_compra, id_dpto) values ('lavadora', 1,'lavadora convencional, en reparación',160000, getdate(),3);
 
-insert into gastos (id_dpto, gast_mes, gast_agno) values (1,85000,1020000);
-insert into gastos (id_dpto, gast_mes, gast_agno) values (2,55000,660000);
-insert into gastos (id_dpto, gast_mes, gast_agno) values (3,125000,1500000);
+insert into gastos (id_dpto, fec_ingreso, gasto_luz, gasto_agua, gasto_gas, gasto_servicios, gasto_dividendo, gasto_comunes) values (1, getdate(), 35000, 30000, 40000, 40000, 550000, 45000);
+insert into gastos (id_dpto, fec_ingreso, gasto_luz, gasto_agua, gasto_gas, gasto_servicios, gasto_dividendo, gasto_comunes) values (2, getdate(), 25000, 30000, 30000, 30000, 350000, 35000);
+insert into gastos (id_dpto, fec_ingreso, gasto_luz, gasto_agua, gasto_gas, gasto_servicios, gasto_dividendo, gasto_comunes) values (3, getdate(), 40000, 40000, 45000, 45000, 750000, 55000);
 
 
 insert into res_mant (fec_rmant, est_man, id_dpto, id_usr) values ('01/11/2021','agendada',3,1);

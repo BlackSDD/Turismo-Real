@@ -67,6 +67,7 @@ CREATE TABLE articulo (
     cant_arti   INT,
     deta_arti   NVARCHAR(2000) NOT NULL,
     valor_arti  INT NOT NULL,
+    fec_compra  DATE NOT NULL,
     id_dpto     INT NOT NULL
 );
 
@@ -148,9 +149,14 @@ CREATE TABLE disponibilidad (
 );
 
 CREATE TABLE gastos (
-    id_dpto     INT NOT NULL,
-    gast_mes    INT NOT NULL,
-    gast_agno   INT NOT NULL
+    id_dpto         INT NOT NULL,
+    fec_ingreso     DATE NOT NULL,
+    gasto_luz       INT NOT NULL,
+    gasto_agua      INT NOT NULL,
+    gasto_gas       INT NOT NULL,
+    gasto_servicios INT NOT NULL,
+    gasto_dividendo INT NOT NULL,
+    gasto_comunes   INT NOT NULL
 );
 
 CREATE TABLE mantencion (
@@ -334,7 +340,7 @@ ALTER TABLE gastos
     ADD CONSTRAINT gastos_departamento_fk FOREIGN KEY ( id_dpto )
         REFERENCES departamento ( id_dpto );
 
-ALTER TABLE gastos ADD CONSTRAINT gastos_pk PRIMARY KEY ( id_dpto );
+ALTER TABLE gastos ADD CONSTRAINT gastos_pk PRIMARY KEY ( id_dpto, fec_ingreso );
 
 ALTER TABLE articulo ADD CONSTRAINT articulo_pk PRIMARY KEY ( id_arti );
 

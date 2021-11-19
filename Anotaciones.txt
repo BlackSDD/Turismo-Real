@@ -1,3 +1,7 @@
 Un departamento deshabilitado tiene en descripción: 'departamento no disponible'
 
 Un servextra deshabilitado: 'Servicio no disponible'
+
+Para el desglose de ganancias, separamos las ganancias por arriendo, cobro de multas y servicios extra 
+Las ganancias quedarán registradas como la fecha del inicio de la reserva 
+Para desglosar la fecha por semana, decidimos que será semana por mes ejemplo: semana 1 de enero, 4 semana de diciembre, etc.
