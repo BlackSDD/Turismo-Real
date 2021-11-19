@@ -247,7 +247,7 @@ CREATE TABLE usuario (
     rut_usr     INT NOT NULL,
     dv_usr      CHAR(1) NOT NULL,
     cant_res    INT,
-    est_cta     NVARCHAR(20),
+    est_cta     NVARCHAR(20) NOT NULL,
     tipo_cli    NVARCHAR(25),
     id_tipo_usr INT NOT NULL
 );
