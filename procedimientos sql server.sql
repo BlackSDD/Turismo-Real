@@ -5,10 +5,9 @@ create or alter procedure pd_eliminarAgenciaExterna
 (
 	@id_agencia INT
 )
-as
+as 
 begin
 	delete  from agencia_externa where id_agencia = @id_agencia;
-	commit;
 end;
 go
 
@@ -29,7 +28,6 @@ begin
 	@tel_age,
     @id_com
 	);
-    commit;
 end;
 go
 
@@ -48,7 +46,6 @@ begin
 		email_age = @email_age,
         tel_age = @tel_age
 	where ID_AGENCIA = @id_age;
-    commit;
 end;
 go
 
@@ -63,7 +60,6 @@ create or alter procedure pd_eliminarArticulo
 as
 begin
 	delete  from articulo where id_arti = @id_arti;
-    commit;
 end;
 go
 
@@ -86,7 +82,6 @@ begin
     @valor_arti,
 	@id_depto
 	);
-    commit;
 end;
 go
 
@@ -107,7 +102,6 @@ begin
 		deta_arti = @deta_arti, 
 		valor_arti = @valor_arti
 	where id_arti = @id_arti;
-    commit;
 end;
 go
 
@@ -203,7 +197,6 @@ begin
 	@nom_com,
     @id_rgn
 	);
-commit;
 end;
 go
 
@@ -218,7 +211,6 @@ begin
 	update comuna set
         nom_com = @nom_com
         where id_com = @id_com;
-	commit;
 end;
 go
 
@@ -231,7 +223,6 @@ as
 begin
 	delete from comuna 
 	where id_com = @id_com;
-	commit;
 end;
 go
 
@@ -248,7 +239,6 @@ as
 begin
 	delete from condominio 
 	where id_cnd = @id_cnd;
-	commit;
 end;
 go
 
@@ -265,7 +255,6 @@ begin
 	@nom_cnd,
     @id_com
 	);
-    commit;
 end;
 go
 
@@ -280,7 +269,6 @@ begin
 	update condominio set
         nom_cnd = @nom_cnd
         where id_cnd = @id_cnd;
-	commit;
 end;
 go
 
@@ -305,7 +293,6 @@ begin
 		hora_acord = ' ' ,
 		costo_total = 0
 	where id_cont_serv = @id_cont_serv;
-	commit;
 end;
 go
 
@@ -397,7 +384,6 @@ begin
 		cant_nigno = @cant_nigno,
 		cant_3ra = @cant_3ra
 	where id_cont_serv = @id_cont;
-
 end;
 go
 
@@ -428,7 +414,6 @@ begin
 	update disponibilidad set
 		esta_disp = 'No'
 		where id_dpto = @id_dpto;
-    commit;
 end;
 go
 
@@ -463,8 +448,7 @@ begin
 	@img_4_dpto , 
 	@img_5_dpto ,
     @id_cnd
-	);
-    commit;
+	); 
 end;
 go
 
@@ -497,7 +481,6 @@ begin
 		img_4_dpto = @img_4_dpto,
 		img_5_dpto = @img_5_dpto
 	where id_dpto = @id_dpto;
-    commit;
 end;
 go
 
@@ -513,7 +496,6 @@ create or alter procedure pd_eliminarGastos
 as
 begin
 	delete  from Gastos where id_dpto = @id_dpto;
-    commit;
 end;
 go
 
@@ -533,7 +515,6 @@ begin
 	@gast_mes ,
 	@gast_agno
 	);
-    commit;
 end;
 go
 
@@ -550,7 +531,6 @@ begin
 		gast_mes = @gast_mes,
 		gast_agno = @gast_agno
 	where id_dpto = @id_dpto;
-	commit;
 end;
 go
 
@@ -574,7 +554,6 @@ begin
 	@cost_mant ,
 	@deta_mant 
 	);
-    commit;
 end;
 go
 
@@ -591,7 +570,6 @@ begin
         cost_mant = @cost_mant,
         deta_mant = @deta_mant
 	where id_rmant = @id_rmant;
-    commit;
 end;
 go
 
@@ -609,8 +587,7 @@ as
 begin
 	update pago set
         monto_pagado = @monto_pagado
-	where id_rva = @id_rva;
-    commit;
+	where id_rva = @id_rva; 
 end;
 go
 
@@ -626,8 +603,7 @@ create or alter procedure pd_eliminarRegion
 as
 begin
 	delete from Region 
-        where id_rgn = @id_rgn;
-    commit;
+        where id_rgn = @id_rgn; 
 end;
 go
 
@@ -642,7 +618,6 @@ begin
 	(
 	@nom_rgn 
 	);
-    commit;
 end;
 go
 
@@ -657,7 +632,6 @@ begin
 	update region set 
         nom_rgn = @nom_rgn
     where id_rgn = @id_rgn;
-	commit;
 end;
 go
 
@@ -675,7 +649,6 @@ begin
 	update res_mant set
         est_man = 'cancelada'
     where id_rmant = @id_rmant;
-    commit;
 end;
 go
 
@@ -696,7 +669,6 @@ begin
     @id_dpto,
     @id_usr
 	);
-    commit;
 end;
 go
 
@@ -711,7 +683,6 @@ begin
 	update Res_mant set 
         fec_rmant = @fec_rmant
 	where id_rmant = @id_rmant;
-	commit;
 end;
 go
 
@@ -776,10 +747,6 @@ BEGIN
 					'en verificación', 
 					@ID_DPTO, 
 					@ID_USR);
-				IF @@TRANCOUNT > 0
-				begin
-				   COMMIT TRANSACTION ;
-				END;
 		end;
     CLOSE CUR;
     DEALLOCATE CUR;
@@ -797,7 +764,6 @@ begin
 	update reserva set
         estado_rva = 'cancelada'
     where id_rva = @id_rva;
-    commit;
 end;
 go
 
@@ -814,7 +780,6 @@ begin
         num_pers = @num_pers,
         estado_rva = @estado_rva
 	where id_rva = @id_rva;
-	commit;
 end;
 go
 
@@ -892,10 +857,6 @@ BEGIN
 				desc_serv = 'Servicio no disponible'
 			WHERE id_serv = @id_serv;
 	END;
-    IF @@TRANCOUNT > 0 
-	BEGIN
-		COMMIT TRANSACTION 
-	END;
 END;
 go
 
@@ -917,7 +878,6 @@ begin
 	@desc_serv,
     @id_agencia
 	);
-    commit;
 end;
 go
 
@@ -934,7 +894,6 @@ begin
         nom_serv = @nom_serv,  
         desc_serv = @desc_serv
 	where id_serv = @id_serv;
-	commit;
 end;
 go
 
@@ -971,8 +930,7 @@ begin
 	@ubi_fin ,
 	@alimentacion,
 	@transporte 
-	);
-    commit;
+	);  
 end;
 go
 
@@ -1003,7 +961,6 @@ begin
         alimentacion = @alimentacion, 
         Transporte = @transporte
 	where id_serv = @id_serv;
-	commit;
 end;
 go
 
@@ -1027,7 +984,6 @@ begin
 	@cost_km_dia ,
 	@cost_km_noc
 	);
-    commit;
 end;
 go
 
@@ -1043,8 +999,7 @@ begin
 	update Transporte set 
         cost_km_dia = @cost_km_dia,
         cost_km_noc = @cost_km_noc
-	where id_serv = @id_serv;
-	commit;
+	where id_serv = @id_serv;	
 end;
 go
 
@@ -1100,7 +1055,6 @@ begin
 	@tipo_cli ,
     @id_tipo_usr
 	);
-    commit;
 end;
 go
 
@@ -1118,8 +1072,7 @@ begin
         email_usr = @email_usr, 
         contr_usr = @contr_usr, 
         tel_usr = @tel_usr
-	where id_usr = @id_usr;
-	commit;
+	where id_usr = @id_usr;	
 end;
 go
 
@@ -1155,10 +1108,6 @@ BEGIN
 			tipo_cli = 'normal'
         WHERE id_usr = @id_usr
     END;
-    IF @@TRANCOUNT > 0
-	BEGIN
-		COMMIT TRANSACTION 
-	END;
 END;
 go
 

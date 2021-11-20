@@ -222,29 +222,33 @@ as
     declare @abono int =(select abono_req from deleted) ;    
     declare @total int = (select monto_total from deleted);
 begin
-
-
-		if @pago >= @abono and @pago < @total 
-        begin
-			update pago set
-				est_pago = 'abonado'
-				where id_rva = @id;
-			update reserva set
-				estado_rva = 'reservada'
-				where id_rva = @id;
-		end;
-		else if @pago < @abono 
-        begin
-			update pago set
-				est_pago = 'pago pendiente'
-				where id_rva = @id;
-		end;
-		else if @pago = @total 
-        begin
-			update pago set
-				est_pago = 'pagado totalmente'
-				where id_rva = @id;    
-		end;
+	if @pago > @abono and @pago < @total 
+    begin
+		update pago set
+			est_pago = 'pago pendiente'
+			where id_rva = @id;
+	end;
+	else if @pago < @abono 
+	begin
+		update pago set
+			est_pago = 'abono pendiente'
+			where id_rva = @id;
+	end;
+	else if @pago = @total 
+    begin
+		update pago set
+			est_pago = 'pagado totalmente'
+			where id_rva = @id;    
+	end;
+	else if @pago = @abono 
+	begin
+		update pago set
+			est_pago = 'abonado'
+			where id_rva = @id;
+		update reserva set
+			estado_rva = 'reservada'
+			where id_rva = @id;
+	end;
 end;
 go
 
