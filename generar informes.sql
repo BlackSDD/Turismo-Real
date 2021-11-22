@@ -105,7 +105,7 @@ SELECT
 GROUP BY rg.id_rgn, rg.nom_rgn, r.fec_ini_rva, DATEPART(MONTH, r.fec_ini_rva), year(r.fec_ini_rva),concat(cn.nom_cnd, ' #' , d.num_dpto)
 having rg.id_rgn = @id_region and year(r.fec_ini_rva) = @agno;
 
--- Gastos mensuales para  informe diario
+-- Gastos mensuales para informe diario
 select 
 	rg.nom_rgn as "Region",
     year(g.fec_ingreso) as "Año",
@@ -123,13 +123,14 @@ select
 		when DATEPART(MONTH, g.fec_ingreso) = 11 then 'Noviembre'
 		when DATEPART(MONTH, g.fec_ingreso) = 12 then 'Diciembre'
 	end as "Mes",
+	convert(varchar, g.fec_ingreso, 103) as "Día",
 	concat(cn.nom_cnd, ' #' , d.num_dpto) as "Departamento",
-	sum(g.gasto_luz) as "Gastos de luz mensual",
-	sum(g.gasto_agua) as "Gastos de agua mensual",
-	sum(g.gasto_gas) as "Gastos de gas mensual",
-	sum(g.gasto_servicios) as "Gastos de servicios mensual",
-	sum(g.gasto_comunes) as "Gastos comunes mensual",
-	sum(g.gasto_dividendo) as "Dividendo mensual"
+	sum(g.gasto_luz) as "Gastos de luz día factura",
+	sum(g.gasto_agua) as "Gastos de agua día factura",
+	sum(g.gasto_gas) as "Gastos de gas día factura",
+	sum(g.gasto_servicios) as "Gastos de servicios día factura",
+	sum(g.gasto_comunes) as "Gastos comunes día factura",
+	sum(g.gasto_dividendo) as "Dividendo día factura"
 	from departamento d join gastos g
 		on d.id_dpto = g.id_dpto
     join condominio cn
@@ -138,8 +139,11 @@ select
 		on cm.id_com = cn.id_com
     join region rg
         on rg.id_rgn = cm.id_rgn
-GROUP BY rg.id_rgn, rg.nom_rgn, year(g.fec_ingreso), concat(cn.nom_cnd, ' #' , d.num_dpto) , DATEPART(MONTH, g.fec_ingreso)
-having rg.id_rgn = @id_region and year(g.fec_ingreso) = @agno;
+GROUP BY rg.id_rgn, rg.nom_rgn, year(g.fec_ingreso), concat(cn.nom_cnd, ' #' , d.num_dpto) , DATEPART(MONTH, g.fec_ingreso), g.fec_ingreso
+having  rg.id_rgn = @id_region and year(g.fec_ingreso) = @agno
+order by "Día", "Departamento" asc;
+
+
 
 ----------------------------------------------------------------------
 
