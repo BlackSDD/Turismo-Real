@@ -143,7 +143,73 @@ GROUP BY rg.id_rgn, rg.nom_rgn, year(g.fec_ingreso), concat(cn.nom_cnd, ' #' , d
 having  rg.id_rgn = @id_region and year(g.fec_ingreso) = @agno
 order by "Día", "Departamento" asc;
 
+-- Gastos en articulos por día
+select 
+	rg.nom_rgn as "Region",
+	year(a.fec_compra) as "Año",
+	case
+		when DATEPART(MONTH, a.fec_compra) = 1 then 'Enero'
+		when DATEPART(MONTH, a.fec_compra) = 2 then 'Febrero'
+		when DATEPART(MONTH, a.fec_compra) = 3 then 'Marzo'
+		when DATEPART(MONTH, a.fec_compra) = 4 then 'Abril'
+		when DATEPART(MONTH, a.fec_compra) = 5 then 'Mayo'
+		when DATEPART(MONTH, a.fec_compra) = 6 then 'Junio'
+		when DATEPART(MONTH, a.fec_compra) = 7 then 'Julio'
+		when DATEPART(MONTH, a.fec_compra) = 8 then 'Agosto'
+		when DATEPART(MONTH, a.fec_compra) = 9 then 'Septiembre'
+		when DATEPART(MONTH, a.fec_compra) = 10 then 'Octubre'
+		when DATEPART(MONTH, a.fec_compra) = 11 then 'Noviembre'
+		when DATEPART(MONTH, a.fec_compra) = 12 then 'Diciembre'
+	end as "Mes",
+	convert(varchar, a.fec_compra ,103) as "Día",
+	concat(cn.nom_cnd, ' #' , d.num_dpto) as "Departamento",
+	sum(a.valor_arti) as "Gastos en articulos por día"
+	from departamento d join articulo a
+		on d.id_dpto = a.id_dpto
+    join condominio cn
+        on cn.id_cnd = d.id_cnd
+    join comuna cm
+		on cm.id_com = cn.id_com
+    join region rg
+        on rg.id_rgn = cm.id_rgn
+GROUP BY rg.id_rgn, rg.nom_rgn, year(a.fec_compra), concat(cn.nom_cnd, ' #' , d.num_dpto) , DATEPART(MONTH, a.fec_compra), convert(varchar, a.fec_compra ,103)
+having rg.id_rgn = @id_region and year(a.fec_compra) = @agno
+order by DATEPART(MONTH, a.fec_compra),"Día" , "Departamento" asc;
 
+-- Gastos en mantenciones por día
+select 
+	rg.nom_rgn as "Region",
+	year(rm.fec_rmant) as "Año",
+	case
+		when DATEPART(MONTH, rm.fec_rmant) = 1 then 'Enero'
+		when DATEPART(MONTH, rm.fec_rmant) = 2 then 'Febrero'
+		when DATEPART(MONTH, rm.fec_rmant) = 3 then 'Marzo'
+		when DATEPART(MONTH, rm.fec_rmant) = 4 then 'Abril'
+		when DATEPART(MONTH, rm.fec_rmant) = 5 then 'Mayo'
+		when DATEPART(MONTH, rm.fec_rmant) = 6 then 'Junio'
+		when DATEPART(MONTH, rm.fec_rmant) = 7 then 'Julio'
+		when DATEPART(MONTH, rm.fec_rmant) = 8 then 'Agosto'
+		when DATEPART(MONTH, rm.fec_rmant) = 9 then 'Septiembre'
+		when DATEPART(MONTH, rm.fec_rmant) = 10 then 'Octubre'
+		when DATEPART(MONTH, rm.fec_rmant) = 11 then 'Noviembre'
+		when DATEPART(MONTH, rm.fec_rmant) = 12 then 'Diciembre'
+	end as "Mes",
+	convert(varchar, rm.fec_rmant ,103) as "Día",
+	concat(cn.nom_cnd, ' #' , d.num_dpto) as "Departamento",
+	sum(m.cost_mant) as "Gastos en mantenciones por día"
+	from departamento d join res_mant rm
+		on d.id_dpto = rm.id_dpto
+	join mantencion m
+		on rm.id_rmant = m.id_rmant
+    join condominio cn
+        on cn.id_cnd = d.id_cnd
+    join comuna cm
+		on cm.id_com = cn.id_com
+    join region rg
+        on rg.id_rgn = cm.id_rgn
+GROUP BY rg.id_rgn, rg.nom_rgn, year(rm.fec_rmant), concat(cn.nom_cnd, ' #' , d.num_dpto) , DATEPART(MONTH, rm.fec_rmant), convert(varchar, rm.fec_rmant ,103)
+having rg.id_rgn = @id_region and year(rm.fec_rmant) = @agno
+order by DATEPART(MONTH, rm.fec_rmant), "Día" , "Departamento" asc;
 
 ----------------------------------------------------------------------
 
@@ -182,7 +248,7 @@ SELECT
 GROUP BY rg.id_rgn, rg.nom_rgn, DATEPART(week, r.fec_ini_rva), year(r.fec_ini_rva), concat(cn.nom_cnd, ' #' , d.num_dpto),DATEPART(MONTH, r.fec_ini_rva)
 having rg.id_rgn = @id_region and year(r.fec_ini_rva) = @agno;
 
--- Gastos mensuales para informe semanal
+-- Gastos de servicios semana de facturazión
 select 
 	rg.nom_rgn as "Region",
     year(g.fec_ingreso) as "Año",
@@ -200,13 +266,14 @@ select
 		when DATEPART(MONTH, g.fec_ingreso) = 11 then 'Noviembre'
 		when DATEPART(MONTH, g.fec_ingreso) = 12 then 'Diciembre'
 	end as "Mes",
+	DATEPART(week, g.fec_ingreso) as "Semana",
 	concat(cn.nom_cnd, ' #' , d.num_dpto) as "Departamento",
-	sum(g.gasto_luz) as "Gastos de luz mensual",
-	sum(g.gasto_agua) as "Gastos de agua mensual",
-	sum(g.gasto_gas) as "Gastos de gas mensual",
-	sum(g.gasto_servicios) as "Gastos de servicios mensual",
-	sum(g.gasto_comunes) as "Gastos comunes mensual",
-	sum(g.gasto_dividendo) as "Dividendo mensual"
+	sum(g.gasto_luz) as "Gastos de luz semana factura",
+	sum(g.gasto_agua) as "Gastos de agua semana factura",
+	sum(g.gasto_gas) as "Gastos de gas semana factura",
+	sum(g.gasto_servicios) as "Gastos de servicios semana factura",
+	sum(g.gasto_comunes) as "Gastos comunes semana factura",
+	sum(g.gasto_dividendo) as "Dividendo semana factura"
 	from departamento d join gastos g
 		on d.id_dpto = g.id_dpto
     join condominio cn
@@ -215,8 +282,9 @@ select
 		on cm.id_com = cn.id_com
     join region rg
         on rg.id_rgn = cm.id_rgn
-GROUP BY rg.id_rgn, rg.nom_rgn, year(g.fec_ingreso), concat(cn.nom_cnd, ' #' , d.num_dpto) , DATEPART(MONTH, g.fec_ingreso)
-having rg.id_rgn = @id_region and year(g.fec_ingreso) = @agno;
+GROUP BY rg.id_rgn, rg.nom_rgn, year(g.fec_ingreso), concat(cn.nom_cnd, ' #' , d.num_dpto) , DATEPART(MONTH, g.fec_ingreso),DATEPART(week, g.fec_ingreso)
+having rg.id_rgn =  @id_region and year(g.fec_ingreso) = @agno
+order by DATEPART(MONTH, g.fec_ingreso), "Semana", "Departamento" asc ;
 
 -- Gastos en articulos por semana 
 select 
@@ -251,13 +319,44 @@ GROUP BY rg.id_rgn, rg.nom_rgn, year(a.fec_compra), concat(cn.nom_cnd, ' #' , d.
 having rg.id_rgn = @id_region and year(a.fec_compra) = @agno
 order by "Semana", "Departamento" asc;
 
-
-
+-- Gastos en mantenciones por semana 
+select 
+	rg.nom_rgn as "Region",
+	year(rm.fec_rmant) as "Año",
+	case
+		when DATEPART(MONTH, rm.fec_rmant) = 1 then 'Enero'
+		when DATEPART(MONTH, rm.fec_rmant) = 2 then 'Febrero'
+		when DATEPART(MONTH, rm.fec_rmant) = 3 then 'Marzo'
+		when DATEPART(MONTH, rm.fec_rmant) = 4 then 'Abril'
+		when DATEPART(MONTH, rm.fec_rmant) = 5 then 'Mayo'
+		when DATEPART(MONTH, rm.fec_rmant) = 6 then 'Junio'
+		when DATEPART(MONTH, rm.fec_rmant) = 7 then 'Julio'
+		when DATEPART(MONTH, rm.fec_rmant) = 8 then 'Agosto'
+		when DATEPART(MONTH, rm.fec_rmant) = 9 then 'Septiembre'
+		when DATEPART(MONTH, rm.fec_rmant) = 10 then 'Octubre'
+		when DATEPART(MONTH, rm.fec_rmant) = 11 then 'Noviembre'
+		when DATEPART(MONTH, rm.fec_rmant) = 12 then 'Diciembre'
+	end as "Mes",
+	DATEPART(week, rm.fec_rmant) as "Semana",
+	concat(cn.nom_cnd, ' #' , d.num_dpto) as "Departamento",
+	sum(m.cost_mant) as "Gastos en mantenciones por semana"
+	from departamento d join res_mant rm
+		on d.id_dpto = rm.id_dpto
+	join mantencion m
+		on rm.id_rmant = m.id_rmant
+    join condominio cn
+        on cn.id_cnd = d.id_cnd
+    join comuna cm
+		on cm.id_com = cn.id_com
+    join region rg
+        on rg.id_rgn = cm.id_rgn
+GROUP BY rg.id_rgn, rg.nom_rgn, year(rm.fec_rmant), concat(cn.nom_cnd, ' #' , d.num_dpto) , DATEPART(MONTH, rm.fec_rmant), DATEPART(week, rm.fec_rmant)
+having rg.id_rgn = @id_region and year(rm.fec_rmant) = @agno
+order by DATEPART(MONTH, rm.fec_rmant), "Semana" , "Departamento" asc;
 
 ----------------------------------------------------------------------
 
 -- Ganancia por mes 
-
 SELECT 
 	rg.nom_rgn as "Region",
 	case
@@ -289,6 +388,7 @@ SELECT
 		on rg.id_rgn = cm.id_rgn
 GROUP BY rg.id_rgn, rg.nom_rgn, DATEPART(MONTH, r.fec_ini_rva), year(r.fec_ini_rva),concat(cn.nom_cnd, ' #' , d.num_dpto) 
 having rg.id_rgn = @id_region and year(r.fec_ini_rva) = @agno;
+
 
 -- Gastos por mes
 select 
@@ -326,8 +426,8 @@ select
 GROUP BY rg.id_rgn, rg.nom_rgn, year(g.fec_ingreso), concat(cn.nom_cnd, ' #' , d.num_dpto) , DATEPART(MONTH, g.fec_ingreso)
 having rg.id_rgn = @id_region and year(g.fec_ingreso) = @agno;
 
--- Gastos en articulos por mes
 
+-- Gastos en articulos por mes
 select 
 	rg.nom_rgn as "Region",
 	year(a.fec_compra) as "Año",
@@ -346,7 +446,7 @@ select
 		when DATEPART(MONTH, a.fec_compra) = 12 then 'Diciembre'
 	end as "Mes",
 	concat(cn.nom_cnd, ' #' , d.num_dpto) as "Departamento",
-	sum(a.valor_arti) as "Gastos en articulos comprados por semana"
+	sum(a.valor_arti) as "Gastos en articulos comprados por mes"
 	from departamento d join articulo a
 		on d.id_dpto = a.id_dpto
     join condominio cn
@@ -357,11 +457,41 @@ select
         on rg.id_rgn = cm.id_rgn
 GROUP BY rg.id_rgn, rg.nom_rgn, year(a.fec_compra), concat(cn.nom_cnd, ' #' , d.num_dpto) , DATEPART(MONTH, a.fec_compra)
 having rg.id_rgn = @id_region and year(a.fec_compra) = @agno
-order by "Mes", "Departamento" asc;
+order by DATEPART(MONTH, a.fec_compra), "Departamento" asc;
 
-
-
-
+-- Gastos en mantenciones por mes
+select 
+	rg.nom_rgn as "Region",
+	year(rm.fec_rmant) as "Año",
+	case
+		when DATEPART(MONTH, rm.fec_rmant) = 1 then 'Enero'
+		when DATEPART(MONTH, rm.fec_rmant) = 2 then 'Febrero'
+		when DATEPART(MONTH, rm.fec_rmant) = 3 then 'Marzo'
+		when DATEPART(MONTH, rm.fec_rmant) = 4 then 'Abril'
+		when DATEPART(MONTH, rm.fec_rmant) = 5 then 'Mayo'
+		when DATEPART(MONTH, rm.fec_rmant) = 6 then 'Junio'
+		when DATEPART(MONTH, rm.fec_rmant) = 7 then 'Julio'
+		when DATEPART(MONTH, rm.fec_rmant) = 8 then 'Agosto'
+		when DATEPART(MONTH, rm.fec_rmant) = 9 then 'Septiembre'
+		when DATEPART(MONTH, rm.fec_rmant) = 10 then 'Octubre'
+		when DATEPART(MONTH, rm.fec_rmant) = 11 then 'Noviembre'
+		when DATEPART(MONTH, rm.fec_rmant) = 12 then 'Diciembre'
+	end as "Mes",
+	concat(cn.nom_cnd, ' #' , d.num_dpto) as "Departamento",
+	sum(m.cost_mant) as "Gastos en mantenciones por mes"
+	from departamento d join res_mant rm
+		on d.id_dpto = rm.id_dpto
+	join mantencion m
+		on rm.id_rmant = m.id_rmant
+    join condominio cn
+        on cn.id_cnd = d.id_cnd
+    join comuna cm
+		on cm.id_com = cn.id_com
+    join region rg
+        on rg.id_rgn = cm.id_rgn
+GROUP BY rg.id_rgn, rg.nom_rgn, year(rm.fec_rmant), concat(cn.nom_cnd, ' #' , d.num_dpto) , DATEPART(MONTH, rm.fec_rmant)
+having rg.id_rgn = 5 and year(rm.fec_rmant) = 2021
+order by DATEPART(MONTH, rm.fec_rmant),  "Departamento" asc;
 
 ----------------------------------------------------------------------
 
@@ -405,3 +535,555 @@ select
         on rg.id_rgn = cm.id_rgn
 GROUP BY rg.id_rgn, rg.nom_rgn, year(g.fec_ingreso), concat(cn.nom_cnd, ' #' , d.num_dpto)
 having rg.id_rgn = @id_region and year(g.fec_ingreso) = @agno;
+
+-- Gastos en articulos por año
+select 
+	rg.nom_rgn as "Region",
+	year(a.fec_compra) as "Año",
+	concat(cn.nom_cnd, ' #' , d.num_dpto) as "Departamento",
+	sum(a.valor_arti) as "Gastos en articulos anual"
+	from departamento d join articulo a
+		on d.id_dpto = a.id_dpto
+    join condominio cn
+        on cn.id_cnd = d.id_cnd
+    join comuna cm
+		on cm.id_com = cn.id_com
+    join region rg
+        on rg.id_rgn = cm.id_rgn
+GROUP BY rg.id_rgn, rg.nom_rgn, year(a.fec_compra), concat(cn.nom_cnd, ' #' , d.num_dpto) 
+having rg.id_rgn = @id_region and year(a.fec_compra) = @agno
+order by "Año" , "Departamento" asc;
+
+-- Gastos de mantencion por año
+
+select 
+	rg.nom_rgn as "Region",
+	year(rm.fec_rmant) as "Año",
+	concat(cn.nom_cnd, ' #' , d.num_dpto) as "Departamento",
+	sum(m.cost_mant) as "Gastos en mantenciones por año"
+	from departamento d join res_mant rm
+		on d.id_dpto = rm.id_dpto
+	join mantencion m
+		on rm.id_rmant = m.id_rmant
+    join condominio cn
+        on cn.id_cnd = d.id_cnd
+    join comuna cm
+		on cm.id_com = cn.id_com
+    join region rg
+        on rg.id_rgn = cm.id_rgn
+GROUP BY rg.id_rgn, rg.nom_rgn, year(rm.fec_rmant), concat(cn.nom_cnd, ' #' , d.num_dpto) 
+having rg.id_rgn = @id_region and year(rm.fec_rmant) = @agno
+order by  "Departamento" asc;
+
+---------------------------------------------------------------------------------------------------
+-- Informe de estadísticas por depto
+
+-- Ganancias por día
+SELECT 
+	rg.nom_rgn as "Region",
+	year(r.fec_ini_rva) as "Año",
+	case
+		when DATEPART(MONTH, r.fec_ini_rva) = 1 then 'Enero'
+		when DATEPART(MONTH, r.fec_ini_rva) = 2 then 'Febrero'
+		when DATEPART(MONTH, r.fec_ini_rva) = 3 then 'Marzo'
+		when DATEPART(MONTH, r.fec_ini_rva) = 4 then 'Abril'
+		when DATEPART(MONTH, r.fec_ini_rva) = 5 then 'Mayo'
+		when DATEPART(MONTH, r.fec_ini_rva) = 6 then 'Junio'
+		when DATEPART(MONTH, r.fec_ini_rva) = 7 then 'Julio'
+		when DATEPART(MONTH, r.fec_ini_rva) = 8 then 'Agosto'
+		when DATEPART(MONTH, r.fec_ini_rva) = 9 then 'Septiembre'
+		when DATEPART(MONTH, r.fec_ini_rva) = 10 then 'Octubre'
+		when DATEPART(MONTH, r.fec_ini_rva) = 11 then 'Noviembre'
+		when DATEPART(MONTH, r.fec_ini_rva) = 12 then 'Diciembre'
+	end as "Mes",
+	convert(varchar, r.fec_ini_rva,103) as "Día",
+	concat(cn.nom_cnd, ' #' , d.num_dpto) as "Departamento",
+	SUM(p.monto_pagado) as "Ganancia diaria",
+	count(r.id_rva) as "Reservas" 
+    FROM reserva r join pago p
+		on r.id_rva = p.id_rva 
+    join departamento d 
+		on d.id_dpto = r.id_dpto
+    join condominio cn
+        on cn.id_cnd = d.id_cnd
+    join comuna cm
+		on cm.id_com = cn.id_com
+    join region rg
+        on rg.id_rgn = cm.id_rgn
+GROUP BY rg.id_rgn, rg.nom_rgn, r.fec_ini_rva, DATEPART(MONTH, r.fec_ini_rva), year(r.fec_ini_rva),concat(cn.nom_cnd, ' #' , d.num_dpto), d.id_dpto, year(r.fec_ini_rva)
+having d.id_dpto = 1 and year(r.fec_ini_rva) = 2022
+order by "Día";
+
+-- Gastos para informe diario
+select 
+	rg.nom_rgn as "Region",
+    year(g.fec_ingreso) as "Año",
+	case
+		when DATEPART(MONTH, g.fec_ingreso) = 1 then 'Enero'
+		when DATEPART(MONTH, g.fec_ingreso) = 2 then 'Febrero'
+		when DATEPART(MONTH, g.fec_ingreso) = 3 then 'Marzo'
+		when DATEPART(MONTH, g.fec_ingreso) = 4 then 'Abril'
+		when DATEPART(MONTH, g.fec_ingreso) = 5 then 'Mayo'
+		when DATEPART(MONTH, g.fec_ingreso) = 6 then 'Junio'
+		when DATEPART(MONTH, g.fec_ingreso) = 7 then 'Julio'
+		when DATEPART(MONTH, g.fec_ingreso) = 8 then 'Agosto'
+		when DATEPART(MONTH, g.fec_ingreso) = 9 then 'Septiembre'
+		when DATEPART(MONTH, g.fec_ingreso) = 10 then 'Octubre'
+		when DATEPART(MONTH, g.fec_ingreso) = 11 then 'Noviembre'
+		when DATEPART(MONTH, g.fec_ingreso) = 12 then 'Diciembre'
+	end as "Mes",
+	convert(varchar, g.fec_ingreso, 103) as "Día",
+	concat(cn.nom_cnd, ' #' , d.num_dpto) as "Departamento",
+	sum(g.gasto_luz) as "Gastos de luz día factura",
+	sum(g.gasto_agua) as "Gastos de agua día factura",
+	sum(g.gasto_gas) as "Gastos de gas día factura",
+	sum(g.gasto_servicios) as "Gastos de servicios día factura",
+	sum(g.gasto_comunes) as "Gastos comunes día factura",
+	sum(g.gasto_dividendo) as "Dividendo día factura"
+	from departamento d join gastos g
+		on d.id_dpto = g.id_dpto
+    join condominio cn
+        on cn.id_cnd = d.id_cnd
+    join comuna cm
+		on cm.id_com = cn.id_com
+    join region rg
+        on rg.id_rgn = cm.id_rgn
+GROUP BY rg.id_rgn, rg.nom_rgn, year(g.fec_ingreso), concat(cn.nom_cnd, ' #' , d.num_dpto) , DATEPART(MONTH, g.fec_ingreso), g.fec_ingreso, d.id_dpto
+having  d.id_dpto = 1 and year(g.fec_ingreso) = 2022
+order by "Día", "Departamento" asc;
+
+-- Gastos de articulos por día
+select 
+	rg.nom_rgn as "Region",
+	year(a.fec_compra) as "Año",
+	case
+		when DATEPART(MONTH, a.fec_compra) = 1 then 'Enero'
+		when DATEPART(MONTH, a.fec_compra) = 2 then 'Febrero'
+		when DATEPART(MONTH, a.fec_compra) = 3 then 'Marzo'
+		when DATEPART(MONTH, a.fec_compra) = 4 then 'Abril'
+		when DATEPART(MONTH, a.fec_compra) = 5 then 'Mayo'
+		when DATEPART(MONTH, a.fec_compra) = 6 then 'Junio'
+		when DATEPART(MONTH, a.fec_compra) = 7 then 'Julio'
+		when DATEPART(MONTH, a.fec_compra) = 8 then 'Agosto'
+		when DATEPART(MONTH, a.fec_compra) = 9 then 'Septiembre'
+		when DATEPART(MONTH, a.fec_compra) = 10 then 'Octubre'
+		when DATEPART(MONTH, a.fec_compra) = 11 then 'Noviembre'
+		when DATEPART(MONTH, a.fec_compra) = 12 then 'Diciembre'
+	end as "Mes",
+	convert(varchar, a.fec_compra ,103) as "Día",
+	concat(cn.nom_cnd, ' #' , d.num_dpto) as "Departamento",
+	sum(a.valor_arti) as "Gastos en articulos por día"
+	from departamento d join articulo a
+		on d.id_dpto = a.id_dpto
+    join condominio cn
+        on cn.id_cnd = d.id_cnd
+    join comuna cm
+		on cm.id_com = cn.id_com
+    join region rg
+        on rg.id_rgn = cm.id_rgn
+GROUP BY rg.id_rgn, rg.nom_rgn, year(a.fec_compra), concat(cn.nom_cnd, ' #' , d.num_dpto) , DATEPART(MONTH, a.fec_compra), convert(varchar, a.fec_compra ,103), d.id_dpto
+having d.id_dpto = 1 and year(a.fec_compra) = 2022
+order by DATEPART(MONTH, a.fec_compra),"Día" , "Departamento" asc;
+
+-- Gastos de mantenciones por dia
+select 
+	rg.nom_rgn as "Region",
+	year(rm.fec_rmant) as "Año",
+	case
+		when DATEPART(MONTH, rm.fec_rmant) = 1 then 'Enero'
+		when DATEPART(MONTH, rm.fec_rmant) = 2 then 'Febrero'
+		when DATEPART(MONTH, rm.fec_rmant) = 3 then 'Marzo'
+		when DATEPART(MONTH, rm.fec_rmant) = 4 then 'Abril'
+		when DATEPART(MONTH, rm.fec_rmant) = 5 then 'Mayo'
+		when DATEPART(MONTH, rm.fec_rmant) = 6 then 'Junio'
+		when DATEPART(MONTH, rm.fec_rmant) = 7 then 'Julio'
+		when DATEPART(MONTH, rm.fec_rmant) = 8 then 'Agosto'
+		when DATEPART(MONTH, rm.fec_rmant) = 9 then 'Septiembre'
+		when DATEPART(MONTH, rm.fec_rmant) = 10 then 'Octubre'
+		when DATEPART(MONTH, rm.fec_rmant) = 11 then 'Noviembre'
+		when DATEPART(MONTH, rm.fec_rmant) = 12 then 'Diciembre'
+	end as "Mes",
+	convert(varchar, rm.fec_rmant ,103) as "Día",
+	concat(cn.nom_cnd, ' #' , d.num_dpto) as "Departamento",
+	sum(m.cost_mant) as "Gastos en mantenciones por día"
+	from departamento d join res_mant rm
+		on d.id_dpto = rm.id_dpto
+	join mantencion m
+		on rm.id_rmant = m.id_rmant
+    join condominio cn
+        on cn.id_cnd = d.id_cnd
+    join comuna cm
+		on cm.id_com = cn.id_com
+    join region rg
+        on rg.id_rgn = cm.id_rgn
+GROUP BY rg.id_rgn, rg.nom_rgn, year(rm.fec_rmant), concat(cn.nom_cnd, ' #' , d.num_dpto) , DATEPART(MONTH, rm.fec_rmant), convert(varchar, rm.fec_rmant ,103), d.id_dpto
+having d.id_dpto = 1 and year(rm.fec_rmant) = 2022
+order by DATEPART(MONTH, rm.fec_rmant), "Día" , "Departamento" asc;
+
+------------------------------------------------------------------------------------------
+
+-- Ganancias por semana
+SELECT 
+	rg.nom_rgn as "Region",
+	year(r.fec_ini_rva) as "Año",
+	case
+		when DATEPART(MONTH, r.fec_ini_rva) = 1 then 'Enero'
+		when DATEPART(MONTH, r.fec_ini_rva) = 2 then 'Febrero'
+		when DATEPART(MONTH, r.fec_ini_rva) = 3 then 'Marzo'
+		when DATEPART(MONTH, r.fec_ini_rva) = 4 then 'Abril'
+		when DATEPART(MONTH, r.fec_ini_rva) = 5 then 'Mayo'
+		when DATEPART(MONTH, r.fec_ini_rva) = 6 then 'Junio'
+		when DATEPART(MONTH, r.fec_ini_rva) = 7 then 'Julio'
+		when DATEPART(MONTH, r.fec_ini_rva) = 8 then 'Agosto'
+		when DATEPART(MONTH, r.fec_ini_rva) = 9 then 'Septiembre'
+		when DATEPART(MONTH, r.fec_ini_rva) = 10 then 'Octubre'
+		when DATEPART(MONTH, r.fec_ini_rva) = 11 then 'Noviembre'
+		when DATEPART(MONTH, r.fec_ini_rva) = 12 then 'Diciembre'
+	end as "Mes",
+	DATEPART(week, r.fec_ini_rva) as "Semana" ,
+	concat(cn.nom_cnd, ' #' , d.num_dpto) as "Departamento",
+	SUM(p.monto_pagado) as "Ganancia semanal",
+	count(r.id_rva) as "Reservas" 
+    FROM reserva r join pago p
+		on r.id_rva = p.id_rva 
+    join departamento d 
+		on d.id_dpto = r.id_dpto
+    join condominio cn
+        on cn.id_cnd = d.id_cnd
+    join comuna cm
+		on cm.id_com = cn.id_com
+    join region rg
+        on rg.id_rgn = cm.id_rgn
+GROUP BY rg.id_rgn, rg.nom_rgn,  DATEPART(MONTH, r.fec_ini_rva), year(r.fec_ini_rva), concat(cn.nom_cnd, ' #' , d.num_dpto), d.id_dpto, DATEPART(week, r.fec_ini_rva)
+having d.id_dpto = 1 and year(r.fec_ini_rva) = 2022
+order by DATEPART(MONTH, r.fec_ini_rva), "Semana";
+
+-- Gastos servicios por semana de facturación
+select 
+	rg.nom_rgn as "Region",
+    year(g.fec_ingreso) as "Año",
+	case
+		when DATEPART(MONTH, g.fec_ingreso) = 1 then 'Enero'
+		when DATEPART(MONTH, g.fec_ingreso) = 2 then 'Febrero'
+		when DATEPART(MONTH, g.fec_ingreso) = 3 then 'Marzo'
+		when DATEPART(MONTH, g.fec_ingreso) = 4 then 'Abril'
+		when DATEPART(MONTH, g.fec_ingreso) = 5 then 'Mayo'
+		when DATEPART(MONTH, g.fec_ingreso) = 6 then 'Junio'
+		when DATEPART(MONTH, g.fec_ingreso) = 7 then 'Julio'
+		when DATEPART(MONTH, g.fec_ingreso) = 8 then 'Agosto'
+		when DATEPART(MONTH, g.fec_ingreso) = 9 then 'Septiembre'
+		when DATEPART(MONTH, g.fec_ingreso) = 10 then 'Octubre'
+		when DATEPART(MONTH, g.fec_ingreso) = 11 then 'Noviembre'
+		when DATEPART(MONTH, g.fec_ingreso) = 12 then 'Diciembre'
+	end as "Mes",
+	DATEPART(week, g.fec_ingreso) as "Semana",
+	concat(cn.nom_cnd, ' #' , d.num_dpto) as "Departamento",
+	sum(g.gasto_luz) as "Gastos de luz semana factura",
+	sum(g.gasto_agua) as "Gastos de agua semana factura",
+	sum(g.gasto_gas) as "Gastos de gas semana factura",
+	sum(g.gasto_servicios) as "Gastos de servicios semana factura",
+	sum(g.gasto_comunes) as "Gastos comunes semana factura",
+	sum(g.gasto_dividendo) as "Dividendo semana factura"
+	from departamento d join gastos g
+		on d.id_dpto = g.id_dpto
+    join condominio cn
+        on cn.id_cnd = d.id_cnd
+    join comuna cm
+		on cm.id_com = cn.id_com
+    join region rg
+        on rg.id_rgn = cm.id_rgn
+GROUP BY rg.id_rgn, rg.nom_rgn, year(g.fec_ingreso), concat(cn.nom_cnd, ' #' , d.num_dpto) , DATEPART(MONTH, g.fec_ingreso),  d.id_dpto, DATEPART(week, g.fec_ingreso)
+having  d.id_dpto = 1 and year(g.fec_ingreso) = 2022
+order by DATEPART(MONTH, g.fec_ingreso), "Semana" , "Departamento" asc;
+
+-- Gastos en articulos por semana
+select 
+	rg.nom_rgn as "Region",
+	year(a.fec_compra) as "Año",
+	case
+		when DATEPART(MONTH, a.fec_compra) = 1 then 'Enero'
+		when DATEPART(MONTH, a.fec_compra) = 2 then 'Febrero'
+		when DATEPART(MONTH, a.fec_compra) = 3 then 'Marzo'
+		when DATEPART(MONTH, a.fec_compra) = 4 then 'Abril'
+		when DATEPART(MONTH, a.fec_compra) = 5 then 'Mayo'
+		when DATEPART(MONTH, a.fec_compra) = 6 then 'Junio'
+		when DATEPART(MONTH, a.fec_compra) = 7 then 'Julio'
+		when DATEPART(MONTH, a.fec_compra) = 8 then 'Agosto'
+		when DATEPART(MONTH, a.fec_compra) = 9 then 'Septiembre'
+		when DATEPART(MONTH, a.fec_compra) = 10 then 'Octubre'
+		when DATEPART(MONTH, a.fec_compra) = 11 then 'Noviembre'
+		when DATEPART(MONTH, a.fec_compra) = 12 then 'Diciembre'
+	end as "Mes",
+	DATEPART(week, a.fec_compra) as "Semana",
+	concat(cn.nom_cnd, ' #' , d.num_dpto) as "Departamento",
+	sum(a.valor_arti) as "Gastos en articulos por semana"
+	from departamento d join articulo a
+		on d.id_dpto = a.id_dpto
+    join condominio cn
+        on cn.id_cnd = d.id_cnd
+    join comuna cm
+		on cm.id_com = cn.id_com
+    join region rg
+        on rg.id_rgn = cm.id_rgn
+GROUP BY rg.id_rgn, rg.nom_rgn, year(a.fec_compra), concat(cn.nom_cnd, ' #' , d.num_dpto) , DATEPART(MONTH, a.fec_compra), d.id_dpto, DATEPART(week, a.fec_compra)
+having d.id_dpto = 1 and year(a.fec_compra) = 2022
+order by DATEPART(MONTH, a.fec_compra),"Semana", "Departamento" asc;
+
+--  Gastos mantenciones por semana
+select 
+	rg.nom_rgn as "Region",
+	year(rm.fec_rmant) as "Año",
+	case
+		when DATEPART(MONTH, rm.fec_rmant) = 1 then 'Enero'
+		when DATEPART(MONTH, rm.fec_rmant) = 2 then 'Febrero'
+		when DATEPART(MONTH, rm.fec_rmant) = 3 then 'Marzo'
+		when DATEPART(MONTH, rm.fec_rmant) = 4 then 'Abril'
+		when DATEPART(MONTH, rm.fec_rmant) = 5 then 'Mayo'
+		when DATEPART(MONTH, rm.fec_rmant) = 6 then 'Junio'
+		when DATEPART(MONTH, rm.fec_rmant) = 7 then 'Julio'
+		when DATEPART(MONTH, rm.fec_rmant) = 8 then 'Agosto'
+		when DATEPART(MONTH, rm.fec_rmant) = 9 then 'Septiembre'
+		when DATEPART(MONTH, rm.fec_rmant) = 10 then 'Octubre'
+		when DATEPART(MONTH, rm.fec_rmant) = 11 then 'Noviembre'
+		when DATEPART(MONTH, rm.fec_rmant) = 12 then 'Diciembre'
+	end as "Mes",
+	DATEPART(week, rm.fec_rmant) as "Semana",
+	concat(cn.nom_cnd, ' #' , d.num_dpto) as "Departamento",
+	sum(m.cost_mant) as "Gastos en mantenciones por semana"
+	from departamento d join res_mant rm
+		on d.id_dpto = rm.id_dpto
+	join mantencion m
+		on rm.id_rmant = m.id_rmant
+    join condominio cn
+        on cn.id_cnd = d.id_cnd
+    join comuna cm
+		on cm.id_com = cn.id_com
+    join region rg
+        on rg.id_rgn = cm.id_rgn
+GROUP BY rg.id_rgn, rg.nom_rgn, year(rm.fec_rmant), concat(cn.nom_cnd, ' #' , d.num_dpto) , DATEPART(MONTH, rm.fec_rmant),  d.id_dpto, DATEPART(week, rm.fec_rmant)
+having d.id_dpto = 1 and year(rm.fec_rmant) = 2022
+order by DATEPART(MONTH, rm.fec_rmant), "Semana", "Departamento" asc;
+
+---------------------------------------------------------------------------------------------------------------
+
+-- Ganancias por mes
+SELECT 
+	rg.nom_rgn as "Region",
+	year(r.fec_ini_rva) as "Año",
+	case
+		when DATEPART(MONTH, r.fec_ini_rva) = 1 then 'Enero'
+		when DATEPART(MONTH, r.fec_ini_rva) = 2 then 'Febrero'
+		when DATEPART(MONTH, r.fec_ini_rva) = 3 then 'Marzo'
+		when DATEPART(MONTH, r.fec_ini_rva) = 4 then 'Abril'
+		when DATEPART(MONTH, r.fec_ini_rva) = 5 then 'Mayo'
+		when DATEPART(MONTH, r.fec_ini_rva) = 6 then 'Junio'
+		when DATEPART(MONTH, r.fec_ini_rva) = 7 then 'Julio'
+		when DATEPART(MONTH, r.fec_ini_rva) = 8 then 'Agosto'
+		when DATEPART(MONTH, r.fec_ini_rva) = 9 then 'Septiembre'
+		when DATEPART(MONTH, r.fec_ini_rva) = 10 then 'Octubre'
+		when DATEPART(MONTH, r.fec_ini_rva) = 11 then 'Noviembre'
+		when DATEPART(MONTH, r.fec_ini_rva) = 12 then 'Diciembre'
+	end as "Mes",
+	concat(cn.nom_cnd, ' #' , d.num_dpto) as "Departamento",
+	SUM(p.monto_pagado) as "Ganancia mensual",
+	count(r.id_rva) as "Reservas" 
+    FROM reserva r join pago p
+		on r.id_rva = p.id_rva 
+    join departamento d 
+		on d.id_dpto = r.id_dpto
+    join condominio cn
+        on cn.id_cnd = d.id_cnd
+    join comuna cm
+		on cm.id_com = cn.id_com
+    join region rg
+        on rg.id_rgn = cm.id_rgn
+GROUP BY rg.id_rgn, rg.nom_rgn,  DATEPART(MONTH, r.fec_ini_rva), year(r.fec_ini_rva),concat(cn.nom_cnd, ' #' , d.num_dpto), d.id_dpto 
+having d.id_dpto = 1 and year(r.fec_ini_rva) = 2022
+order by DATEPART(MONTH, r.fec_ini_rva);
+
+-- Gastos por servicios por mes
+select 
+	rg.nom_rgn as "Region",
+    year(g.fec_ingreso) as "Año",
+	case
+		when DATEPART(MONTH, g.fec_ingreso) = 1 then 'Enero'
+		when DATEPART(MONTH, g.fec_ingreso) = 2 then 'Febrero'
+		when DATEPART(MONTH, g.fec_ingreso) = 3 then 'Marzo'
+		when DATEPART(MONTH, g.fec_ingreso) = 4 then 'Abril'
+		when DATEPART(MONTH, g.fec_ingreso) = 5 then 'Mayo'
+		when DATEPART(MONTH, g.fec_ingreso) = 6 then 'Junio'
+		when DATEPART(MONTH, g.fec_ingreso) = 7 then 'Julio'
+		when DATEPART(MONTH, g.fec_ingreso) = 8 then 'Agosto'
+		when DATEPART(MONTH, g.fec_ingreso) = 9 then 'Septiembre'
+		when DATEPART(MONTH, g.fec_ingreso) = 10 then 'Octubre'
+		when DATEPART(MONTH, g.fec_ingreso) = 11 then 'Noviembre'
+		when DATEPART(MONTH, g.fec_ingreso) = 12 then 'Diciembre'
+	end as "Mes",
+	concat(cn.nom_cnd, ' #' , d.num_dpto) as "Departamento",
+	sum(g.gasto_luz) as "Gastos de luz gasto mensual",
+	sum(g.gasto_agua) as "Gastos de agua gasto mensual",
+	sum(g.gasto_gas) as "Gastos de gas gasto mensual",
+	sum(g.gasto_servicios) as "Gastos de servicios gasto mensual",
+	sum(g.gasto_comunes) as "Gastos comunes gasto mensual",
+	sum(g.gasto_dividendo) as "Dividendo gasto mensual "
+	from departamento d join gastos g
+		on d.id_dpto = g.id_dpto
+    join condominio cn
+        on cn.id_cnd = d.id_cnd
+    join comuna cm
+		on cm.id_com = cn.id_com
+    join region rg
+        on rg.id_rgn = cm.id_rgn
+GROUP BY rg.id_rgn, rg.nom_rgn, year(g.fec_ingreso), concat(cn.nom_cnd, ' #' , d.num_dpto) , DATEPART(MONTH, g.fec_ingreso),  d.id_dpto
+having  d.id_dpto = 1 and year(g.fec_ingreso) = 2022
+order by DATEPART(MONTH, g.fec_ingreso),  "Departamento" asc;
+
+-- Gastos en articulos por mes
+select 
+	rg.nom_rgn as "Region",
+	year(a.fec_compra) as "Año",
+	case
+		when DATEPART(MONTH, a.fec_compra) = 1 then 'Enero'
+		when DATEPART(MONTH, a.fec_compra) = 2 then 'Febrero'
+		when DATEPART(MONTH, a.fec_compra) = 3 then 'Marzo'
+		when DATEPART(MONTH, a.fec_compra) = 4 then 'Abril'
+		when DATEPART(MONTH, a.fec_compra) = 5 then 'Mayo'
+		when DATEPART(MONTH, a.fec_compra) = 6 then 'Junio'
+		when DATEPART(MONTH, a.fec_compra) = 7 then 'Julio'
+		when DATEPART(MONTH, a.fec_compra) = 8 then 'Agosto'
+		when DATEPART(MONTH, a.fec_compra) = 9 then 'Septiembre'
+		when DATEPART(MONTH, a.fec_compra) = 10 then 'Octubre'
+		when DATEPART(MONTH, a.fec_compra) = 11 then 'Noviembre'
+		when DATEPART(MONTH, a.fec_compra) = 12 then 'Diciembre'
+	end as "Mes",
+	concat(cn.nom_cnd, ' #' , d.num_dpto) as "Departamento",
+	sum(a.valor_arti) as "Gastos en articulos por mes"
+	from departamento d join articulo a
+		on d.id_dpto = a.id_dpto
+    join condominio cn
+        on cn.id_cnd = d.id_cnd
+    join comuna cm
+		on cm.id_com = cn.id_com
+    join region rg
+        on rg.id_rgn = cm.id_rgn
+GROUP BY rg.id_rgn, rg.nom_rgn, year(a.fec_compra), concat(cn.nom_cnd, ' #' , d.num_dpto) , DATEPART(MONTH, a.fec_compra), d.id_dpto
+having d.id_dpto = 1 and year(a.fec_compra) = 2022
+order by DATEPART(MONTH, a.fec_compra), "Departamento" asc;
+
+-- Gastos de mantenciones por mes
+select 
+	rg.nom_rgn as "Region",
+	year(rm.fec_rmant) as "Año",
+	case
+		when DATEPART(MONTH, rm.fec_rmant) = 1 then 'Enero'
+		when DATEPART(MONTH, rm.fec_rmant) = 2 then 'Febrero'
+		when DATEPART(MONTH, rm.fec_rmant) = 3 then 'Marzo'
+		when DATEPART(MONTH, rm.fec_rmant) = 4 then 'Abril'
+		when DATEPART(MONTH, rm.fec_rmant) = 5 then 'Mayo'
+		when DATEPART(MONTH, rm.fec_rmant) = 6 then 'Junio'
+		when DATEPART(MONTH, rm.fec_rmant) = 7 then 'Julio'
+		when DATEPART(MONTH, rm.fec_rmant) = 8 then 'Agosto'
+		when DATEPART(MONTH, rm.fec_rmant) = 9 then 'Septiembre'
+		when DATEPART(MONTH, rm.fec_rmant) = 10 then 'Octubre'
+		when DATEPART(MONTH, rm.fec_rmant) = 11 then 'Noviembre'
+		when DATEPART(MONTH, rm.fec_rmant) = 12 then 'Diciembre'
+	end as "Mes",
+	concat(cn.nom_cnd, ' #' , d.num_dpto) as "Departamento",
+	sum(m.cost_mant) as "Gastos en mantenciones por mes"
+	from departamento d join res_mant rm
+		on d.id_dpto = rm.id_dpto
+	join mantencion m
+		on rm.id_rmant = m.id_rmant
+    join condominio cn
+        on cn.id_cnd = d.id_cnd
+    join comuna cm
+		on cm.id_com = cn.id_com
+    join region rg
+        on rg.id_rgn = cm.id_rgn
+GROUP BY rg.id_rgn, rg.nom_rgn, year(rm.fec_rmant), concat(cn.nom_cnd, ' #' , d.num_dpto) , DATEPART(MONTH, rm.fec_rmant), d.id_dpto
+having d.id_dpto = 1 and year(rm.fec_rmant) = 2022
+order by DATEPART(MONTH, rm.fec_rmant), "Departamento" asc;
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+-- Ganancias por año
+SELECT 
+	rg.nom_rgn as "Region",
+	year(r.fec_ini_rva) as "Año",
+	concat(cn.nom_cnd, ' #' , d.num_dpto) as "Departamento",
+	SUM(p.monto_pagado) as "Ganancia anual",
+	count(r.id_rva) as "Reservas" 
+    FROM reserva r join pago p
+		on r.id_rva = p.id_rva 
+    join departamento d 
+		on d.id_dpto = r.id_dpto
+    join condominio cn
+        on cn.id_cnd = d.id_cnd
+    join comuna cm
+		on cm.id_com = cn.id_com
+    join region rg
+        on rg.id_rgn = cm.id_rgn
+GROUP BY rg.id_rgn, rg.nom_rgn, year(r.fec_ini_rva),concat(cn.nom_cnd, ' #' , d.num_dpto), d.id_dpto 
+having d.id_dpto = 1 and year(r.fec_ini_rva) = 2022
+order by "Año";
+
+-- Gastos en servicios por año
+select 
+	rg.nom_rgn as "Region",
+    year(g.fec_ingreso) as "Año",
+	concat(cn.nom_cnd, ' #' , d.num_dpto) as "Departamento",
+	sum(g.gasto_luz) as "Gastos de luz gasto anual",
+	sum(g.gasto_agua) as "Gastos de agua gasto anual",
+	sum(g.gasto_gas) as "Gastos de gas gasto anual",
+	sum(g.gasto_servicios) as "Gastos de servicios gasto anual",
+	sum(g.gasto_comunes) as "Gastos comunes gasto anual",
+	sum(g.gasto_dividendo) as "Dividendo gasto anual "
+	from departamento d join gastos g
+		on d.id_dpto = g.id_dpto
+    join condominio cn
+        on cn.id_cnd = d.id_cnd
+    join comuna cm
+		on cm.id_com = cn.id_com
+    join region rg
+        on rg.id_rgn = cm.id_rgn
+GROUP BY rg.id_rgn, rg.nom_rgn, year(g.fec_ingreso), concat(cn.nom_cnd, ' #' , d.num_dpto),  d.id_dpto
+having  d.id_dpto = 1 and year(g.fec_ingreso) = 2022
+order by  "Año" asc;
+
+-- Gastos en articulos por año
+select 
+	rg.nom_rgn as "Region",
+	year(a.fec_compra) as "Año",
+	concat(cn.nom_cnd, ' #' , d.num_dpto) as "Departamento",
+	sum(a.valor_arti) as "Gastos en articulos anual"
+	from departamento d join articulo a
+		on d.id_dpto = a.id_dpto
+    join condominio cn
+        on cn.id_cnd = d.id_cnd
+    join comuna cm
+		on cm.id_com = cn.id_com
+    join region rg
+        on rg.id_rgn = cm.id_rgn
+GROUP BY rg.id_rgn, rg.nom_rgn, year(a.fec_compra), concat(cn.nom_cnd, ' #' , d.num_dpto), d.id_dpto
+having d.id_dpto = 1 and year(a.fec_compra) = 2022
+order by  "Año" asc;
+
+-- Gasto por mantenciones anual
+select 
+	rg.nom_rgn as "Region",
+	year(rm.fec_rmant) as "Año",
+	concat(cn.nom_cnd, ' #' , d.num_dpto) as "Departamento",
+	sum(m.cost_mant) as "Gastos en mantenciones anual"
+	from departamento d join res_mant rm
+		on d.id_dpto = rm.id_dpto
+	join mantencion m
+		on rm.id_rmant = m.id_rmant
+    join condominio cn
+        on cn.id_cnd = d.id_cnd
+    join comuna cm
+		on cm.id_com = cn.id_com
+    join region rg
+        on rg.id_rgn = cm.id_rgn
+GROUP BY rg.id_rgn, rg.nom_rgn, year(rm.fec_rmant), concat(cn.nom_cnd, ' #' , d.num_dpto), d.id_dpto
+having d.id_dpto = 1 and year(rm.fec_rmant) = 2022
+order by "Año" asc;
