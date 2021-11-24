@@ -120,10 +120,9 @@ router.route('/comuna').post((request, response) => {
 });
 
 
-//eliminar
-router.route('/comuna').delete((request, response) => {
-    let Comuna = {...request.body}
-    ComunaWS.delComuna(Comuna).then(result => {
+//eliminars
+router.route('/comuna/:id_com').delete((request, response) => {
+    ComunaWS.delComuna(request.params.id_com).then(result => {
         response.json(result[0]);
     }, (err) => {
         console.log(err.message);
@@ -440,7 +439,7 @@ router.route('/checkout/dpto/:id_dpto').get((request, response) => {
 
 
 
-var portcnx = process.env.PORT || 3000;
+var portcnx = process.env.PORT || 4000;
 app.listen(portcnx);
 console.log('fin de consulta')
 

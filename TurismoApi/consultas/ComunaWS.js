@@ -62,7 +62,6 @@ async function upComuna(Comuna){
             .input("id_com", sql.Int , Comuna.id_com)
             .input("nom_com", sql.NVarChar , Comuna.nom_com)
             .execute('pd_modificarComuna');
-        console.log($error);
         return newComuna.recordsets;    
     } 
     catch(err){
@@ -74,11 +73,11 @@ async function upComuna(Comuna){
 
 
 // elimina una comuna
-async function delComuna(Comuna){
+async function delComuna(id_com){
     try{
         let pool = await sql.connect(cnx);
         let newComuna = await pool.request()
-            .input("id_com", sql.Int , Comuna.id_com)
+            .input("id_com", sql.Int , id_com)
             .execute('pd_eliminarComuna');
         console.log("se elimino la comuna")    
         return newComuna.recordsets;    
