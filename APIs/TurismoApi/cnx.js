@@ -1,0 +1,12 @@
+const cnx = {
+    user: 'TurismoReal1',
+    password: '1234',
+    server : 'DESKTOP-HHQNQGG',
+    database: 'TurismoReal',
+    options: {
+        encrypt: true, // for azure
+        trustServerCertificate: true, // change to true for local dev / self-signed certs
+      },
+}
+
+module.exports = cnx;
