@@ -17,7 +17,7 @@ const MainAdmin = () => {
                     <div className="row">
                         <h3>
                         Somos una empresa familiar con ya 10 años en el mercado, dedicada a entregar el mejor servicio de arriendo de departamentos, de los cuales nosotros mismos
-                        somos propietarios, por lo que no tendrás problemas de intermediarios o gestión, además de recibir un trato cálido y gentil a lo largo de toda tu estadía.
+                        somos propietarios, por lo que no tendrás problemas de intermediarios o gestión, ademár de recibir un trato cálido y gentil a lo largo de toda tu estadía.
                         </h3>
                     </div>
                     <div className="row"  id="row2">

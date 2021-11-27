@@ -10,6 +10,13 @@
  
 }
 
+/* body{
+  min-height: 100vh;
+} */
 
 
-
+#navbar{
+    opacity: 0.97; 
+    /* filter:(opacity=50);    */
+    background: black;
+}
