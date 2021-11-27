@@ -1,0 +1,38 @@
+#inputform1::placeholder {
+    color: black;
+    font-style: bold;
+}
+
+#inputform2::placeholder{
+    color: black;
+    font-style: bold;
+}
+
+#btnCreateComuna{
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+#create-comuna-title{
+    padding-top: 3%;
+    padding-bottom: 3%;
+}
+
+#admin-background{
+    color:white;
+    background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(0,0,0,1) 0%, rgba(70,116,175,1) 100%);
+    padding-bottom: 5%;
+}
+
+#create-comuna-form{ 
+    margin-left: auto;
+    margin-right: auto;
+    
+    width: fit-content;
+    padding: 7% 7% 15%;
+    background: black;
+    /* background: rgb(2,0,36); */
+    /* background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(51,84,68,1) 50%, rgba(0,0,0,1) 100%); */
+    opacity: 0.9;
+    
+}

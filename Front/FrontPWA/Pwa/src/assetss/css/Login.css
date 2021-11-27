@@ -1,0 +1,36 @@
+.container{
+    text-align: center;
+    justify-content: center;
+}
+
+#login-body{
+    color: white;
+    background-image: url("https://wallpapercave.com/wp/wp2901668.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    
+}
+
+#background-login{
+    size: 100%;
+    min-height: 100vh;
+    /* position: absolute; */
+    z-index: -1;
+}
+
+#login{
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+    padding: 7% 7% 15%;
+    background: black;
+    /* background: rgb(2,0,36); */
+    /* background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(51,84,68,1) 50%, rgba(0,0,0,1) 100%); */
+    opacity: 0.9;
+}
+
+
+#title-login{
+    padding-bottom: 10%;
+}
+

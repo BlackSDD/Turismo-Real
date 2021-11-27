@@ -1,0 +1,28 @@
+.App{
+  margin:auto;
+  /* background-image: url(https://images.pexels.com/photos/3255761/pexels-photo-3255761.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);   */
+  /* background-color: black; */
+  /* min-height: 100vh; */
+  /* padding-bottom: 0px; */
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+ 
+}
+
+/* body{
+  min-height: 100vh;
+} */
+
+
+#navbar{
+    opacity: 0.97; 
+    /* filter:(opacity=50);    */
+    background: black;
+}
+
+a:link {
+  text-decoration: none;
+  color: white;
+}
+
