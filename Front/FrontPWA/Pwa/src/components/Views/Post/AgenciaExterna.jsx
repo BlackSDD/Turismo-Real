@@ -114,7 +114,6 @@ class AgenciaExterna extends Component{
                         </form>
                     </div>
             </div>
-            <Footer/>
             </React.Fragment>
         );
     

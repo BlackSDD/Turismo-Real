@@ -1,7 +1,6 @@
 import React from 'react';
 import './assetss/css/App.css';
 import "bootstrap/dist/css/bootstrap.css";
-
 import Login from './components/Login';
 import Home from './components/Home';
 import Comuna from './components/Views/Post/Comuna';
@@ -22,7 +21,7 @@ function App() {
       <Router>
         <Navbar/>
           <Switch>
-          <Route path="/" exact render ={ props=> ( <Home {...props} />)}></Route>
+          <Route path="/home" exact render ={ props=> ( <Home {...props} />)}></Route>
           <Route path="/login" exact render ={ props=> ( <Login {...props} />)}></Route>       
     {/* PostRoutes--------- */}
             <Route path="/condominio" exact render={props => (<Condominio {...props}/>)}></Route>

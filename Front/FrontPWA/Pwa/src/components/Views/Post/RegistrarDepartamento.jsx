@@ -161,7 +161,7 @@ render(){
 
                             <div className="row mt-5 mb-5  d-flex justify-content-center">
                                 <div className="col-6 text-center">
-                                    <button><a href={'http://localhost:3000/dashboard'}>Volver</a></button>
+                                    <button><a href={'/home'}>Volver</a></button>
                                 </div>
                                 <div className="col-6 text-center">
                                     <input type="submit" value="Registrar" onClick={this.manejadorBoton.bind(this)}post/>
@@ -170,7 +170,7 @@ render(){
                     </form>
                 </div>
         </div>
-        <Footer/>
+        
         </React.Fragment>
     );
 

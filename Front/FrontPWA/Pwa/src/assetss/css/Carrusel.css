@@ -36,7 +36,7 @@ img {
 
 #div-carrusel{
     background: rgb(2,0,36);
-    background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(105,115,159,1) 50%, rgba(0,0,0,1) 100%);
+    background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(46,68,133,1) 50%, rgba(0,0,0,1) 100%);
     align-content: center;
     background-size: cover;
     

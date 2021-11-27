@@ -24,7 +24,7 @@
 }
 
 
-#icono{
+#equipo{
     font-size: 20px;
     text-align: center;
     /* @media screen 100px {        
@@ -35,10 +35,43 @@
     text-align: left;
 }
 
-#ulFooter{
+#ul-footer-equipo{
     list-style-type:none;
     /* list-style-position: inside; */
-    text-align: center;
-    font-size: 15px;
-
+    text-align: left;
+    /* font-size: 15px; */
 }
+
+#ul-footer-links{
+    list-style-type:none;
+    /* list-style-position: inside; */
+    text-align: left;
+    font-size: 20px;
+}
+
+#container-footer{
+    max-width: 86%;
+    padding:0% auto 0%;
+}
+
+#a-footer{
+    text-decoration: none;
+    color: white;
+}
+
+a:link {
+    color: white;
+    
+  }
+  
+a:visited {
+    color: white;
+}
+  
+a:hover {
+    color: rgb(206, 179, 62);
+}
+  
+a:active {
+    color: cyan;
+} 

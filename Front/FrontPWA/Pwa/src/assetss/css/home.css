@@ -13,21 +13,20 @@
     width: auto;
 }
 
-.row{
+#row-home{
     max-width: 100%;
     width: 100%;
     padding: 0px;
 }
 
-li{
-    font-size: 35px;
-    font-style: bolder;
-}
 
-#ulComunas{
+
+#ul-home{
     list-style-type: circle white;
     list-style-position: inside;
     text-align: left;
+    font-size: 35px;
+    font-style: bolder;
 }
 
 

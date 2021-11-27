@@ -20,3 +20,9 @@
     /* filter:(opacity=50);    */
     background: black;
 }
+
+a:link {
+  text-decoration: none;
+  color: white;
+}
+

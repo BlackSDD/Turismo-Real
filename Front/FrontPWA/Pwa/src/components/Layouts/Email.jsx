@@ -30,7 +30,7 @@ export default function Email() {
                     <p>¿Tienes alguna duda? envianos un mensaje, te responderemos en breve</p>
                     <Form.Group className="mb-3" controlId="Nombre">
                         <Form.Label>Ingrese su nombre</Form.Label>
-                        <Form.Control as="textarea" name="nombre" rows={1} required />
+                        <Form.Control  name="nombre" required />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="Email">
@@ -40,7 +40,7 @@ export default function Email() {
 
                     <Form.Group className="mb-3" controlId="Mensaje">
                         <Form.Label>Ingrese el mensaje a enviar</Form.Label>
-                        <Form.Control as="textarea" name="mensaje" rows={4} required/>
+                        <Form.Control as="textarea" name="mensaje" rows={2} required/>
                     </Form.Group>
 
                     <button type="submit" class="btn btn-primary"> Enviar Mensaje</button>

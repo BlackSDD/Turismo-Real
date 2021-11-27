@@ -14,7 +14,7 @@ const MainAdmin = () => {
             <div id="home-body">
                 <div id="homeContainer" >
                     <h1 id="titleSobre">Sobre Turismo Real...</h1>
-                    <div className="row">
+                    <div className="row" id="row-home">
                         <h3>
                         Somos una empresa familiar con ya 10 años en el mercado, dedicada a entregar el mejor servicio de arriendo de departamentos, de los cuales nosotros mismos
                         somos propietarios, por lo que no tendrás problemas de intermediarios o gestión, ademár de recibir un trato cálido y gentil a lo largo de toda tu estadía.
@@ -38,11 +38,11 @@ const MainAdmin = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="row">
+                    <div className="row" id="row-home">
                         <h2>Actualmente contamos con 10 departamentos ubicados en zonas de alto interés turístico, cada uno de ellos acondicionados con 
                             un alto estándar de calidad, tal como tú mereces</h2>
                         <div id="list">
-                            <ul id="ulComunas">
+                            <ul id="ul-home">
                                 <li>La Serena</li>
                                 <li>Pucón</li>
                                 <li>Puerto Varas</li>
