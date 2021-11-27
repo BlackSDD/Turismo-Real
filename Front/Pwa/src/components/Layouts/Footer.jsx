@@ -9,7 +9,7 @@ import depto4 from '../../assetss/img/depto4.jpg';
 // import {faAccessibleIcon} from '@fortawesome/free-brands-svg-icons';
 import {faUser, faPhoneAlt, faAt} from '@fortawesome/free-solid-svg-icons';
 import Email from './Email';
-
+import {Image} from 'react-bootstrap';
 
 function Footer() {
     return (
@@ -30,14 +30,14 @@ function Footer() {
                                     <li><FontAwesomeIcon icon={faAt} color="white"/> cristian.prieto@gmail.com</li>
                                 </ul>
                                 <ul id="ul-footer-equipo">
-                                    <li><FontAwesomeIcon icon={faUser} color="white" /> Cristian Prieto</li>
-                                    <li><FontAwesomeIcon icon={faPhoneAlt} color="white" /> + 569 2050 3942</li>
-                                    <li><FontAwesomeIcon icon={faAt} color="white"/> cristian.prieto@gmail.com</li>
+                                    <li><FontAwesomeIcon icon={faUser} color="white" /> Matías Fuentes</li>
+                                    <li><FontAwesomeIcon icon={faPhoneAlt} color="white" /> + 569 4882 1386</li>
+                                    <li><FontAwesomeIcon icon={faAt} color="white"/> matias76097795@gmail.com</li>
                                 </ul>
                                 <ul id="ul-footer-equipo">
-                                    <li><FontAwesomeIcon icon={faUser} color="white" /> Cristian Prieto</li>
-                                    <li><FontAwesomeIcon icon={faPhoneAlt} color="white" /> + 569 2050 3942</li>
-                                    <li><FontAwesomeIcon icon={faAt} color="white"/> cristian.prieto@gmail.com</li>
+                                    <li><FontAwesomeIcon icon={faUser} color="white" /> Eugenio Echeverria</li>
+                                    <li><FontAwesomeIcon icon={faPhoneAlt} color="white" /> + 569 8751 5486</li>
+                                    <li><FontAwesomeIcon icon={faAt} color="white"/> TurismoReal.CEO@gmail.com</li>
                                 </ul>
                             </div>
                         </div>                        
@@ -45,7 +45,7 @@ function Footer() {
                     <div className="col-sm-3">
                         <h4 className="text-center">Links de interés</h4>
                         <ul id="ul-footer-links">
-                            <li><a  href="/departamento">Ver Departamentos</a></li>
+                            <li><a  href="/departamento" id="a-footer">Ver Departamentos</a></li>
                             <li><a id="a-footer">Ver Convenios</a></li>
                             <li><a id="a-footer">Consultar reservas</a></li>
                             {/* <li class="menuitem"><a href="index.php"><div class="menulink">Lnk1</div></a></li> */}
@@ -55,18 +55,18 @@ function Footer() {
                         <h4 className="text-center">Top departamentos</h4>
                         <div className="row">
                             <div className="col-sm">
-                                <a href=""><img src={depto1} alt="alternatetext"></img></a>
+                                <a href=""><Image rounded id="image-footer" fluid src={depto1} class="img-footer" alt="Escapada en parejas"></Image></a>
                             </div>
                             <div className="col-sm">
-                                <a href=""><img src={depto2} alt="alternatetext"></img></a>
+                                <a href=""><Image rounded id="image-footer" fluid src={depto2} alt="Departamento de lujo Viña"></Image></a>
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-sm">
-                                <a href=""><img src={depto3} alt="alternatetext"></img></a>
+                                <a href=""><Image  rounded id="image-footer" fluid src={depto3} alt="Departamento con vista al volcán villarica"></Image></a>
                             </div>
                             <div className="col-sm">
-                                <a href=""><img src={depto4} alt="alternatetext"></img></a>
+                                <a href=""><Image rounded id="image-footer" fluid src={depto4} alt="Departamento "></Image></a>
                             </div>
                         </div>
                     </div>

@@ -1,0 +1,9 @@
+.modal{
+    background-color: white;
+    display:  none;
+}
+
+.modal-open {
+    display: flex;
+}
+

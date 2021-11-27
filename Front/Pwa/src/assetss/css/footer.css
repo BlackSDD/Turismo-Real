@@ -59,19 +59,31 @@
     color: white;
 }
 
-a:link {
+
+
+#image-footer{
+    height: 90%;
+    width: 100%;
+    padding: 4% 0% 4%;
+}
+
+#a-footer:link {
     color: white;
+    text-decoration: none;
     
   }
   
-a:visited {
+  #a-footer:visited {
     color: white;
-}
+    text-decoration: none;
+  }
   
-a:hover {
+  #a-footer:hover {
     color: rgb(206, 179, 62);
-}
+    text-decoration: none;
+  }
   
-a:active {
+  #a-footer:active {
     color: cyan;
-} 
+    text-decoration: none;
+  } 

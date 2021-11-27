@@ -30,14 +30,14 @@
 }
 
 
-h1{
+#title-home-about{
     padding-top: 1%;
     padding-bottom: 3%;
 }
 
-#titleSobre{
+#title-home-sobre{
     text-shadow: 6px 4px 4px #638a89, 6px 4px 4px #638a89;
-    font-size: 50px;
+    font-size: 60px;
     width: 100%;
 }
 
@@ -64,15 +64,18 @@ h1{
 }
 
 #row2{
-    padding-top: 1%;
-    padding-bottom: 1%;
+    padding-top: 2%;
+    padding-bottom: 2%;
     border-top: 1px solid cornsilk;
     justify-content: center;
     padding-right: 0px;
     margin: 0px;
 }
+#desc-home-about{
+    padding-bottom: 2%;
+}
 
-#titleServices{
+#title-home-services{
     padding-bottom: 2%;
 }
 

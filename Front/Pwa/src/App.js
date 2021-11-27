@@ -10,6 +10,7 @@ import Articulo from './components/Views/Post/RegistrarArticulo';
 import AgenciaExterna from './components/Views/Post/AgenciaExterna';
 import ComunaWS from './components/Views/Get/ListarComunas';
 import ComunaEdi from './components/Views/put/Comuna';
+import Test from './components/test';
 import Footer from './components/Layouts/Footer';
 import Navbar  from './components/Layouts/Navbar';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
@@ -22,7 +23,8 @@ function App() {
         <Navbar/>
           <Switch>
           <Route path="/home" exact render ={ props=> ( <Home {...props} />)}></Route>
-          <Route path="/login" exact render ={ props=> ( <Login {...props} />)}></Route>       
+          <Route path="/login" exact render ={ props=> ( <Login {...props} />)}></Route>  
+          <Route path="/test" exact render ={ props=> ( <Test {...props} />)}></Route>     
     {/* PostRoutes--------- */}
             <Route path="/condominio" exact render={props => (<Condominio {...props}/>)}></Route>
             <Route path="/Comuna" exact render ={ props=> ( <Comuna {...props} />)}></Route>

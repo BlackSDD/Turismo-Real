@@ -13,18 +13,18 @@ const MainAdmin = () => {
 
             <div id="home-body">
                 <div id="homeContainer" >
-                    <h1 id="titleSobre">Sobre Turismo Real...</h1>
+                    <h1 id="title-home-about">Sobre Turismo Real...</h1>
                     <div className="row" id="row-home">
-                        <h3>
+                        <h2 id="desc-home-about">
                         Somos una empresa familiar con ya 10 años en el mercado, dedicada a entregar el mejor servicio de arriendo de departamentos, de los cuales nosotros mismos
                         somos propietarios, por lo que no tendrás problemas de intermediarios o gestión, ademár de recibir un trato cálido y gentil a lo largo de toda tu estadía.
-                        </h3>
+                        </h2>
                     </div>
                     <div className="row"  id="row2">
-                    <h1 id="titleServices">
+                    <h2 id="title-home-services">
                     También disponemos de convenios con otros servicios en las diferentes zonas turísticas del país, para que nuestros clientes más leales puedan
                     disfrutar al máximo su experiencia.
-                    </h1>
+                    </h2>
                         <div className="col-sm">
                             <h4>Llega a donde tu quieras con transporte las 24 horas</h4>
                             <div id="carruselS">
