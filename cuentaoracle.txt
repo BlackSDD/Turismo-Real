@@ -1,1 +1,0 @@
-create user C##turismo identified by 1234;

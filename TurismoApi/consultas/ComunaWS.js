@@ -55,11 +55,11 @@ async function newComuna(Comuna){
 
 
 //actualiza la comuna
-async function upComuna(Comuna){
+async function upComuna(id_com,Comuna){
     try{
         let pool = await sql.connect(cnx);
         let newComuna = await pool.request()
-            .input("id_com", sql.Int , Comuna.id_com)
+            .input("id_com", sql.Int , id_com)
             .input("nom_com", sql.NVarChar , Comuna.nom_com)
             .execute('pd_modificarComuna');
         return newComuna.recordsets;    

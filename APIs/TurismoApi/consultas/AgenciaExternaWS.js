@@ -98,7 +98,7 @@ async function upAgencia(AgenciaExterna){
     try{
         let pool = await sql.connect(cnx);
         let newComuna = await pool.request()
-            .input("id_agencia", sql.Int , AgenciaExterna.id_agencia)
+            .input("id_age", sql.Int , AgenciaExterna.id_age)
             .input("nom_age", sql.NVarChar , AgenciaExterna.nom_age)
             .input("email_age", sql.NVarChar , AgenciaExterna.email_age)
             .input("tel_age", sql.Int , AgenciaExterna.tel_age)
@@ -114,11 +114,11 @@ async function upAgencia(AgenciaExterna){
 
 
 // elimina una comuna
-async function delAgencia(AgenciaExterna){
+async function delAgencia(id_agencia){
     try{
         let pool = await sql.connect(cnx);
         let newComuna = await pool.request()
-        .input("id_agencia", sql.Int , AgenciaExterna.id_agencia)
+        .input("id_age", sql.Int , id_agencia)
             .execute('pd_eliminarAgenciaExterna');
         return newComuna.recordsets;    
     } 

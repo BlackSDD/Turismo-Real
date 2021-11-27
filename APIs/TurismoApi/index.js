@@ -166,6 +166,22 @@ router.route('/conducto').get((request, response) => {
     });
 });
 
+///listar marca
+router.route('/conducto').get((request, response) => {
+    ExtrasWS.getVehiculo().then(result =>{
+        response.json(result[0]);
+    });
+});
+
+
+///listar marca
+router.route('/region').get((request, response) => {
+    ExtrasWS.getRegion().then(result =>{
+        response.json(result[0]);
+    });
+});
+
+
 
 
 

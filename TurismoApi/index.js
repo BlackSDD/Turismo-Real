@@ -131,9 +131,9 @@ router.route('/comuna/:id_com').delete((request, response) => {
 });
 
 //modificar
-router.route('/comuna').put((request, response) => {
+router.route('/comuna/:id_com').put((request, response) => {
     let Comuna = {...request.body}
-    ComunaWS.upComuna(Comuna).then(result => {
+    ComunaWS.upComuna(request.params.id_com, Comuna).then(result => {
         response.json(result[0]);
     }, (err) => {
         console.log(err.message);

@@ -1,0 +1,9 @@
+#inputform1::placeholder {
+    color: black;
+    font-style: bold;
+}
+
+#inputform2::placeholder{
+    color: black;
+    font-style: bold;
+}

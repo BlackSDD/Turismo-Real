@@ -55,6 +55,20 @@ async function getConductor(){
     catch(err){
         console.log(err);
     }
+}
+
+async function getRegion(){
+        try{
+            let pool = await sql.connect(cnx);
+            let salida = await pool.request().query('SELECT *  FROM [TurismoReal].[dbo].[region]');
+            return salida.recordsets;
+            
+        } 
+        catch(err){
+            console.log(err);
+        }    
+
+    
 
 }
 
@@ -63,5 +77,6 @@ module.exports = {
     getMarca: getMarca,
     getModelo: getModelo,
     getVehiculo: getVehiculo,
-    getConductor: getConductor
+    getConductor: getConductor,
+    getRegion: getRegion
 }
