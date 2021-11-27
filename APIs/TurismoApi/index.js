@@ -48,6 +48,12 @@ const Reserva = require('./constructores/Reserva')
 //TRANSPORTE
 const TransporteWS = require('./consultas/TransporteWS')
 const Transporte = require('./constructores/Transporte')
+//ARTICULO
+const ArticuloWS =  require('./consultas/ArticuloWS')
+const Articulo = require('./constructores/Articulo')
+//REGION
+const RegionWS = require('./consultas/RegionWS')
+const Region = require('./constructores/Region')
 
 var express = require('express');
 var bodyP = require('body-parser');
@@ -98,8 +104,8 @@ router.route('/usuario').get((request, response) => {
     });
 });
 
-router.route('/usuario/:email_usr').get((request, response) => {
-    UsuarioWS.getUsuario(request.params.email_usr).then(result =>{
+router.route('/usuario/:id_usr').get((request, response) => {
+    UsuarioWS.getUsuario(request.params.id_usr).then(result =>{
         response.json(result[0]);
     });
 });
@@ -119,8 +125,12 @@ router.route('/usuario').put((request, response) => {
 
 
 router.route('/suspenderUsuario/:id_usr').put((request, response) => {
-    UsuarioWS.upSuspenderUsuario(request.params.id_usr).then(result =>{
+    UsuarioWS.upSuspenderUsuario(request.params.id_usr).then(result => {
         response.json(result[0]);
+        console.log('Se elimino el articulo')       
+    }, (err) => {
+        console.log(err.message);
+        response.json(err.message)
     });
 });
 
@@ -307,6 +317,7 @@ router.route('/agencia').get((request, response) => {
 //listar 1 agencia
 
 router.route('/agencia/:id_agencia').get((request, response) => {
+    
     AgenciaExternaWS.getAgencia(request.params.id_agencia).then(result =>{
         response.json(result[0]);
     });
@@ -690,6 +701,14 @@ router.route('/gastos').post((request, response) => {
     });
 });
 ///PAGO
+//Listar pagos
+router.route('/pago').get((request, response) => {
+    PagoWS.getPago().then(result =>{
+        response.json(result[0]);
+    });
+});
+
+//Registrar pago
 router.route('/pago').post((request, response) => {
     let Pago = {...request.body}
     PagoWS.NewPago(Pago).then(result => {
@@ -702,6 +721,13 @@ router.route('/pago').post((request, response) => {
 });
 
 //TOUR
+//Listar tours
+router.route('/tour').get((request, response) => {
+    TourWS.getTours().then(result =>{
+        response.json(result[0]);
+    });
+});
+
 //Registrar tour
 router.route('/tour').post((request, response) => {
     let Tour = {...request.body}
@@ -796,6 +822,59 @@ router.route('/transporte').put((request, response) => {
     });
 });
 
+
+///ARTICULO
+//Listar todos los articulos
+router.route('/articulo').get((request, response) => {
+    ArticuloWS.getArticulos().then(result =>{
+        response.json(result[0]);
+    });
+});
+//Ver un articulo en especifico
+router.route('/articulo/:id_arti').get((request, response) => {
+    ArticuloWS.getArticulo(request.params.id_arti).then(result =>{
+        response.json(result[0]);
+    });
+});
+// Registrar articulo
+router.route('/articulo').post((request, response) => {
+    let Articulo = {...request.body}
+    ArticuloWS.newArticulo(Articulo).then(result => {
+        response.json(result[0]);
+    }, (err) => {
+        console.log(err.message);
+        response.json(err.message)
+    });
+});
+//Actualizar articulo
+router.route('/articulo').put((request, response) => {
+    let Articulo = {...request.body}
+    ArticuloWS.UpArticulo(Articulo).then(result => {
+        response.json(result[0]);
+        console.log('Transporte actualizado')   
+
+     }, (err) => {
+        console.log(err.message);
+        response.json(err.message)
+    });
+});
+//Eliminar articulo
+router.route('/articulo/:id_arti').delete((request, response) => {
+    ArticuloWS.delArticulo(request.params.id_arti).then(result => {
+        response.json(result[0]);
+        console.log('Se elimino el articulo')       
+    }, (err) => {
+        console.log(err.message);
+        response.json(err.message)
+    });
+});
+///REGION
+//Listar todos los articulos
+router.route('/region').get((request, response) => {
+    RegionWS.getRegion().then(result =>{
+        response.json(result[0]);
+    });
+});
 
 var portcnx = process.env.PORT || 4000;
 app.listen(portcnx);

@@ -59,12 +59,12 @@ async function getUsuarios(){
     }
 }
 
-async function getUsuario(email_usr){
+async function getUsuario(id_usr){
     try{
         let pool = await sql.connect(cnx);
         let salida = await pool.request()
-        .input('email_usr', sql.NVarChar, email_usr)
-        .query('SELECT *  FROM usuario where email_usr = @email_usr');
+        .input('id_usr', sql.NVarChar, id_usr)
+        .query('SELECT *  FROM usuario where id_usr = @id_usr');
         console.log(salida.recordsets);
         return salida.recordsets;
         
@@ -93,19 +93,19 @@ async function UpUsuario(Usuario){
 
 
 
-async function upSuspenderUsuario(Usuario){
-        try{
-            let pool = await sql.connect(cnx);
-            let suspenderUsuario = await pool.request()
-                .input("id_usr", sql.Int , Usuario.id_usr)
-                .execute('pd_suspenderUsra');
-            console.log("Se suspendió al usuario")    
-            return suspenderUsuario.recordsets;    
-        } 
-        catch(err){
-            throw new Error (`Error en el procidemiento ${err.procName}...${err.message}`);
-        }
+async function upSuspenderUsuario(id_usr){
+    try{
+        let pool = await sql.connect(cnx);
+        let salida = await pool.request()
+        .input('id_usr', sql.Int, id_usr)
+        .execute('pd_suspenderUsr');
+        console.log(salida.recordsets);
+        return salida.recordsets;
+    } 
+    catch(err){
+        throw new Error (`Error en el procidemiento ${err.procName}...${err.message}`);
     }
+}
 
     
     async function upValidarUsuario(Usuario){

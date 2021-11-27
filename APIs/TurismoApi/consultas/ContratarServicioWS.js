@@ -65,14 +65,14 @@ async function upContratarServicio(ContratarServicio){
     }
 }
 
-async function delContratarServicio(ContratarServicio){
+async function delContratarServicio(id_cont_serv){
     try{
         let pool = await sql.connect(cnx);
-        let delServicio = await pool.request()
-            .input("id_cont_serv", sql.Int , ContratarServicio.id_cont_serv)
-            .execute('pd_eliminarContServ');
-        console.log("se elimino la contratacion del servicio")    
-        return delServicio.recordsets;    
+        let salida = await pool.request()
+        .input('id_cont_serv', sql.Int, id_cont_serv)
+        .execute('pd_eliminarContServ');
+        console.log(salida.recordsets);
+        return salida.recordsets;
     } 
     catch(err){
         throw new Error (`Error en el procidemiento ${err.procName}...${err.message}`);

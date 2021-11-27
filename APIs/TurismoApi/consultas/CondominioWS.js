@@ -109,14 +109,15 @@ async function upCondominio(Condominio){
 
 
 
-// elimina una comuna
-async function delCondominio(Condominio){
+// elimina una condominio
+async function delCondominio(id_cnd){
     try{
         let pool = await sql.connect(cnx);
-        let newComuna = await pool.request()
-            .input("id_cnd", sql.Int , Condominio.id_cnd)
-            .execute('pd_eliminarCondominio');
-        return newComuna.recordsets;    
+        let salida = await pool.request()
+        .input('id_cnd', sql.Int, id_cnd)
+        .execute('pd_eliminarCondominio');
+        console.log(salida.recordsets);
+        return salida.recordsets;
     } 
     catch(err){
         throw new Error (`Error en el procidemiento ${err.procName}...${err.message}`);

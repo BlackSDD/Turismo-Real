@@ -55,13 +55,14 @@ async function NewGastos(Gastos){
 
 
 // Eliminar registro de gastos
-async function delGastos(Gastos){
+async function delGastos(id_dpto){
     try{
         let pool = await sql.connect(cnx);
-        let deleteGastos = await pool.request()
-            .input("id_dpto", sql.Int , Gastos.id_dpto)
-            .execute('pd_eliminarGastos');
-        return deleteGastos.recordsets;    
+        let salida = await pool.request()
+        .input('id_dpto', sql.Int, id_dpto)
+        .execute('pd_eliminarGastos');
+        console.log(salida.recordsets);
+        return salida.recordsets;
     } 
     catch(err){
         throw new Error (`Error en el procidemiento ${err.procName}...${err.message}`);

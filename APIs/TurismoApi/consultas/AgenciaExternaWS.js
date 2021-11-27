@@ -26,7 +26,7 @@ async function getAgencia(id_agencia){
         let pool = await sql.connect(cnx);
         let salida = await pool.request()
         .input('id_agencia', sql.Int, id_agencia)
-        .query('SELECT *  FROM condominio where id_agencia = @id_agencia');
+        .query('SELECT *  FROM agencia_externa where id_agencia = @id_agencia');
         console.log(salida.recordsets);
         return salida.recordsets;
         
@@ -98,7 +98,7 @@ async function upAgencia(AgenciaExterna){
     try{
         let pool = await sql.connect(cnx);
         let newComuna = await pool.request()
-            .input("id_agencia", sql.Int , AgenciaExterna.id_agencia)
+            .input("id_age", sql.Int , AgenciaExterna.id_age)
             .input("nom_age", sql.NVarChar , AgenciaExterna.nom_age)
             .input("email_age", sql.NVarChar , AgenciaExterna.email_age)
             .input("tel_age", sql.Int , AgenciaExterna.tel_age)
@@ -113,14 +113,15 @@ async function upAgencia(AgenciaExterna){
 
 
 
-// elimina una comuna
-async function delAgencia(AgenciaExterna){
+// elimina una Agencia externa
+async function delAgencia(id_age){
     try{
         let pool = await sql.connect(cnx);
-        let newComuna = await pool.request()
-        .input("id_agencia", sql.Int , AgenciaExterna.id_agencia)
-            .execute('pd_eliminarAgenciaExterna');
-        return newComuna.recordsets;    
+        let salida = await pool.request()
+        .input('id_age', sql.Int, id_age)
+        .execute('pd_eliminarAgenciaExterna');
+        console.log(salida.recordsets);
+        return salida.recordsets;
     } 
     catch(err){
         throw new Error (`Error en el procidemiento ${err.procName}...${err.message}`);

@@ -2,6 +2,21 @@ const cnx = require('../cnx');
 
 const sql = require('mssql');
 
+
+//Listar Tours
+async function getTours(){
+    try{
+        let pool = await sql.connect(cnx);
+        let salida = await pool.request().query('SELECT *  FROM [TurismoReal].[dbo].[tour]');
+        console.log(salida.recordsets);
+        return salida.recordsets;
+        
+    } 
+    catch(err){
+        console.log(err);
+    }
+}
+
 //Agregar Tour
 async function NewTour(Tour){
     try{
@@ -50,6 +65,7 @@ async function UpTour(Tour){
 }
 
 module.exports = {
+    getTours: getTours,
     NewTour: NewTour,
     UpTour: UpTour
 }

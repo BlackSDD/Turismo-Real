@@ -94,13 +94,14 @@ async function upDepartamento(departamento){
 
 
 // elimina una comuna
-async function delDepartamento(departamento){
+async function delDepartamento(id_dpto){
     try{
         let pool = await sql.connect(cnx);
-        let newComuna = await pool.request()
-        .input("id_dpto", sql.Int , departamento.id_dpto)
+        let salida = await pool.request()
+        .input('id_dpto', sql.Int, id_dpto)
         .execute('pd_eliminarDepartamento');
-        return newComuna.recordsets;    
+        console.log(salida.recordsets);
+        return salida.recordsets;
     } 
     catch(err){
         throw new Error (`Error en el procidemiento ${err.procName}...${err.message}`);

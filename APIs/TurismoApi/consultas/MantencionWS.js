@@ -50,13 +50,14 @@ async function upMantencion(mantencion){
 }
 
 // elimina una comuna
-async function delMantencion(mantencion){
+async function delMantencion(id_rmant){
     try{
         let pool = await sql.connect(cnx);
-        let newMantencion = await pool.request()
-            .input("id_rmant", sql.Int , mantencion.id_rmant)
-            .execute('pd_eliminarMantencion');
-        return newMantencion.recordsets;    
+        let salida = await pool.request()
+        .input('id_rmant', sql.Int, id_rmant)
+        .execute('pd_eliminarMantencion');
+        console.log(salida.recordsets);
+        return salida.recordsets;
     } 
     catch(err){
         throw new Error (`Error en el procidemiento ${err.procName}...${err.message}`);
