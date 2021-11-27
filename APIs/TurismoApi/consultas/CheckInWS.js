@@ -68,8 +68,7 @@ async function upCheckIn(CheckIn){
         let newComuna = await pool.request()
             .input("id_rva", sql.Int , CheckIn.id_rva)
             .input("deta_chi", sql.NVarChar , CheckIn.deta_chi)
-            .input("id_usr", sql.Int , CheckIn.id_usr)
-            .execute('pd_modificarArticulo');
+            .execute('pd_modificarCheckin');
         return newComuna.recordsets;    
     } 
     catch(err){

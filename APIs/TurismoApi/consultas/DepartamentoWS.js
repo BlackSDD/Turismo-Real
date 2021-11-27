@@ -71,7 +71,6 @@ async function upDepartamento(departamento){
         let pool = await sql.connect(cnx);
         let newComuna = await pool.request()
             .input("id_dpto", sql.Int , departamento.id_dpto)
-            .input("dir_dpto", sql.Int , departamento.dir_dpto)
             .input('dir_dpto', sql.NVarChar , departamento.dir_dpto)
             .input('num_dpto', sql.Int , departamento.num_dpto)
             .input('n_amb_dpto', sql.Int , departamento.n_amb_dpto)

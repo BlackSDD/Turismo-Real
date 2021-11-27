@@ -114,11 +114,11 @@ async function upAgencia(AgenciaExterna){
 
 
 // elimina una Agencia externa
-async function delAgencia(id_age){
+async function delAgencia(id_agencia){
     try{
         let pool = await sql.connect(cnx);
         let salida = await pool.request()
-        .input('id_age', sql.Int, id_age)
+        .input('id_agencia', sql.Int, id_agencia)
         .execute('pd_eliminarAgenciaExterna');
         console.log(salida.recordsets);
         return salida.recordsets;
