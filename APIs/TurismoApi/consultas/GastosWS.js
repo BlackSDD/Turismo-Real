@@ -36,7 +36,7 @@ async function NewGastos(Gastos){
     try{
         let pool = await sql.connect(cnx);
         let newGastos = await pool.request()
-        .input("gasto_luz ", sql.Int , Gastos.gasto_luz )
+        .input("gasto_luz", sql.Int , Gastos.gasto_luz )
         .input("gasto_agua", sql.Int , Gastos.gasto_agua)
         .input("gasto_gas", sql.Int , Gastos.gasto_gas  )
         .input("gasto_servicios", sql.Int , Gastos.gasto_servicios)

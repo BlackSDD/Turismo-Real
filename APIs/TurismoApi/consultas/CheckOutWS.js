@@ -69,7 +69,7 @@ async function upCheckOut(CheckOut){
             .input("id_rva", sql.Int , CheckOut.id_rva)
             .input("deta_chi", sql.NVarChar , CheckOut.deta_chi)
             .input("id_usr", sql.Int , CheckOut.id_usr)
-            .execute('pd_modificarArticulo');
+            .execute('pd_modificarCheckout');
         return newComuna.recordsets;    
     } 
     catch(err){

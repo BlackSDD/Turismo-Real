@@ -392,7 +392,7 @@ router.route('/departamento').post((request, response) => {
 });
 
 //eliminar
-router.route('/agencia/:id_dpto').delete((request, response) => {
+router.route('/departamento/:id_dpto').delete((request, response) => {
     DepartamentoWS.delDepartamento(request.params.id_dpto).then(result => {
         response.json(result[0]);
     }, (err) => {
@@ -544,7 +544,7 @@ router.route('/contServicio').post((request, response) => {
 });
 
 //eliminar
-router.route('/contServicio/:id_cont_serv').delete((request, response) => {
+router.route('/contServicio/:id_cont_serv').put((request, response) => {
     ContratarServicioSW.delContratarServicio(request.params.id_cont_serv).then(result => {
         response.json(result[0]);
         console.log('Se elimino el registro de servicio contratado')
@@ -622,7 +622,7 @@ router.route('/reservaMantencion').get((request, response) => {
 });
 
 router.route('/reservaMantencion/:id_rmant').get((request, response) => {
-    ResMantencionSW.getReservaMantencion(request.params.id_rmant).then(result =>{
+    ResMantencionSW.getReservasMantencion(request.params.id_rmant).then(result =>{
         response.json(result[0]);
     });
 });
@@ -700,6 +700,7 @@ router.route('/gastos').post((request, response) => {
         response.json(err.message)
     });
 });
+/////////////////////////////////////////////REALIZAR PRUEBA A LOS QUE VIENEN ABAJO////////////////////////
 ///PAGO
 //Listar pagos
 router.route('/pago').get((request, response) => {
