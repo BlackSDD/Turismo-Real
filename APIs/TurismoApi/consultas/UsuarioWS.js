@@ -108,19 +108,35 @@ async function upSuspenderUsuario(id_usr){
 }
 
     
-    async function upValidarUsuario(Usuario){
-        try{
-            let pool = await sql.connect(cnx);
-            let suspenderUsuario = await pool.request()
-                .input("id_usr", sql.Int , Usuario.id_usr)
-                .execute('pd_validarUsr');
-            console.log("Se validó al usuario")    
-            return suspenderUsuario.recordsets;    
-        } 
-        catch(err){
-            throw new Error (`Error en el procidemiento ${err.procName}...${err.message}`);
-        }
+async function upValidarUsuario(id_usr){
+
+    try{
+        let pool = await sql.connect(cnx);
+        let newComuna = await pool.request()
+            .input("id_usr", sql.Int , id_usr)
+            .execute('pd_validarUsr');
+        console.log('Usuario validado');
+        return newComuna.recordsets;
+    } 
+    catch(err){
+        throw new Error (`Error en el procidemiento ${err.procName}...${err.message}`);
     }
+}
+
+async function upCambiarCliente(id_usr){
+    try{
+        let pool = await sql.connect(cnx);
+        let salida = await pool.request()
+        .input('id_usr', sql.Int, id_usr)
+        .execute('pd_cambiarTipoCliente');
+        console.log(salida.recordsets);
+        return salida.recordsets;
+    } 
+    catch(err){
+        throw new Error (`Error en el procidemiento ${err.procName}...${err.message}`);
+    }
+}
+
 
 
 
@@ -133,5 +149,6 @@ module.exports = {
     getUsuarios: getUsuarios,
     upSuspenderUsuario: upSuspenderUsuario,
     upValidarUsuario: upValidarUsuario,
-    UpUsuario: UpUsuario
+    UpUsuario: UpUsuario,
+    upCambiarCliente: upCambiarCliente
 }
