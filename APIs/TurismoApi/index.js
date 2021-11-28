@@ -885,6 +885,14 @@ router.route('/articulo/:id_arti').delete((request, response) => {
 });
 ///REGION
 //Listar todos los servicios extras
+router.route('/region').get((request, response) => {
+    RegionWS.getRegion().then(result =>{
+        response.json(result[0]);
+    });
+});
+
+///SERVICIOS EXTRAS
+//Listar todos los servicios extras
 router.route('/serviciosExtra').get((request, response) => {
     ServiciosExtraWS.getServiciosExtras().then(result =>{
         response.json(result[0]);
