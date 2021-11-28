@@ -78,7 +78,8 @@ async function UpUsuario(Usuario){
     try{
         let pool = await sql.connect(cnx);
         let upUsuario = await pool.request()
-            .input("id_usr", sql.Int , Usuario.id_usr)
+            .input("rut_usr", sql.Int , Usuario.rut_usr)
+            .input("dv_usr", sql.Int , Usuario.dv_usr)
             .input("email_usr", sql.NVarChar , Usuario.email_usr)
             .input("contr_usr", sql.NVarChar , Usuario.contr_usr)
             .input("tel_usr", sql.Int , Usuario.tel_usr)

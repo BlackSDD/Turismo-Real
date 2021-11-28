@@ -1425,7 +1425,8 @@ go
 -- Modificar
 create or alter procedure pd_modificarDatosUsr
 (
-	@id_usr INT,
+	@rut_usr INT,
+	@dv_usr CHAR,
 	@email_usr NVARCHAR(100),
 	@contr_usr NVARCHAR(50),
 	@tel_usr INT
@@ -1436,7 +1437,7 @@ begin
         email_usr = @email_usr, 
         contr_usr = @contr_usr, 
         tel_usr = @tel_usr
-	where id_usr = @id_usr;	
+	where rut_usr = @rut_usr and dv_usr = @dv_usr;		
 end;
 go
 
