@@ -721,6 +721,14 @@ router.route('/pago').post((request, response) => {
     });
 });
 
+//Calcular monto del pago
+router.route('/pago/montoPago/:id_rva').get((request, response) => {
+    PagoWS.getMontoPago(request.params.id_rva).then(result =>{
+        response.json(result[0]);
+    });
+});
+
+
 //TOUR
 //Listar tours
 router.route('/tour').get((request, response) => {

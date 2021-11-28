@@ -74,6 +74,7 @@ begin
 					where id_serv = @id_serv);
     end;
 	set @costo = @km_rec * @km;
+	set @costo= CONVERT(INT,ROUND(@costo,0,0),0);
 	return @costo;
 end;
 go
