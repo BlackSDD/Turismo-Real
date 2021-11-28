@@ -12,8 +12,8 @@ const useModal = (initialValue = false) => {
     setIsOpenModal(false);
   }
 
+  return [isOpenModal, openModal ,closeModal ];
 
-    return [isOpenModal, openModal ,closeModal ];
 }
 
 export default useModal

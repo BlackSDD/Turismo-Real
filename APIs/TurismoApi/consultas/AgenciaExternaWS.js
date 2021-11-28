@@ -36,8 +36,6 @@ async function getAgencia(id_agencia){
     }
 }
 
-
-
 //lista agencias por comuna
 async function getAgenciaCom(id_com){
     try{
@@ -53,8 +51,6 @@ async function getAgenciaCom(id_com){
         console.log(err);
     }
 }
-
-
 
 //lista agencias por region
 async function getAgenciaReg(id_rgn){
@@ -72,10 +68,7 @@ async function getAgenciaReg(id_rgn){
     }
 }
 
-
-
 //crea una agencia
-
 async function newAgencia(AgenciaExterna){
     try{
         let pool = await sql.connect(cnx);
@@ -91,7 +84,6 @@ async function newAgencia(AgenciaExterna){
         throw new Error (`Error en el procidemiento ${err.procName}...${err.message}`);
     }
 }
-
 
 //actualiza la agencia
 async function upAgencia(AgenciaExterna){
@@ -110,9 +102,6 @@ async function upAgencia(AgenciaExterna){
     }
 }
 
-
-
-
 // elimina una Agencia externa
 async function delAgencia(id_agencia){
     try{
@@ -127,7 +116,6 @@ async function delAgencia(id_agencia){
         throw new Error (`Error en el procidemiento ${err.procName}...${err.message}`);
     }
 }
-
 
 
 module.exports = {
