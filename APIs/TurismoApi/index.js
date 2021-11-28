@@ -54,11 +54,15 @@ const Articulo = require('./constructores/Articulo')
 //REGION
 const RegionWS = require('./consultas/RegionWS')
 const Region = require('./constructores/Region')
+//SERVICIOS EXTRAS
+const ServiciosExtra =  require('./constructores/ServiciosExtra')
+const ServiciosExtraWS = require('./consultas/ServiciosExtraWS')
 
 var express = require('express');
 var bodyP = require('body-parser');
 var cors = require('cors');
 const { request, response } = require('express');
+const ServiciosExtras = require('./constructores/ServiciosExtra');
 
 
 var app = express();
@@ -136,7 +140,17 @@ router.route('/suspenderUsuario/:id_usr').put((request, response) => {
 
 router.route('/validarUsuario/:id_usr').put((request, response) => {
     let Usuario = {...request.body}
-    UsuarioWS.upValidarUsuario(Usuario).then(result => {
+    UsuarioWS.upValidarUsuario(request.params.id_usr).then(result => {
+        response.json(result[0]);
+    }, (err) => {
+        console.log(err.message);
+        response.json(err.message)
+    });
+});
+
+router.route('/cambiarTipoCliente/:id_usr').put((request, response) => {
+    let Usuario = {...request.body}
+    UsuarioWS.upCambiarCliente(request.params.id_usr).then(result => {
         response.json(result[0]);
     }, (err) => {
         console.log(err.message);
@@ -877,13 +891,31 @@ router.route('/articulo/:id_arti').delete((request, response) => {
     });
 });
 ///REGION
-//Listar todos los articulos
-router.route('/region').get((request, response) => {
-    RegionWS.getRegion().then(result =>{
+//Listar todos los servicios extras
+router.route('/serviciosExtra').get((request, response) => {
+    ServiciosExtraWS.getServiciosExtras().then(result =>{
         response.json(result[0]);
     });
 });
+//Ver un servicio extra en especifico
+router.route('/serviciosExtra/:id_serv').get((request, response) => {
+    ServiciosExtraWS.getServicoExtra(request.params.id_serv).then(result =>{
+        response.json(result[0]);
+    });
+});
+//Agregar un servicio extra
+// Registrar articulo
+router.route('/serviciosExtra').post((request, response) => {
+    let ServiciosExtras = {...request.body}
+    ServiciosExtraWS.newServicioExtra(ServiciosExtras).then(result => {
+        response.json(result[0]);
+    }, (err) => {
+        console.log(err.message);
+        response.json(err.message)
+    });
+});
 
+///Servicios extras
 var portcnx = process.env.PORT || 4000;
 app.listen(portcnx);
 console.log('fin de consulta')
