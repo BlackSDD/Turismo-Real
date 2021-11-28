@@ -1,7 +1,9 @@
 const cnx = {
     user: 'TurismoReal1',
     password: '1234',
-    server : 'MATITA-PC',
+
+    server : 'DESKTOP-CAJFOG6',
+
     database: 'TurismoReal',
     options: {
         encrypt: true, // for azure
@@ -11,4 +13,5 @@ const cnx = {
 
 module.exports = cnx;
 
-// server : 'MATITA-PC'
+// server matias: 'MATITA-PC'
+// server cristian: 'MATITA-PC'
