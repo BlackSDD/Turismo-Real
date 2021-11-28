@@ -10,7 +10,6 @@
     left: 0;
     width: 100%;
     z-index: 10;
-    /* max-height: 300px; */
 }
 
 .footer-bottom{
@@ -18,17 +17,13 @@
     padding-bottom: 8px;
 }
 
-
 #h4-footer{
     font-weight: bold;    
 }
 
 
 #equipo{
-    font-size: 20px;
     text-align: center;
-    /* @media screen 100px {        
-    } */
 }
 
 #equipo{
@@ -39,6 +34,7 @@
     list-style-type:none;
     /* list-style-position: inside; */
     text-align: left;
+    padding-right: 1px;
     /* font-size: 15px; */
 }
 
@@ -46,7 +42,6 @@
     list-style-type:none;
     /* list-style-position: inside; */
     text-align: left;
-    font-size: 20px;
 }
 
 #container-footer{

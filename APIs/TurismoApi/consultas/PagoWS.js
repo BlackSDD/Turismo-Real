@@ -30,7 +30,22 @@ async function NewPago(Pago){
     }
 }
 
+async function getMontoPago(id_rva){
+    try{
+        let pool = await sql.connect(cnx);
+        let salida = await pool.request()
+            .input("id_rva", sql.Int, id_rva)
+            .query('select dbo.fn_monto_pago(@id_rva) as Pagar');
+        console.log(salida.recordsets);
+        return salida.recordsets;
+    } 
+    catch(err){
+        console.log(err);
+    }
+}
+
 module.exports = {
     getPago: getPago,
-    NewPago: NewPago
+    NewPago: NewPago,
+    getMontoPago: getMontoPago
 }

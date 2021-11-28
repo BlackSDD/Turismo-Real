@@ -18,9 +18,6 @@ async function getArticulos(){
     }
 }
 
-
-
-
 //lista 1 articulo
 async function getArticulo(id_arti){
     try{

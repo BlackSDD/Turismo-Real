@@ -1032,7 +1032,6 @@ create or alter procedure pd_agregarUsr
 	@tel_usr INT,
 	@rut_usr INT,
 	@dv_usr char(1),
-	@cant_res INT,
 	@est_cta NVARCHAR(20),
 	@tipo_cli NVARCHAR(25),
     @id_tipo_usr INT
@@ -1050,7 +1049,7 @@ begin
 	@tel_usr ,
 	@rut_usr ,
 	@dv_usr ,
-	@cant_res,
+	0,
 	@est_cta ,
 	@tipo_cli ,
     @id_tipo_usr
