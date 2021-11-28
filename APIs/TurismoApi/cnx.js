@@ -14,4 +14,4 @@ const cnx = {
 module.exports = cnx;
 
 // server matias: 'MATITA-PC'
-// server cristian: 'MATITA-PC'
+// server cristian: 'DESKTOP-CAJFOG6'
