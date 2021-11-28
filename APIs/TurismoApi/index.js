@@ -177,6 +177,13 @@ router.route('/conducto').get((request, response) => {
 });
 
 
+///listar TipoUsuario
+router.route('/tipousr').get((request, response) => {
+    ExtrasWS.getTipo().then(result =>{
+        response.json(result[0]);
+    });
+});
+
 
 
 ////////////////COMUNA/////////////////////

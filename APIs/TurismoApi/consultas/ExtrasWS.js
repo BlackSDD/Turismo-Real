@@ -59,9 +59,25 @@ async function getConductor(){
 }
 
 
+async function getTipo(){
+    try{
+        let pool = await sql.connect(cnx);
+        let salida = await pool.request().query('SELECT *  FROM [TurismoReal].[dbo].[tipo_usuario]');
+        return salida.recordsets;
+        
+    } 
+    catch(err){
+        console.log(err);
+    }
+
+}
+
+
+
 module.exports = {
     getMarca: getMarca,
     getModelo: getModelo,
     getVehiculo: getVehiculo,
-    getConductor: getConductor
+    getConductor: getConductor,
+    getTipo: getTipo,
 }

@@ -14,6 +14,18 @@ import Test from './components/test';
 import Footer from './components/Layouts/Footer';
 import Navbar  from './components/Layouts/Navbar';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+////////////////Articulo
+import ArticuloList from './components/Views/Articulo/ArticuloList';
+import ArticuloNew  from './components/Views/Articulo/ArticuloNew';
+import ArticuloEdi from './components/Views/Articulo/ArticuloEdi';
+////////////////Agencia
+import AgenciaExternaList from './components/Views/AgenciaExterna/AgenciaExternaList';
+import AgenciaExternaNew  from './components/Views/AgenciaExterna/AgenciaExternaNew';
+import AgenciaExternaEdi from './components/Views/AgenciaExterna/AgenciaExternaEdi';
+////////////////Usuario
+import UsuarioList from './components/Views/Usuario/UsuarioList';
+import UsuarioNew  from './components/Views/Usuario/UsuarioNew';
+import UsuarioEdi from './components/Views/Usuario/UsuarioEdi';
 
 
 function App() {
@@ -30,10 +42,21 @@ function App() {
             <Route path="/Comuna" exact render ={ props=> ( <Comuna {...props} />)}></Route>
             <Route path="/Comuna/EDIT" exact render ={ props=> ( <ComunaEdi {...props} />)}></Route>
             <Route path="/departamento" exact render={props => (<Departamento {...props}/>)}></Route>
-            <Route path="/articulo" exact render={props => (<Articulo {...props}/>)}></Route>
             <Route path="/agencia" exact render={props => (<AgenciaExterna   {...props}/>)}></Route>
     {/* ListarRoutes */}
             <Route path="/listarComuna" exact render ={ props=> ( <ComunaWS {...props} />)}></Route>
+    {/* Articulo */}
+            <Route path="/ArticuloList" exact render ={ props=> ( <ArticuloList {...props} />)}></Route>
+            <Route path="/ArticuloNew" exact render ={ props=> ( <ArticuloNew {...props} />)}></Route>
+            <Route path="/ArticuloEdi" exact render ={ props=> ( <ArticuloEdi {...props} />)}></Route>   
+    {/* Agencia */}
+            <Route path="/AgenciaExternaList" exact render ={ props=> ( <AgenciaExternaList {...props} />)}></Route>
+            <Route path="/AgenciaExternaNew" exact render ={ props=> ( <AgenciaExternaNew {...props} />)}></Route>
+            <Route path="/AgenciaExternaEdi" exact render ={ props=> ( <AgenciaExternaEdi {...props} />)}></Route>
+    {/* Agencia */}
+            <Route path="/UsuarioList" exact render ={ props=> ( <UsuarioList {...props} />)}></Route>
+            <Route path="/UsuarioNew" exact render ={ props=> ( <UsuarioNew {...props} />)}></Route>
+            <Route path="/UsuarioEdi" exact render ={ props=> ( <UsuarioEdi {...props} />)}></Route>                                
           </Switch>
           <Footer/>  
       </Router>
