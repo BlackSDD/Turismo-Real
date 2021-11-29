@@ -48,19 +48,19 @@ export default class ReservaMantencionList extends Component {
                                           Fecha:  {art.fec_rmant}
                                         </p>
                                         <p>
-                                          Estado:  {art.cant_arti}
+                                          Estado:  {art.est_man}
                                         </p>                  
                                         </div>
                                 </div>
                         ))
                     }
 
-                            <Link to={"/ArticuloNew"} className="btn btn-secondary">
-                                <i className="material-icons">INGRESAR ARTICULO</i>
+                            <Link to={"/ReservaMantencionNew"} className="btn btn-secondary">
+                                <i className="material-icons">INGRESAR RESERVA</i>
                             </Link>
                             
-                            <Link to={"/ArticuloEdi"} className="btn btn-secondary">
-                                <i className="material-icons"> EDITAR ARTICULO</i>
+                            <Link to={"/ReservaMantencionEdi"} className="btn btn-secondary">
+                                <i className="material-icons"> EDITAR RESERVA</i>
                             </Link>
                     </div>
                 </div>

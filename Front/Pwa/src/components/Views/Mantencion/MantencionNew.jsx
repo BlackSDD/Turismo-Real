@@ -23,13 +23,14 @@ const notifyE = () =>{
     });
 };
 
-export default class ReservaMantencionEdi extends Component{
+export default class ReservaMantencionNew extends Component{
 
     state ={
         id_rmant: '',
-        fec_rmant: '',
-    }
+        cost_mant: '',
+        deta_mant: '',
 
+    }
 
 
 
@@ -37,16 +38,18 @@ export default class ReservaMantencionEdi extends Component{
         e.preventDefault();
         const answer = window.confirm("¿Confirmar creación de este articulo?");
             const newComuna = {
-                
                 id_rmant: this.state.id_rmant,
-                fec_rmant: this.state.fec_rmant,
+                cost_mant: this.state.cost_mant,
+                deta_mant: this.state.deta_mant,
+                
             };
             if (answer){
-            axios.put('http://localhost:4000/API/reservaMantencion', newComuna);
+            axios.post('http://localhost:4000/API/Mantencion', newComuna);
             notifyS();
             this.setState({
-                id_rmant: " ",
-                fec_rmant: " ",
+                fec_rmant: "",
+                id_usr: "",
+                id_dpto: "",
             });
             // window.location.assign("http://localhost:3000/listarcomuna");
         } else {
@@ -65,18 +68,22 @@ export default class ReservaMantencionEdi extends Component{
             <React.Fragment>
                 <div id="admin-background">
                     <div class="container">
-                        <h1 id="create-comuna-title">Modifucar Articulo</h1>
+                        <h1 id="create-comuna-title">Ingresar Articulo</h1>
                         <div id="create-comuna-form">
                             <Form className="contact-form" onSubmit={this.handleSubmit}>
                                 <Form.Group className="mb-3" controlId="Articulo">
-                                    <Form.Label>Ingrese la id de su reserva</Form.Label>
-                                    <Form.Control as="textarea" name="id_rmant" placeholder= "id de reserva" rows={1} value={this.state.id_rmant} required onChange={this.onInputChange}/>
+                                    <Form.Label>Codigo de Reserva</Form.Label>
+                                    <Form.Control type="number" name="id_rmant" placeholder= "id_reserva" rows={1} value={this.state.id_rmant} required onChange={this.onInputChange}/>
                                 </Form.Group>
                                 <Form.Group className="mb-3" controlId="Articulo">
-                                    <Form.Label>Ingrese la cantidad de objetos</Form.Label>
-                                    <Form.Control type="date" name="fec_rmant" rows={1} value={this.state.fec_rmant} required onChange={this.onInputChange}/>
+                                    <Form.Label>Costo de Mantencion</Form.Label>
+                                    <Form.Control type="number" name="cost_mant" placeholder= "costo" rows={1} value={this.state.contr_usr} required onChange={this.onInputChange}/>
                                 </Form.Group>
-                                <button type="submit" class="btn btn-primary" id="btnCreateComuna">Cambiar Articulo</button>
+                                <Form.Group className="mb-3" controlId="Articulo">
+                                    <Form.Label>Descripcion de mantencion</Form.Label>
+                                    <Form.Control as="textarea" name="deta_mant" placeholder= "detalle" rows={1} value={this.state.deta_mant} required onChange={this.onInputChange}/>
+                                </Form.Group>
+                                <button type="submit" class="btn btn-primary" id="btnCreateComuna">Agregar Mantencion</button>
                             </Form>
                         </div>
                     </div>        

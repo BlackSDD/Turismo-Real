@@ -32,6 +32,14 @@ import AgenciaExternaEdi from './components/Views/AgenciaExterna/AgenciaExternaE
 import UsuarioList from './components/Views/Usuario/UsuarioList';
 import UsuarioNew  from './components/Views/Usuario/UsuarioNew';
 import UsuarioEdi from './components/Views/Usuario/UsuarioEdi';
+////////////////ReservaMantencion
+import ReservaMantencionList from './components/Views/ReservaMantencion/ReservaMantencionList';
+import ReservaMantencionNew  from './components/Views/ReservaMantencion/ReservaMantencionNew';
+import ReservaMantencionEdi from './components/Views/ReservaMantencion/ReservaMantencionEdi';
+////////////////Mantencion
+import MantencionList from './components/Views/Mantencion/MantencionList';
+import MantencionNew  from './components/Views/Mantencion/MantencionNew';
+import MantencionEdi from './components/Views/Mantencion/MantencionEdi';
 
 
 function App() {
@@ -62,10 +70,18 @@ function App() {
             <Route path="/AgenciaExternaList" exact render ={ props=> ( <AgenciaExternaList {...props} />)}></Route>
             <Route path="/AgenciaExternaNew" exact render ={ props=> ( <AgenciaExternaNew {...props} />)}></Route>
             <Route path="/AgenciaExternaEdi" exact render ={ props=> ( <AgenciaExternaEdi {...props} />)}></Route>
-    {/* Agencia */}
+    {/* Usuario */}
             <Route path="/UsuarioList" exact render ={ props=> ( <UsuarioList {...props} />)}></Route>
             <Route path="/UsuarioNew" exact render ={ props=> ( <UsuarioNew {...props} />)}></Route>
-            <Route path="/UsuarioEdi" exact render ={ props=> ( <UsuarioEdi {...props} />)}></Route>                                
+            <Route path="/UsuarioEdi" exact render ={ props=> ( <UsuarioEdi {...props} />)}></Route>
+    {/* ReservaMantencion */}
+            <Route path="/ReservaMantencionList" exact render ={ props=> ( <ReservaMantencionList {...props} />)}></Route>
+            <Route path="/ReservaMantencionNew" exact render ={ props=> ( <ReservaMantencionNew {...props} />)}></Route>
+            <Route path="/ReservaMantencionEdi" exact render ={ props=> ( <ReservaMantencionEdi {...props} />)}></Route>     
+    {/* ReservaMantencion */}
+            <Route path="/MantencionList" exact render ={ props=> ( <MantencionList {...props} />)}></Route>
+            <Route path="/MantencionNew" exact render ={ props=> ( <MantencionNew {...props} />)}></Route>
+            <Route path="/MantencionEdi" exact render ={ props=> ( <MantencionEdi {...props} />)}></Route>                                                       
           </Switch>
           <Footer/>  
       </Router>
