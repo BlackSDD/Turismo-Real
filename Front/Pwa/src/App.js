@@ -1,6 +1,13 @@
 import React from 'react';
 import './assetss/css/App.css';
 import "bootstrap/dist/css/bootstrap.css";
+
+/////Test
+import Test from './components/test';
+import Test2 from './components/test2';
+
+import ConfirmPago from './components/confirmPago';
+
 import Login from './components/Login';
 import Home from './components/Home';
 import Comuna from './components/Views/Post/Comuna';
@@ -10,7 +17,6 @@ import Articulo from './components/Views/Post/RegistrarArticulo';
 import AgenciaExterna from './components/Views/Post/AgenciaExterna';
 import ComunaWS from './components/Views/Get/ListarComunas';
 import ComunaEdi from './components/Views/put/Comuna';
-import Test from './components/test';
 import Footer from './components/Layouts/Footer';
 import Navbar  from './components/Layouts/Navbar';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
@@ -34,9 +40,12 @@ function App() {
       <Router>
         <Navbar/>
           <Switch>
-          <Route path="/home" exact render ={ props=> ( <Home {...props} />)}></Route>
+          <Route path="/" exact render ={ props=> ( <Home {...props} />)}></Route>
           <Route path="/login" exact render ={ props=> ( <Login {...props} />)}></Route>  
           <Route path="/test" exact render ={ props=> ( <Test {...props} />)}></Route>     
+          <Route path="/test2" exact render ={ props=> ( <Test2 {...props} />)}></Route>     
+          <Route path="/confirmPago/:pago/:reserva" exact render ={ props=> ( <ConfirmPago {...props} />)}></Route>     
+
     {/* PostRoutes--------- */}
             <Route path="/condominio" exact render={props => (<Condominio {...props}/>)}></Route>
             <Route path="/Comuna" exact render ={ props=> ( <Comuna {...props} />)}></Route>

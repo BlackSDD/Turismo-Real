@@ -72,7 +72,6 @@ function Footer() {
                     </div>
                 </div>
             </div>
-            
             <hr></hr>
             <div className="footer-bottom">
                 <p className="text-center"> &copy; {new Date().getFullYear()} Turimdo Real App</p>

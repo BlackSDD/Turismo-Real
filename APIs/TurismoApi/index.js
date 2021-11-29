@@ -64,7 +64,6 @@ var cors = require('cors');
 const { request, response } = require('express');
 const ServiciosExtras = require('./constructores/ServiciosExtra');
 
-
 var app = express();
 var router = express.Router();
 
@@ -72,6 +71,14 @@ app.use(bodyP.urlencoded({extended: true}));
 app.use(bodyP.json());
 app.use(cors());
 app.use('/API', router);
+
+///// Paypal /////
+
+router.route('/paypal').get((request, response) =>{
+    Paypal.generarTokenPaypal().then(result =>{
+        response.json(result[t0]);
+    });
+});
 
 
 ////////////////AGENCIA EXTERNA/////////////////////
@@ -82,8 +89,6 @@ router.route('/agencia').get((request, response) => {
         response.json(result[0]);
     });
 });
-
-
 
 //listar 1 agencia
 
@@ -589,7 +594,7 @@ router.route('/pago').post((request, response) => {
     let Pago = {...request.body}
     PagoWS.NewPago(Pago).then(result => {
         response.json(result[0]);
-    console.log('Se a registrado el pago')
+    console.log('Se ha registrado el pago')
     }, (err) => {
         console.log(err.message);
         response.json(err.message)

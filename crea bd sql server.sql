@@ -312,11 +312,17 @@ ALTER TABLE comuna
     ADD CONSTRAINT comuna_region_fk FOREIGN KEY ( id_rgn )
         REFERENCES region ( id_rgn );
 
+alter table comuna 
+    add CONSTRAINT comuna_unique unique (nom_com);
+
 ALTER TABLE condominio ADD CONSTRAINT condominio_pk PRIMARY KEY ( id_cnd );
 
 ALTER TABLE condominio
     ADD CONSTRAINT condominio_comuna_fk FOREIGN KEY ( id_com )
         REFERENCES comuna ( id_com );
+
+alter table condominio 
+    add CONSTRAINT condominio_unique unique (nom_cnd);
 
 ALTER TABLE departamento ADD CONSTRAINT departamento_pk PRIMARY KEY ( id_dpto );
 
