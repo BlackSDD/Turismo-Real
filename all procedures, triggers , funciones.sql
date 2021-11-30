@@ -942,7 +942,7 @@ go
 
 --TABLA PAGO
 
-
+-- Se usa para agrear un monto de pago -> ingresar un monto que se pagó
 create or alter procedure pd_agregarPago
 (
 	@id_rva INT,

@@ -33,6 +33,10 @@ const Mantencion = require('./constructores/Mantencion');
 //RESERVA MANTENCION
 const ResMantencionSW = require('./consultas/ResMantencionWS');
 const ResMantencion = require('./constructores/ResMantencion')
+
+// Disponibilidad
+const DisponibilidadWS = require('./consultas/DisponibilidadWS');
+
 //GATOS
 const GastosWS = require('./consultas/GastosWS');
 const Gastos = require('./constructores/Gastos')
@@ -64,7 +68,6 @@ var cors = require('cors');
 const { request, response } = require('express');
 const ServiciosExtras = require('./constructores/ServiciosExtra');
 
-
 var app = express();
 var router = express.Router();
 
@@ -72,6 +75,14 @@ app.use(bodyP.urlencoded({extended: true}));
 app.use(bodyP.json());
 app.use(cors());
 app.use('/API', router);
+
+///// Paypal /////
+
+router.route('/paypal').get((request, response) =>{
+    Paypal.generarTokenPaypal().then(result =>{
+        response.json(result[t0]);
+    });
+});
 
 
 ////////////////AGENCIA EXTERNA/////////////////////
@@ -82,8 +93,6 @@ router.route('/agencia').get((request, response) => {
         response.json(result[0]);
     });
 });
-
-
 
 //listar 1 agencia
 
@@ -482,6 +491,15 @@ router.route('/departamento/reg/:nom_rgn').get((request, response) => {
     });
 });
 
+
+/////////////// Disponibilidad ///////////////
+router.route('/disponibilidad/:id_dpto').get((request, response) => {
+    DisponibilidadWS.getDisponibilidad(request.params.id_dpto).then(result =>{
+            response.json(result[0]);
+    });
+});
+
+
 //////////GASTOS//////////////
 ///Listar Gastos
 router.route('/gastos').get((request, response) => {
@@ -589,7 +607,7 @@ router.route('/pago').post((request, response) => {
     let Pago = {...request.body}
     PagoWS.NewPago(Pago).then(result => {
         response.json(result[0]);
-    console.log('Se a registrado el pago')
+    console.log('Se ha registrado el pago')
     }, (err) => {
         console.log(err.message);
         response.json(err.message)
@@ -658,6 +676,13 @@ router.route('/reservaMantencion').put((request, response) => {
 ///Listar reservas
 router.route('/reserva').get((request, response) => {
     ReservaWS.getReservas().then(result =>{
+        response.json(result[0]);
+    });
+});
+
+//// Get reserva por id
+router.route('/reserva/:id_rva').get((request, response) => {
+    ReservaWS.getReservaId(request.params.id_rva).then(result =>{
         response.json(result[0]);
     });
 });
