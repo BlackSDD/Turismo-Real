@@ -1,5 +1,7 @@
 console.log('inicio')
 
+///Informes////
+const InformesWS = require('./consultas/InformesWS');
 /////Departamento
 const DepartamentoWS = require('./consultas/DepartamentoWS');
 const Departamento = require('./constructores/Departamento');
@@ -29,14 +31,11 @@ const ContratarServicio = require('./constructores/ContratarServicio');
 ///MANTENCION   
 const MantencionSW = require('./consultas/MantencionWS');
 const Mantencion = require('./constructores/Mantencion');
-
 //RESERVA MANTENCION
 const ResMantencionSW = require('./consultas/ResMantencionWS');
 const ResMantencion = require('./constructores/ResMantencion')
-
 // Disponibilidad
 const DisponibilidadWS = require('./consultas/DisponibilidadWS');
-
 //GATOS
 const GastosWS = require('./consultas/GastosWS');
 const Gastos = require('./constructores/Gastos')
@@ -67,6 +66,7 @@ var bodyP = require('body-parser');
 var cors = require('cors');
 const { request, response } = require('express');
 const ServiciosExtras = require('./constructores/ServiciosExtra');
+const { get } = require('request');
 
 var app = express();
 var router = express.Router();
@@ -923,7 +923,32 @@ router.route('/tipousr').get((request, response) => {
     });
 });
 
-//////////////////////////////////////////////////////////////////////////////
+//////// INFORMES
+
+/////////////////////////INFORME RESERVAS DETALLADO////////////////////////////////////////
+router.route('/informeResDet/:id_reserva').get((request, response) => {
+    InformesWS.getInformeReservaDet(request.params.id_reserva).then(result =>{
+        response.json(result[0]);
+    });
+});
+
+router.route('/informeResDetServ/:id_reserva').get((request, response) => {
+    InformesWS.getInformeReservaDetServ(request.params.id_reserva).then(result =>{
+        response.json(result[0]);
+    });
+});
+
+//////////////////////////INFORME RESERVAS GENERAL////////////////////////////////////////////////////
+
+router.route('/informeResGen/:agno').get((request, response) => {
+    InformesWS.getInformeReservaGen(request.params.agno).then(result =>{
+        response.json(result[0]);
+    });
+});
+
+//////////////////////////INFORME RESERVAS GENERAL////////////////////////////////////////////////////
+
+
 var portcnx = process.env.PORT || 4000;
 app.listen(portcnx);
 console.log('fin de consulta')

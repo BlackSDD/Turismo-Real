@@ -1,5 +1,8 @@
 -- informe general de reservas
 -- requiere un año para consultar las reservas 
+CREATE OR ALTER PROCEDURE pd_informe_reserva_gen(@agno int)
+as
+begin
 select
         concat(c.nom_cnd , ' '  , d.num_dpto) as "Departamento",
         concat(u.nom_usr , ' ' , u.appat_usr , ' ' , u.apmat_usr) as "Cliente",
@@ -13,45 +16,64 @@ select
         on d.id_cnd = c.id_cnd
     where r.estado_rva != 'cancelada' 
         and year(r.fec_ini_rva) = @agno
-    order by "Departamento";
-
-
+    order by  "Fecha", "Departamento";
+end;
+go
 ----------------------------------------------------------------------
 
 -- Informe de reservas detallado 
 -- requiere la id de la reserva (traida desde una lista en la interfaz)
 
-select
-        DISTINCT(r.id_rva) as "Id reserva",
-        concat(c.nom_cnd , ' '  , d.num_dpto) as "Departamento",
-        concat(u.nom_usr , ' ' , u.appat_usr , ' ' , u.apmat_usr) as "Cliente",
-        r.estado_rva as "Estado reserva",
-        concat(convert(varchar,r.fec_ini_rva,103) , ' - ' , convert(varchar,r.fec_fin_rva,103)) as "Fecha Reserva",
-        concat('$',p.monto_total) as "Costo total",
-        concat('$',p.monto_arr) as "Costo arriendo",
-        concat('$',p.monto_serv_extra) as "Costo servicios extra",
-        concat('$',p.monto_multas)as "Costo Multas",
-        concat('$',p.monto_pagado) as "Monto Pagado",
-        isnull(ckin.deta_chi,'Check-in todavia no registrado') as "Detalle check-in",
-        isnull(ckout.deta_cho,'Check-out todavia no registrado') as "Detalle check-in"
-    from reserva r join usuario u
-        on u.id_usr = r.id_usr
-    left join checkin ckin
-        on r.id_rva = ckin.id_rva
-    left join checkout ckout
-        on r.id_rva = ckout.id_rva
-    join departamento d 
-        on r.id_dpto = d.id_dpto
-    join condominio c
-        on d.id_cnd = c.id_cnd
-    join pago p
-    on r.id_rva = p.id_rva
-    -- @id_reserva es la que se solicita al "usuario" / sistema        
-    where r.id_rva = @id_reserva
-    order by "Departamento";
+screate or alter procedure pd_informe_reserva_det(@id_reserva int)
+as
 
--- Select que trae todos los contratos de servicio te la reserva detallada
--- Se usa en conjunto con el selec anterior
+begin
+	select
+			DISTINCT(r.id_rva) as "Id reserva",
+			concat(c.nom_cnd , ' '  , d.num_dpto) as "Departamento",
+			concat(u.nom_usr , ' ' , u.appat_usr , ' ' , u.apmat_usr) as "Cliente",
+			r.estado_rva as "Estado reserva",
+			concat(convert(varchar,r.fec_ini_rva,103) , ' - ' , convert(varchar,r.fec_fin_rva,103)) as "Fecha Reserva",
+			concat('$',p.monto_total) as "Costo total",
+			concat('$',p.monto_arr) as "Costo arriendo",
+			concat('$',p.monto_serv_extra) as "Costo servicios extra",
+			concat('$',p.monto_multas)as "Costo Multas",
+			concat('$',p.monto_pagado) as "Monto Pagado",
+			isnull(ckin.deta_chi,'Check-in todavia no registrado') as "Detalle check-in",
+			isnull(ckout.deta_cho,'Check-out todavia no registrado') as "Detalle check-in"
+		from reserva r join usuario u
+			on u.id_usr = r.id_usr
+		left join checkin ckin
+			on r.id_rva = ckin.id_rva
+		left join checkout ckout
+			on r.id_rva = ckout.id_rva
+		join departamento d 
+			on r.id_dpto = d.id_dpto
+		join condominio c
+			on d.id_cnd = c.id_cnd
+		join pago p
+		on r.id_rva = p.id_rva
+		-- @id_reserva es la que se solicita al "usuario" / sistema        
+		where r.id_rva = @id_reserva
+		order by "Departamento";
+		select 
+        s.nom_serv as "Nombre del servicio",
+        c.deta_cont as "Detalle del servicio",
+        convert(varchar,c.fec_cont,103) as "Fecha de contratación",
+        concat(convert(varchar,c.fec_acord,103), ' ', convert(varchar,c.hora_acord,103)) as "Fecha realización de servicio", 
+        concat('$',c.costo_total) as "Costo servicio extra"
+    from cont_serv c left join servextras s
+        on c.id_serv = s.id_serv
+    -- @id_reserva es la que se solicita al "usuario" / sistema     
+    where c.id_rva = @id_reserva
+    order by "Fecha realización de servicio";
+end;
+go
+
+---- trae el detalle de los servicios contratados, se usan en conjunto
+create or alter procedure pd_informe_reserva_det_serv(@id_reserva int)
+as
+begin
 select 
         s.nom_serv as "Nombre del servicio",
         c.deta_cont as "Detalle del servicio",
@@ -63,7 +85,8 @@ select
     -- @id_reserva es la que se solicita al "usuario" / sistema     
     where c.id_rva = @id_reserva
     order by "Fecha realización de servicio";
-
+end;
+go
 
 
 

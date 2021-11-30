@@ -19,11 +19,10 @@ function PaypalCheckout({precio, id_rva}) {
             }]
         });
     };
-    const onApprove = (data, actions) => {
-        return actions.order.capture(handlePay(data, precio));
-    };
 
-    
+    const onApprove = (data, actions) => {
+        return actions.order.capture(handlePay());
+    };
 
     function handlePay(e){
         console.log("Pago recibido")

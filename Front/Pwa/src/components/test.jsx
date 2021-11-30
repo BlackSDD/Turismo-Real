@@ -5,7 +5,6 @@ import React, { useState, Component } from 'react';
 import MyNotify from './Layouts/mynotify';
 import PaypalCheckout from './Layouts/PaypalCheckout';
 import axios from 'axios';
-import { Link, Redirect } from 'react-router-dom';
 
 
 export default class Test extends Component{

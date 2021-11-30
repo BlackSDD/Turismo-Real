@@ -52,7 +52,7 @@ function App() {
           <Route path="/login" exact render ={ props=> ( <Login {...props} />)}></Route>  
           <Route path="/test" exact render ={ props=> ( <Test {...props} />)}></Route>     
           <Route path="/test2" exact render ={ props=> ( <Test2 {...props} />)}></Route>     
-          <Route path="/confirmPago/:reserva" exact render ={ props=> ( <ConfirmPago {...props} />)}></Route>     
+          <Route path="/confirmPago/:id_rva" exact render ={ props=> ( <ConfirmPago {...props} />)}></Route>     
 
     {/* PostRoutes--------- */}
             <Route path="/condominio" exact render={props => (<Condominio {...props}/>)}></Route>
