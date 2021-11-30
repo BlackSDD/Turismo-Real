@@ -80,15 +80,15 @@ app.use('/API', router);
 //////USUARIO
 
 
-// router.route('/usuario').post((request, response) => {
-//     let Usuario = {...request.body}
-//     UsuarioWS.getUsuari(Usuario).then(result => {
-//         response.json(result[0]);
-//     }, (err) => {
-//         console.log(err.message);
-//         response.json(err.message)
-//     });
-// });
+router.route('/usuarioAutenticar').post((request, response) => {
+    let Usuario = {...request.body}
+    UsuarioWS.getUsuarioAutenticar(Usuario).then(result => {
+        response.json(result[0]);
+    }, (err) => {
+        console.log(err.message);
+        response.json(err.message)
+    });
+});
 
 router.route('/usuario').post((request, response) => {
     let Usuario = {...request.body}
