@@ -5,12 +5,12 @@ import {useParams, withRouter, useLocation} from 'react-router-dom';
 
 const ConfirmPago = () => {
 
-    const useQuery = () => new URLSearchParams(useLocation().search);
+    // const useQuery = () => new URLSearchParams(useLocation().search);
 
-    const query = useQuery();
-    const id_rva = query.get('id_rva');
+    // const query = useQuery();
+    // const id_rva = query.get(':id_rva');
 
-    // let {reserva} = useParams();
+    let {id_rva} = useParams();
     // console.log("id reserva", {reserva})
     
     const [informeR, setInformeR] = useState(null)
@@ -21,7 +21,7 @@ const ConfirmPago = () => {
         getInformeResServ(id_rva)
     },[])
 
-    const getInformeRes = async (id_rva) => {
+    const getInformeRes = async ({id_rva}) => {
         const res = await axios.get('http://localhost:4000/API/informeResDet/' + id_rva);
         setInformeR({
             informeRes: res.data
@@ -34,8 +34,10 @@ const ConfirmPago = () => {
             informeCont: res.data
         });
     }
+    console.log(id_rva);
 
     return (
+        
         <div className="container justify-content-center align-items-center">
             <h1>Pago confirmado</h1>
             {/* <p>Id reserva: {id_rva}</p> */}
