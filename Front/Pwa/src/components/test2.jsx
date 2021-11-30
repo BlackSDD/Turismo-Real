@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {  useHistory} from "react-router-dom";
 
-function Test2(){
+const Test2 = () =>{
 
 
     let history = useHistory();
@@ -10,10 +10,31 @@ function Test2(){
       history.push("/");
     }
   
+    // https://mindicador.cl/api/dolar
+    const [valorDolar, setValorDolar] = useState([]);
+    const getDolar = async() =>{
+        const data = await fetch('https://mindicador.cl/api/dolar')
+        const valorD = await data.json()
+        setValorDolar(valorD)
+    }
+    useEffect(()=> {
+        getDolar()
+    },[])
+    console.log({valorDolar})
+        
+
     return (
-      <button type="button" onClick={handleClick}>
-        Go home
-      </button>
+        <div>
+            {
+                valorDolar.dolar.map(e =>(
+                    <li key={e.fecha}>{e.valor}</li>
+                ))
+            }
+            <button type="button" onClick={handleClick}>
+                Go home
+            </button>
+        </div>
+        
     );
 
 }

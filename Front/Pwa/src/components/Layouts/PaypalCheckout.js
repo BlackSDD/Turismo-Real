@@ -37,16 +37,28 @@ function PaypalCheckout ({precio, id_rva}) {
     }
     
     const [informeR, setInformeR] = useState([])
-    const [count, setCount] = useState(false);
-
+    const [count, setCount] = useState(false);    
     const state = {
         informereserva: []
     }
 
     
+    // https://mindicador.cl/api/dolar
+    const [valorDolar, setValorDolar] = useState([]);
+    const getDolar = async() =>{
+        const data = await fetch('https://mindicador.cl/api/dolar')
+        const valorD = await data.json()
+        setValorDolar(valorD)
+    }
+    useEffect(()=> {
+        getDolar()
+    },[])
+    console.log({valorDolar})
+        
+        
 
     const getInformeRes = async (id) => {
-        const res = await axios.get('http://localhost:4000/API/informeResDet/', { id } )
+        const res = await axios.get('http://localhost:4000/API/informeResDet/', { params: id } )
         const inR = await JSON.parse(res.data) 
         setInformeR({inR})
         this.state({
@@ -56,6 +68,7 @@ function PaypalCheckout ({precio, id_rva}) {
 
     console.log({informeR})
     console.log({state})
+    
 
     if(count===false){
         return( 
