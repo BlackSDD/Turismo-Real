@@ -40,6 +40,14 @@ import ReservaMantencionEdi from './components/Views/ReservaMantencion/ReservaMa
 import MantencionList from './components/Views/Mantencion/MantencionList';
 import MantencionNew  from './components/Views/Mantencion/MantencionNew';
 import MantencionEdi from './components/Views/Mantencion/MantencionEdi';
+////////////////Servicio Extra
+import ServicioExtraList from './components/Views/ServicioExtra/ServicioExtraList';
+import ServicioExtraNew  from './components/Views/ServicioExtra/ServicioExtraNew';
+////////////////Tour
+import TourList from './components/Views/Tour/TourList';
+import TourNew  from './components/Views/Tour/TourNew';
+import TourEdi  from './components/Views/Tour/TourEdi';
+
 
 
 function App() {
@@ -81,7 +89,14 @@ function App() {
     {/* ReservaMantencion */}
             <Route path="/MantencionList" exact render ={ props=> ( <MantencionList {...props} />)}></Route>
             <Route path="/MantencionNew" exact render ={ props=> ( <MantencionNew {...props} />)}></Route>
-            <Route path="/MantencionEdi" exact render ={ props=> ( <MantencionEdi {...props} />)}></Route>                                                       
+            <Route path="/MantencionEdi" exact render ={ props=> ( <MantencionEdi {...props} />)}></Route>       
+    {/* ReservaMantencion */}
+            <Route path="/ServicioExtraList" exact render ={ props=> ( <ServicioExtraList {...props} />)}></Route>
+            <Route path="/ServicioExtraNew" exact render ={ props=> ( <ServicioExtraNew {...props} />)}></Route>
+    {/* ReservaMantencion */}
+            <Route path="/TourList" exact render ={ props=> ( <TourList {...props} />)}></Route>
+            <Route path="/TourNew" exact render ={ props=> ( <TourNew {...props} />)}></Route> 
+            <Route path="/TourEdi" exact render ={ props=> ( <TourEdi {...props} />)}></Route>                                                                                         
           </Switch>
           <Footer/>  
       </Router>
