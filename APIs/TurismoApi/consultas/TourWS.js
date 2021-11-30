@@ -22,7 +22,7 @@ async function NewTour(Tour){
     try{
         let pool = await sql.connect(cnx);
         let newTour = await pool.request()
-            .input('id_serv', sql.Int , Tour.dir_dpto)
+            .input('id_serv', sql.Int , Tour.id_serv)
             .input('dur_hra', sql.Int , Tour.dur_hra)
             .input('dur_min', sql.Int , Tour.dur_min)
             .input('cost_adult', sql.Int , Tour.cost_adult)
@@ -46,7 +46,7 @@ async function UpTour(Tour){
     try{
         let pool = await sql.connect(cnx);
         let upTour = await pool.request()
-        .input('id_serv', sql.Int , Tour.dir_dpto)
+        .input('id_serv', sql.Int , Tour.id_serv)
         .input('dur_hra', sql.Int , Tour.dur_hra)
         .input('dur_min', sql.Int , Tour.dur_min)
         .input('cost_adult', sql.Int , Tour.cost_adult)

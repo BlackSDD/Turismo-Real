@@ -74,6 +74,7 @@ begin
 					where id_serv = @id_serv);
     end;
 	set @costo = @km_rec * @km;
+	set @costo= CONVERT(INT,ROUND(@costo,0,0),0);
 	return @costo;
 end;
 go
@@ -941,7 +942,7 @@ go
 
 --TABLA PAGO
 
-
+-- Se usa para agrear un monto de pago -> ingresar un monto que se pagó
 create or alter procedure pd_agregarPago
 (
 	@id_rva INT,
@@ -1396,7 +1397,6 @@ create or alter procedure pd_agregarUsr
 	@tel_usr INT,
 	@rut_usr INT,
 	@dv_usr char(1),
-	@cant_res INT,
 	@est_cta NVARCHAR(20),
 	@tipo_cli NVARCHAR(25),
     @id_tipo_usr INT
@@ -1414,7 +1414,7 @@ begin
 	@tel_usr ,
 	@rut_usr ,
 	@dv_usr ,
-	@cant_res,
+	0,
 	@est_cta ,
 	@tipo_cli ,
     @id_tipo_usr
@@ -1425,7 +1425,8 @@ go
 -- Modificar
 create or alter procedure pd_modificarDatosUsr
 (
-	@id_usr INT,
+	@rut_usr INT,
+	@dv_usr CHAR,
 	@email_usr NVARCHAR(100),
 	@contr_usr NVARCHAR(50),
 	@tel_usr INT
@@ -1436,7 +1437,7 @@ begin
         email_usr = @email_usr, 
         contr_usr = @contr_usr, 
         tel_usr = @tel_usr
-	where id_usr = @id_usr;	
+	where rut_usr = @rut_usr and dv_usr = @dv_usr;		
 end;
 go
 

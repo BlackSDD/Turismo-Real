@@ -42,8 +42,8 @@ export default function Email() {
                         <Form.Label>Ingrese el mensaje a enviar</Form.Label>
                         <Form.Control as="textarea" name="mensaje" rows={2} required/>
                     </Form.Group>
-
-                    <button type="submit" class="btn btn-primary"> Enviar Mensaje</button>
+                    
+                    <button type="submit" className="btn btn-primary"> Enviar Mensaje</button>
                 </Form>
                 
         </div>

@@ -19,7 +19,7 @@ class NavBar extends Component {
                 <Navbar.Collapse>
 
                     <Nav>
-                        <Nav.Link href="/home"> Home </Nav.Link> 
+                        <Nav.Link href="/"> Home </Nav.Link> 
                         <Nav.Link href="/login"> Acceder </Nav.Link>
                     </Nav>
 

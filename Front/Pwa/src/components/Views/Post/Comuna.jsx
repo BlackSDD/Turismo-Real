@@ -42,18 +42,20 @@ export default class Comuna extends Component{
     handleSubmit = async (e) => {
         e.preventDefault();
         const answer = window.confirm("¿Confirmar creación de comuna?");
-            const newComuna = {
-                nom_com: this.state.nom_com,
-                id_rgn: this.state.id_rgn,
-            };
-            if (answer){
+        const newComuna = {
+            nom_com: this.state.nom_com,
+            id_rgn: this.state.id_rgn,
+        };
+        if(this.state.id_rgn ===""){
+            notifyE();
+        } 
+        if (answer && this.state.nom_com.length>2){
             axios.post('http://localhost:4000/API/comuna', newComuna);
             notifyS();
             this.setState({
                 nom_com: " ",
                 id_rgn: " "
-            });
-            // window.location.assign("http://localhost:3000/listarcomuna");
+        });
         } else {
             notifyE();
         }
@@ -62,12 +64,14 @@ export default class Comuna extends Component{
     onInputChange = (e) => {
         this.setState({[e.target.name]: e.target.value});
     }
-
+    
+        
     render(){
+        console.log(this.state);
         return (
             <React.Fragment>
                 <div id="admin-background">
-                    <div class="container">
+                    <div className="container">
                         <h1 id="create-comuna-title">Registrar Comuna</h1>
                         <div id="create-comuna-form">
                             <Form className="contact-form" onSubmit={this.handleSubmit}>
@@ -78,8 +82,12 @@ export default class Comuna extends Component{
                                 <Form.Group>
                                     <Form.Label>Ingrese la Región</Form.Label>
                                     <Form.Select  value={this.state.id_rgn} onChange={this.onInputChange} name="id_rgn" required>
-                                    {
+                                        <option value="">
+                                            Elige una region    
+                                        </option>
+                                    {   
                                         this.state.region.map(reg => (
+                                        
                                         <option key={reg.id_rgn} value={reg.id_rgn}>
                                             {reg.nom_rgn}
                                         </option>

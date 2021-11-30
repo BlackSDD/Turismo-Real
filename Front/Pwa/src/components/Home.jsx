@@ -6,7 +6,7 @@ import CarruselTaxi from './Layouts/carrusel-taxi';
 
 const MainAdmin = () => {
     return (
-        <div className="col-sm" id="homdeDiv">
+        <div className="col-md" id="homdeDiv">
             <div id="carrusel1" >
                 <Carrusel/>
             </div>

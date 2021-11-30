@@ -1,10 +1,10 @@
 #home-body{
     background-image: url("https://images.hdqwalls.com/wallpapers/city-lights-buildings-4k-og.jpg");
-    background-repeat: repeat;
+    background-repeat: no-repeat;
     background-size: 100% 100%;
     width: 100%;
     color: white;
-    position: relative;
+    /* position: relative; */
 }
 
 #homeContainer{
@@ -19,13 +19,11 @@
     padding: 0px;
 }
 
-
-
 #ul-home{
     list-style-type: circle white;
     list-style-position: inside;
     text-align: left;
-    font-size: 35px;
+    font-size: 130%;
     font-style: bolder;
 }
 
@@ -33,13 +31,9 @@
 #title-home-about{
     padding-top: 1%;
     padding-bottom: 3%;
+    text-shadow: 6px 4px 4px #638a89, 6px 4px 4px #638a89;
 }
 
-#title-home-sobre{
-    text-shadow: 6px 4px 4px #638a89, 6px 4px 4px #638a89;
-    font-size: 60px;
-    width: 100%;
-}
 
 #list{
     padding-top: 5px;
@@ -49,11 +43,7 @@
     margin-right: auto;
 }
 
-#carrusel1{
-    /* display: block; */
-    height: 600px;
-    z-index: -10;
-}
+
 
 #carruselS{
     /* max-height: 600px; */

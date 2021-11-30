@@ -1,6 +1,25 @@
 const cnx = require('../cnx');
 
 const sql = require('mssql');
+
+//Get reserva por id 
+
+async function getReservaId(id_rva){
+    try{
+        let pool = await sql.connect(cnx);
+        let salida = await pool.request()
+        .input("id_rva", sql.Int , id_rva)
+        .query('SELECT *  FROM reserva where id_rva = @id_rva');
+        console.log(salida.recordsets);
+        return salida.recordsets;
+        
+    } 
+    catch(err){
+        console.log(err);
+    }
+}
+
+
 //Listar todas las reservas
 async function getReservas(){
     try{
@@ -72,6 +91,7 @@ module.exports = {
     getReservas: getReservas,
     NewReserva: NewReserva,
     UpReserva: UpReserva,
-    UpCancelarReserva: UpCancelarReserva
+    UpCancelarReserva: UpCancelarReserva,
+    getReservaId: getReservaId
 }
 
