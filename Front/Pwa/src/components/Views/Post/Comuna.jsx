@@ -64,8 +64,10 @@ export default class Comuna extends Component{
     onInputChange = (e) => {
         this.setState({[e.target.name]: e.target.value});
     }
-
+    
+        
     render(){
+        console.log(this.state);
         return (
             <React.Fragment>
                 <div id="admin-background">

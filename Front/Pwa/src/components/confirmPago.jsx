@@ -21,11 +21,10 @@ const ConfirmPago = () => {
         getInformeResServ(id_rva)
     },[])
 
-    const getInformeRes = async ({id_rva}) => {
-        const res = await axios.get('http://localhost:4000/API/informeResDet/' + id_rva);
-        setInformeR({
-            informeRes: res.data
-        });
+    const getInformeRes = async () => {
+        const res = await axios.get('http://localhost:4000/API/informeResDet/1' );
+        const inR = await res.json() 
+        setInformeR(res);
     }
 
     const getInformeResServ = async ({id_rva}) => {
@@ -35,6 +34,7 @@ const ConfirmPago = () => {
         });
     }
     console.log(id_rva);
+    console.log({informeR})
 
     return (
         
@@ -43,7 +43,7 @@ const ConfirmPago = () => {
             {/* <p>Id reserva: {id_rva}</p> */}
             {/* <p>info{state.informeRes}</p> */}
             {/* <p>Se pago: ${id_rva}</p> */}
-            {
+            {/* {
                 informeR.map(reserva => (
                     <div className="col-md-4 p-2" key={reserva.id_rva}>
                         {reserva.departamento}
@@ -56,7 +56,8 @@ const ConfirmPago = () => {
                         {contrato}
                     </div>
                 ))
-            }
+            } */}
+            <p>{informeR}</p>
         </div>
     )
     
