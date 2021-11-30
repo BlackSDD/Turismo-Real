@@ -69,7 +69,7 @@ export default class UsuarioNew extends Component{
    
                 
             };
-            if (answer){
+            if (answer && this.state.dv_usr!== ""){
             axios.post('http://localhost:4000/API/usuario', newComuna);
             notifyS();
             this.setState({
@@ -138,6 +138,7 @@ export default class UsuarioNew extends Component{
                                 <Form.Group className="mb-3" controlId="Articulo">
                                     <Form.Label>digito verificador</Form.Label>
                                     <Form.Select value={this.state.dv_usr} onChange={this.onInputChange} name="dv_usr" required>
+                                        <option value="">ingrese una opcion</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>

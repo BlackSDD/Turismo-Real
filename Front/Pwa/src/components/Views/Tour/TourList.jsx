@@ -17,33 +17,22 @@ const notifyE = () =>{
     toast.error('Operación cancelada');
 };
 
-export default class UsuarioList extends Component {
+export default class TourList extends Component {
 
     state = {
-        servicio: []
+        tour: []
     }
 
     async componentDidMount() {
-        this.getServicio();
+        this.getUsuario();
     }
 
-    getServicio = async () => {
-        const res = await axios.get('http://localhost:4000/API/serviciosExtra')
+    getUsuario = async () => {
+        const res = await axios.get('http://localhost:4000/API/tour')
         this.setState({
-            servicio: res.data
+            tour: res.data
         })
     }
-
-    Eliminar = async (Id) => {
-        const answer = window.confirm("¿Estas Seguro?");
-        if (answer){
-            await axios.delete('http://localhost:4000/API/serviciosExtra/' + Id);
-            notifyS();
-        } else {
-            notifyE();
-        }
-        this.getUsuario();
-    };
 
 
     render() {
@@ -52,25 +41,41 @@ export default class UsuarioList extends Component {
                 <div className="row">
                     
                     {
-                        this.state.servicio.map(art => (
+                        this.state.tour.map(art => (
                             <div className="col-sm-3 col-md-6" key={art.id_serv}>
                                         <div className="card-body">
                                         <p>
-                                          nombre: {art.nom_serv}
+                                          duracion: {art.dur_hra}:{art.dur_min}
                                         </p>
                                         <p>
-                                          descripcion: {art.desc_serv}
+                                          Costo adulto: ${art.cost_adult}
+                                        </p>
+                                        <p>
+                                          Costo niños:  ${art.cost_nigno}
+                                        </p>
+                                        <p>
+                                          Costo para tercera edad :   ${art.cost_3ra}
+                                        </p>
+                                        <p>
+                                          Inicio:   {art.ubi_partida}
+                                        </p>
+                                        <p>
+                                          Fin:   {art.ubi_fin}
+                                        </p>
+                                        <p>
+                                          incluye transporte :   {art.transporte}
+                                        </p>
+                                        <p>
+                                          incluye comida :   {art.alimentacion}
                                         </p>
 
-
                                         </div>
-                                   
                                 </div>
                         ))
                     }
 
                         <Link to={"/UsuarioNew"} className="btn btn-secondary">
-                            <i className="material-icons">INGRESAR SERVICIO</i>
+                            <i className="material-icons">INGRESAR USUARIO</i>
                         </Link>
                             
                         <Link to={"/UsuarioEdi"} className="btn btn-secondary">

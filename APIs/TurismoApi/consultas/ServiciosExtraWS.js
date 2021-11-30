@@ -6,7 +6,7 @@ const sql = require('mssql');
 async function getServiciosExtras(){
     try{
         let pool = await sql.connect(cnx);
-        let salida = await pool.request().query('SELECT *  FROM [TurismoReal].[dbo].[servextras]');
+        let salida = await pool.request().query('select * from servextras');
         console.log(salida.recordsets);
         return salida.recordsets;
         
