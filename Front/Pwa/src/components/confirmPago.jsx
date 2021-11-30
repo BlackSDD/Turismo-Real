@@ -17,17 +17,21 @@ const ConfirmPago = () => {
     const [informeS, setInformeS] = useState([])
 
     useEffect(() =>{
-        getInformeRes(id_rva)
+        getInformeRes()
         // getInformeResServ(id_rva)
     },[])
 
     const getInformeRes = async () => {
-        const res = await axios.get('http://localhost:4000/API/informeResDet/1' );
-        // const inR = await res.data.json() 
-        setInformeR({res});
+        const res = await axios.get('http://localhost:4000/API/informeResDet/1' )
+        const inR = await JSON.parse(res.data) 
+        setInformeR({inR})
+        
     }
 
-    // const getInformeResServ = async ({id_rva}) => {
+    // Id_reserva, Departamento, Cliente, Estado_reserva, 
+    // Fecha_Reserva, Costo_total, Costo_arriendo, Costo_servicios_extra, 
+    // Costo_Multas, Monto_Pagado, Detalle_checkin, Detalle_checkout
+    // // const getInformeResServ = async ({id_rva}) => {
     //     const res = await axios.get('http://localhost:4000/API/informeResDetServ/' + id_rva);
     //     setInformeS({
     //         informeCont: res.data
