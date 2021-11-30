@@ -13,26 +13,26 @@ const ConfirmPago = () => {
     let {id_rva} = useParams();
     // console.log("id reserva", {reserva})
     
-    const [informeR, setInformeR] = useState(null)
-    const [informeS, setInformeS] = useState(null)
+    const [informeR, setInformeR] = useState([])
+    const [informeS, setInformeS] = useState([])
 
     useEffect(() =>{
         getInformeRes(id_rva)
-        getInformeResServ(id_rva)
+        // getInformeResServ(id_rva)
     },[])
 
     const getInformeRes = async () => {
         const res = await axios.get('http://localhost:4000/API/informeResDet/1' );
-        const inR = await res.json() 
-        setInformeR(res);
+        // const inR = await res.data.json() 
+        setInformeR({res});
     }
 
-    const getInformeResServ = async ({id_rva}) => {
-        const res = await axios.get('http://localhost:4000/API/informeResDetServ/' + id_rva);
-        setInformeS({
-            informeCont: res.data
-        });
-    }
+    // const getInformeResServ = async ({id_rva}) => {
+    //     const res = await axios.get('http://localhost:4000/API/informeResDetServ/' + id_rva);
+    //     setInformeS({
+    //         informeCont: res.data
+    //     });
+    // }
     console.log(id_rva);
     console.log({informeR})
 
