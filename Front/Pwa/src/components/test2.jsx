@@ -1,22 +1,22 @@
 import React from 'react';
 import {  useParams} from 'react-router-dom';
+import { Redirect , useHistory} from "react-router-dom";
 
 function Test2(){
 
 
-let {algo} = useParams();
+    let history = useHistory();
 
+    function handleClick() {
+      history.push("/");
+    }
+  
     return (
-        <div>
-            Test 2
-            <button
-                        
-                    >
-            </button>
-        </div>
-        
+      <button type="button" onClick={handleClick}>
+        Go home
+      </button>
+    );
 
-    )
 }
 
 export default Test2

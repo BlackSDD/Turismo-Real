@@ -27,6 +27,11 @@ export default class Test extends Component{
             valor: res.data
         })
     }
+
+    getReserva = async () =>{
+        const x = 0;
+
+    }
  
     render(){
         return (
@@ -61,6 +66,7 @@ export default class Test extends Component{
                         <div key={mont.id}>
                         <PaypalCheckout
                             precio = {mont.Pago}
+                            id_rva = {1}
                         />
                         </div>
                     ))

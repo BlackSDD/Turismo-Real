@@ -1,14 +1,13 @@
-import { Modal } from 'bootstrap';
 import React, {useState} from 'react';
 import ReactDOM  from 'react-dom';
-import ConfirmPago from '../confirmPago';
-import MyNotify from './mynotify';
-import {Redirect, navigate} from 'react-router-dom';
+import { useHistory} from 'react-router-dom';
 
 const PayPalButton = window.paypal.Buttons.driver("react", { React, ReactDOM });
 
-function PaypalCheckout({precio}) {
+function PaypalCheckout({precio, id_rva}) {
     const [price, setPrice] = useState(0);
+
+    let history = useHistory();
 
     const createOrder = (data, actions) => {
         return actions.order.create({
@@ -24,14 +23,14 @@ function PaypalCheckout({precio}) {
         return actions.order.capture(handlePay(data, precio));
     };
 
-    function onNavigate() {
-
-    }
+    
 
     function handlePay(e){
         console.log("Pago recibido")
-        
-        
+        history.push({
+            pathname: '/confirmPago',
+            state: { detail: {id_rva} }
+        });
     }
 
     return (

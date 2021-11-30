@@ -13,7 +13,7 @@ import Home from './components/Home';
 import Comuna from './components/Views/Post/Comuna';
 import Condominio from './components/Views/Post/RegistrarCondominios';
 import Departamento from './components/Views/Post/RegistrarDepartamento';
-import Articulo from './components/Views/Post/RegistrarArticulo';
+// import Articulo from './components/Views/Post/RegistrarArticulo';
 import AgenciaExterna from './components/Views/Post/AgenciaExterna';
 import ComunaWS from './components/Views/Get/ListarComunas';
 import ComunaEdi from './components/Views/put/Comuna';
@@ -52,7 +52,7 @@ function App() {
           <Route path="/login" exact render ={ props=> ( <Login {...props} />)}></Route>  
           <Route path="/test" exact render ={ props=> ( <Test {...props} />)}></Route>     
           <Route path="/test2" exact render ={ props=> ( <Test2 {...props} />)}></Route>     
-          <Route path="/confirmPago/:pago/:reserva" exact render ={ props=> ( <ConfirmPago {...props} />)}></Route>     
+          <Route path="/confirmPago/:reserva" exact render ={ props=> ( <ConfirmPago {...props} />)}></Route>     
 
     {/* PostRoutes--------- */}
             <Route path="/condominio" exact render={props => (<Condominio {...props}/>)}></Route>

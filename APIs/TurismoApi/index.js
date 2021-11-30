@@ -33,6 +33,10 @@ const Mantencion = require('./constructores/Mantencion');
 //RESERVA MANTENCION
 const ResMantencionSW = require('./consultas/ResMantencionWS');
 const ResMantencion = require('./constructores/ResMantencion')
+
+// Disponibilidad
+const DisponibilidadWS = require('./consultas/DisponibilidadWS');
+
 //GATOS
 const GastosWS = require('./consultas/GastosWS');
 const Gastos = require('./constructores/Gastos')
@@ -487,6 +491,15 @@ router.route('/departamento/reg/:nom_rgn').get((request, response) => {
     });
 });
 
+
+/////////////// Disponibilidad ///////////////
+router.route('/disponibilidad/:id_dpto').get((request, response) => {
+    DisponibilidadWS.getDisponibilidad(request.params.id_dpto).then(result =>{
+            response.json(result[0]);
+    });
+});
+
+
 //////////GASTOS//////////////
 ///Listar Gastos
 router.route('/gastos').get((request, response) => {
@@ -663,6 +676,13 @@ router.route('/reservaMantencion').put((request, response) => {
 ///Listar reservas
 router.route('/reserva').get((request, response) => {
     ReservaWS.getReservas().then(result =>{
+        response.json(result[0]);
+    });
+});
+
+//// Get reserva por id
+router.route('/reserva/:id_rva').get((request, response) => {
+    ReservaWS.getReservaId(request.params.id_rva).then(result =>{
         response.json(result[0]);
     });
 });

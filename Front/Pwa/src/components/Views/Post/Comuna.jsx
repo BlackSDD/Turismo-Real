@@ -69,7 +69,7 @@ export default class Comuna extends Component{
         return (
             <React.Fragment>
                 <div id="admin-background">
-                    <div class="container">
+                    <div className="container">
                         <h1 id="create-comuna-title">Registrar Comuna</h1>
                         <div id="create-comuna-form">
                             <Form className="contact-form" onSubmit={this.handleSubmit}>

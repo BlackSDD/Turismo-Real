@@ -46,16 +46,15 @@ function Footer() {
                         <h4 className="text-center">Links de interés</h4>
                         <ul id="ul-footer-links">
                             <li><a  href="/departamento" id="a-footer">Ver Departamentos</a></li>
-                            <li><a id="a-footer">Ver Convenios</a></li>
-                            <li><a id="a-footer">Consultar reservas</a></li>
-                            {/* <li class="menuitem"><a href="index.php"><div class="menulink">Lnk1</div></a></li> */}
+                            <li><a href="" id="a-footer">Ver Convenios</a></li>
+                            <li><a href=""  id="a-footer">Consultar reservas</a></li>
                         </ul>
                     </div>
                     <div className="col-lg-3 col-md-6 col-sm-12">
                         <h4 className="text-center">Top departamentos</h4>
                         <div className="row">
                             <div className="col-md">
-                                <a href=""><Image rounded id="image-footer" fluid src={depto1} class="img-footer" alt="Escapada en parejas"></Image></a>
+                                <a href=""><Image rounded id="image-footer" fluid src={depto1} alt="Escapada en parejas"></Image></a>
                             </div>
                             <div className="col-md">
                                 <a href=""><Image rounded id="image-footer" fluid src={depto2} alt="Departamento de lujo Viña"></Image></a>
