@@ -1,6 +1,6 @@
 #home-body{
     background-image: url("https://images.hdqwalls.com/wallpapers/city-lights-buildings-4k-og.jpg");
-    background-repeat: repeat;
+    background-repeat: no-repeat;
     background-size: 100% 100%;
     width: 100%;
     color: white;
@@ -18,8 +18,6 @@
     width: 100%;
     padding: 0px;
 }
-
-
 
 #ul-home{
     list-style-type: circle white;

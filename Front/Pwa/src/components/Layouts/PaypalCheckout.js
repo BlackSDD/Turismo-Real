@@ -1,48 +1,83 @@
-import React, {useState} from 'react';
+import React, {Component, useState, useEffect} from 'react';
 import ReactDOM  from 'react-dom';
 import { useHistory} from 'react-router-dom';
+import axios from 'axios';
 
 const PayPalButton = window.paypal.Buttons.driver("react", { React, ReactDOM });
 
-function PaypalCheckout({precio, id_rva}) {
-    const [price, setPrice] = useState(0);
+function PaypalCheckout ({precio, id_rva}) {
+    // const [price, setPrice] = useState(0);
 
-    let history = useHistory();
+    // let history = useHistory();
+
+    let dolar = Math.round(precio/830);
 
     const createOrder = (data, actions) => {
         return actions.order.create({
             purchase_units: [{
                 amount: {
-                value: precio,
+                value: dolar,
                 },
-
             }]
         });
     };
+
     const onApprove = (data, actions) => {
-        return actions.order.capture(handlePay(data, precio));
+        return actions.order.capture(handlePay());
     };
 
-    
-
     function handlePay(e){
-        console.log("Pago recibido")
-        history.push({
-            pathname: '/confirmPago',
-            state: { detail: {id_rva} }
-        });
+        console.log("Pago recibido");
+        setCount(true);
+    }
+    
+    const [informeR, setInformeR] = useState([])
+    const [count, setCount] = useState(false);
+
+    let urlId = {
+        id_reserva: id_rva
+    }
+    
+    console.log({urlId})
+    
+    useEffect(() => {
+        getInformeRes(urlId);
+    },[]);
+
+    const getInformeRes = async () => {
+        const res = await axios.post('http://localhost:4000/API/informeResDet/', urlId )
+        setInformeR(res.data)
     }
 
-    return (
-        <div>
-            <h1>El monto a pagar es {precio} </h1>
-            <PayPalButton
+    console.log({informeR})
+    // console.log({state})
+
+    if(count===false){
+        return( 
+            <div>
+                <h1>El monto a pagar es {dolar} </h1>
+                <PayPalButton
                 createOrder={(data, actions) => createOrder(data, actions)}
                 onApprove={(data, actions) => onApprove(data, actions)}
-            />
+                />
+                <h1>{informeR.Id_reserva}</h1>
+            </div>
+        );
+    }
+    else {
+    return(
+        <div>
+            <h1>Pago recibido</h1>
+            
+            {
+                informeR.map(e =>
+                    <p>{e.Cliente}</p>    
+                )
+            }
+            
         </div>
-        
     );
+    }
 }
 
 export default PaypalCheckout  

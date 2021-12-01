@@ -1,11 +1,10 @@
-import React, { useState, Component } from 'react';
+import React, {  Component } from 'react';
 // import Modal from './Layouts/modal';
 // import {Button} from 'react-bootstrap';
 // import useModal from './hook/useModal';
 import MyNotify from './Layouts/mynotify';
 import PaypalCheckout from './Layouts/PaypalCheckout';
 import axios from 'axios';
-import { Link, Redirect } from 'react-router-dom';
 
 
 export default class Test extends Component{
@@ -14,7 +13,6 @@ export default class Test extends Component{
     state = {
         valor: []
     }
-
 
     async componentDidMount() {
         this.getMontoPago(1);
@@ -72,9 +70,7 @@ export default class Test extends Component{
                     ))
                 }
 
-            <button 
-            
-            >
+            <button onClick="window.print">
                 Boton
             </button>
                 

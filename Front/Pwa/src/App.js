@@ -5,6 +5,8 @@ import "bootstrap/dist/css/bootstrap.css";
 /////Test
 import Test from './components/test';
 import Test2 from './components/test2';
+import Test3 from './components/test3';
+
 
 import ConfirmPago from './components/confirmPago';
 
@@ -60,7 +62,8 @@ function App() {
           <Route path="/login" exact render ={ props=> ( <Login {...props} />)}></Route>  
           <Route path="/test" exact render ={ props=> ( <Test {...props} />)}></Route>     
           <Route path="/test2" exact render ={ props=> ( <Test2 {...props} />)}></Route>     
-          <Route path="/confirmPago/:reserva" exact render ={ props=> ( <ConfirmPago {...props} />)}></Route>     
+          <Route path="/test3" exact render ={ props=> ( <Test3 {...props} />)}></Route>     
+          <Route path="/confirmPago/:id_rva" exact render ={ props=> ( <ConfirmPago {...props} />)}></Route>     
 
     {/* PostRoutes--------- */}
             <Route path="/condominio" exact render={props => (<Condominio {...props}/>)}></Route>
