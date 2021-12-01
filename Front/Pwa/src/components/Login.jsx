@@ -1,14 +1,18 @@
 import React from "react";
-import {Alert, Form} from 'react-bootstrap';
+import Form from 'react-bootstrap';
 import '../assetss/css/Login.css';
 // import '../assetss/css/comon-body.css';
 import 'react-toastify/dist/ReactToastify.css';
 import {toast} from 'react-toastify';
 import axios from "axios";
-import { useHistory, withRouter } from "react-router";
+// import { useHistory, withRouter } from "react-router";
 
 const notifyE = () =>{
     toast.error('Correo y/o contraseña inválidos, asegúrese que las credenciales son correctas');
+};
+
+const notifyESuspendida = () =>{
+    toast.error('Su cuenta se encuentra suspendidad, comuníquese con nosotros a través de los medios proporcionados al pie de la página');
 };
 
 const notifyS = () =>{
@@ -37,7 +41,9 @@ class Login extends React.Component{
 
     }
 
-
+    RedirigirRegistrar = () =>{
+        this.props.history.push("/UsuarioNew");
+    }
 
     manejadorBoton = () =>{
         axios.post("http://localhost:4000/API/usuarioAutenticar", this.state.form)
@@ -46,24 +52,36 @@ class Login extends React.Component{
             {
                 notifyE();
             }
-            else if(response.data[0].id_tipo_usr == "1")
+            else
             {
-                notifyS();
-                console.log("Admin")
-                this.props.history.push("/departamento");
+                if(response.data[0].est_cta == "suspendida")
+                {
+                    notifyESuspendida();
+                }
+                else
+                {
+                    if(response.data[0].id_tipo_usr == "1")
+                    {
+                        notifyS();
+                        console.log("Admin")
+                    }
+                    else if(response.data[0].id_tipo_usr =="2")
+                    {
+                        notifyS();
+                        console.log("Funcionario")
+                        this.props.history.push("/Home");
+                    }
+                    else if(response.data[0].id_tipo_usr =="3")
+                    {
+                        notifyS();
+                        this.props.history.push("/Home");
+        
+                    }
+    
+                }
+    
             }
-            else if(response.data[0].id_tipo_usr =="2")
-            {
-                notifyS();
-                console.log("Funcionario")
-                this.props.history.push("/condominio");
-            }
-            else if(response.data[0].id_tipo_usr =="3")
-            {
-                notifyS();
-                this.props.history.push("/home");
-
-            }
+            
 
 
         })
@@ -103,13 +121,9 @@ class Login extends React.Component{
                                     />
                                 </Form.Group>
                             </Form>
-                            <button type="submit" class="btn btn-primary"
-                            onClick={this.manejadorBoton}
-                            >Enviar Mensaje</button>
-                            </div>
-                            <div name="noExiste" class="alert alert-danger" role="alert" hidden="true">
-                            This is a danger alert—check it out!
-                            </div>
+                            <button type="submit" class="btn btn-primary mb-3 mt-5 col-12" onClick={this.manejadorBoton}>Iniciar sesión</button>
+                            <button type="button" class="btn btn-secondary mb-5 col-12" onClick={this.RedirigirRegistrar}>Registrarse</button>
+                        </div>                               
                     </div>
                     <br/>
                 </div>
