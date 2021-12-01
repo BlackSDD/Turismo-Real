@@ -926,12 +926,15 @@ router.route('/tipousr').get((request, response) => {
 //////// INFORMES
 
 /////////////////////////INFORME RESERVAS DETALLADO////////////////////////////////////////
-router.route('/informeResDet/:id_reserva').get((request, response) => {
-    InformesWS.getInformeReservaDet(request.params.id_reserva).then(result =>{
+router.route('/informeResDet/').post((request, response) => {
+    let id_reserva = {...request.body}
+    InformesWS.getInformeReservaDet(id_reserva).then(result =>{
         response.json(result[0]);
+    }, (err) => {
+        console.log(err.message);
+        response.json(err.message)
     });
 });
-
 router.route('/informeResDetServ/:id_reserva').get((request, response) => {
     InformesWS.getInformeReservaDetServ(request.params.id_reserva).then(result =>{
         response.json(result[0]);

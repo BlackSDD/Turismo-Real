@@ -8,13 +8,15 @@ const PayPalButton = window.paypal.Buttons.driver("react", { React, ReactDOM });
 function PaypalCheckout ({precio, id_rva}) {
     // const [price, setPrice] = useState(0);
 
-    let history = useHistory();
+    // let history = useHistory();
+
+    let dolar = Math.round(precio/830);
 
     const createOrder = (data, actions) => {
         return actions.order.create({
             purchase_units: [{
                 amount: {
-                value: precio,
+                value: dolar,
                 },
             }]
         });
@@ -24,47 +26,41 @@ function PaypalCheckout ({precio, id_rva}) {
         return actions.order.capture(handlePay());
     };
 
-    const id = {id_rva};
-
     function handlePay(e){
         console.log("Pago recibido");
         setCount(true);
-        getInformeRes(id)
-        // history.push({
-        //     pathname: '/confirmPago' + {id_rva},
-        //     state: { detail: {id_rva} }
-        // });
     }
     
     const [informeR, setInformeR] = useState([])
     const [count, setCount] = useState(false);
 
-    const state = {
-        informereserva: []
+    let urlId = {
+        id_reserva: id_rva
     }
-
     
+    console.log({urlId})
+    
+    useEffect(() => {
+        getInformeRes(urlId);
+    },[]);
 
-    const getInformeRes = async (id) => {
-        const res = await axios.get('http://localhost:4000/API/informeResDet/', { id } )
-        const inR = await JSON.parse(res.data) 
-        setInformeR({inR})
-        this.state({
-            informereserva: res.data
-        });
+    const getInformeRes = async () => {
+        const res = await axios.post('http://localhost:4000/API/informeResDet/', urlId )
+        setInformeR(res.data)
     }
 
     console.log({informeR})
-    console.log({state})
+    // console.log({state})
 
     if(count===false){
         return( 
             <div>
-                <h1>El monto a pagar es {precio} </h1>
+                <h1>El monto a pagar es {dolar} </h1>
                 <PayPalButton
                 createOrder={(data, actions) => createOrder(data, actions)}
                 onApprove={(data, actions) => onApprove(data, actions)}
                 />
+                <h1>{informeR.Id_reserva}</h1>
             </div>
         );
     }
@@ -72,6 +68,12 @@ function PaypalCheckout ({precio, id_rva}) {
     return(
         <div>
             <h1>Pago recibido</h1>
+            
+            {
+                informeR.map(e =>
+                    <p>{e.Cliente}</p>    
+                )
+            }
             
         </div>
     );

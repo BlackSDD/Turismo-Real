@@ -21,18 +21,18 @@ async function getInformeReservaGen(agno){
 
 
 ////////////////////////INFORME RESERVAS DETALLADO/////////////////////////////////////////
-async function getInformeReservaDet(id_reserva){
+async function getInformeReservaDet(reserva){
 
     try{
         let pool = await sql.connect(cnx);
         let salida = await pool.request()
-            .input("id_reserva", sql.Int , id_reserva)
+            .input("id_reserva", sql.Int , reserva.id_reserva)
             .execute('pd_informe_reserva_det');
         console.log('salida.recordsets');
         return salida.recordsets;
     } 
     catch(err){
-        throw new Error (err);
+        throw new Error (err);s
     }
 }
 

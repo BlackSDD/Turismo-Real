@@ -1,4 +1,4 @@
-import React, { useState, Component } from 'react';
+import React, {  Component } from 'react';
 // import Modal from './Layouts/modal';
 // import {Button} from 'react-bootstrap';
 // import useModal from './hook/useModal';
@@ -13,7 +13,6 @@ export default class Test extends Component{
     state = {
         valor: []
     }
-
 
     async componentDidMount() {
         this.getMontoPago(1);
@@ -71,9 +70,7 @@ export default class Test extends Component{
                     ))
                 }
 
-            <button 
-            
-            >
+            <button onClick="window.print">
                 Boton
             </button>
                 
