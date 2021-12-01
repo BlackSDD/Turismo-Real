@@ -24,7 +24,7 @@ go
 -- Informe de reservas detallado 
 -- requiere la id de la reserva (traida desde una lista en la interfaz)
 
-screate or alter procedure pd_informe_reserva_det(@id_reserva int)
+create or alter procedure pd_informe_reserva_det(@id_reserva int)
 as
 
 begin

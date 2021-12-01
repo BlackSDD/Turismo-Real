@@ -50,7 +50,6 @@ function PaypalCheckout ({precio, id_rva}) {
     }
 
     console.log({informeR})
-    // console.log({state})
 
     if(count===false){
         return( 

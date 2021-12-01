@@ -475,11 +475,13 @@ router.route('/departamento').put((request, response) => {
     });
 });
 
-
 //buscar departamento por id
 router.route('/departamento/:id_dpto').get((request, response) => {
     DepartamentoWS.getDepartamento(request.params.id_dpto).then(result =>{
         response.json(result[0]);
+    }, (err) => {
+        console.log(err.message);
+        response.json(err.message)
     });
 });
 
@@ -488,29 +490,40 @@ router.route('/departamento/:id_dpto').get((request, response) => {
 router.route('/departamento/reg/:nom_rgn').get((request, response) => {
     DepartamentoWS.getDepartamentoReg(request.params.nom_rgn).then(result =>{
         response.json(result[0]);
+    }, (err) => {
+        console.log(err.message);
+        response.json(err.message)
     });
 });
-
 
 /////////////// Disponibilidad ///////////////
 router.route('/disponibilidad/:id_dpto').get((request, response) => {
     DisponibilidadWS.getDisponibilidad(request.params.id_dpto).then(result =>{
             response.json(result[0]);
+        }, (err) => {
+            console.log(err.message);
+            response.json(err.message)
+        });
     });
-});
-
 
 //////////GASTOS//////////////
 ///Listar Gastos
 router.route('/gastos').get((request, response) => {
     GastosWS.getGastos().then(result =>{
         response.json(result[0]);
+    }, (err) => {
+        console.log(err.message);
+        response.json(err.message)
     });
 });
+
 /// Mostrar gastos de un departamento especifico
 router.route('/gastos/dpto/:id_dpto').get((request, response) => {
     GastosWS.getGastosPorDepartamento(request.params.id_dpto).then(result =>{
         response.json(result[0]);
+    }, (err) => {
+        console.log(err.message);
+        response.json(err.message)
     });
 });
 
@@ -531,12 +544,12 @@ router.route('/gastos').put((request, response) => {
     GastosWS.upGastos(Gastos).then(result => {
         response.json(result[0]);
         console.log('Se acutalizó el registro de gastos del departamento')   
-
      }, (err) => {
         console.log(err.message);
         response.json(err.message)
     });
 });
+
 //Registrar gastos de gastos de un departamento
 router.route('/gastos').post((request, response) => {
     let Gastos = {...request.body}
@@ -555,6 +568,9 @@ router.route('/gastos').post((request, response) => {
 router.route('/mantencion').get((request, response) => {
     MantencionSW.getMantencion().then(result =>{
         response.json(result[0]);
+    }, (err) => {
+        console.log(err.message);
+        response.json(err.message)
     });
 });
 
@@ -587,7 +603,6 @@ router.route('/mantencion').put((request, response) => {
     MantencionSW.upMantencion(Mantencion).then(result => {
         response.json(result[0]);
         console.log('Se acutalizó el registro de mantencion')   
-
      }, (err) => {
         console.log(err.message);
         response.json(err.message)
@@ -599,6 +614,9 @@ router.route('/mantencion').put((request, response) => {
 router.route('/pago').get((request, response) => {
     PagoWS.getPago().then(result =>{
         response.json(result[0]);
+    }, (err) => {
+        console.log(err.message);
+        response.json(err.message)
     });
 });
 

@@ -8,13 +8,13 @@ import Test2 from './components/test2';
 import Test3 from './components/test3';
 
 
-import ConfirmPago from './components/confirmPago';
 
 import Login from './components/Login';
 import Home from './components/Home';
 import Comuna from './components/Views/Post/Comuna';
 import Condominio from './components/Views/Post/RegistrarCondominios';
-import Departamento from './components/Views/Post/RegistrarDepartamento';
+import RegistrarDepartamento from './components/Views/Post/RegistrarDepartamento';
+import ListarDepto from './components/Views/Departamento/ListarDepto';
 // import Articulo from './components/Views/Post/RegistrarArticulo';
 import AgenciaExterna from './components/Views/Post/AgenciaExterna';
 import ComunaWS from './components/Views/Get/ListarComunas';
@@ -49,7 +49,8 @@ import ServicioExtraNew  from './components/Views/ServicioExtra/ServicioExtraNew
 import TourList from './components/Views/Tour/TourList';
 import TourNew  from './components/Views/Tour/TourNew';
 import TourEdi  from './components/Views/Tour/TourEdi';
-
+//////////////Reserva Depto////////////
+import Reserva from './components/Views/Reservas/Reserva';
 
 
 function App() {
@@ -63,16 +64,17 @@ function App() {
           <Route path="/test" exact render ={ props=> ( <Test {...props} />)}></Route>     
           <Route path="/test2" exact render ={ props=> ( <Test2 {...props} />)}></Route>     
           <Route path="/test3" exact render ={ props=> ( <Test3 {...props} />)}></Route>     
-          <Route path="/confirmPago/:id_rva" exact render ={ props=> ( <ConfirmPago {...props} />)}></Route>     
 
     {/* PostRoutes--------- */}
             <Route path="/condominio" exact render={props => (<Condominio {...props}/>)}></Route>
             <Route path="/Comuna" exact render ={ props=> ( <Comuna {...props} />)}></Route>
             <Route path="/Comuna/EDIT" exact render ={ props=> ( <ComunaEdi {...props} />)}></Route>
-            <Route path="/departamento" exact render={props => (<Departamento {...props}/>)}></Route>
+            <Route path="/registrardepartamento" exact render={props => (<RegistrarDepartamento {...props}/>)}></Route>
             <Route path="/agencia" exact render={props => (<AgenciaExterna   {...props}/>)}></Route>
     {/* ListarRoutes */}
             <Route path="/listarComuna" exact render ={ props=> ( <ComunaWS {...props} />)}></Route>
+            <Route path="/listarDeptos" exact render ={ props=> ( <ListarDepto {...props} />)}></Route>
+
     {/* Articulo */}
             <Route path="/ArticuloList" exact render ={ props=> ( <ArticuloList {...props} />)}></Route>
             <Route path="/ArticuloNew" exact render ={ props=> ( <ArticuloNew {...props} />)}></Route>
@@ -93,13 +95,16 @@ function App() {
             <Route path="/MantencionList" exact render ={ props=> ( <MantencionList {...props} />)}></Route>
             <Route path="/MantencionNew" exact render ={ props=> ( <MantencionNew {...props} />)}></Route>
             <Route path="/MantencionEdi" exact render ={ props=> ( <MantencionEdi {...props} />)}></Route>       
-    {/* ReservaMantencion */}
+    {/* Servicio extra */}
             <Route path="/ServicioExtraList" exact render ={ props=> ( <ServicioExtraList {...props} />)}></Route>
             <Route path="/ServicioExtraNew" exact render ={ props=> ( <ServicioExtraNew {...props} />)}></Route>
     {/* ReservaMantencion */}
             <Route path="/TourList" exact render ={ props=> ( <TourList {...props} />)}></Route>
             <Route path="/TourNew" exact render ={ props=> ( <TourNew {...props} />)}></Route> 
             <Route path="/TourEdi" exact render ={ props=> ( <TourEdi {...props} />)}></Route>                                                                                         
+    {/* Generar Reserva Departamento */}
+            <Route path="/reserva" exact render ={ props=> ( <Reserva {...props} />)}></Route>     
+        
           </Switch>
           <Footer/>  
       </Router>

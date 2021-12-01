@@ -1,15 +1,10 @@
 import React, {  Component } from 'react';
-// import Modal from './Layouts/modal';
-// import {Button} from 'react-bootstrap';
-// import useModal from './hook/useModal';
-import MyNotify from './Layouts/mynotify';
 import PaypalCheckout from './Layouts/PaypalCheckout';
 import axios from 'axios';
 
 
 export default class Test extends Component{
 
-    // const [isOpenLoginModal, openLoginModal ,closeLoginModal ] = useModal();
     state = {
         valor: []
     }
@@ -30,35 +25,11 @@ export default class Test extends Component{
         const x = 0;
 
     }
- 
+
     render(){
         return (
             <div>
-                {/* <Button onClick={openLoginModal}>
-                    Open Modal
-                </Button>
-
-                <Modal
-                    isOpen={isOpenLoginModal} 
-                    closeModal={closeLoginModal}
-                    title="soy un Modal"
-                >
-                    <form>
-                    <input 
-                        type="email"
-                        placeholder="Correo"
-                    />
-                    <input 
-                        type="password"
-                        placeholder="Contraseña"
-                    />
-                    </form>
-                </Modal> */}
-                <MyNotify
-                    type={'success'} 
-                    title= {'Operación realizada con éxito'}
-                    message="Soy un Toast"
-                />
+                
                 {
                     this.state.valor.map(mont => (
                         <div key={mont.id}>
@@ -73,8 +44,6 @@ export default class Test extends Component{
             <button onClick="window.print">
                 Boton
             </button>
-                
-
             </div>
         )
     }
