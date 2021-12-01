@@ -5,6 +5,7 @@ import '../assetss/css/Login.css';
 import 'react-toastify/dist/ReactToastify.css';
 import {toast} from 'react-toastify';
 import axios from "axios";
+
 // import { useHistory, withRouter } from "react-router";
 
 const notifyE = () =>{
@@ -74,7 +75,11 @@ class Login extends React.Component{
                     else if(response.data[0].id_tipo_usr =="3")
                     {
                         notifyS();
-                        this.props.history.push("/Home");
+                        //setear y almacenar datos en el session storage
+                        sessionStorage.correo = response.data[0].email_usr
+                        sessionStorage.idUsuario = response.data[0].id_usr
+                        let email = sessionStorage.correo
+                        console.log('El correo es' + email)
         
                     }
     
