@@ -3,7 +3,7 @@ const cnx = require('../cnx');
 const sql = require('mssql');
 
 
-async function getUsuarioAutenticar(Usuario){
+async function getUsuarioAutentificar(Usuario){
     try{
         let pool = await sql.connect(cnx);
         let salida = await pool.request()
@@ -145,7 +145,7 @@ async function upCambiarCliente(id_usr){
 
 
 module.exports = {
-    getUsuarioAutenticar: getUsuarioAutenticar,
+    getUsuarioAutentificar: getUsuarioAutentificar,
     newUsuario : newUsuario,
     getUsuario : getUsuario,
     getUsuarios: getUsuarios,

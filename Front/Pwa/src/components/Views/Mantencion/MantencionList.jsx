@@ -37,7 +37,7 @@ export default class UsuarioList extends Component {
     Eliminar = async (Id) => {
         const answer = window.confirm("¿Estas Seguro?");
         if (answer){
-            await axios.delete('http://localhost:4000/API/mantencion//' + Id);
+            await axios.delete('http://localhost:4000/API/mantencion/' + Id);
             notifyS();
         } else {
             notifyE();

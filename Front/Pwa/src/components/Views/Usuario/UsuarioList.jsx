@@ -37,7 +37,7 @@ export default class UsuarioList extends Component {
     Suspender = async (Id) => {
         const answer = window.confirm("¿Estas Seguro?");
         if (answer){
-            await axios.delete('http://localhost:4000/API/suspenderUsuario/' + Id);
+            await axios.put('http://localhost:4000/API/suspenderUsuario/' + Id);
             notifyS();
         } else {
             notifyE();
@@ -47,9 +47,10 @@ export default class UsuarioList extends Component {
 
 
     Validar = async (Id) => {
+         
         const answer = window.confirm("¿Estas Seguro?");
         if (answer){
-            await axios.delete('http://localhost:4000/API/validarUsuario/' + Id);
+            await axios.put('http://localhost:4000/API/validarUsuario/' + Id);
             notifyS();
         } else {
             notifyE();

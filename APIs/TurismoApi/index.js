@@ -830,15 +830,16 @@ router.route('/transporte').put((request, response) => {
 //////USUARIO
 
 
-// router.route('/usuario').post((request, response) => {
-//     let Usuario = {...request.body}
-//     UsuarioWS.getUsuari(Usuario).then(result => {
-//         response.json(result[0]);
-//     }, (err) => {
-//         console.log(err.message);
-//         response.json(err.message)
-//     });
-// });
+router.route('/usuarioAutenticar').post((request, response) => {
+    let Usuario = {...request.body}
+    UsuarioWS.getUsuarioAutentificar(Usuario).then(result => {
+        response.json(result[0]);
+    }, (err) => {
+        console.log(err.message);
+        response.json(err.message)
+    });
+});
+
 
 router.route('/usuario').post((request, response) => {
     let Usuario = {...request.body}
