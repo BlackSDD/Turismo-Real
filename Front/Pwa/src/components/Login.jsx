@@ -1,5 +1,5 @@
 import React from "react";
-import Form from 'react-bootstrap';
+import { Form } from "react-bootstrap";
 import '../assetss/css/Login.css';
 // import '../assetss/css/comon-body.css';
 import 'react-toastify/dist/ReactToastify.css';
