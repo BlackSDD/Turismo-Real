@@ -60,7 +60,6 @@ export default class ArticuloEdi extends Component{
                 email_age: " ",
                 tel_age: " ",
             });
-            // window.location.assign("http://localhost:3000/listarcomuna");
         } else {
             notifyE();
         }

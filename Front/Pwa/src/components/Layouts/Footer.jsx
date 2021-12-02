@@ -6,7 +6,6 @@ import depto1 from '../../assetss/img/depto1.jpg';
 import depto2 from '../../assetss/img/depto2.jpg';
 import depto3 from '../../assetss/img/depto3.jpg';
 import depto4 from '../../assetss/img/depto4.jpg';
-// import {faAccessibleIcon} from '@fortawesome/free-brands-svg-icons';
 import {faUser, faPhoneAlt, faAt} from '@fortawesome/free-solid-svg-icons';
 import Email from './Email';
 import {Image} from 'react-bootstrap';

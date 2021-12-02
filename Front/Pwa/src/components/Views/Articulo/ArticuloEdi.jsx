@@ -64,7 +64,6 @@ export default class ArticuloEdi extends Component{
                 deta_arti: " ",
                 valor_arti: " ",
             });
-            // window.location.assign("http://localhost:3000/listarcomuna");
         } else {
             notifyE();
         }

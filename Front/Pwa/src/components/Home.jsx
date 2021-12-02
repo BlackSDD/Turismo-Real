@@ -3,14 +3,16 @@ import '../assetss/css/home.css';
 import Carrusel from './Layouts/Carrusel';
 import CarruselTours from './Layouts/carrusel-tours';
 import CarruselTaxi from './Layouts/carrusel-taxi';
+import Navbar from '../components/Layouts/Navbar.jsx'
 
 //Forma de llamar a datos de sesion storage
 let email = sessionStorage.correo
 console.log('El correo es' + email)
 
-const MainAdmin = () => {
+const Landing = () => {
     return (
         <div className="col-md" id="homdeDiv">
+        <Navbar/>
             <div id="carrusel1" >
                 <Carrusel/>
             </div>
@@ -60,4 +62,4 @@ const MainAdmin = () => {
     )
 }
 
-export default MainAdmin
+export default Landing

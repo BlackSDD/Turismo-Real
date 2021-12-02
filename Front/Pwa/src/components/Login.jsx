@@ -1,19 +1,18 @@
 import React from "react";
 import { Form } from "react-bootstrap";
 import '../assetss/css/Login.css';
-// import '../assetss/css/comon-body.css';
 import 'react-toastify/dist/ReactToastify.css';
 import {toast} from 'react-toastify';
 import axios from "axios";
 
-// import { useHistory, withRouter } from "react-router";
+/////Notificaciones pop
 
 const notifyE = () =>{
     toast.error('Correo y/o contraseña inválidos, asegúrese que las credenciales son correctas');
 };
 
 const notifyESuspendida = () =>{
-    toast.error('Su cuenta se encuentra suspendidad, comuníquese con nosotros a través de los medios proporcionados al pie de la página');
+    toast.error('Su cuenta se encuentra suspendidad o aún no se sido activada, comuníquese con nosotros a través de los medios proporcionados al pie de la página');
 };
 
 const notifyS = () =>{
@@ -64,12 +63,13 @@ class Login extends React.Component{
                     if(response.data[0].id_tipo_usr == "1")
                     {
                         notifyS();
-                        console.log("Admin")
+                        console.log("Admin");
+                        this.props.history.push("/Admin");
                     }
                     else if(response.data[0].id_tipo_usr =="2")
                     {
                         notifyS();
-                        console.log("Funcionario")
+                        console.log("Funcionario");
                         this.props.history.push("/Home");
                     }
                     else if(response.data[0].id_tipo_usr =="3")
@@ -80,6 +80,7 @@ class Login extends React.Component{
                         sessionStorage.idUsuario = response.data[0].id_usr
                         let email = sessionStorage.correo
                         console.log('El correo es: ' + email)
+                        this.props.history.push("/Home");
         
                     }
     
@@ -89,8 +90,8 @@ class Login extends React.Component{
             
 
 
-        })
-    }
+        });
+    };
 
     render(){
         

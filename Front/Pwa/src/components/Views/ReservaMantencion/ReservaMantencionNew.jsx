@@ -62,7 +62,6 @@ export default class ReservaMantencionNew extends Component{
                 id_usr: "",
                 id_dpto: "",
             });
-            // window.location.assign("http://localhost:3000/listarcomuna");
         } else {
             notifyE();
         }

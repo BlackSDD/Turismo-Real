@@ -59,7 +59,6 @@ export default class ArticuloNew extends Component{
                 tel_age: " ",
                 id_com: " ",
             });
-            // window.location.assign("http://localhost:3000/listarcomuna");
         } else {
             notifyE();
         }

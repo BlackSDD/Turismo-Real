@@ -34,7 +34,6 @@ export default class UsuarioNew extends Component{
         tel_usr: '',
         rut_usr: '',
         dv_usr: '',
-        cant_res: 0,
         est_cta: 'suspendida',
         tipo_cli: 'normal',
         id_tipo_usr: '',
@@ -62,7 +61,6 @@ export default class UsuarioNew extends Component{
                 tel_usr: this.state.tel_usr,
                 rut_usr: this.state.rut_usr,
                 dv_usr: this.state.dv_usr,
-                cant_res: 0,
                 est_cta: 'suspendida',
                 tipo_cli: 'normal',
                 id_tipo_usr: this.state.id_tipo_usr,
@@ -81,12 +79,10 @@ export default class UsuarioNew extends Component{
                 tel_usr: '',
                 rut_usr: '',
                 dv_usr: '',
-                cant_res: 0,
                 est_cta: 'suspendida',
                 tipo_cli: 'normal',
                 id_tipo_usr: '',
             });
-            // window.location.assign("http://localhost:3000/listarcomuna");
         } else {
             notifyE();
         }

@@ -1,5 +1,4 @@
 const cnx = require('../cnx');
-
 const sql = require('mssql');
 
 
@@ -48,11 +47,11 @@ async function newDepartamento(departamento){
             .input('n_amb_dpto', sql.Int , departamento.n_amb_dpto)
             .input('desc_dpto', sql.NVarChar , departamento.desc_dpto)
             .input('costo_arri_dpto', sql.Int , departamento.costo_arri_dpto)
-            .input('img_1_dpto', sql.Image , departamento.img_1_dpto)
-            .input('img_2_dpto', sql.Image , departamento.img_2_dpto)
-            .input('img_3_dpto', sql.Image , departamento.img_3_dpto)
-            .input('img_4_dpto', sql.Image , departamento.img_4_dpto)
-            .input('img_5_dpto', sql.Image , departamento.img_5_dpto)
+            .input('img_1_dpto', sql.Image, new Buffer(departamento.img_1_dpto))
+            .input('img_2_dpto', sql.Image(sql.MAX) , departamento.img_2_dpto)
+            .input('img_3_dpto', sql.Image(sql.MAX) , departamento.img_3_dpto)
+            .input('img_4_dpto', sql.Image(sql.MAX) , departamento.img_4_dpto)
+            .input('img_5_dpto', sql.Image(sql.MAX) , departamento.img_5_dpto)
             .input('id_cnd', sql.NVarChar , departamento.id_cnd)
             .execute('pd_agregarDepartamento');
         return newDepartamento.recordsets;
@@ -77,11 +76,11 @@ async function upDepartamento(departamento){
             .input('n_amb_dpto', sql.Int , departamento.n_amb_dpto)
             .input('desc_dpto', sql.NVarChar , departamento.desc_dpto)
             .input('costo_arri_dpto', sql.Int , departamento.costo_arri_dpto)
-            .input('img_1_dpto', sql.Image , departamento.img_1_dpto)
-            .input('img_2_dpto', sql.Image , departamento.img_2_dpto)
-            .input('img_3_dpto', sql.Image , departamento.img_3_dpto)
-            .input('img_4_dpto', sql.Image , departamento.img_4_dpto)
-            .input('img_5_dpto', sql.Image , departamento.img_5_dpto)
+            .input('img_1_dpto', sql.Image(sql.MAX) , departamento.img_1_dpto)
+            .input('img_2_dpto', sql.Image(sql.MAX) , departamento.img_2_dpto)
+            .input('img_3_dpto', sql.Image(sql.MAX) , departamento.img_3_dpto)
+            .input('img_4_dpto', sql.Image(sql.MAX) , departamento.img_4_dpto)
+            .input('img_5_dpto', sql.Image(sql.MAX) , departamento.img_5_dpto)
             .execute('pd_modificarDepartamento');
         return newComuna.recordsets;    
     } 

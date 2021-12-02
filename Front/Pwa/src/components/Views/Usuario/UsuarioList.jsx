@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-// Importing toastify module
+import '../../../assetss/css/ListaDeptos.css';
 import {toast} from 'react-toastify';
-// Import toastify css file
 import 'react-toastify/dist/ReactToastify.css';
 
 toast.configure({

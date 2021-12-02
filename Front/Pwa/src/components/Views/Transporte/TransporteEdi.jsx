@@ -79,7 +79,6 @@ export default class UsuarioEdi extends Component{
             alimentacion:'',
             transporte:'',
             });
-            // window.location.assign("http://localhost:3000/listarcomuna");
         } else {
             notifyE();
         }
