@@ -63,9 +63,6 @@ export default class DeptoList extends Component {
                                         <p>
                                           Costo: {departamento.costo_arri_dpto}
                                         </p>
-                                        <p>
-                                            Costo: {departamento.img_1_dpto.data}
-                                        </p>
                                         </div>
                                     <div className="card-footer">
                                         <button className="btn btn-danger" onClick={() => this.EliminarDepto(departamento.id_dpto)}>

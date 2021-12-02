@@ -23,7 +23,7 @@ const notifyE = () =>{
     });
 };
 
-export default class CondominioNew extends Component{
+export default class CondominioEdit extends Component{
 
     state ={
         nom_cnd:'', 
@@ -50,7 +50,7 @@ export default class CondominioNew extends Component{
                 
             };
             if (answer && this.state.nom_cnd !== ""){
-            axios.post('http://localhost:4000/API/condominio', newComuna);
+            axios.put('http://localhost:4000/API/condominio', newComuna);
             notifyS();
             this.setState({
                 nom_cnd:'', 

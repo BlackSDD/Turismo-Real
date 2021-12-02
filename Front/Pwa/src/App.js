@@ -29,10 +29,14 @@ import ArticuloEdi from './components/Views/Articulo/ArticuloEdi';
 import AgenciaExternaList from './components/Views/AgenciaExterna/AgenciaExternaList';
 import AgenciaExternaNew  from './components/Views/AgenciaExterna/AgenciaExternaNew';
 import AgenciaExternaEdi from './components/Views/AgenciaExterna/AgenciaExternaEdi';
+///Condominio
+import CondominioNew from './components/Views/Condominio/CondominioNew';
+import CondominioList from './components/Views/Condominio/CondominioList';
 ///Departamento
 import DeptoNew from './components/Views/Departamento/DeptoNew';
 import DeptoList from './components/Views/Departamento/DeptoList';
 import DeptoEdi from './components/Views/Departamento/DeptoEdi';
+import Departamento from './components/Views/Get/Departamento';
 ////////////////Usuario
 import UsuarioList from './components/Views/Usuario/UsuarioList';
 import UsuarioNew  from './components/Views/Usuario/UsuarioNew';
@@ -57,6 +61,7 @@ import TourEdi  from './components/Views/Tour/TourEdi';
 import Reserva from './components/Views/Reservas/Reserva';
 import MainAdmin from './components/InicioAdmin';
 import Landing from './components/Home';
+import CondominioEdit from './components/Views/Condominio/CondominioEdit';
 
 
 function App() {
@@ -90,6 +95,10 @@ function App() {
             <Route path="/AgenciaExternaList" exact render ={ props=> ( <AgenciaExternaList {...props} />)}></Route>
             <Route path="/AgenciaExternaNew" exact render ={ props=> ( <AgenciaExternaNew {...props} />)}></Route>
             <Route path="/AgenciaExternaEdi" exact render ={ props=> ( <AgenciaExternaEdi {...props} />)}></Route>
+    {/* Condominio */}
+        <Route path="/CondominioNew" exact render ={ props=> ( <CondominioNew {...props} />)}></Route>
+        <Route path="/CondominioList" exact render ={ props=> ( <CondominioList {...props} />)}></Route>
+        <Route path="/CondominioEdit" exact render ={ props=> ( <CondominioEdit {...props} />)}></Route>
     {/* Departamento */}
             <Route path="/DeptoNew" exact render ={ props=> ( <DeptoNew {...props} />)}></Route>
             <Route path="/DeptoList" exact render ={ props=> ( <DeptoList {...props} />)}></Route>
