@@ -12,7 +12,7 @@ const notifyE = () =>{
 };
 
 const notifyESuspendida = () =>{
-    toast.error('Su cuenta se encuentra suspendidad, comuníquese con nosotros a través de los medios proporcionados al pie de la página');
+    toast.error('Su cuenta se encuentra suspendidad o aún no se sido activada, comuníquese con nosotros a través de los medios proporcionados al pie de la página');
 };
 
 const notifyS = () =>{
@@ -64,6 +64,7 @@ class Login extends React.Component{
                     {
                         notifyS();
                         console.log("Admin");
+                        this.props.history.push("/Admin");
                     }
                     else if(response.data[0].id_tipo_usr =="2")
                     {
@@ -79,6 +80,7 @@ class Login extends React.Component{
                         sessionStorage.idUsuario = response.data[0].id_usr;
                         let email = sessionStorage.correo;
                         console.log('El correo es' + email);
+                        this.props.history.push("/Home");
         
                     }
     

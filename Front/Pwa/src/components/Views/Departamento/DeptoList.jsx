@@ -80,7 +80,7 @@ export default class DeptoList extends Component {
                             <i className="material-icons">INGRESAR Departamento</i>
                         </Link>
                             
-                        <Link to={"/DepartamentoEdi"} className="btn btn-primary col-2 mx-5">
+                        <Link to={"/DeptoEdit"} className="btn btn-primary col-2 mx-5">
                             <i className="material-icons"> EDITAR Departamento</i>
                         </Link>
                     </div>

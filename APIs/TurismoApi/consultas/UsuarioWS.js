@@ -31,7 +31,6 @@ async function newUsuario(Usuario){
             .input('tel_usr', sql.Int , Usuario.tel_usr)
             .input('rut_usr', sql.Int , Usuario.rut_usr)
             .input('dv_usr', sql.Char , Usuario.dv_usr)
-            .input('cant_res', sql.Int , Usuario.cant_res)
             .input('est_cta', sql.NVarChar , Usuario.est_cta)
             .input('tipo_cli', sql.NVarChar , Usuario.tipo_cli)
             .input('id_tipo_usr', sql.Int , Usuario.id_tipo_usr)

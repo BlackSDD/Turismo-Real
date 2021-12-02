@@ -8,7 +8,7 @@ import Test2 from './components/test2';
 import Test3 from './components/test3';
 
 
-
+//Landing
 import Login from './components/Login';
 import Home from './components/Home';
 import Comuna from './components/Views/Post/Comuna';
@@ -37,6 +37,7 @@ import DeptoEdi from './components/Views/Departamento/DeptoEdi';
 import UsuarioList from './components/Views/Usuario/UsuarioList';
 import UsuarioNew  from './components/Views/Usuario/UsuarioNew';
 import UsuarioEdi from './components/Views/Usuario/UsuarioEdi';
+import ClienteNew from './components/Views/Usuario/ClienteNew';
 ////////////////ReservaMantencion
 import ReservaMantencionList from './components/Views/ReservaMantencion/ReservaMantencionList';
 import ReservaMantencionNew  from './components/Views/ReservaMantencion/ReservaMantencionNew';
@@ -54,16 +55,19 @@ import TourNew  from './components/Views/Tour/TourNew';
 import TourEdi  from './components/Views/Tour/TourEdi';
 //////////////Reserva Depto////////////
 import Reserva from './components/Views/Reservas/Reserva';
+import MainAdmin from './components/InicioAdmin';
+import Landing from './components/Home';
 
 
 function App() {
   return (
     <React.Fragment>
       <Router>
-        <Navbar/>
           <Switch>
-          <Route path="/" exact render ={ props=> ( <Home {...props} />)}></Route>
-          <Route path="/login" exact render ={ props=> ( <Login {...props} />)}></Route>  
+   {/* Landing */}
+          <Route path="/" exact render ={ props=> ( <Landing {...props} />)}></Route>
+          <Route path="/login" exact render ={ props=> ( <Login {...props} />)}></Route>    
+          <Route path="/Admin" exact render ={ props=> ( <MainAdmin {...props} />)}></Route>    
           <Route path="/test" exact render ={ props=> ( <Test {...props} />)}></Route>     
           <Route path="/test2" exact render ={ props=> ( <Test2 {...props} />)}></Route>     
           <Route path="/test3" exact render ={ props=> ( <Test3 {...props} />)}></Route>     
@@ -94,11 +98,12 @@ function App() {
             <Route path="/UsuarioList" exact render ={ props=> ( <UsuarioList {...props} />)}></Route>
             <Route path="/UsuarioNew" exact render ={ props=> ( <UsuarioNew {...props} />)}></Route>
             <Route path="/UsuarioEdi" exact render ={ props=> ( <UsuarioEdi {...props} />)}></Route>
+            <Route path="/ClienteNew" exact render ={ props=> ( <ClienteNew {...props} />)}></Route>
     {/* ReservaMantencion */}
             <Route path="/ReservaMantencionList" exact render ={ props=> ( <ReservaMantencionList {...props} />)}></Route>
             <Route path="/ReservaMantencionNew" exact render ={ props=> ( <ReservaMantencionNew {...props} />)}></Route>
             <Route path="/ReservaMantencionEdi" exact render ={ props=> ( <ReservaMantencionEdi {...props} />)}></Route>     
-    {/* ReservaMantencion */}
+    {/* Mantencion */}
             <Route path="/MantencionList" exact render ={ props=> ( <MantencionList {...props} />)}></Route>
             <Route path="/MantencionNew" exact render ={ props=> ( <MantencionNew {...props} />)}></Route>
             <Route path="/MantencionEdi" exact render ={ props=> ( <MantencionEdi {...props} />)}></Route>       
