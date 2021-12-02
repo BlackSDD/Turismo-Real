@@ -6,7 +6,7 @@ async function getDisponibilidad(id_dpto){
         let pool = await sql.connect(cnx);
         let salida = await pool.request()
         .input("id_dpto", sql.Int , id_dpto)
-        .query('SELECT *  FROM disponibilidad where id_dpto = @id_dpto');
+        .query('SELECT * FROM disponibilidad where id_dpto = @id_dpto');
         console.log(salida.recordsets);
         return salida.recordsets;
     } 

@@ -2,45 +2,47 @@ import React from 'react';
 import DayPicker from 'react-day-picker';
 import axios from 'axios';
 import 'react-day-picker/lib/style.css';
-import Moment from 'moment';
 
 export default class Example extends React.Component {
   
     constructor(props) {
-    super(props);
-    this.handleDayClick = this.handleDayClick.bind(this);
-    this.state = {
-      selectedDay: undefined,
-    };
+        super(props);
+        this.handleDayClick = this.handleDayClick.bind(this);
+        this.state = {
+        selectedDay: undefined,
+        fechasR: [] 
+        };
     }
 
-  handleDayClick(day, { selected, disabled }) {
-    if (disabled) {
-      // Day is disabled, do nothing
-      return;
+    handleDayClick(day, { selected, disabled }) {
+        if (disabled) {
+        // Day is disabled, do nothing
+        return;
+        }
+        if (selected) {
+        // Unselect the day if already selected
+        this.setState({ selectedDay: undefined });
+        return;
+        }
+        this.setState({ selectedDay: day });
     }
-    if (selected) {
-      // Unselect the day if already selected
-      this.setState({ selectedDay: undefined });
-      return;
+
+    // state = {
+    //     fechas:[],
+    //     dates: [],
+    //     arrayF: []
+    // }
+
+    id_d = {
+        id_dpto: 1
     }
-    this.setState({ selectedDay: day });
-  }
 
-  state= {
-    fechas:[],
-    dates: [],
-    arrayF: []
-  }
-
-  id_d = {
-      id_dpto: 1
-  }
 
     async componentDidMount() {
-        this.getFechas(this.id_d)
-        this.state.dates = ([...this.state.dates,this.state.fechas.map((e) => e.Concate)])
-        this.state.arrayF = ([...this.state.arrayF, new Date(this.state.dates)] )
+        // this.getFechas(this.id_d)
+        this.setState({
+            fechasR: this.props.fechas
+        });
     }
 
     getFechas = async (id) =>{
@@ -61,29 +63,29 @@ export default class Example extends React.Component {
     dias3 = [new Date(this.dias.y,this.dias.m,this.dias.d),
         new Date(2021,11,20)]
 
-        
-
-  render() {
-      console.log('Las fechas: ',this.state.fechas)
-    return (
-        <div>
-            <h1>Day Picker</h1>
-            <DayPicker
-                onDayClick={this.handleDayClick}
-                selectedDays={this.state.selectedDay}
-                // initialMonth={new Date(2021, 12)}    
-                                    
-                disabledDays={[new Date('2021-12-15'),
-                    new Date('2021-12-11T02:00:00Z') ] }
-            />
-            {this.state.selectedDay ? (
-            <p>Fecha seleccionada {this.state.selectedDay.toLocaleDateString()}</p>
-            ) : (
-            <p>Por favor elige un día</p>
-            )}
-            <p>{this.dias[0]}</p>
-            
-        </div>
-    );
-  }
+    render() {
+        console.log('Start date')
+        console.log('Las fechas: ',this.state.fechasR)
+        console.log('End date')
+        return (
+            <div>
+                <h1>Day Picker</h1>
+                <DayPicker
+                    onDayClick={this.handleDayClick}
+                    selectedDays={this.state.selectedDay}
+                    // initialMonth={new Date(2021, 12)}    
+                                        
+                    disabledDays={[new Date('2021-12-15'),
+                        new Date('2021-12-11T02:00:00Z') ] }
+                />
+                {this.state.selectedDay ? (
+                <p>Fecha seleccionada {this.state.selectedDay.toLocaleDateString()}</p>
+                ) : (
+                <p>Por favor elige un día</p>
+                )}
+                <p>{this.dias[0]}</p>
+                
+            </div>
+        );
+    }
 }
