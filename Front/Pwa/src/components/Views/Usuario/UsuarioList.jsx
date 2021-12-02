@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import '../../../assetss/css/ListaDeptos.css'
 // Importing toastify module
 import {toast} from 'react-toastify';
 // Import toastify css file
