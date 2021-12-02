@@ -22,7 +22,7 @@ function Test2(){
   useEffect(() => {
     const dates = fechas.map((e) => {
       let newFecha = new Date(e.Concate);
-      const val = newFecha.toLocaleDateString("es-ES", e.Concate);
+      const val = newFecha.toLocaleDateString("en-US", e.Concate);
       return val;
     })
     setArrayF(dates);

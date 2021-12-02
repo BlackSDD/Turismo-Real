@@ -1,30 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import DayPicker from 'react-day-picker';
 import axios from 'axios';
 import 'react-day-picker/lib/style.css';
 
-export default class Example extends React.Component {
+function Example({fechas}) {
   
-    constructor(props) {
-        super(props);
-        this.handleDayClick = this.handleDayClick.bind(this);
-        this.state = {
-        selectedDay: undefined,
-        fechasR: [] 
-        };
-    }
+    handleDayClick = handleDayClick.bind(this);
 
-    handleDayClick(day, { selected, disabled }) {
+    const [state, setState] = useState ( {
+        selectedDay: undefined,
+    })
+    
+    function handleDayClick(day, { selected, disabled }) {
         if (disabled) {
         // Day is disabled, do nothing
         return;
         }
         if (selected) {
         // Unselect the day if already selected
-        this.setState({ selectedDay: undefined });
+        setState({ selectedDay: undefined });
         return;
         }
-        this.setState({ selectedDay: day });
+        setState({ selectedDay: day });
     }
 
     // state = {
@@ -33,59 +30,60 @@ export default class Example extends React.Component {
     //     arrayF: []
     // }
 
-    id_d = {
-        id_dpto: 1
-    }
+    // const id_d = {
+    //     id_dpto: 1
+    // }
 
+    useEffect(()=> {
+        // getFechas(id_d)
+    })
 
-    async componentDidMount() {
-        // this.getFechas(this.id_d)
-        this.setState({
-            fechasR: this.props.fechas
-        });
-    }
+    // const getFechas = async (id) =>{
+    //     const res = await axios.post('http://localhost:4000/API/disponibilidadJson', id)
+    //     setState ({
+    //         fechas: new Date(res.data)
+    //     });
+    // }
+    const [fechasR, setFechasR] = useState([
+        '2021,12,21','2021,12,22', '2021,12,25', '2020-12-13',
+    ])
+    const [dias, setDias] = useState(null);
+    // dias2 = new Date(dias.y,dias.m,dias.d)
+    // x = [new Date(fechas.Concate)]
+    console.log('Start date');
+    console.log('Las fechas: ', fechas);
+    console.log(fechasR[0])
+    console.log('End date');
 
-    getFechas = async (id) =>{
-        const res = await axios.post('http://localhost:4000/API/disponibilidadJson', id)
-        this.setState ({
-            fechas: new Date(res.data)
-        });
-    }
-
-    dias = {
-        d:15,
-        m:11,
-        y:2021
-    }
-    
-    dias2 = new Date(this.dias.y,this.dias.m,this.dias.d)
-    // x = [new Date(this.fechas.Concate)]
-    dias3 = [new Date(this.dias.y,this.dias.m,this.dias.d),
-        new Date(2021,11,20)]
-
-    render() {
-        console.log('Start date')
-        console.log('Las fechas: ',this.state.fechasR)
-        console.log('End date')
-        return (
-            <div>
-                <h1>Day Picker</h1>
-                <DayPicker
-                    onDayClick={this.handleDayClick}
-                    selectedDays={this.state.selectedDay}
-                    // initialMonth={new Date(2021, 12)}    
-                                        
-                    disabledDays={[new Date('2021-12-15'),
-                        new Date('2021-12-11T02:00:00Z') ] }
-                />
-                {this.state.selectedDay ? (
-                <p>Fecha seleccionada {this.state.selectedDay.toLocaleDateString()}</p>
-                ) : (
-                <p>Por favor elige un día</p>
-                )}
-                <p>{this.dias[0]}</p>
-                
-            </div>
-        );
-    }
+    return (
+        <div>
+            <h1>Day Picker</h1>
+            <DayPicker
+                onDayClick={handleDayClick}
+                selectedDays={state.selectedDay}
+                // initialMonth={new Date(2021, 12)}    
+                disabledDays={[ 
+                    fechasR.map((e) => new Date(e)),
+                    new Date(fechasR.map((e)=> e)),
+                    new Date(fechasR[0]),
+                    //new Date(fechasR),
+                    // new Date(fechasR.forEach(e => e)),
+                    new Date('2021-12-11T02:00:00Z'),
+                    // new Date('2021/12/07') 
+                ]}
+            />
+            {state.selectedDay ? (
+            <p>Fecha seleccionada {state.selectedDay.toLocaleDateString()}</p>
+            ) : (
+            <p>Por favor elige un día</p>
+            )}
+            {/* <p>{dias}</p> */}
+            {
+                fechasR.map(e => {
+                    return <p>{e}</p>})
+            }
+        </div>
+    );   
 }
+
+export default Example;
