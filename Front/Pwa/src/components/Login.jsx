@@ -79,7 +79,7 @@ class Login extends React.Component{
                         sessionStorage.correo = response.data[0].email_usr
                         sessionStorage.idUsuario = response.data[0].id_usr
                         let email = sessionStorage.correo
-                        console.log('El correo es' + email)
+                        console.log('El correo es: ' + email)
         
                     }
     

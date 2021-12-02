@@ -7,10 +7,11 @@ const sql = require('mssql');
 async function getDepartamentos(){
     try{
         let pool = await sql.connect(cnx);
-        let salida = await pool.request().query('SELECT *  FROM [TurismoReal].[dbo].[departamento]');
-        console.log(salida.recordsets);
-        return salida.recordsets;
-        
+        let salida = await pool.request()
+            // .query('SELECT *  FROM [TurismoReal].[dbo].[departamento]');
+            .execute('pd_listar_deptos');
+            console.log(salida.recordsets);
+        return salida.recordsets;     
     } 
     catch(err){
         console.log(err);
