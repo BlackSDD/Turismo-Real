@@ -49,8 +49,8 @@ export default class TourNew extends Component{
 
     handleSubmit = async (e) => {
         e.preventDefault();
-        const answer = window.confirm("¿Confirmar creación de este articulo?");
-            const newComuna = {
+        const answer = window.confirm("¿Confirmar creación de este tour?");
+            const newTour = {
                 id_serv: this.state.id_serv,
                 dur_hra: this.state.dur_hra,
                 dur_min: this.state.dur_min,
@@ -63,7 +63,7 @@ export default class TourNew extends Component{
                 transporte: this.state.transporte,
             };
             if (answer && this.id_serv !== "" && this.alimentacion!=="" && this.transporte !==""){
-            axios.post('http://localhost:4000/API/tour', newComuna);
+            axios.post('http://localhost:4000/API/tour', newTour);
             notifyS();
             this.setState({
                 id_serv: "",
@@ -156,7 +156,7 @@ export default class TourNew extends Component{
                                     </Form.Select>
                                 </Form.Group>
                                 
-                                <button type="submit" class="btn btn-primary" id="btnCreateComuna">Agregar Articulo</button>
+                                <button type="submit" class="btn btn-primary" id="btnCreateComuna">Agregar TOUR</button>
                             </Form>
                         </div>
                     </div>        

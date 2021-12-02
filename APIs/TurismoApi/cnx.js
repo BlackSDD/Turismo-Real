@@ -2,7 +2,7 @@ const cnx = {
     user: 'TurismoReal1',
     password: '1234',
 
-    server : 'DESKTOP-HHQNQGG',
+    server : 'LAPTOP-ID9I44CE',
 
     database: 'TurismoReal',
     options: {

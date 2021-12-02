@@ -74,12 +74,12 @@ export default class TourList extends Component {
                         ))
                     }
 
-                        <Link to={"/UsuarioNew"} className="btn btn-secondary">
-                            <i className="material-icons">INGRESAR USUARIO</i>
+                        <Link to={"/TourNew"} className="btn btn-secondary">
+                            <i className="material-icons">INGRESAR TOUR</i>
                         </Link>
                             
-                        <Link to={"/UsuarioEdi"} className="btn btn-secondary">
-                            <i className="material-icons"> EDITAR USUARIO</i>
+                        <Link to={"/TourEdi"} className="btn btn-secondary">
+                            <i className="material-icons"> EDITAR TOUR</i>
                         </Link>
                     </div>
                 </div>

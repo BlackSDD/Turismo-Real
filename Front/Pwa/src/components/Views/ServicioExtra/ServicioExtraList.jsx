@@ -69,13 +69,10 @@ export default class UsuarioList extends Component {
                         ))
                     }
 
-                        <Link to={"/UsuarioNew"} className="btn btn-secondary">
+                        <Link to={"/ServicioExtraNew"} className="btn btn-secondary">
                             <i className="material-icons">INGRESAR SERVICIO</i>
                         </Link>
                             
-                        <Link to={"/UsuarioEdi"} className="btn btn-secondary">
-                            <i className="material-icons"> EDITAR USUARIO</i>
-                        </Link>
                     </div>
                 </div>
             

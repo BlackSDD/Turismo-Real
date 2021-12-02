@@ -43,8 +43,8 @@ export default class ArticuloEdi extends Component{
 
     handleSubmit = async (e) => {
         e.preventDefault();
-        const answer = window.confirm("¿Confirmar creación de este articulo?");
-            const newComuna = {
+        const answer = window.confirm("¿Confirmar creación de esta agencia?");
+            const newAgencia = {
                 
                 id_age: this.state.id_age,
                 nom_age: this.state.nom_age,
@@ -52,7 +52,7 @@ export default class ArticuloEdi extends Component{
                 tel_age: this.state.tel_age,
             };
             if (answer){
-            axios.put('http://localhost:4000/API/agencia', newComuna);
+            axios.put('http://localhost:4000/API/agencia', newAgencia);
             notifyS();
             this.setState({
                 id_age: " ",
