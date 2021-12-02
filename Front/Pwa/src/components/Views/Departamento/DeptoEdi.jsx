@@ -73,7 +73,6 @@ export default class DeptoEdi extends Component{
                 img_4_dpto:'' , 
                 img_5_dpto:'' ,
                 });
-            // window.location.assign("http://localhost:3000/listarcomuna");
         } else {
             notifyE();
         }

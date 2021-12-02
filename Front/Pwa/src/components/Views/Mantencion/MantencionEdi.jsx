@@ -51,7 +51,6 @@ export default class MantencionEdi extends Component{
                 cost_mant: " ",
                 deta_mant: "",
             });
-            // window.location.assign("http://localhost:3000/listarcomuna");
         } else {
             notifyE();
         }

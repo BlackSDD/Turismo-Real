@@ -63,7 +63,6 @@ export default class ArticuloNew extends Component{
                 valor_arti: " ",
                 id_dpto: " ",
             });
-            // window.location.assign("http://localhost:3000/listarcomuna");
         } else {
             notifyE();
         }

@@ -1,10 +1,6 @@
 import React from "react";
 
 import { Component } from "react";
-
-//servicios
-// import {Apiurl} from '../services/apirest';
-
 //libreria
 import axios from 'axios';
 
@@ -48,7 +44,7 @@ export default class CondonminioEdi extends Component{
 
     onInputChange = (e) => {
         this.setState({[e.target.name]: e.target.value});
-    }
+    };
 
     render(){
         

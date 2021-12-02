@@ -55,7 +55,6 @@ export default class UsuarioEdi extends Component{
                 rut_usr: "",
                 dv_usr: "", 
             });
-            // window.location.assign("http://localhost:3000/listarcomuna");
         } else {
             notifyE();
         }

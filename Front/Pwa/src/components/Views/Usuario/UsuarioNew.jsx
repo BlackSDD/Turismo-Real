@@ -86,7 +86,6 @@ export default class UsuarioNew extends Component{
                 tipo_cli: 'normal',
                 id_tipo_usr: '',
             });
-            // window.location.assign("http://localhost:3000/listarcomuna");
         } else {
             notifyE();
         }
