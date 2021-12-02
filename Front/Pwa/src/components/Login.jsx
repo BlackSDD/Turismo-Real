@@ -76,10 +76,10 @@ class Login extends React.Component{
                     {
                         notifyS();
                         //setear y almacenar datos en el session storage
-                        sessionStorage.correo = response.data[0].email_usr;
-                        sessionStorage.idUsuario = response.data[0].id_usr;
-                        let email = sessionStorage.correo;
-                        console.log('El correo es' + email);
+                        sessionStorage.correo = response.data[0].email_usr
+                        sessionStorage.idUsuario = response.data[0].id_usr
+                        let email = sessionStorage.correo
+                        console.log('El correo es: ' + email)
                         this.props.history.push("/Home");
         
                     }

@@ -1,20 +1,55 @@
-import React from 'react';
-import {  useHistory} from "react-router-dom";
+import React, {useState, useEffect} from 'react';
+import Example from './Example';
+import axios from 'axios';
 
 function Test2(){
 
+  let id_d = {
+    id_dpto: 1
+  }
 
-    let history = useHistory();
+  const [fechas, setFechas] = useState([]);
+  const [arrayF, setArrayF] = useState([]);
 
-    function handleClick() {
-      history.push("/");
-    }
-  
-    return (
-      <button type="button" onClick={handleClick}>
-        Go home
-      </button>
-    );
+  useEffect(() =>{
+    getFechas(id_d)
+    // setDate([...date, e.fec_disp])
+    // )
+    // setDate([...date, new Date((fechas.map(e => e.Concate)))])
+    // setArrayF([...arrayF, new Date( fechas[0].Concate )])    
+  }, []);
+
+  useEffect(() => {
+    const dates = fechas.map((e) => {
+      let newFecha = new Date(e.Concate);
+      const val = newFecha.toLocaleDateString("en-US", e.Concate);
+      return val;
+    })
+    setArrayF(dates);
+  }, [fechas]);
+
+  const getFechas = async (id) =>{
+    const res = await axios.post('http://localhost:4000/API/disponibilidadJson', id)
+    setFechas(res.data)
+  };
+
+  console.log('fechas ArrayF', arrayF);
+
+  return (
+    <div>
+      <Example
+        fechas={arrayF}
+      />
+      Test 2 
+      {
+        arrayF.map(e =>(
+          <div>
+            <li>{e}</li>
+          </div>
+        ))
+      }
+    </div>
+  );
 
 }
 

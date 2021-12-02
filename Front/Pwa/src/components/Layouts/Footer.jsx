@@ -44,7 +44,7 @@ function Footer() {
                     <div className="col-lg-3 col-md-6 col-sm-12">
                         <h4 className="text-center">Links de interés</h4>
                         <ul id="ul-footer-links">
-                            <li><a  href="/departamento" id="a-footer">Ver Departamentos</a></li>
+                            <li><a  href="/listarDeptos" id="a-footer">Ver Departamentos</a></li>
                             <li><a href="" id="a-footer">Ver Convenios</a></li>
                             <li><a href=""  id="a-footer">Consultar reservas</a></li>
                         </ul>
@@ -72,7 +72,7 @@ function Footer() {
             </div>
             <hr></hr>
             <div className="footer-bottom">
-                <p className="text-center"> &copy; {new Date().getFullYear()} Turimdo Real App</p>
+                <p className="text-center"> &copy; {new Date().getFullYear()} Turismo Real App</p>
             </div>
         </div>
     )

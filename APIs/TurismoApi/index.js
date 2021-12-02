@@ -1,5 +1,6 @@
 console.log('inicio')
 
+
 ///Informes////
 const InformesWS = require('./consultas/InformesWS');
 /////Departamento
@@ -65,15 +66,23 @@ var express = require('express');
 var bodyP = require('body-parser');
 var cors = require('cors');
 const { request, response } = require('express');
-const ServiciosExtras = require('./constructores/ServiciosExtra');
 const { get } = require('request');
 
 var app = express();
 var router = express.Router();
 
+
+
+var cors = require('cors');
+const corsOptions ={
+    origin:'http://localhost:3000', 
+    credentials:true,            //access-control-allow-credentials:true
+    optionSuccessStatus:200
+}
+app.use(cors())     
+app.use(cors(corsOptions));
 app.use(bodyP.urlencoded({extended: true}));
 app.use(bodyP.json());
-app.use(cors());
 app.use('/API', router);
 
 ///// Paypal /////
@@ -439,9 +448,11 @@ router.route('/contServicio').put((request, response) => {
 router.route('/departamento').get((request, response) => {
     DepartamentoWS.getDepartamentos().then(result =>{
         response.json(result[0]);
+    }, (err) => {
+        console.log(err.message);
+        response.json(err.message)
     });
 });
-
 
 //agregar departamento
 router.route('/departamento').post((request, response) => {
@@ -505,6 +516,27 @@ router.route('/disponibilidad/:id_dpto').get((request, response) => {
             response.json(err.message)
         });
     });
+// array para traer id {"Depto": id_dpto}
+router.route('/disponibilidadNo').post((request, response) => {
+    let Depto = {...request.body}
+    DisponibilidadWS.getNoDisponibe(Depto).then(result => {
+        response.json(result[0]);
+    }, (err) => {
+        console.log(err.message);
+        response.json(err.message)
+    });
+});
+
+// array para traer id {"Depto": id_dpto}
+router.route('/disponibilidadJson').post((request, response) => {
+    let id_dpto = {...request.body}
+    DisponibilidadWS.getNoDisponibleJson(id_dpto).then(result => {
+        response.json(result[0]);
+    }, (err) => {
+        console.log(err.message);
+        response.json(err.message)
+    });
+});
 
 //////////GASTOS//////////////
 ///Listar Gastos
@@ -619,7 +651,7 @@ router.route('/pago').get((request, response) => {
         response.json(err.message)
     });
 });
-
+///
 //Registrar pago
 router.route('/pago').post((request, response) => {
     let Pago = {...request.body}
@@ -954,6 +986,7 @@ router.route('/informeResDet/').post((request, response) => {
         response.json(err.message)
     });
 });
+
 router.route('/informeResDetServ/:id_reserva').get((request, response) => {
     InformesWS.getInformeReservaDetServ(request.params.id_reserva).then(result =>{
         response.json(result[0]);
@@ -970,8 +1003,6 @@ router.route('/informeResGen/:agno').get((request, response) => {
 
 //////////////////////////INFORME RESERVAS GENERAL////////////////////////////////////////////////////
 
-
 var portcnx = process.env.PORT || 4000;
 app.listen(portcnx);
 console.log('fin de consulta')
-

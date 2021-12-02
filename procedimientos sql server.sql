@@ -484,6 +484,37 @@ begin
 end;
 go
 
+---- LISTAR DEPTOS
+create or alter procedure pd_listar_deptos 
+as
+begin
+select 
+	rg.id_rgn,
+	rg.nom_rgn,
+	cm.id_com,
+	cm.nom_com,
+	cn.id_cnd,
+	concat( cn.nom_cnd, ' #' ,d.num_dpto ) as "depto",
+	d.id_dpto,
+	d.dir_dpto,
+	d.n_amb_dpto,
+	d.desc_dpto,
+	d.costo_arri_dpto,
+	d.img_1_dpto,
+	d.img_2_dpto,
+	d.img_3_dpto,
+	d.img_4_dpto,
+	d.img_5_dpto
+	from 
+	departamento d join condominio cn
+		on d.id_cnd = cn.id_cnd
+	join comuna cm
+		on cm.id_com = cn.id_com
+	join region rg
+		on rg.id_rgn = cm.id_rgn
+	order by rg.id_rgn, cm.id_com, id_cnd , "depto";
+end;
+
 ---------------------------------------------------------------------------
 
 -- TABLA GASTOS

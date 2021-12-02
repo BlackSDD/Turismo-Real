@@ -33,16 +33,17 @@ function PaypalCheckout ({precio, id_rva}) {
     
     const [informeR, setInformeR] = useState([])
     const [count, setCount] = useState(false);
+    const [id, setId] = useState('')
 
     let urlId = {
         id_reserva: id_rva
-    }
     
-    console.log({urlId})
+    }
     
     useEffect(() => {
         getInformeRes(urlId);
     },[]);
+
 
     const getInformeRes = async () => {
         const res = await axios.post('http://localhost:4000/API/informeResDet/', urlId )
