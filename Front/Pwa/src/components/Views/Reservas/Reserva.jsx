@@ -99,21 +99,18 @@ export default function Reserva() {
             </div>);
     };
     
-    
     let variable = sessionStorage.Pagar;
 
     useEffect(() => {
         variable = sessionStorage.Pagar;
         console.log('variable: ',variable)
-    }, )
-
+    },[])
 
     console.log('Inicio carga disponibilidad');
     console.log('Fechas: ',fechas);
     console.log('fechas ArrayF', arrayF);
     console.log('End carga disponibilidad');
     
-
     if(count===false){
         return (
             <div>
