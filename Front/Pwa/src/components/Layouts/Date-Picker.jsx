@@ -4,6 +4,7 @@ import {Button, Form} from 'react-bootstrap';
 // import 'react-day-picker/lib/style.css';
 import '../../assetss/css/Date-Picker.css'
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 
 export default class DatePicker extends React.Component {
   static defaultProps = {
@@ -42,6 +43,7 @@ export default class DatePicker extends React.Component {
 
   HandleReserva = async(from, to, num, reservado) =>{
     console.log('# personas:',num)
+    //Almaceno los datos del storage
     let datos ={
       id_usr: sessionStorage.idUsuario,
       id_dpto : sessionStorage.id_d
@@ -55,7 +57,7 @@ export default class DatePicker extends React.Component {
     };
     axios.post('http://localhost:4000/API/reserva', newReserva);
     let reserva = await axios.post('http://localhost:4000/API/reservaCurrent', datos);
-    console.log(reserva.data[0])
+    console.log('Reserva data 0:',reserva.data[0])
     let infoResv = reserva.data;
     let idReserva = infoResv.map((e)=>{
         let x = e.curr_id;
@@ -65,9 +67,12 @@ export default class DatePicker extends React.Component {
     console.log('infoResv:', infoResv.curr_id);
     console.log('id final: ', idReserva)
     sessionStorage.reserva = idReserva;
-    this.setState({reservado: true});
-    console.log(reservado);
+    // this.setState({reservado: true});
+    // console.log('Reservado: ',reservado);
     sessionStorage.Pagar = true;
+
+    let redir = { redirect: "http://localhost:3000/paypal" };
+    return(<Redirect to={redir.redirect}/>);
   }
 
   handleResetClick() {

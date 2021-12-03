@@ -5,9 +5,18 @@ import axios from 'axios';
 
 const PayPalButton = window.paypal.Buttons.driver("react", { React, ReactDOM });
 
-function PaypalCheckout ({precio, id_rva}) {
+function PaypalCheckout () {
     // const [price, setPrice] = useState(0);
     // let history = useHistory();
+    const [pago, setPago] = useState([]);
+    const precio = pago;
+    const id_rva = sessionStorage.reserva;
+    const [informeR, setInformeR] = useState([])
+    const [count, setCount] = useState(false);
+
+    let urlId = {
+        id_reserva: id_rva
+    }
 
     let dolar = Math.round(precio/830);
 
@@ -21,26 +30,30 @@ function PaypalCheckout ({precio, id_rva}) {
         });
     };
 
+    useEffect((e)=>{
+        // e.preventDefault();
+            getMontoPago(id_rva);
+    },[]);
+
+    const getMontoPago = async (id) =>{
+        const res = await axios.get('http://localhost:4000/API/pago/montoPago/' + id)
+        setPago(res.data);
+        console.log(res.data);
+    }
+    
     const onApprove = (data, actions) => {
         return actions.order.capture(handlePay());
     };
 
     function handlePay(e){
         console.log("Pago recibido");
+        getInformeRes(urlId);
         setCount(true);
     }
     
-    const [informeR, setInformeR] = useState([])
-    const [count, setCount] = useState(false);
-   
-
-    let urlId = {
-        id_reserva: id_rva
-    }
-    
-    useEffect(() => {
-        getInformeRes(urlId);
-    },[]);
+    // useEffect(() => {
+    //     getInformeRes(urlId);
+    // },[]);
 
     const getInformeRes = async () => {
         const res = await axios.post('http://localhost:4000/API/informeResDet/', urlId )
@@ -70,6 +83,8 @@ function PaypalCheckout ({precio, id_rva}) {
                     <div>
                         <p>{e.Cliente}</p>  
                         <p>{e.FechaReserva}</p> 
+                        <p>{dolar}</p>
+                        <p>{pago}</p>
                     </div>
                 )
             }

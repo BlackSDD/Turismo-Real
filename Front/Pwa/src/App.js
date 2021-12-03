@@ -7,6 +7,7 @@ import Test from './components/test';
 import Test2 from './components/test2';
 import Test3 from './components/test3';
 
+import Paypal from './components/Layouts/PaypalCheckout';
 
 //Landing
 import Login from './components/Login';
@@ -71,6 +72,7 @@ function App() {
           <Route path="/test" exact render ={ props=> ( <Test {...props} />)}></Route>     
           <Route path="/test2" exact render ={ props=> ( <Test2 {...props} />)}></Route>     
           <Route path="/test3" exact render ={ props=> ( <Test3 {...props} />)}></Route>     
+          <Route path="/paypal" exact render ={ props=> ( <Paypal {...props} />)}></Route>     
 
     {/* PostRoutes--------- */}
             <Route path="/condominio" exact render={props => (<Condominio {...props}/>)}></Route>

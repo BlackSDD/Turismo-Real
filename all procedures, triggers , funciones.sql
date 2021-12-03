@@ -98,7 +98,8 @@ begin
 	END;
 	set @I = 0;
 	set @v_fecha = getdate();
-	WHILE @I <= 1000
+	SET @v_fecha = DATEADD(day, -1, @v_fecha);
+	WHILE @I <= 365
 	begin
 		INSERT disponibilidad (FEC_DISP, ESTA_DISP, ID_DPTO)
                VALUES (@v_fecha, 'No', @v_id_dpto);
@@ -847,12 +848,7 @@ select
 	d.dir_dpto,
 	d.n_amb_dpto,
 	d.desc_dpto,
-	d.costo_arri_dpto,
-	d.img_1_dpto,
-	d.img_2_dpto,
-	d.img_3_dpto,
-	d.img_4_dpto,
-	d.img_5_dpto
+	d.costo_arri_dpto
 	from 
 	departamento d join condominio cn
 		on d.id_cnd = cn.id_cnd
