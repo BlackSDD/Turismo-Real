@@ -67,11 +67,12 @@ function PaypalCheckout ({precio, id_rva}) {
             <h1>Pago recibido</h1>
             {
                 informeR.map(e =>
-                    <p>{e.Cliente}</p>  
-                    // <p>{e.fecha_reserva}</p>  
+                    <div>
+                        <p>{e.Cliente}</p>  
+                        <p>{e.FechaReserva}</p> 
+                    </div>
                 )
             }
-            
         </div>
     );
     }
