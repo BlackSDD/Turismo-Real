@@ -49,7 +49,10 @@ export default class CondominioNew extends Component{
    
                 
             };
-            if (answer && this.state.nom_cnd !== ""){
+            if (answer && 
+                this.state.nom_cnd !== "" && 
+                this.state.id_com !== "" 
+                ){
             axios.post('http://localhost:4000/API/condominio', newComuna);
             notifyS();
             this.setState({
@@ -83,6 +86,9 @@ export default class CondominioNew extends Component{
                                 <Form.Group>
                                     <Form.Label>Tipo de usuario</Form.Label>
                                     <Form.Select  value={this.state.id_com} onChange={this.onInputChange} name="id_com" required>
+                                    <option value="">
+                                        Ingrese una opción
+                                    </option>
                                     {
                                         this.state.nomCom.map(reg => (
                                         <option  value={reg.id_com}>

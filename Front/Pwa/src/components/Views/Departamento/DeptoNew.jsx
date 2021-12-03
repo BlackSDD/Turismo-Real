@@ -56,7 +56,14 @@ handleSubmit = async (e) => {
 
             
         };
-        if (answer && this.state.dir_dpto!== ""){
+        if (answer && 
+            this.state.dir_dpto!== "" &&
+            this.state.num_dpto!== "" &&
+            this.state.n_amb_dpto!== "" &&
+            this.state.desc_dpto!== "" &&
+            this.state.costo_arri_dpto!== "" &&
+            this.state.id_cnd!== ""
+            ){
         axios.post('http://localhost:4000/API/departamento', newDepartamento);
         notifyS();
         this.setState({

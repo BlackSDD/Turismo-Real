@@ -745,6 +745,13 @@ router.route('/serviciosExtra').get((request, response) => {
         response.json(result[0]);
     });
 });
+
+router.route('/serviciosExtraTrasporte').get((request, response) => {
+    ServiciosExtraWS.getServiciosExtrasTransporte().then(result =>{
+        response.json(result[0]);
+    });
+});
+
 //Ver un servicio extra en especifico
 router.route('/serviciosExtra/:id_serv').get((request, response) => {
     ServiciosExtraWS.getServicoExtra(request.params.id_serv).then(result =>{
@@ -801,6 +808,7 @@ router.route('/transporte').get((request, response) => {
         response.json(result[0]);
     });
 });
+
 
 ///Agregar transporte
 router.route('/transporte').post((request, response) => {

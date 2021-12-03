@@ -56,10 +56,16 @@ export default class UsuarioList extends Component {
                             <div className="col-sm-3 col-md-6" key={art.id_serv}>
                                         <div className="card-body">
                                         <p>
-                                          nombre: {art.nom_serv}
+                                          Agencia: {art.nom_age}
                                         </p>
                                         <p>
-                                          descripcion: {art.desc_serv}
+                                          Tipo de servicio: {art.tipo_serv}
+                                        </p>
+                                        <p>
+                                          Nombre: {art.nom_serv}
+                                        </p>
+                                        <p>
+                                          Descripción: {art.desc_serv}
                                         </p>
 
 

@@ -6,7 +6,7 @@ const sql = require('mssql');
 async function getServiciosExtras(){
     try{
         let pool = await sql.connect(cnx);
-        let salida = await pool.request().query('select * from servextras');
+        let salida = await pool.request().query('select * from servextras inner join agencia_externa on servextras.id_agencia = agencia_externa.id_agencia');
         console.log(salida.recordsets);
         return salida.recordsets;
         
@@ -15,6 +15,20 @@ async function getServiciosExtras(){
         console.log(err);
     }
 }
+
+async function getServiciosExtrasTransporte(){
+    try{
+        let pool = await sql.connect(cnx);
+        let salida = await pool.request().query("select * from servextras where tipo_serv = 'V' ");
+        console.log(salida.recordsets);
+        return salida.recordsets;
+        
+    } 
+    catch(err){
+        console.log(err);
+    }
+}
+
 //Ver un servicio extra
 async function getServicoExtra(id_serv){
     try{
@@ -51,6 +65,7 @@ async function newServicioExtra(ServiciosExtras){
 
 
 module.exports = {
+    getServiciosExtrasTransporte: getServiciosExtrasTransporte,
     getServiciosExtras: getServiciosExtras,
     getServicoExtra: getServicoExtra,
     newServicioExtra: newServicioExtra

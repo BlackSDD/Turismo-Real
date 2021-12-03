@@ -27,13 +27,13 @@ export default class CondominioEdit extends Component{
 
     state ={
         nom_cnd:'', 
-	    id_com:'', 
+	    id_cnd:'', 
         nomCom: []
         
     }
 
     async componentDidMount() {
-        const res = await axios.get('http://localhost:4000/API/comuna');
+        const res = await axios.get('http://localhost:4000/API/condominio');
         this.setState({
             nomCom: res.data
         });
@@ -45,16 +45,19 @@ export default class CondominioEdit extends Component{
         const answer = window.confirm("¿Confirmar la creación del condominio?");
             const newComuna = {
                 nom_cnd: this.state.nom_cnd,
-                id_com: this.state.id_com
+                id_cnd: this.state.id_cnd
    
                 
             };
-            if (answer && this.state.nom_cnd !== ""){
+            if (answer && 
+                this.state.nom_cnd !== "" && 
+                this.state.id_com !== "" 
+                ){
             axios.put('http://localhost:4000/API/condominio', newComuna);
             notifyS();
             this.setState({
                 nom_cnd:'', 
-                id_com: '',
+                id_cnd: '',
             });
         } else {
             notifyE();
@@ -76,21 +79,24 @@ export default class CondominioEdit extends Component{
                         <h1 id="create-comuna-title">Ingresar Articulo</h1>
                         <div id="create-comuna-form">
                             <Form className="contact-form" onSubmit={this.handleSubmit}>
-                                <Form.Group className="mb-3" controlId="Articulo">
-                                    <Form.Label>Nombre comuna</Form.Label>
-                                    <Form.Control type="text" name="nom_cnd" placeholder="Nombre condominio" rows={1} value={this.state.nom_com} required onChange={this.onInputChange}/>
-                                </Form.Group>
                                 <Form.Group>
-                                    <Form.Label>Tipo de usuario</Form.Label>
-                                    <Form.Select  value={this.state.id_com} onChange={this.onInputChange} name="id_com" required>
-                                    {
+                                    <Form.Label>Comuna a actualizar</Form.Label>
+                                    <Form.Select  value={this.state.id_cnd} onChange={this.onInputChange} name="id_cnd" required>
+                                    <option value="">
+                                        Ingrese una opción
+                                    </option>                                    {
                                         this.state.nomCom.map(reg => (
-                                        <option  value={reg.id_com}>
-                                            {reg.nom_com}
+                                        <option  value={reg.id_cnd}>
+                                            {reg.nom_cnd}
                                         </option>
                                         ))
                                     }
                                     </Form.Select>
+                                </Form.Group>
+
+                                <Form.Group className="mb-3" controlId="Articulo">
+                                    <Form.Label>Nombre comuna</Form.Label>
+                                    <Form.Control type="text" name="nom_cnd" placeholder="Nombre condominio" rows={1} value={this.state.nom_com} required onChange={this.onInputChange}/>
                                 </Form.Group>
                                 <button type="submit" class="btn btn-primary" id="btnCreateComuna">Agregar Articulo</button>
                             </Form>

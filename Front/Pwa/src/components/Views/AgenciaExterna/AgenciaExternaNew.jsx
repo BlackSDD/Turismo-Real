@@ -50,7 +50,13 @@ export default class ArticuloNew extends Component{
                 tel_age: this.state.tel_age,
                 id_com: this.state.id_com,
             };
-            if (answer){
+            if (answer && 
+                this.state.nom_age !== "" && 
+                this.state.email_age !== "" && 
+                this.state.tel_age !== "" && 
+                this.state.id_com !== ""  
+
+                ){
             axios.post('http://localhost:4000/API/agencia', newAgencia);
             notifyS();
             this.setState({
@@ -79,20 +85,23 @@ export default class ArticuloNew extends Component{
                         <div id="create-comuna-form">
                             <Form className="contact-form" onSubmit={this.handleSubmit}>
                                 <Form.Group className="mb-3" controlId="Articulo">
-                                    <Form.Label>Ingrese nombre del articulo</Form.Label>
+                                    <Form.Label>Nombre de agencia</Form.Label>
                                     <Form.Control as="textarea" name="nom_age" placeholder= "nombre del articulo" rows={1} value={this.state.nom_age} required onChange={this.onInputChange}/>
                                 </Form.Group>
                                 <Form.Group className="mb-3" controlId="Articulo">
-                                    <Form.Label>Ingrese la cantidad de objetos</Form.Label>
+                                    <Form.Label>Email de agencia</Form.Label>
                                     <Form.Control type="email" name="email_age" placeholder= "cantidad " rows={1} value={this.state.email_age} required onChange={this.onInputChange}/>
                                 </Form.Group>
                                 <Form.Group className="mb-3" controlId="Articulo">
-                                    <Form.Label>Ingrese el precio del articulo</Form.Label>
+                                    <Form.Label>Teléfono de agencia</Form.Label>
                                     <Form.Control as="input" name="tel_age" placeholder= "precio " rows={1} value={this.state.tel_age} required onChange={this.onInputChange}/>
                                 </Form.Group>
                                 <Form.Group>
-                                    <Form.Label>Ingrese la comuna</Form.Label>
+                                    <Form.Label>Comuna a la cual pertenece</Form.Label>
                                     <Form.Select  value={this.state.id_com} onChange={this.onInputChange} name="id_com" required>
+                                    <option value="">
+                                        Ingrese una opción
+                                    </option>
                                     {
                                         this.state.comuna.map(reg => (
                                         <option  value={reg.id_com}>

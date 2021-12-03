@@ -87,7 +87,7 @@ export default class CondominioList extends Component {
                         ))
                     }
 
-                        <Link to={"/CondominioNew"} className="btn btn-secondary">
+                        <Link to={"/CondominioNew"} className="btn btn-secondary mt-5">
                             <i className="material-icons">INGRESAR CONDOMINIO</i>
                         </Link>
                             

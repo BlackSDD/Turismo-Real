@@ -19,7 +19,7 @@ const MainAdmin = () => {
                     <div class="card-body">
                     <div className="title col-12 mt-1 mb-1 text-start">
                         <h6>Gestión departamentos y condominios</h6>
-                        <li><Link class="menu-item text-white" to="/t">Administrar condominios</Link></li>
+                        <li><Link class="menu-item text-white" to="/CondominioList">Administrar condominios</Link></li>
                         <hr />
                         <li><Link class="menu-item text-white" to="/DeptoList">Administrar departamentos</Link></li>
                         <hr />
