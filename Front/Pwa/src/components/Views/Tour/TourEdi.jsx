@@ -50,8 +50,8 @@ export default class UsuarioEdi extends Component{
 
     handleSubmit = async (e) => {
         e.preventDefault();
-        const answer = window.confirm("¿Confirmar creación de este articulo?");
-            const newComuna = {
+        const answer = window.confirm("¿Confirmar creación de este Tour?");
+            const newTour = {
                 
                 id_serv: this.state.id_serv,
                 dur_hra: this.state.dur_hra,
@@ -65,7 +65,7 @@ export default class UsuarioEdi extends Component{
                 transporte: this.state.transporte,
             };
             if (answer){
-            axios.put('http://localhost:4000/API/tour', newComuna);
+            axios.put('http://localhost:4000/API/tour', newTour);
             notifyS();
             this.setState({
             id_serv: '',
@@ -158,7 +158,7 @@ export default class UsuarioEdi extends Component{
                                     </Form.Select>
                                 </Form.Group>
                                 
-                                <button type="submit" class="btn btn-primary" id="btnCreateComuna">Agregar Articulo</button>
+                                <button type="submit" class="btn btn-primary" id="btnCreateComuna">Modificar Tour</button>
                             </Form>
                         </div>
                     </div>        

@@ -63,39 +63,39 @@ export default class UsuarioList extends Component {
                 <div className="row">
                     
                     {
-                        this.state.usuario.map(art => (
-                            <div className="col-sm-3 col-md-6" key={art.id_usr}>
+                        this.state.usuario.map(usr => (
+                            <div className="col-sm-3 col-md-6" key={usr.id_usr}>
                                         <div className="card-body">
                                         <p>
-                                          nombre: {art.nom_usr}  {art.appat_usr} {art.apmat_usr} 
+                                          nombre: {usr.nom_usr}  {usr.appat_usr} {usr.apmat_usr} 
                                         </p>
                                         <p>
-                                          RUT: {art.rut_usr}-{art.dv_usr}
+                                          RUT: {usr.rut_usr}-{usr.dv_usr}
                                         </p>
                                         <p>
-                                          Telefono de contacto:  {art.tel_usr}
+                                          Telefono de contacto:  {usr.tel_usr}
                                         </p>
                                         <p>
-                                          Correo de contacto :   {art.email_usr}
+                                          Correo de contacto :   {usr.email_usr}
                                         </p>
                                         <p>
-                                          Cantidad de reservas :   {art.email_usr}
+                                          Cantidad de reservas :   {usr.cant_res}
                                         </p>
                                         <p>
-                                          Estado cuenta :   {art.est_cta}
+                                          Estado cuenta :   {usr.est_cta}
                                         </p>
                                         <p>
-                                          Tipo cuenta :   {art.tipo_cli}
+                                          Tipo cuenta :   {usr.tipo_cli}
                                         </p>
 
                                         </div>
                                     <div className="card-footer">
-                                        <button className="btn btn-danger" onClick={() => this.Suspender(art.id_usr)}>
+                                        <button className="btn btn-danger" onClick={() => this.Suspender(usr.id_usr)}>
                                             SUSPENDER USUARIO
                                         </button>
                                     </div>
                                     <div className="card-footer">
-                                        <button className="btn btn-danger" onClick={() => this.Validar(art.id_usr)}>
+                                        <button className="btn btn-danger" onClick={() => this.Validar(usr.id_usr)}>
                                             VALIDAR USUARIO
                                         </button>
                                     </div>

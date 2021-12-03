@@ -43,15 +43,15 @@ export default class ArticuloNew extends Component{
 
     handleSubmit = async (e) => {
         e.preventDefault();
-        const answer = window.confirm("¿Confirmar creación de este articulo?");
-            const newComuna = {
+        const answer = window.confirm("¿Confirmar creación de esta agencia externa?");
+            const newAgencia = {
                 nom_age: this.state.nom_age,
                 email_age: this.state.email_age,
                 tel_age: this.state.tel_age,
                 id_com: this.state.id_com,
             };
             if (answer){
-            axios.post('http://localhost:4000/API/agencia', newComuna);
+            axios.post('http://localhost:4000/API/agencia', newAgencia);
             notifyS();
             this.setState({
                 nom_age: " ",
@@ -102,7 +102,7 @@ export default class ArticuloNew extends Component{
                                     }
                                     </Form.Select>
                                 </Form.Group>
-                                <button type="submit" class="btn btn-primary" id="btnCreateComuna">Agregar Articulo</button>
+                                <button type="submit" class="btn btn-primary" id="btnCreateComuna">Agregar Agencia</button>
                             </Form>
                         </div>
                     </div>        

@@ -47,15 +47,15 @@ export default class ReservaMantencionNew extends Component{
 
     handleSubmit = async (e) => {
         e.preventDefault();
-        const answer = window.confirm("¿Confirmar creación de este articulo?");
-            const newComuna = {
+        const answer = window.confirm("¿Confirmar creación de esta mantencion?");
+            const newResMan = {
                 fec_rmant: this.state.fec_rmant,
                 id_usr: this.state.id_usr,
                 id_dpto: this.state.id_dpto,
                 
             };
             if (answer){
-            axios.post('http://localhost:4000/API/reservaMantencion', newComuna);
+            axios.post('http://localhost:4000/API/reservaMantencion', newResMan);
             notifyS();
             this.setState({
                 fec_rmant: "",
@@ -78,7 +78,7 @@ export default class ReservaMantencionNew extends Component{
             <React.Fragment>
                 <div id="admin-background">
                     <div class="container">
-                        <h1 id="create-comuna-title">Ingresar Articulo</h1>
+                        <h1 id="create-comuna-title">Ingresar Mantención</h1>
                         <div id="create-comuna-form">
                             <Form className="contact-form" onSubmit={this.handleSubmit}>
                                 <Form.Group className="mb-3" controlId="Articulo">
@@ -109,7 +109,7 @@ export default class ReservaMantencionNew extends Component{
                                     }
                                     </Form.Select>
                                 </Form.Group>
-                                <button type="submit" class="btn btn-primary" id="btnCreateComuna">Agregar Articulo</button>
+                                <button type="submit" class="btn btn-primary" id="btnCreateComuna">Agregar Mantención</button>
                             </Form>
                         </div>
                     </div>        

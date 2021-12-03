@@ -74,12 +74,12 @@ export default class ArticuloList extends Component {
                         ))
                     }
 
-                            <Link to={"/ArticuloNew"} className="btn btn-secondary">
-                                <i className="material-icons">INGRESAR ARTICULO</i>
+                            <Link to={"/AgenciaExternaNew"} className="btn btn-secondary">
+                                <i className="material-icons">INGRESAR AGENCIA</i>
                             </Link>
                             
-                            <Link to={"/ArticuloEdi"} className="btn btn-secondary">
-                                <i className="material-icons"> EDITAR ARTICULO</i>
+                            <Link to={"/AgenciaExternaEdi"} className="btn btn-secondary">
+                                <i className="material-icons"> EDITAR AGENCIA</i>
                             </Link>
                     </div>
                 </div>
