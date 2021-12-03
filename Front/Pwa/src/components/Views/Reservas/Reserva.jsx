@@ -2,7 +2,8 @@ import React, {  Component, useEffect, useState } from 'react';
 import PaypalCheckout from '../../Layouts/PaypalCheckout';
 import axios from 'axios';
 import {toast} from 'react-toastify';
-
+///import PWA
+<link rel="manifest" href="../../public/manifest.json"></link>
 
 toast.configure({
 
