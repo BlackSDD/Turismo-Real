@@ -5,6 +5,8 @@ import {Form} from 'react-bootstrap';
 import axios from 'axios';
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+///import PWA
+<link rel="manifest" href="../../public/manifest.json"></link>
 toast.configure({
 
 });

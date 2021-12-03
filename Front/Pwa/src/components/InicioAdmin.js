@@ -1,6 +1,8 @@
 import React from 'react'
 import "../assetss/css/Admin.css"
 import { Router, Route, Link } from 'react-router-dom';
+///import PWA
+<link rel="manifest" href="../../public/manifest.json"></link>
 
 const MainAdmin = () => {
     return (

@@ -1,13 +1,15 @@
-import React from 'react'
+import React from 'react';
 import '../assetss/css/home.css';
 import Carrusel from './Layouts/Carrusel';
 import CarruselTours from './Layouts/carrusel-tours';
 import CarruselTaxi from './Layouts/carrusel-taxi';
-import Navbar from '../components/Layouts/Navbar.jsx'
+import Navbar from '../components/Layouts/Navbar.jsx';
+///import PWA
+<link rel="manifest" href="../../public/manifest.json"></link>
 
 //Forma de llamar a datos de sesion storage
-let email = sessionStorage.correo
-console.log('El correo es' + email)
+let email = sessionStorage.correo;
+console.log('El correo es' + email);
 
 const Landing = () => {
     return (
