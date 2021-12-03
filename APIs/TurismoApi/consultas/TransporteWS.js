@@ -6,7 +6,7 @@ const sql = require('mssql');
 async function getTransportes(){
     try{
         let pool = await sql.connect(cnx);
-        let salida = await pool.request().query('SELECT *  FROM [TurismoReal].[dbo].[transporte]');
+        let salida = await pool.request().query('select * from transporte inner join servextras on transporte.id_serv = servextras.id_serv');
         console.log(salida.recordsets);
         return salida.recordsets;
         

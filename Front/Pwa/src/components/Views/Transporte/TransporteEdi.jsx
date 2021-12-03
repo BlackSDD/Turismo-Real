@@ -26,22 +26,15 @@ const notifyE = () =>{
 export default class UsuarioEdi extends Component{
 
     state ={
-        id_serv: '',
-        dur_hra: '',
-        dur_min: '',
-        cost_adult:'',
-        cost_nigno:'',
-        cost_3ra:'',
-        ubi_partida:'',
-        ubi_fin:'',
-        alimentacion:'',
-        transporte:'',
-        servicio:[],
-    }
-    
+        id_serv:"" ,
+        cost_km_dia:"" ,
+        cost_km_noc:"" ,
+        servicio: []
+        
+    }    
 
     async componentDidMount() {
-        const res = await axios.get('http://localhost:4000/API/tour');
+        const res = await axios.get('http://localhost:4000/API/serviciosExtraTrasporte');        
         this.setState({
             servicio: res.data
         });
@@ -50,36 +43,26 @@ export default class UsuarioEdi extends Component{
 
     handleSubmit = async (e) => {
         e.preventDefault();
-        const answer = window.confirm("¿Confirmar creación de este articulo?");
+        const answer = window.confirm("¿Confirmar la tarifa del transporte?");
             const newComuna = {
-                
-                id_serv: this.state.id_serv,
-                dur_hra: this.state.dur_hra,
-                dur_min: this.state.dur_min,
-                cost_adult: this.state.cost_adult,
-                cost_nigno: this.state.cost_nigno,
-                cost_3ra: this.state.cost_3ra,
-                ubi_partida: this.state.ubi_partida,
-                ubi_fin: this.state.ubi_fin,
-                alimentacion: this.state.alimentacion,
-                transporte: this.state.transporte,
+            id_serv:this.state.id_serv ,
+            cost_km_dia:this.state.cost_km_dia ,
+            cost_km_noc:this.state.cost_km_noc
             };
-            if (answer){
-            axios.put('http://localhost:4000/API/tour', newComuna);
+            if (answer && 
+            this.state.id_serv !== "" && 
+            this.state.cost_km_dia !== "" && 
+            this.state.cost_km_noc !== ""
+            ){
+            axios.put('http://localhost:4000/API/transporte', newComuna);            
             notifyS();
             this.setState({
-            id_serv: '',
-            dur_hra: '',
-            dur_min: '',
-            cost_adult:'',
-            cost_nigno:'',
-            cost_3ra:'',
-            ubi_partida:'',
-            ubi_fin:'',
-            alimentacion:'',
-            transporte:'',
-            });
-        } else {
+            id_serv:"" ,
+            cost_km_dia:"" ,
+            cost_km_noc:"" ,
+            });        
+            } else 
+            {
             notifyE();
         }
     }
@@ -95,70 +78,30 @@ export default class UsuarioEdi extends Component{
             <React.Fragment>
                 <div id="admin-background">
                     <div class="container">
-                        <h1 id="create-comuna-title">Ingrese Tour Nuevo</h1>
+                        <h1 id="create-comuna-title">Definir tarifa de Transporte</h1>
                         <div id="create-comuna-form">
                             <Form className="contact-form" onSubmit={this.handleSubmit}>
                             <Form.Group>
-                                    <Form.Label>Ingrese La agencia</Form.Label>
+                                    <Form.Label>Servicio</Form.Label>
                                     <Form.Select  value={this.state.id_serv} onChange={this.onInputChange} name="id_serv" required>
-                                    <option value="">ingrese una agencia</option>
+                                    <option value="">
+                                        Ingrese una opción
+                                    </option>
                                     {
                                         this.state.servicio.map(reg => (
                                         <option  value={reg.id_serv}>
-                                            {reg.ubi_partida}
+                                            {reg.nom_serv}
                                         </option>
                                         ))
                                     }
                                     </Form.Select>
                                 </Form.Group>
-
-                                <Form.Group className="mb-3" controlId="Articulo">
-                                    <Form.Label>Ingrese las horas que dura el viaje</Form.Label>
-                                    <Form.Control as="input" name="dur_hra" rows={1} value={this.state.dur_hra} required onChange={this.onInputChange}/>
-                                </Form.Group>
-                                <Form.Group className="mb-3" controlId="Articulo">
-                                    <Form.Label>Ingrese los minutos</Form.Label>
-                                    <Form.Control as="input" name="dur_min" rows={1} value={this.state.dur_min} required onChange={this.onInputChange}/>
-                                </Form.Group>
-                                <Form.Group className="mb-3" controlId="Articulo">
-                                    <Form.Label>Costo por adulto</Form.Label>
-                                    <Form.Control as="input" name="cost_adult" rows={1} value={this.state.cost_adult} required onChange={this.onInputChange}/>
-                                </Form.Group>
-                                <Form.Group className="mb-3" controlId="Articulo">
-                                    <Form.Label>Costo niño</Form.Label>
-                                    <Form.Control as="input" name="cost_nigno" rows={1} value={this.state.cost_nigno} required onChange={this.onInputChange}/>
-                                </Form.Group>
-                                <Form.Group className="mb-3" controlId="Articulo">
-                                    <Form.Label>Costo tercera edad</Form.Label>
-                                    <Form.Control as="input" name="cost_3ra" rows={1} value={this.state.cost_3ra} required onChange={this.onInputChange}/>
-                                </Form.Group>
-                                <Form.Group className="mb-3" controlId="Articulo">
-                                    <Form.Label>Ingrese donde inicia el tour</Form.Label>
-                                    <Form.Control as="textarea" name="ubi_partida" rows={1} value={this.state.ubi_partida} required onChange={this.onInputChange}/>
-                                </Form.Group>
-                                <Form.Group className="mb-3" controlId="Articulo">
-                                    <Form.Label>Ingrese donde termina el tour</Form.Label>
-                                    <Form.Control as="textarea" name="ubi_fin" rows={1} value={this.state.ubi_fin} required onChange={this.onInputChange}/>
-                                </Form.Group>
+                                <Form.Group className="mb-3" controlId="Transporte">
+                                    <Form.Label>Costo km. noche</Form.Label>
+                                    <Form.Control type="number" name="cost_km_noc" placeholder="65" rows={1} value={this.state.cost_km_noc} required onChange={this.onInputChange}/>
+                                </Form.Group>        
                                 
-                                <Form.Group>
-                                    <Form.Label>Incluye comida</Form.Label>
-                                    <Form.Select  value={this.state.alimentacion} onChange={this.onInputChange} name="alimentacion" required>
-                                        <option value="">ingrese una opcion</option>
-                                        <option value="Si">Si</option>
-                                        <option value="No">No</option>
-                                    </Form.Select>
-                                </Form.Group>
-                                <Form.Group>
-                                    <Form.Label>Incluye Transporte</Form.Label>
-                                    <Form.Select  value={this.state.transporte} onChange={this.onInputChange} name="transporte" required>
-                                        <option value="">ingrese una opcion</option>
-                                        <option value="Si">Si</option>
-                                        <option value="No">No</option>
-                                    </Form.Select>
-                                </Form.Group>
-                                
-                                <button type="submit" class="btn btn-primary" id="btnCreateComuna">Agregar Articulo</button>
+                                <button type="submit" class="btn btn-primary" id="btnCreateComuna">Agregar Transporte</button>
                             </Form>
                         </div>
                     </div>        

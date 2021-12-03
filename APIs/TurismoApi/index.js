@@ -790,6 +790,13 @@ router.route('/serviciosExtra').get((request, response) => {
     });
 });
 //Ver un servicio extra en especifico
+
+router.route('/serviciosExtraTrasporte').get((request, response) => {
+    ServiciosExtraWS.getServiciosExtrasTransporte().then(result =>{
+        response.json(result[0]);
+    });
+});
+
 router.route('/serviciosExtra/:id_serv').get((request, response) => {
     ServiciosExtraWS.getServicoExtra(request.params.id_serv).then(result =>{
         response.json(result[0]);

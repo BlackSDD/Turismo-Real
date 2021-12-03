@@ -771,12 +771,7 @@ create or alter procedure pd_agregarDepartamento
 	@num_dpto INT, 
 	@n_amb_dpto INT, 
 	@desc_dpto NVARCHAR(2000), 
-	@costo_arri_dpto INT, 
-	@img_1_dpto image, 
-	@img_2_dpto image, 
-	@img_3_dpto image,
-	@img_4_dpto image, 
-	@img_5_dpto image,
+	@costo_arri_dpto INT,
     @id_cnd INT	
 )
 as
@@ -788,12 +783,7 @@ begin
 	@num_dpto , 
 	@n_amb_dpto , 
 	@desc_dpto , 
-	@costo_arri_dpto, 
-	@img_1_dpto , 
-	@img_2_dpto , 
-	@img_3_dpto ,
-	@img_4_dpto , 
-	@img_5_dpto ,
+	@costo_arri_dpto,
     @id_cnd
 	); 
 end;

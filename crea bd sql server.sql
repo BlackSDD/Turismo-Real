@@ -134,11 +134,6 @@ CREATE TABLE departamento (
     n_amb_dpto        INT NOT NULL,
     desc_dpto         NVARCHAR(2000) NOT NULL,
     costo_arri_dpto   INT NOT NULL,
-    img_1_dpto        IMAGE NOT NULL,
-    img_2_dpto        IMAGE,
-    img_3_dpto        IMAGE,
-    img_4_dpto        IMAGE,
-    img_5_dpto        IMAGE,
     id_cnd            INT NOT NULL
 );
 
