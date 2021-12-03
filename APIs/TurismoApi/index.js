@@ -996,7 +996,7 @@ router.route('/tipousr').get((request, response) => {
 //////// INFORMES
 
 /////////////////////////INFORME RESERVAS DETALLADO////////////////////////////////////////
-router.route('/informeResDet/').post((request, response) => {
+router.route('/informeResDet').post((request, response) => {
     let id_reserva = {...request.body}
     InformesWS.getInformeReservaDet(id_reserva).then(result =>{
         response.json(result[0]);
@@ -1014,8 +1014,9 @@ router.route('/informeResDetServ/:id_reserva').get((request, response) => {
 
 //////////////////////////INFORME RESERVAS GENERAL////////////////////////////////////////////////////
 
-router.route('/informeResGen/:agno').get((request, response) => {
-    InformesWS.getInformeReservaGen(request.params.agno).then(result =>{
+router.route('/informeResGen').post((request, response) => {
+    let informeResGen = {...request.body}
+    InformesWS.getInformeReservaGen(informeResGen).then(result =>{
         response.json(result[0]);
     });
 });
