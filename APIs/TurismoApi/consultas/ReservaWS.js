@@ -44,16 +44,15 @@ async function NewReserva(Reserva){
             .input('fec_fin_rva', sql.Date , Reserva.fec_fin_rva)
             .input('num_pers', sql.Int , Reserva.num_pers)
             .input('id_dpto', sql.Int , Reserva.id_dpto)
-            .input('id_rva', sql.Int , Reserva.id_rva)
+            .input('id_usr', sql.Int , Reserva.id_usr)
             .execute('pd_agregarReserva');
         return newReserva.recordsets;
-        
-        
     } 
     catch(err){
         console.log(err);
     }
 }
+
 //Modificar reserva
 async function UpReserva(Reserva){
     try{
@@ -70,6 +69,7 @@ async function UpReserva(Reserva){
         throw new Error (`Error en el procidemiento ${err.procName}...${err.message}`);
     }
 }
+
 // Eliminar reserva
 
 async function UpCancelarReserva(id_rva){
@@ -87,11 +87,27 @@ async function UpCancelarReserva(id_rva){
     }
 }
 
+async function getCurrentRva(id_usr){
+    try{
+        let pool = await sql.connect(cnx);
+        let salida = await pool.request()
+            .input("id_usr", sql.Int, id_usr.id_usr)
+            .execute('pd_reserva_ondoing');
+        console.log(salida.recordsets);
+        return salida.recordsets;
+    } 
+    catch(err){
+        console.log(err);
+    }
+}
+
+
 module.exports = {
     getReservas: getReservas,
     NewReserva: NewReserva,
     UpReserva: UpReserva,
     UpCancelarReserva: UpCancelarReserva,
-    getReservaId: getReservaId
+    getReservaId: getReservaId,
+    getCurrentRva: getCurrentRva,
 }
 

@@ -743,7 +743,7 @@ router.route('/reserva').post((request, response) => {
     let Reserva = {...request.body}
     ReservaWS.NewReserva(Reserva).then(result => {
         response.json(result[0]);
-        console.log('Reserva creada')   
+        console.log('Reserva solicitada')   
 
     }, (err) => {
         console.log(err.message);
@@ -767,6 +767,17 @@ router.route('/cancelarReserva/:id_rva').put((request, response) => {
     ReservaWS.UpCancelarReserva(request.params.id_rva).then(result =>{
         response.json(result[0]);
         console.log('Reserva cancelada') 
+    });
+});
+
+
+router.route('/reservaCurrent').post((request, response)=>{
+    let id_usr = {...request.body}
+    ReservaWS.getCurrentRva(id_usr).then(result => {
+        response.json(result[0]);  
+     }, (err) => {
+        console.log(err.message);
+        response.json(err.message)
     });
 });
 

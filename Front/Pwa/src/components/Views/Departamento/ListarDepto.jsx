@@ -35,7 +35,7 @@ export default function ListarDepto(){
     function handleReserva(id_d ){
         // definir variable de sesión
         sessionStorage.id_d = id_d;
-        sessionStorage.Pagado = false;
+        sessionStorage.Pagar = false;
         history.push("/Reservar" );
         // {params: id_d}
         // id_d (id del depto)

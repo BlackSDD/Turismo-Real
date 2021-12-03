@@ -5,6 +5,7 @@ import {toast} from 'react-toastify';
 import Navbar from '../../Layouts/Navbar';
 import { useParams, useLocation } from 'react-router-dom';
 import DatePicker from '../../Layouts/Date-Picker';
+import {Button} from  'react-bootstrap';
 
 toast.configure({
 });
@@ -31,12 +32,11 @@ export default function Reserva() {
     const [id_rva, setId_rva] = useState(null);
     const [fechas, setFechas] = useState([]);
     const [arrayF, setArrayF] = useState([]);
+    const [count, setCount] = useState(false);
     // const [id_depto, setId_depto] = useState(location.state.id_d);
     let id_d = {
         id_dpto : storage
     };
-
-    const[id_depto, setId_depto] = useState({});
 
     useEffect(() =>{
         console.log('storage: ', storage);
@@ -63,21 +63,22 @@ export default function Reserva() {
     };
 
     // useEffect((e)=>{
-    //     e.preventDefault();
+    //     // e.preventDefault();
     //     if (!id_rva) {
     //         getMontoPago(id_rva);
     //     };
     // },[]);
 
     const getMontoPago = async (id) =>{
-        id.preventDefault();
-        const res = await axios.get('http://localhost:4000/API/pago/montoPago/' + id)
-        setPago(res.data);
-        console.log(res);
+        // const res = await axios.get('http://localhost:4000/API/pago/montoPago/' + id)
+        // setPago(res.data);
+        // console.log(res);
+        setCount({
+            count: true
+        })
     }
     
     function GenerarPago(props){
-        props.preventDefault();
         const generarP = props.generar;
         if (generarP) {
            return PagoPaypal({id_rva})
@@ -98,30 +99,38 @@ export default function Reserva() {
             </div>);
     };
     
+    
+    let variable = sessionStorage.Pagar;
+
+    useEffect(() => {
+        variable = sessionStorage.Pagar;
+        console.log('variable: ',variable)
+    }, )
+
+
     console.log('Inicio carga disponibilidad');
     console.log('Fechas: ',fechas);
     console.log('fechas ArrayF', arrayF);
     console.log('End carga disponibilidad');
-    console.log(sessionStorage.Pagado)
+    
 
-    if(sessionStorage.Pagado === false){
+    if(count===false){
         return (
             <div>
                 <Navbar/>
                 <DatePicker
                     fechas={arrayF}
-                />                
-                <button>
-                    Boton
-                </button>
+                />                          
             </div>
         );
     }else{
         return(
             <div>
+                <Navbar/>
                 alguna wea
             </div>
-        );}
+        );
+    }
 }
 
 

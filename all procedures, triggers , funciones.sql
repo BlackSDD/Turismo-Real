@@ -877,13 +877,11 @@ go
 -- Traer Fechas no disponibles según id depto
 create or alter procedure pd_fechas_no_disp (@id_dpto int)
 as
-Declare @today date = getdate();
 begin
+	Declare @today date = getdate();
 	update disponibilidad set
 			esta_disp = 'No'
 		where fec_disp < @today and id_dpto = @id_dpto;
-
-
 	select 
 		id_dpto,
 		esta_disp,
@@ -1218,7 +1216,15 @@ begin
 end;
 go
 
-
+-- Busca la reserva que se esta llevando a cabo el proceso de arriendo
+create or alter procedure pd_reserva_ondoing (@id_usr int)
+as
+begin
+	select 
+		max(id_rva) as "curr_id"
+		from reserva where id_usr = @id_usr
+end;
+go
 ---------------------------------------------------------------------------
 
 --TABLA SERVEXTRAS
