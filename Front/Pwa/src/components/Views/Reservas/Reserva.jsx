@@ -6,6 +6,8 @@ import Navbar from '../../Layouts/Navbar';
 import { useParams, useLocation } from 'react-router-dom';
 import DatePicker from '../../Layouts/Date-Picker';
 import {Button} from  'react-bootstrap';
+///import PWA
+<link rel="manifest" href="../../public/manifest.json"></link>
 
 toast.configure({
 });

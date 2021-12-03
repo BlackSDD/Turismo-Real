@@ -3,7 +3,9 @@ import '../assetss/css/home.css';
 import Carrusel from './Layouts/Carrusel';
 import CarruselTours from './Layouts/carrusel-tours';
 import CarruselTaxi from './Layouts/carrusel-taxi';
-import Navbar from '../components/Layouts/Navbar.jsx'
+import Navbar from '../components/Layouts/Navbar.jsx';
+///import PWA
+<link rel="manifest" href="../../public/manifest.json"></link>
 
 //Forma de llamar a datos de sesion storage
 let email = sessionStorage.correo

@@ -3,6 +3,8 @@ import React from "react";
 import Footer from "../../Layouts/Footer";
 import { Component } from "react";
 import { Image, VarBinary } from "mssql";
+///import PWA
+<link rel="manifest" href="../../public/manifest.json"></link>
 
 
 
