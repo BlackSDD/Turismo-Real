@@ -14,6 +14,15 @@ begin
             SET @v_fecha = DATEADD(day, 1, @v_fecha);
             SET @I = @I + 1;
 	END;
+	set @I = 0;
+	set @v_fecha = getdate();
+	WHILE @I <= 1000
+	begin
+		INSERT disponibilidad (FEC_DISP, ESTA_DISP, ID_DPTO)
+               VALUES (@v_fecha, 'No', @v_id_dpto);
+            SET @v_fecha = DATEADD(day, -1, @v_fecha);
+            SET @I = @I + 1;
+	end;
 end;
 go
 

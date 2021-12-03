@@ -516,21 +516,22 @@ router.route('/disponibilidad/:id_dpto').get((request, response) => {
             response.json(err.message)
         });
     });
-// array para traer id {"Depto": id_dpto}
-router.route('/disponibilidadNo').post((request, response) => {
-    let Depto = {...request.body}
-    DisponibilidadWS.getNoDisponibe(Depto).then(result => {
-        response.json(result[0]);
-    }, (err) => {
-        console.log(err.message);
-        response.json(err.message)
-    });
-});
+
+    // // array para traer id {"Depto": id_dpto}
+// router.route('/disponibilidadNo').post((request, response) => {
+//     let Depto = {...request.body}
+//     DisponibilidadWS.getNoDisponibe(Depto).then(result => {
+//         response.json(result[0]);
+//     }, (err) => {
+//         console.log(err.message);
+//         response.json(err.message)
+//     });
+// });
 
 // array para traer id {"Depto": id_dpto}
-router.route('/disponibilidadJson').post((request, response) => {
+router.route('/disponibilidadNoId').post((request, response) => {
     let id_dpto = {...request.body}
-    DisponibilidadWS.getNoDisponibleJson(id_dpto).then(result => {
+    DisponibilidadWS.getNoDisponibleId(id_dpto).then(result => {
         response.json(result[0]);
     }, (err) => {
         console.log(err.message);

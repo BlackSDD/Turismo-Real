@@ -1,18 +1,20 @@
 import React, {  Component, useEffect, useState } from 'react';
 import axios from 'axios';
+import {useHistory} from 'react-router-dom';
 import '../../../assetss/css/ListaDeptos.css';
-import Reserva from '../Reservas/Reserva';
+import Reservar from '../Reservas/Reserva';
 import building from '../../../assetss/img/building.png'
+import Navbar from '../../Layouts/Navbar.jsx'
+import { Button } from 'react-bootstrap';
+import DatePicker from '../../Layouts/Date-Picker';
 
 export default function ListarDepto(){
-    
+  
     const [deptos, setDeptos] = useState([]);
-    const [dispNo, setDispNo] = useState([]);
-    
-    // state = {
-    //     deptos:[]
-    // }
-    
+    // const [dispNo, setDispNo] = useState([]);
+    const history = useHistory();
+
+ 
     const getDeptos = async () =>{
         const res = await axios.get('http://localhost:4000/API/departamento');
         setDeptos(res.data);
@@ -30,19 +32,30 @@ export default function ListarDepto(){
         // })
     },[]);
 
-    console.log({deptos})
-   
-        
+    function handleReserva(id_d ){
+        // definir variable de sesión
+        sessionStorage.id_d = id_d;
+        sessionStorage.Pagado = false;
+        history.push("/Reservar" );
+        // {params: id_d}
+        // id_d (id del depto)
+    }
+
+    console.log('Listar Deptos');
+    console.log({deptos});
+    console.log('End Lista Deptos');
+
         return (
             <div>
+                <Navbar/>
                 <div id="listar-deptos">
                     <h1>Listado de departamentos</h1>
                     <div className="container">
                         {
                             deptos.map(e =>(
-                                <div className="row">
+                                <div className="row" id="row-lista-depto">
                                     <div className="col-lg-6 col-md-6 col-sm-12">
-                                        <img src={building} className="img-lista-depto" ></img>
+                                        <img src={building} alt="Imagen Referencial" className="img-lista-depto" ></img>
                                     </div>
                                     <div className="col-lg-6 col-md-6 col-sm-12">
                                         <h2>{e.nom_rgn}</h2>
@@ -54,18 +67,14 @@ export default function ListarDepto(){
                                         <p>{e.desc_dpto}</p>
                                         <p>Número de ambientes: {e.n_amb_dpto} </p>
                                         <p>Costo de Arriendo por noche ${e.costo_arri_dpto} CLP</p>
-                                        {/* {e.img_1_dpto}
-                                        {e.img_2_dpto}
-                                        {e.img_3_dpto}
-                                        {e.img_4_dpto}
-                                        {e.img_5_dpto} */}
-                                        {/* {e.id_dpto} */}
                                     </div>
+                                    <Button onClick={() => {handleReserva(e.id_dpto)}}>
+                                        Reservar Departamento
+                                    </Button>
                                 </div>
                             ))
                         }
                     </div>
-
                     {/* <Reserva
                         id_rva= {1}
                     /> */}

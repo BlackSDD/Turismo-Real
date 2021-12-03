@@ -79,7 +79,8 @@ begin
 end;
 go
 
--- Trigger para insertar 10 años de fechas una vez insertado un depto;
+-- Trigger para insertar 10 años de fechas una vez insertado un depto
+-- y 3 años pasados para denegar reservas en pasado;
 create or alter trigger tr_insert_disponibilidad
 	on departamento
 	after insert
@@ -95,6 +96,15 @@ begin
             SET @v_fecha = DATEADD(day, 1, @v_fecha);
             SET @I = @I + 1;
 	END;
+	set @I = 0;
+	set @v_fecha = getdate();
+	WHILE @I <= 1000
+	begin
+		INSERT disponibilidad (FEC_DISP, ESTA_DISP, ID_DPTO)
+               VALUES (@v_fecha, 'No', @v_id_dpto);
+            SET @v_fecha = DATEADD(day, -1, @v_fecha);
+            SET @I = @I + 1;
+	end;
 end;
 go
 
@@ -831,6 +841,7 @@ select
 	cm.id_com,
 	cm.nom_com,
 	cn.id_cnd,
+	cn.nom_cnd,
 	concat( cn.nom_cnd, ' #' ,d.num_dpto ) as "depto",
 	d.id_dpto,
 	d.dir_dpto,
@@ -851,7 +862,7 @@ select
 		on rg.id_rgn = cm.id_rgn
 	order by rg.id_rgn, cm.id_com, id_cnd , "depto";
 end;
-
+go
 ---------------------------------------------------------------------------
 -- TABLA DISPONIBILIDAD
 
@@ -861,8 +872,25 @@ as
 begin
 	select * from disponibilidad where id_dpto = @id_dpto and esta_disp = 'No';
 end;
+go
+
+-- Traer Fechas no disponibles según id depto
+create or alter procedure pd_fechas_no_disp (@id_dpto int)
+as
+Declare @today date = getdate();
+begin
+	update disponibilidad set
+			esta_disp = 'No'
+		where fec_disp < @today and id_dpto = @id_dpto;
 
 
+	select 
+		id_dpto,
+		esta_disp,
+		concat(year(fec_disp), ',',month(fec_disp),',', DAY(fec_disp)) as "fec_disp_no"
+		from disponibilidad where id_dpto = @id_dpto and esta_disp = 'No';
+end;
+go
 ----------------------------------------------------------------------------
 -- TABLA GASTOS
 

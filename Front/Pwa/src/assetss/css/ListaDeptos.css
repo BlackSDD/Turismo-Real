@@ -12,3 +12,11 @@
     width: auto;
     height: 25vh;
 }
+
+#row-lista-depto{
+  border: 2px solid white;
+  border-radius: 5px;
+  padding-bottom: 2% ;
+  padding-top: 2%;
+  margin-top: 2%;
+}

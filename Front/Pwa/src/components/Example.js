@@ -6,9 +6,11 @@ import 'react-day-picker/lib/style.css';
 function Example({fechas}) {
   
     handleDayClick = handleDayClick.bind(this);
+    handleResetClick = handleResetClick.bind(this);
 
-    const [state, setState] = useState ( {
+    const [state, setState] = useState ({
         selectedDay: undefined,
+        // getInitialState()
     })
     
     function handleDayClick(day, { selected, disabled }) {
@@ -24,35 +26,23 @@ function Example({fechas}) {
         setState({ selectedDay: day });
     }
 
-    // state = {
-    //     fechas:[],
-    //     dates: [],
-    //     arrayF: []
-    // }
+    function handleResetClick() {
+        setState(getInitialState());
+    }
 
-    // const id_d = {
-    //     id_dpto: 1
-    // }
+    const getInitialState = () => {
+        return {
+          from: undefined,
+          to: undefined,
+        };
+    }
 
     useEffect(()=> {
         // getFechas(id_d)
     })
 
-    // const getFechas = async (id) =>{
-    //     const res = await axios.post('http://localhost:4000/API/disponibilidadJson', id)
-    //     setState ({
-    //         fechas: new Date(res.data)
-    //     });
-    // }
-    const [fechasR, setFechasR] = useState([
-        '2021,12,21','2021,12,22', '2021,12,25', '2020-12-13',
-    ])
-    const [dias, setDias] = useState(null);
-    // dias2 = new Date(dias.y,dias.m,dias.d)
-    // x = [new Date(fechas.Concate)]
     console.log('Start date');
     console.log('Las fechas: ', fechas);
-    console.log(fechasR[0])
     console.log('End date');
 
     return (
@@ -62,26 +52,20 @@ function Example({fechas}) {
                 onDayClick={handleDayClick}
                 selectedDays={state.selectedDay}
                 // initialMonth={new Date(2021, 12)}    
-                disabledDays={[ 
-                    fechasR.map((e) => new Date(e)),
-                    new Date(fechasR.map((e)=> e)),
-                    new Date(fechasR[0]),
-                    //new Date(fechasR),
-                    // new Date(fechasR.forEach(e => e)),
-                    new Date('2021-12-11T02:00:00Z'),
-                    // new Date('2021/12/07') 
-                ]}
+                disabledDays={     
+                    fechas.map(date => new Date(date))              
+                }
             />
             {state.selectedDay ? (
             <p>Fecha seleccionada {state.selectedDay.toLocaleDateString()}</p>
             ) : (
             <p>Por favor elige un día</p>
             )}
-            {/* <p>{dias}</p> */}
+            {/* <p>{dias}</p>
             {
-                fechasR.map(e => {
+                fechas.map(e => {
                     return <p>{e}</p>})
-            }
+            } */}
         </div>
     );   
 }

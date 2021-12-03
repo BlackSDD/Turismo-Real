@@ -7,7 +7,6 @@ const PayPalButton = window.paypal.Buttons.driver("react", { React, ReactDOM });
 
 function PaypalCheckout ({precio, id_rva}) {
     // const [price, setPrice] = useState(0);
-
     // let history = useHistory();
 
     let dolar = Math.round(precio/830);
@@ -33,17 +32,15 @@ function PaypalCheckout ({precio, id_rva}) {
     
     const [informeR, setInformeR] = useState([])
     const [count, setCount] = useState(false);
-    const [id, setId] = useState('')
+   
 
     let urlId = {
         id_reserva: id_rva
-    
     }
     
     useEffect(() => {
         getInformeRes(urlId);
     },[]);
-
 
     const getInformeRes = async () => {
         const res = await axios.post('http://localhost:4000/API/informeResDet/', urlId )
@@ -57,8 +54,8 @@ function PaypalCheckout ({precio, id_rva}) {
             <div>
                 <h1>El monto a pagar es {dolar} </h1>
                 <PayPalButton
-                createOrder={(data, actions) => createOrder(data, actions)}
-                onApprove={(data, actions) => onApprove(data, actions)}
+                    createOrder={(data, actions) => createOrder(data, actions)}
+                    onApprove={(data, actions) => onApprove(data, actions)}
                 />
                 <h1>{informeR.Id_reserva}</h1>
             </div>
@@ -68,7 +65,6 @@ function PaypalCheckout ({precio, id_rva}) {
     return(
         <div>
             <h1>Pago recibido</h1>
-            
             {
                 informeR.map(e =>
                     <p>{e.Cliente}</p>    

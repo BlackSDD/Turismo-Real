@@ -26,17 +26,8 @@ export default class Test extends Component{
 
     }
 
-    // let history = useHistory();
-
-    // function handleClick() {
-    //   history.push("/");
-    // }
-
-    // <button type="button" onClick={handleClick}>
-    //     Go home
-    //   </button>
-    
     render(){
+        console.log('console: ',this.state.valor[0].pago)
         return (
             <div>
                 
