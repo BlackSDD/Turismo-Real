@@ -1,6 +1,7 @@
 -- informe general de reservas
 -- requiere un año para consultar las reservas 
-CREATE OR ALTER PROCEDURE pd_informe_reserva_gen(@agno int)
+CREATE OR ALTER PROCEDURE pd_informe_reserva_gen
+(@agno int)
 as
 begin
 select

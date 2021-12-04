@@ -3,6 +3,8 @@ import React from "react";
 import Footer from "../../Layouts/Footer";
 import { Component } from "react";
 import { Image, VarBinary } from "mssql";
+///import PWA
+<link rel="manifest" href="../../public/manifest.json"></link>
 
 
 
@@ -42,12 +44,7 @@ manejadorBoton=(e)=>{
 	    num_dpto , 
 	    n_amb_dpto , 
 	    desc_dpto , 
-	    costo_arri_dpto , 
-	    img_1_dpto , 
-	    img_2_dpto , 
-	    img_3_dpto ,
-	    img_4_dpto , 
-	    img_5_dpto ,
+	    costo_arri_dpto ,
         id_cnd 	
 
 
@@ -57,12 +54,7 @@ manejadorBoton=(e)=>{
 	    num_dpto , 
 	    n_amb_dpto , 
 	    desc_dpto , 
-	    costo_arri_dpto , 
-	    img_1_dpto , 
-	    img_2_dpto , 
-	    img_3_dpto ,
-	    img_4_dpto , 
-	    img_5_dpto ,
+	    costo_arri_dpto ,
         id_cnd 	
     }).then((result)=>{});
 };

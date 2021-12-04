@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import {toast} from 'react-toastify';
 // Import toastify css file
 import 'react-toastify/dist/ReactToastify.css';
+///import PWA
+<link rel="manifest" href="../../public/manifest.json"></link>
 
 toast.configure({
 

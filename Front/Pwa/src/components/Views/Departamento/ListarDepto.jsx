@@ -7,6 +7,8 @@ import building from '../../../assetss/img/building.png'
 import Navbar from '../../Layouts/Navbar.jsx'
 import { Button } from 'react-bootstrap';
 import DatePicker from '../../Layouts/Date-Picker';
+///import PWA
+<link rel="manifest" href="../../public/manifest.json"></link>
 
 export default function ListarDepto(){
   

@@ -4,12 +4,12 @@ const sql = require('mssql');
 
 //////////////////////////INFORME RESERVAS GENERAL///////////////////////////////
 
-async function getInformeReservaGen(agno){
+async function getInformeReservaGen(InformeGeneral){
 
     try{
         let pool = await sql.connect(cnx);
         let salida = await pool.request()
-            .input("agno", sql.Int , agno)
+            .input("agno", sql.Int , InformeGeneral.agno)
             .execute('pd_informe_reserva_gen');
         console.log('salida.recordsets');
         return salida.recordsets;

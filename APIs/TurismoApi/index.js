@@ -680,6 +680,12 @@ router.route('/pago/abonoPago/').post((request, response) => {
     });
 });
 
+router.route('/pago/ReservaPago').post((request, response) => {
+    let id_rva = {...request.body}
+    PagoWS.getMontoPagoArriendo(id_rva).then(result =>{
+        response.json(result[0]);
+    });
+});
 
 ///////////REGION//////////
 router.route('/region').get((request, response) => {
@@ -777,10 +783,30 @@ router.route('/cancelarReserva/:id_rva').put((request, response) => {
     });
 });
 
-
+// reserva en estado de agendamiento web
 router.route('/reservaCurrent').post((request, response)=>{
     let id_usr = {...request.body}
     ReservaWS.getCurrentRva(id_usr).then(result => {
+        response.json(result[0]);  
+     }, (err) => {
+        console.log(err.message);
+        response.json(err.message)
+    });
+});
+
+// reserva pre checkin
+router.route('/reservaPreCheckin').get((request, response)=>{
+    ReservaWS.getReservasCheck().then(result => {
+        response.json(result[0]);  
+     }, (err) => {
+        console.log(err.message);
+        response.json(err.message)
+    });
+});
+
+// reserva pre checkout
+router.route('/reservaProgress').get((request, response)=>{
+    ReservaWS.getReservasProgress().then(result => {
         response.json(result[0]);  
      }, (err) => {
         console.log(err.message);
@@ -1021,8 +1047,9 @@ router.route('/informeResDetServ/:id_reserva').get((request, response) => {
 
 //////////////////////////INFORME RESERVAS GENERAL////////////////////////////////////////////////////
 
-router.route('/informeResGen/:agno').get((request, response) => {
-    InformesWS.getInformeReservaGen(request.params.agno).then(result =>{
+router.route('/informeResGen').post((request, response) => {
+    let informeResGen = {...request.body}
+    InformesWS.getInformeReservaGen(informeResGen).then(result =>{
         response.json(result[0]);
     });
 });
