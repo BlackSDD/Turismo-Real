@@ -39,21 +39,17 @@ async function getCheckIn(id_rva){
     }
 }
 
-
-
-
-
 //crea un check in
 
 async function newCheckIn(CheckIn){
     try{
         let pool = await sql.connect(cnx);
-        let newComuna = await pool.request()
+        let newCheckIn = await pool.request()
             .input("id_rva", sql.Int , CheckIn.id_rva)
             .input("deta_chi", sql.NVarChar , CheckIn.deta_chi)
             .input("id_usr", sql.Int , CheckIn.id_usr)
             .execute('pd_agregarCheckin');
-        return newComuna.recordsets;    
+        return newCheckIn.recordsets;    
     } 
     catch(err){
         throw new Error (`Error en el procidemiento ${err.procName}...${err.message}`);
@@ -65,11 +61,11 @@ async function newCheckIn(CheckIn){
 async function upCheckIn(CheckIn){
     try{
         let pool = await sql.connect(cnx);
-        let newComuna = await pool.request()
+        let newCheckIn = await pool.request()
             .input("id_rva", sql.Int , CheckIn.id_rva)
             .input("deta_chi", sql.NVarChar , CheckIn.deta_chi)
             .execute('pd_modificarCheckin');
-        return newComuna.recordsets;    
+        return newCheckIn.recordsets;    
     } 
     catch(err){
         throw new Error (`Error en el procidemiento ${err.procName}...${err.message}`);

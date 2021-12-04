@@ -48,6 +48,12 @@ export default class DatePicker extends React.Component {
       id_usr: sessionStorage.idUsuario,
       id_dpto : sessionStorage.id_d
     };
+    
+    if (!num){
+      num = 0;
+    }
+    console.log('# new:',num)
+
     const newReserva = {
       fec_ini_rva : from,
       fec_fin_rva : to,
@@ -70,8 +76,6 @@ export default class DatePicker extends React.Component {
     // this.setState({reservado: true});
     // console.log('Reservado: ',reservado);
     sessionStorage.Pagar = true;
-
-    // let redir = { redirect: "http://localhost:3000/paypal" };
     window.location.href= "/paypal";
   }
 
@@ -81,10 +85,9 @@ export default class DatePicker extends React.Component {
 
   render() {
     const { from, to, num} = this.state;
-    // const reservado = this.state;
-    const modifiers = { start: from, end: to };
-    
+    const modifiers = { start: from, end: to };    
     console.log('rango: ',this.state.range)
+
       return (
         <div id="body-date-picker">
             <Navbar/>

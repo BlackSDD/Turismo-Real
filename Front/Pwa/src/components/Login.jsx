@@ -47,8 +47,8 @@ class Login extends React.Component{
         this.props.history.push("/UsuarioNew");
     }
 
-    manejadorBoton = () =>{
-        axios.post("http://localhost:4000/API/usuarioAutenticar", this.state.form)
+    manejadorBoton = async() =>{
+        await axios.post("http://localhost:4000/API/usuarioAutenticar", this.state.form)
         .then(response =>{
             if(response.data == "")
             {
@@ -67,33 +67,41 @@ class Login extends React.Component{
                         notifyS();
                         console.log("Admin");
                         this.props.history.push("/Admin");
+                        // window.location.shref = "/Admin";
+                        sessionStorage.idUsuario = response.data[0].id_usr;
+                        sessionStorage.tipoUsr = response.data[0].id_tipo_usr;
+                        let login = 1;
+                        sessionStorage.Login= login;
                     }
                     else if(response.data[0].id_tipo_usr =="2")
                     {
                         notifyS();
                         console.log("Funcionario");
-                        this.props.history.push("/Admin");
+                        this.props.history.push("/MainFuncionario");
+                        // window.location.shref = "/Admin";
+                        sessionStorage.idUsuario = response.data[0].id_usr;
+                        sessionStorage.tipoUsr = response.data[0].id_tipo_usr;
+                        let login = 1;
+                        sessionStorage.Login= login;
+
                     }
                     else if(response.data[0].id_tipo_usr =="3")
                     {
-                        notifyS();
                         //setear y almacenar datos en el session storage
                         sessionStorage.correo = response.data[0].email_usr;
                         sessionStorage.idUsuario = response.data[0].id_usr;
+                        sessionStorage.tipoUsr = response.data[0].id_tipo_usr;
                         let login = 1;
                         sessionStorage.Login= login;
                         let email = sessionStorage.correo
                         console.log('El correo es: ' + email)
                         this.props.history.push("/");
-        
+                        // window.location.shref = "/";
+                        notifyS();
                     }
     
                 }
-    
             }
-            
-
-
         });
     };
 

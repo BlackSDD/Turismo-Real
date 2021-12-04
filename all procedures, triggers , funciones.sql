@@ -759,12 +759,7 @@ begin
     delete from articulo where id_dpto = @id_dpto;
 	update departamento set
         desc_dpto = 'departamento no disponible',
-        costo_arri_dpto = '0',
-        img_1_dpto = 0x,
-        img_2_dpto = 0x,
-        img_3_dpto = 0x,
-        img_4_dpto = 0x,
-        img_5_dpto = 0x
+        costo_arri_dpto = '0'
         where id_dpto = @id_dpto;        
 	update disponibilidad set
 		esta_disp = 'No'
@@ -784,7 +779,7 @@ create or alter procedure pd_agregarDepartamento
 )
 as
 begin
-	insert into departamento (dir_dpto, num_dpto, n_amb_dpto, desc_dpto, costo_arri_dpto, img_1_dpto, img_2_dpto, img_3_dpto, img_4_dpto, img_5_dpto, id_cnd)
+	insert into departamento (dir_dpto, num_dpto, n_amb_dpto, desc_dpto, costo_arri_dpto, id_cnd)
 	values
 	(
 	@dir_dpto , 
@@ -805,12 +800,7 @@ create or alter procedure pd_modificarDepartamento
 	@num_dpto INT, 
 	@n_amb_dpto INT, 
 	@desc_dpto NVARCHAR(2000), 
-	@costo_arri_dpto INT, 
-	@img_1_dpto image, 
-	@img_2_dpto image, 
-	@img_3_dpto image,
-	@img_4_dpto image, 
-	@img_5_dpto image
+	@costo_arri_dpto INT
 )
 as
 begin
@@ -819,12 +809,7 @@ begin
 		num_dpto = @num_dpto,
 		n_amb_dpto = @n_amb_dpto,
 		desc_dpto = @desc_dpto,
-		costo_arri_dpto = @costo_arri_dpto,
-		img_1_dpto = @img_1_dpto,
-		img_2_dpto = @img_2_dpto,
-		img_3_dpto = @img_3_dpto,
-		img_4_dpto = @img_4_dpto,
-		img_5_dpto = @img_5_dpto
+		costo_arri_dpto = @costo_arri_dpto
 	where id_dpto = @id_dpto;
 end;
 go
@@ -857,6 +842,7 @@ select
 	order by rg.id_rgn, cm.id_com, id_cnd , "depto";
 end;
 go
+
 ---------------------------------------------------------------------------
 -- TABLA DISPONIBILIDAD
 
@@ -1013,11 +999,20 @@ create or alter procedure pd_agregarPago
 as
 begin
 	update pago set
-        monto_pagado = @monto_pagado
+        monto_pagado = monto_pagado + @monto_pagado
 	where id_rva = @id_rva; 
 end;
 go
 
+create or alter procedure pd_pago_total_reserva (@id_rva int) 
+as
+begin
+	select
+		(monto_arr - monto_pagado) as "Pago"
+	from pago
+		where id_rva = @id_rva
+end
+go
 ---------------------------------------------------------------------------
 
 --TABLA REGION
@@ -1219,6 +1214,25 @@ begin
 		from reserva where id_usr = @id_usr
 end;
 go
+
+-- Listar reservas en estado reservada (pre checkin)
+create or alter procedure pd_reservas_chek
+as
+
+begin
+	select * from reserva where estado_rva = 'reservada'
+end
+go
+
+-- Listar reservas en progreso (pre-checkout)
+create or alter procedure pd_reservas_in_progress
+as
+
+begin
+	select * from reserva where estado_rva = 'en progreso'
+end
+go
+
 ---------------------------------------------------------------------------
 
 --TABLA SERVEXTRAS

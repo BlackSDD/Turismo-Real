@@ -12,13 +12,37 @@ async function getReservaId(id_rva){
         .query('SELECT *  FROM reserva where id_rva = @id_rva');
         console.log(salida.recordsets);
         return salida.recordsets;
-        
     } 
     catch(err){
         console.log(err);
     }
 }
 
+async function getReservasCheck(){
+    try{
+        let pool = await sql.connect(cnx);
+        let salida = await pool.request()
+        .execute('pd_reservas_chek');
+        console.log(salida.recordsets);
+        return salida.recordsets;
+    } 
+    catch(err){
+        console.log(err);
+    }
+}
+
+async function getReservasProgress(){
+    try{
+        let pool = await sql.connect(cnx);
+        let salida = await pool.request()
+        .execute('pd_reservas_in_progress');
+        console.log(salida.recordsets);
+        return salida.recordsets;
+    } 
+    catch(err){
+        console.log(err);
+    }
+}
 
 //Listar todas las reservas
 async function getReservas(){
@@ -109,5 +133,7 @@ module.exports = {
     UpCancelarReserva: UpCancelarReserva,
     getReservaId: getReservaId,
     getCurrentRva: getCurrentRva,
+    getReservasProgress: getReservasProgress,
+    getReservasCheck: getReservasCheck
 }
 
