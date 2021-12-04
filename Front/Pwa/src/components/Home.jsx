@@ -3,8 +3,7 @@ import '../assetss/css/home.css';
 import Carrusel from './Layouts/Carrusel';
 import CarruselTours from './Layouts/carrusel-tours';
 import CarruselTaxi from './Layouts/carrusel-taxi';
-import Navbar from '../components/Layouts/Navbar.jsx';
-///import PWA
+import Navbar from '../components/Layouts/Navbar.jsx'
 <link rel="manifest" href="../../public/manifest.json"></link>
 
 //Forma de llamar a datos de sesion storage
@@ -15,6 +14,7 @@ const Landing = () => {
     return (
         <div className="col-md" id="homdeDiv">
         <Navbar/>
+
             <div id="carrusel1" >
                 <Carrusel/>
             </div>

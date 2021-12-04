@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-// Importing toastify module
 import {toast} from 'react-toastify';
-// Import toastify css file
+import '../../../assetss/css/articulo.css';
 import 'react-toastify/dist/ReactToastify.css';
 ///import PWA
 <link rel="manifest" href="../../public/manifest.json"></link>
@@ -49,7 +48,7 @@ export default class ArticuloList extends Component {
 
     render() {
         return (
-            <div className="container-fluid">
+            <div className="container-fluid" id="body-articulos">
                 <div className="row">
                     
                     {

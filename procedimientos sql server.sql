@@ -404,12 +404,7 @@ begin
     delete from gastos where id_dpto = @id_dpto;
 	update departamento set
         desc_dpto = 'departamento no disponible',
-        costo_arri_dpto = '0',
-        img_1_dpto = 0x,
-        img_2_dpto = 0x,
-        img_3_dpto = 0x,
-        img_4_dpto = 0x,
-        img_5_dpto = 0x
+        costo_arri_dpto = '0'
         where id_dpto = @id_dpto;        
 	update disponibilidad set
 		esta_disp = 'No'
@@ -424,17 +419,12 @@ create or alter procedure pd_agregarDepartamento
 	@num_dpto INT, 
 	@n_amb_dpto INT, 
 	@desc_dpto NVARCHAR(2000), 
-	@costo_arri_dpto INT, 
-	@img_1_dpto image, 
-	@img_2_dpto image, 
-	@img_3_dpto image,
-	@img_4_dpto image, 
-	@img_5_dpto image,
+	@costo_arri_dpto INT,
     @id_cnd INT	
 )
 as
 begin
-	insert into departamento (dir_dpto, num_dpto, n_amb_dpto, desc_dpto, costo_arri_dpto, img_1_dpto, img_2_dpto, img_3_dpto, img_4_dpto, img_5_dpto, id_cnd)
+	insert into departamento (dir_dpto, num_dpto, n_amb_dpto, desc_dpto, costo_arri_dpto, id_cnd)
 	values
 	(
 	@dir_dpto , 
@@ -442,11 +432,6 @@ begin
 	@n_amb_dpto , 
 	@desc_dpto , 
 	@costo_arri_dpto, 
-	@img_1_dpto , 
-	@img_2_dpto , 
-	@img_3_dpto ,
-	@img_4_dpto , 
-	@img_5_dpto ,
     @id_cnd
 	); 
 end;
@@ -460,12 +445,7 @@ create or alter procedure pd_modificarDepartamento
 	@num_dpto INT, 
 	@n_amb_dpto INT, 
 	@desc_dpto NVARCHAR(2000), 
-	@costo_arri_dpto INT, 
-	@img_1_dpto image, 
-	@img_2_dpto image, 
-	@img_3_dpto image,
-	@img_4_dpto image, 
-	@img_5_dpto image
+	@costo_arri_dpto INT
 )
 as
 begin
@@ -474,12 +454,7 @@ begin
 		num_dpto = @num_dpto,
 		n_amb_dpto = @n_amb_dpto,
 		desc_dpto = @desc_dpto,
-		costo_arri_dpto = @costo_arri_dpto,
-		img_1_dpto = @img_1_dpto,
-		img_2_dpto = @img_2_dpto,
-		img_3_dpto = @img_3_dpto,
-		img_4_dpto = @img_4_dpto,
-		img_5_dpto = @img_5_dpto
+		costo_arri_dpto = @costo_arri_dpto
 	where id_dpto = @id_dpto;
 end;
 go
@@ -499,12 +474,7 @@ select
 	d.dir_dpto,
 	d.n_amb_dpto,
 	d.desc_dpto,
-	d.costo_arri_dpto,
-	d.img_1_dpto,
-	d.img_2_dpto,
-	d.img_3_dpto,
-	d.img_4_dpto,
-	d.img_5_dpto
+	d.costo_arri_dpto
 	from 
 	departamento d join condominio cn
 		on d.id_cnd = cn.id_cnd
@@ -822,6 +792,22 @@ begin
 		max(id_rva) as "curr_id"
 		from reserva where id_usr = @id_usr
 end;
+go
+
+create or alter procedure pd_reservas_chek
+as
+
+begin
+	select * from reserva where estado_rva = 'reservada'
+end
+go
+
+create or alter procedure pd_reservas_in_progress
+as
+
+begin
+	select * from reserva where estado_rva = 'en progreso'
+end
 go
 ---------------------------------------------------------------------------
 

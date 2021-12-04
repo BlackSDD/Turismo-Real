@@ -666,15 +666,28 @@ router.route('/pago').post((request, response) => {
 });
 
 //Calcular monto del pago
-router.route('/pago/montoPago/:id_rva').get((request, response) => {
-    PagoWS.getMontoPago(request.params.id_rva).then(result =>{
+router.route('/pago/montoPago/').post((request, response) => {
+    let id_rva = {...request.body}
+    PagoWS.getMontoPago(id_rva).then(result =>{
+        response.json(result[0]);
+    });
+});
+
+router.route('/pago/abonoPago/').post((request, response) => {
+    let id_rva = {...request.body}
+    PagoWS.getMontoAbono(id_rva).then(result =>{
+        response.json(result[0]);
+    });
+});
+
+router.route('/pago/ReservaPago').post((request, response) => {
+    let id_rva = {...request.body}
+    PagoWS.getMontoPagoArriendo(id_rva).then(result =>{
         response.json(result[0]);
     });
 });
 
 ///////////REGION//////////
-
-
 router.route('/region').get((request, response) => {
     RegionWS.getRegion().then(result =>{
         response.json(result[0]);
@@ -770,10 +783,30 @@ router.route('/cancelarReserva/:id_rva').put((request, response) => {
     });
 });
 
-
+// reserva en estado de agendamiento web
 router.route('/reservaCurrent').post((request, response)=>{
     let id_usr = {...request.body}
     ReservaWS.getCurrentRva(id_usr).then(result => {
+        response.json(result[0]);  
+     }, (err) => {
+        console.log(err.message);
+        response.json(err.message)
+    });
+});
+
+// reserva pre checkin
+router.route('/reservaPreCheckin').get((request, response)=>{
+    ReservaWS.getReservasCheck().then(result => {
+        response.json(result[0]);  
+     }, (err) => {
+        console.log(err.message);
+        response.json(err.message)
+    });
+});
+
+// reserva pre checkout
+router.route('/reservaProgress').get((request, response)=>{
+    ReservaWS.getReservasProgress().then(result => {
         response.json(result[0]);  
      }, (err) => {
         console.log(err.message);
@@ -996,9 +1029,9 @@ router.route('/tipousr').get((request, response) => {
 //////// INFORMES
 
 /////////////////////////INFORME RESERVAS DETALLADO////////////////////////////////////////
-router.route('/informeResDet').post((request, response) => {
-    let id_reserva = {...request.body}
-    InformesWS.getInformeReservaDet(id_reserva).then(result =>{
+router.route('/informeResDet/').post((request, response) => {
+    let id_rva = {...request.body}
+    InformesWS.getInformeReservaDet(id_rva).then(result =>{
         response.json(result[0]);
     }, (err) => {
         console.log(err.message);

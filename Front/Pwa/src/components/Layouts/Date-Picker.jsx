@@ -1,10 +1,10 @@
 import React from 'react';
 import DayPicker, { DateUtils } from 'react-day-picker';
-import {Button, Form} from 'react-bootstrap';
+import {Button, Form, Navbar} from 'react-bootstrap';
 // import 'react-day-picker/lib/style.css';
 import '../../assetss/css/Date-Picker.css'
 import axios from 'axios';
-import { Redirect } from 'react-router-dom';
+import NavBar from './Navbar';
 
 export default class DatePicker extends React.Component {
   static defaultProps = {
@@ -41,13 +41,19 @@ export default class DatePicker extends React.Component {
     console.log(e.target.value)
 }
 
-  HandleReserva = async(from, to, num, reservado) =>{
+  HandleReserva = async(from, to, num) =>{
     console.log('# personas:',num)
     //Almaceno los datos del storage
     let datos ={
       id_usr: sessionStorage.idUsuario,
       id_dpto : sessionStorage.id_d
     };
+    
+    if (!num){
+      num = 0;
+    }
+    console.log('# new:',num)
+
     const newReserva = {
       fec_ini_rva : from,
       fec_fin_rva : to,
@@ -70,9 +76,7 @@ export default class DatePicker extends React.Component {
     // this.setState({reservado: true});
     // console.log('Reservado: ',reservado);
     sessionStorage.Pagar = true;
-
-    let redir = { redirect: "http://localhost:3000/paypal" };
-    return(<Redirect to={redir.redirect}/>);
+    window.location.href= "/paypal";
   }
 
   handleResetClick() {
@@ -80,55 +84,57 @@ export default class DatePicker extends React.Component {
   }
 
   render() {
-    const { from, to, num, reservado} = this.state;
-    // const reservado = this.state;
-    const modifiers = { start: from, end: to };
-    
+    const { from, to, num} = this.state;
+    const modifiers = { start: from, end: to };    
     console.log('rango: ',this.state.range)
-    if(!reservado){
+
       return (
-        <div className="container" id="container-date-picker">
-          <h3>
-              {!from && !to && 'Elija una fecha de check-in.'}
-              {from && !to && 'Elija una fecha de check-out'}
-              {from &&
-                  to &&
-                  `Fecha de reserva desde: ${from.toLocaleDateString()} hasta:
-                      ${to.toLocaleDateString()}`}{' '}
-          </h3>
+        <div id="body-date-picker">
+            <Navbar/>
+            <div className="container" id="container-date-picker">
+              <h3>
+                  {!from && !to && 'Elija una fecha de check-in.'}
+                  {from && !to && 'Elija una fecha de check-out'}
+                  {from &&
+                      to &&
+                      `Fecha de reserva desde: ${from.toLocaleDateString()} hasta:
+                          ${to.toLocaleDateString()}`}{' '}
+              </h3>
+              <br/>
+              <DayPicker id="date-picker"
+                  className="Selectable"
+                  numberOfMonths={this.props.numberOfMonths}
+                  selectedDays={[from, { from, to }]}
+                  showOutsideDays
+                  disabledDays={     
+                      this.props.fechas.map(date => new Date(date))              
+                  }
+                  modifiers={modifiers}
+                  onDayClick={this.handleDayClick}
+              />
+              <br/>
+
+
+              <Form>
+                <Form.Group className="mb-3" controlId="Cantidad">
+                  <Form.Label>Ingrese la cantidad de personas</Form.Label>
+                  <Form.Control  name="num" id="input-date-picker" onChange={this.onInputChange} required/>
+                </Form.Group>
+              </Form>
+
               {from && to && (
-              <Button variant="info" onClick={this.handleResetClick}>
-                Limpiar Campos de Fecha
-              </Button>
+                <div>
+                  <Button id="button-date-picker1" variant="success" onClick={()=>{this.HandleReserva(from,to, num)}}>
+                      Continuar con la Reserva
+                  </Button>
+                  <Button id="button-date-picker2" variant="info" onClick={this.handleResetClick}>
+                    Limpiar Campos de Fecha
+                  </Button>
+                </div>
               )}
-          <br/>
-          <DayPicker id="date-picker"
-              className="Selectable"
-              numberOfMonths={this.props.numberOfMonths}
-              selectedDays={[from, { from, to }]}
-              showOutsideDays
-              disabledDays={     
-                  this.props.fechas.map(date => new Date(date))              
-              }
-              modifiers={modifiers}
-              onDayClick={this.handleDayClick}
-          />
-          <br/>
-
-
-          <Form>
-            <Form.Group className="mb-3" controlId="Cantidad">
-              <Form.Label>Ingrese la cantidad de personas</Form.Label>
-              <Form.Control  name="num"  onChange={this.onInputChange} required/>
-            </Form.Group>
-          </Form>
-
-          {from && to && (
-              <Button variant="success" onClick={()=>{this.HandleReserva(from,to, num, reservado)}}>
-                  Continuar con la Reserva
-              </Button>
-          )}
+            </div>
         </div>
-    );}else return (<br/>);
+        
+    );
   }
 }

@@ -20,9 +20,6 @@ async function getCheckOuts(id_dpto){
     }
 }
 
-
-
-
 //lista 1 checkin
 async function getCheckOut(id_rva){
     try{
@@ -39,38 +36,33 @@ async function getCheckOut(id_rva){
     }
 }
 
-
-
-
-
 //crea un check in
-
 async function newCheckOut(CheckOut){
     try{
         let pool = await sql.connect(cnx);
-        let newComuna = await pool.request()
+        let newCheckout = await pool.request()
             .input("id_rva", sql.Int , CheckOut.id_rva)
-            .input("deta_chi", sql.NVarChar , CheckOut.deta_chi)
+            .input("cost_multa", sql.Int, CheckOut.cost_multa)
+            .input("deta_cho", sql.NVarChar , CheckOut.deta_cho)
             .input("id_usr", sql.Int , CheckOut.id_usr)
-            .execute('pd_agregarCheckin');
-        return newComuna.recordsets;    
+            .execute('pd_agregarCheckout');
+        return newCheckout.recordsets;    
     } 
     catch(err){
         throw new Error (`Error en el procidemiento ${err.procName}...${err.message}`);
     }
 }
 
-
 //actualiza la agencia
 async function upCheckOut(CheckOut){
     try{
         let pool = await sql.connect(cnx);
-        let newComuna = await pool.request()
+        let newCheckout = await pool.request()
             .input("id_rva", sql.Int , CheckOut.id_rva)
             .input("deta_chi", sql.NVarChar , CheckOut.deta_chi)
             .input("id_usr", sql.Int , CheckOut.id_usr)
             .execute('pd_modificarCheckout');
-        return newComuna.recordsets;    
+        return newCheckout.recordsets;    
     } 
     catch(err){
         throw new Error (`Error en el procidemiento ${err.procName}...${err.message}`);

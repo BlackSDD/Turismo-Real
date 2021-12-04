@@ -34,8 +34,36 @@ async function getMontoPago(id_rva){
     try{
         let pool = await sql.connect(cnx);
         let salida = await pool.request()
-            .input("id_rva", sql.Int, id_rva)
+            .input("id_rva", sql.Int, id_rva.reserva)
             .query("select dbo.fn_monto_pago( @id_rva ) as Pago");
+        console.log(salida.recordsets);
+        return salida.recordsets;
+    } 
+    catch(err){
+        console.log(err);
+    }
+}
+
+async function getMontoAbono(id_rva){
+    try{
+        let pool = await sql.connect(cnx);
+        let salida = await pool.request()
+            .input("id_rva", sql.Int, id_rva.reserva)
+            .query("select dbo.fn_pago_abono( @id_rva ) as Pago");
+        console.log(salida.recordsets);
+        return salida.recordsets;
+    } 
+    catch(err){
+        console.log(err);
+    }
+}
+
+async function getMontoPagoArriendo(id_rva){
+    try{
+        let pool = await sql.connect(cnx);
+        let salida = await pool.request()
+            .input("id_rva", sql.Int, id_rva.reserva)
+            .execute("pd_pago_total_reserva");
         console.log(salida.recordsets);
         return salida.recordsets;
     } 
@@ -48,4 +76,6 @@ module.exports = {
     getPago: getPago,
     NewPago: NewPago,
     getMontoPago: getMontoPago,
+    getMontoAbono: getMontoAbono,
+    getMontoPagoArriendo: getMontoPagoArriendo
 }

@@ -2,23 +2,22 @@ import React, {Component, useState, useEffect} from 'react';
 import ReactDOM  from 'react-dom';
 import { useHistory} from 'react-router-dom';
 import axios from 'axios';
+import NavBar from './Navbar';
+import '../../assetss/css/pago.css'
+import {Button} from 'react-bootstrap';
 
 const PayPalButton = window.paypal.Buttons.driver("react", { React, ReactDOM });
 
 function PaypalCheckout () {
-    // const [price, setPrice] = useState(0);
-    // let history = useHistory();
     const [pago, setPago] = useState([]);
-    const precio = pago;
-    const id_rva = sessionStorage.reserva;
-    const [informeR, setInformeR] = useState([])
-    const [count, setCount] = useState(false);
+    const precio = pago.Pago ;
+    const id_rva = parseInt(sessionStorage.reserva);
+    const[valorDolar, setValorDolar] = useState();
 
     let urlId = {
-        id_reserva: id_rva
+        reserva: id_rva
     }
-
-    let dolar = Math.round(precio/830);
+    let dolar = (precio/valorDolar).toFixed(2);
 
     const createOrder = (data, actions) => {
         return actions.order.create({
@@ -30,14 +29,25 @@ function PaypalCheckout () {
         });
     };
 
+    const getDolar = async() =>{
+        const data = await fetch('https://mindicador.cl/api/dolar')
+        const y = await data.json()
+        const z = y.serie.map((e) =>{
+            return e
+        })
+        console.log('y: ', y);
+        console.log('z: ',z);
+        setValorDolar(z[0].valor)
+    }
+
     useEffect((e)=>{
-        // e.preventDefault();
-            getMontoPago(id_rva);
+            getMontoPago(urlId);
+            getDolar();
     },[]);
 
     const getMontoPago = async (id) =>{
-        const res = await axios.get('http://localhost:4000/API/pago/montoPago/' + id)
-        setPago(res.data);
+        const res = await axios.post('http://localhost:4000/API/pago/abonoPago/' , id)
+        setPago(res.data[0]);
         console.log(res.data);
     }
     
@@ -45,52 +55,51 @@ function PaypalCheckout () {
         return actions.order.capture(handlePay());
     };
 
-    function handlePay(e){
+    const handlePay = (e) =>{
+        const newPago ={
+            id_rva : id_rva,
+            monto_pagado: precio
+        }
+        axios.post('http://localhost:4000/API/pago', newPago);
         console.log("Pago recibido");
-        getInformeRes(urlId);
-        setCount(true);
+        window.location.href= "/PagoConfirmado";
     }
     
-    // useEffect(() => {
-    //     getInformeRes(urlId);
-    // },[]);
+    console.log('Log paypal');
+    console.log('urlId:', urlId);
+    console.log('Monto Pago: ', pago);
+    console.log('Precio a pagar:', precio);
+    console.log('Id rva:',id_rva);
+    console.log('precio Dolar: ', valorDolar);
+    console.log('End log paypal');
 
-    const getInformeRes = async () => {
-        const res = await axios.post('http://localhost:4000/API/informeResDet/', urlId )
-        setInformeR(res.data)
-    }
-
-    console.log({informeR})
-
-    if(count===false){
+    
         return( 
-            <div>
-                <h1>El monto a pagar es {dolar} </h1>
-                <PayPalButton
-                    createOrder={(data, actions) => createOrder(data, actions)}
-                    onApprove={(data, actions) => onApprove(data, actions)}
-                />
-                <h1>{informeR.Id_reserva}</h1>
+            <div id="body_pago">
+                <NavBar/>
+                <div className="container" id="container-pago">
+                    <h2>El monto que debe abonar es ${dolar}USD</h2>
+                    <h2>Equivalente al abono requerido de ${precio} CLP</h2>
+                    <PayPalButton
+                        createOrder={(data, actions) => createOrder(data, actions)}
+                        onApprove={(data, actions) => onApprove(data, actions)}
+                    />
+                </div>
             </div>
         );
-    }
-    else {
-    return(
-        <div>
-            <h1>Pago recibido</h1>
-            {
-                informeR.map(e =>
-                    <div>
-                        <p>{e.Cliente}</p>  
-                        <p>{e.FechaReserva}</p> 
-                        <p>{dolar}</p>
-                        <p>{pago}</p>
-                    </div>
-                )
-            }
-        </div>
-    );
-    }
+    
 }
+// "Idreserva",
+// "Departamento",
+// "Cliente",
+// "Estado reserva",
+// "FechaReserva",
+// "Costo_total",
+// "Costo_arriendo",
+// "Costoserviciosextra",
+// "CostoMultas",
+// "MontoPagado",
+// "Detalle_check-in",
+// "Detalle_check-out"
 
 export default PaypalCheckout  

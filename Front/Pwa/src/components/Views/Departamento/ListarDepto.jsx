@@ -13,7 +13,6 @@ import DatePicker from '../../Layouts/Date-Picker';
 export default function ListarDepto(){
   
     const [deptos, setDeptos] = useState([]);
-    // const [dispNo, setDispNo] = useState([]);
     const history = useHistory();
 
  
@@ -21,17 +20,11 @@ export default function ListarDepto(){
         const res = await axios.get('http://localhost:4000/API/departamento');
         setDeptos(res.data);
     }
-    // const getDispNo = async () =>{
-    //     const res = await axios.get('http://localhost:4000/API/departamento');
-    //     setDeptos(res.data);
-    // }
 
     useEffect(()=>{
         getDeptos();
         console.log('Inmediate clg: ',{deptos})
-        // this.setState({
-        //     deptos: res.data
-        // })
+
     },[]);
 
     function handleReserva(id_d ){
@@ -63,8 +56,6 @@ export default function ListarDepto(){
                                         <h2>{e.nom_rgn}</h2>
                                         <h5>Ubicado en la comuna de: {e.nom_com}</h5>
                                         <p>{e.dir_dpto}</p>
-                                        {/* <p>Condominio {e.nom_cnd}</p> */}
-                                        {/* {e.nom_cnd} */}
                                         <p>{e.depto}</p>
                                         <p>{e.desc_dpto}</p>
                                         <p>Número de ambientes: {e.n_amb_dpto} </p>
@@ -77,12 +68,7 @@ export default function ListarDepto(){
                             ))
                         }
                     </div>
-                    {/* <Reserva
-                        id_rva= {1}
-                    /> */}
                 </div>
-                
             </div>
         )
-    
 }

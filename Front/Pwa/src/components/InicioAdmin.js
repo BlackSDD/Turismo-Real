@@ -1,12 +1,14 @@
 import React from 'react'
 import "../assetss/css/Admin.css"
 import { Router, Route, Link } from 'react-router-dom';
+import NavBarAdmin from './Layouts/NavBarAdmin';
 ///import PWA
 <link rel="manifest" href="../../public/manifest.json"></link>
 
 const MainAdmin = () => {
     return (
         <div id="menuAdmin">
+            <NavBarAdmin/>
             <div className="row  d-flex justify-content-center mb-5">
             <div className="card-header mb-5" style={{backgroundColor:'black', opacity:0.8}}>
             <div className="title col-12 mt-5 text-center">
