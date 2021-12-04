@@ -1,0 +1,39 @@
+#body_pago{
+    color: white;
+    background-image: url("https://images.pexels.com/photos/325185/pexels-photo-325185.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    height: 100vh;
+}
+
+#container-pago{
+    background: black;
+    padding: 7% 7% 15%;
+    margin-top: 5%;
+    /* background: rgb(2,0,36); */
+    /* background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(51,84,68,1) 50%, rgba(0,0,0,1) 100%); */
+    opacity: 0.9;
+}
+
+#container-detalle{
+    padding: 7% 7% 15%;
+    margin-top: 5%;
+    background: black;
+    border: 1px solid rgb(182, 69, 69);
+    border-radius: 25px;
+    opacity: 0.6;
+}
+
+#detalles{
+    text-align: left;
+}
+
+#li-pago{
+    list-style-type:none;
+    font-size: 110%;
+    font-weight: bold;
+}
+
+#button-volver-paypal{
+    font-weight: bold;
+}

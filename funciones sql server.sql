@@ -4,11 +4,19 @@
 create or ALTER function fn_arriendo (@id_rva int) returns int
 as 
 BEGIN
-	declare @v1 int
+	declare @v1 int;
+	declare @depto int;
+	
+	select @depto = id_dpto from reserva where id_rva = @id_rva; 
+	
 	select @v1 = (datediff(DAY, r.fec_ini_rva, r.fec_fin_rva ) * d.costo_arri_dpto) 
 		from reserva r join departamento d 
 			on r.id_dpto = d.id_dpto 
 		where r.id_rva = @id_rva; 
+	
+	if @v1 = 0 begin
+		select @v1 = costo_arri_dpto from departamento where id_dpto = @depto
+	end;
 	return @v1
 end;
 go

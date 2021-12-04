@@ -6,7 +6,7 @@ begin
 select
         concat(c.nom_cnd , ' '  , d.num_dpto) as "Departamento",
         concat(u.nom_usr , ' ' , u.appat_usr , ' ' , u.apmat_usr) as "Cliente",
-        r.estado_rva as "Estado reserva",
+        r.estado_rva as "Estado_reserva",
         concat(convert(varchar,r.fec_ini_rva,103) , ' - ' , convert(varchar,r.fec_fin_rva,103)) as "Fecha"
     from usuario u join reserva r
         on u.id_usr = r.id_usr 
@@ -32,7 +32,7 @@ begin
 			DISTINCT(r.id_rva) as "Idreserva",
 			concat(c.nom_cnd , ' '  , d.num_dpto) as "Departamento",
 			concat(u.nom_usr , ' ' , u.appat_usr , ' ' , u.apmat_usr) as "Cliente",
-			r.estado_rva as "Estado reserva",
+			r.estado_rva as "Estado_reserva",
 			concat(convert(varchar,r.fec_ini_rva,103) , ' - ' , convert(varchar,r.fec_fin_rva,103)) as "FechaReserva",
 			concat('$',p.monto_total) as "Costo_total",
 			concat('$',p.monto_arr) as "Costo_arriendo",
@@ -76,6 +76,7 @@ select
     order by "Fecha_servicio";
 end;
 go
+
 
 
 ----------------------------------------------------------------------

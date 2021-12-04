@@ -1,7 +1,7 @@
 const cnx = {
     user: 'TurismoReal1',
     password: '1234',
-    server : 'DESKTOP-HHQNQGG',
+    server : 'Matita-PC',
     database: 'TurismoReal',
     options: {
         encrypt: true, // for azure

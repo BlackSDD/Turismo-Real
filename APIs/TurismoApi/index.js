@@ -666,15 +666,22 @@ router.route('/pago').post((request, response) => {
 });
 
 //Calcular monto del pago
-router.route('/pago/montoPago/:id_rva').get((request, response) => {
-    PagoWS.getMontoPago(request.params.id_rva).then(result =>{
+router.route('/pago/montoPago/').post((request, response) => {
+    let id_rva = {...request.body}
+    PagoWS.getMontoPago(id_rva).then(result =>{
         response.json(result[0]);
     });
 });
 
+router.route('/pago/abonoPago/').post((request, response) => {
+    let id_rva = {...request.body}
+    PagoWS.getMontoAbono(id_rva).then(result =>{
+        response.json(result[0]);
+    });
+});
+
+
 ///////////REGION//////////
-
-
 router.route('/region').get((request, response) => {
     RegionWS.getRegion().then(result =>{
         response.json(result[0]);
@@ -997,8 +1004,8 @@ router.route('/tipousr').get((request, response) => {
 
 /////////////////////////INFORME RESERVAS DETALLADO////////////////////////////////////////
 router.route('/informeResDet/').post((request, response) => {
-    let id_reserva = {...request.body}
-    InformesWS.getInformeReservaDet(id_reserva).then(result =>{
+    let id_rva = {...request.body}
+    InformesWS.getInformeReservaDet(id_rva).then(result =>{
         response.json(result[0]);
     }, (err) => {
         console.log(err.message);

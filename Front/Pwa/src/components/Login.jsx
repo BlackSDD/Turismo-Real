@@ -70,17 +70,19 @@ class Login extends React.Component{
                     {
                         notifyS();
                         console.log("Funcionario");
-                        this.props.history.push("/Home");
+                        this.props.history.push("/Admin");
                     }
                     else if(response.data[0].id_tipo_usr =="3")
                     {
                         notifyS();
                         //setear y almacenar datos en el session storage
-                        sessionStorage.correo = response.data[0].email_usr
-                        sessionStorage.idUsuario = response.data[0].id_usr
+                        sessionStorage.correo = response.data[0].email_usr;
+                        sessionStorage.idUsuario = response.data[0].id_usr;
+                        let login = 1;
+                        sessionStorage.Login= login;
                         let email = sessionStorage.correo
                         console.log('El correo es: ' + email)
-                        this.props.history.push("/Admin");
+                        this.props.history.push("/");
         
                     }
     
