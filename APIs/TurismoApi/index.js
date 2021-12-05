@@ -612,7 +612,7 @@ router.route('/mantencion').post((request, response) => {
     let Mantencion = {...request.body}
     MantencionSW.newMantencion(Mantencion).then(result => {
         response.json(result[0]);
-    console.log('Se a registrado la mantención')
+    console.log('Se ha registrado la mantención')
     }, (err) => {
         console.log(err.message);
         response.json(err.message)
@@ -651,6 +651,14 @@ router.route('/mantencionDepto').post((request, response) => {
         response.json(err.message)
     });
 });
+
+///Get mantenciones agendadas
+router.route('/mantencionAgendada').get((request, response) => {
+    MantencionSW.getMantencionesAgendadas().then(result =>{
+        response.json(result[0]);
+    });
+});
+
 ////////////////////PAGO///////////////////
 //Listar pagos
 router.route('/pago').get((request, response) => {
@@ -714,12 +722,16 @@ router.route('/reservaMantencion').get((request, response) => {
     });
 });
 
-router.route('/reservaMantencion/:id_rmant').get((request, response) => {
-    ResMantencionSW.getReservasMantencion(request.params.id_rmant).then(result =>{
+/// Get reserva de mantencion por id reserva
+router.route('/reservaMantencionID').post((request, response) => {
+    let id_rmant = {...request.body}
+    ResMantencionSW.getReservaMantencionID(id_rmant).then(result =>{
         response.json(result[0]);
+    }, (err) => {
+        console.log(err.message);
+        response.json(err.message)
     });
 });
-
 
 //agregar Reserva Mantencion
 router.route('/reservaMantencion').post((request, response) => {
@@ -733,7 +745,7 @@ router.route('/reservaMantencion').post((request, response) => {
     });
 });
 
-//modificar Reserva Mantencion
+/////modificar Reserva Mantencion
 router.route('/reservaMantencion').put((request, response) => {
     let ResMantencion = {...request.body}
     ResMantencionSW.upReservaMantenciont(ResMantencion).then(result => {
@@ -745,6 +757,8 @@ router.route('/reservaMantencion').put((request, response) => {
         response.json(err.message)
     });
 });
+
+
 
 /////////////RESERVA///////////////
 ///Listar reservas

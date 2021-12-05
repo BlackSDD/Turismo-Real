@@ -18,6 +18,12 @@
     margin-top: 2%;
     width: 90%;
 }
-#input-multa{
-    width: 100%;
+
+#btn-res-mant{
+    padding: 1%;
+    border: 1px solid white;
+    /* border-radius: 50px; */
+    min-width: 25%;
+    margin-bottom: 2%;
 }
+

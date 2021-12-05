@@ -33,7 +33,7 @@ export default class NavBarAdmin extends Component {
               </Navbar.Collapse>
             </Navbar>
           );}
-          if(tipo_usr==1){
+          else{
             return (
               <Navbar id="navbar" bg="dark" variant="dark" sticky="top" expand="lg">
                 <Navbar.Brand>
@@ -43,7 +43,7 @@ export default class NavBarAdmin extends Component {
                 <Navbar.Collapse>
                   <Nav>
                     <Nav.Link href="/Admin"> Home </Nav.Link>
-                    <Nav.Link href="/DeptosMant"> Reservar Mantención  </Nav.Link>
+                    <Nav.Link href="/DeptosMant"> Mantenciones  </Nav.Link>
                     <Nav.Link onClick={this.salir} href="/">Salir</Nav.Link>
                   </Nav>
                 </Navbar.Collapse>

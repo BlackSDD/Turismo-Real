@@ -111,6 +111,8 @@ async function UpCancelarReserva(id_rva){
     }
 }
 
+
+//// Trae la reserva que se esta procesando 
 async function getCurrentRva(id_usr){
     try{
         let pool = await sql.connect(cnx);
