@@ -42,6 +42,15 @@ import DeptoList from './components/Views/Departamento/ListarDepto';
 import DeptoEdi from './components/Views/Departamento/DeptoEdi';
 ///Informe
 import InformeGeneral from './components/Views/Informes/InformesGenerales';
+import InformeDeptoDía from './components/Views/Informes/Departamento/InformeDeptoDía';
+import InformeDeptoSemana from './components/Views/Informes/Departamento/InformeDeptoSemana';
+import InformeDeptoMensual from './components/Views/Informes/Departamento/InformeDeptoMensual';
+import InformeDeptoAgno from './components/Views/Informes/Departamento/InformeDeptoAgno';
+
+import InformeZonaDiaria from './components/Views/Informes/Zona/InformeZonaDiaria';
+import InformeZonaSemana from './components/Views/Informes/Zona/InformeZonaSemana';
+import InformeZonaMensual from './components/Views/Informes/Zona/InformeZonaMensual';
+import InformeZonaAgno from './components/Views/Informes/Zona/InformeZonaAgno';
 ////////////////Usuario
 import UsuarioList from './components/Views/Usuario/UsuarioList';
 import UsuarioNew  from './components/Views/Usuario/UsuarioNew';
@@ -116,6 +125,15 @@ function App() {
                 <Route path="/DeptoEdit" exact render ={ props=> ( <DeptoEdi {...props} />)}></Route>
         {/* Informes */}
                 <Route path="/InformeGen" exact render ={ props=> ( <InformeGeneral {...props} />)}></Route>
+                <Route path="/InformeDeptoDía" exact render ={ props=> ( <InformeDeptoDía {...props} />)}></Route>      
+                <Route path="/InformeDeptoSemana" exact render ={ props=> ( <InformeDeptoSemana {...props} />)}></Route>
+                <Route path="/InformeDeptoMensual" exact render ={ props=> ( <InformeDeptoMensual {...props} />)}></Route>
+                <Route path="/InformeDeptoAgno" exact render ={ props=> ( <InformeDeptoAgno {...props} />)}></Route>
+
+                <Route path="/InformeZonaDiaria" exact render ={ props=> ( <InformeZonaDiaria {...props} />)}></Route>
+                <Route path="/InformeZonaSemana" exact render ={ props=> ( <InformeZonaSemana {...props} />)}></Route>
+                <Route path="/InformeZonaMensual" exact render ={ props=> ( <InformeZonaMensual {...props} />)}></Route>
+                <Route path="/InformeZonaAgno" exact render ={ props=> ( <InformeZonaAgno {...props} />)}></Route>
         {/* Usuario */}
                 <Route path="/UsuarioList" exact render ={ props=> ( <UsuarioList {...props} />)}></Route>
                 <Route path="/UsuarioNew" exact render ={ props=> ( <UsuarioNew {...props} />)}></Route>
@@ -141,7 +159,7 @@ function App() {
                 <Route path="/TransporteEdit" exact render ={ props=> ( <TransporteEdit {...props} />)}></Route>
                 <Route path="/TransporteList" exact render ={ props=> ( <TransporteList {...props} />)}></Route>                                                                                        
         {/* Generar Reserva Departamento */}
-                <Route path="/reservar" exact render ={ props=> ( <Reserva {...props} />)}></Route>     
+                <Route path="/reservar" exact render ={ props=> ( <Reserva {...props} />)}></Route>
         </Switch>
                 <Footer/>  
         </Router>
