@@ -18,6 +18,22 @@ async function getReservaId(id_rva){
     }
 }
 
+
+
+async function getReservasUsr(reserva){
+    try{
+        let pool = await sql.connect(cnx);
+        let salida = await pool.request()
+        .input("id_usr", sql.Int , reserva.id_usr)
+        .query('select * from reserva where id_usr = @id_usr');
+        console.log(salida.recordsets);
+        return salida.recordsets;
+    } 
+    catch(err){
+        console.log(err);
+    }
+}
+
 async function getReservasCheck(){
     try{
         let pool = await sql.connect(cnx);
@@ -111,6 +127,8 @@ async function UpCancelarReserva(id_rva){
     }
 }
 
+
+//// Trae la reserva que se esta procesando 
 async function getCurrentRva(id_usr){
     try{
         let pool = await sql.connect(cnx);
@@ -134,6 +152,7 @@ module.exports = {
     getReservaId: getReservaId,
     getCurrentRva: getCurrentRva,
     getReservasProgress: getReservasProgress,
-    getReservasCheck: getReservasCheck
+    getReservasCheck: getReservasCheck,
+    getReservasUsr : getReservasUsr
 }
 

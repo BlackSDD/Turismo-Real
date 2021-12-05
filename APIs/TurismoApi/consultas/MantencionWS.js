@@ -15,8 +15,6 @@ async function getMantencion(){
     }
 }
 
-
-
 async function newMantencion(mantencion){
     try{
         let pool = await sql.connect(cnx);
@@ -25,7 +23,7 @@ async function newMantencion(mantencion){
             .input("deta_mant", sql.NVarChar , mantencion.deta_mant)
             .input("id_rmant", sql.Int , mantencion.id_rmant)
             .execute('pd_agregarMantencion');
-        console.log('Se a registrado la mantención')
+        console.log('Se ha registrado la mantención')
         return newMantencion.recordsets;    
     } 
     catch(err){
@@ -64,11 +62,39 @@ async function delMantencion(id_rmant){
     }
 }
 
+async function getMantencionDepto(mantencion){
+    try{
+        let pool = await sql.connect(cnx);
+        let salida = await pool.request()
+            .input("id_depto", sql.Int , mantencion.id_depto)
+            .input("agno", sql.Int , mantencion.agno)
+            .execute('pd_getMantenciones');
+        console.log(salida.recordsets)
+        return salida.recordsets;    
+    } 
+    catch(err){
+        throw new Error (`Error en el procidemiento ${err.procName}...${err.message}`);
+    }
+}
 
+async function getMantencionesAgendadas(){
+    try{
+        let pool = await sql.connect(cnx);
+        let salida = await pool.request()
+        .execute('pd_mantencionesAgendadas');
+        console.log(salida.recordsets);
+        return salida.recordsets;
+    } 
+    catch(err){
+        console.log(err);
+    }
+}
 
 module.exports = {
     getMantencion: getMantencion,
     newMantencion : newMantencion,
     upMantencion : upMantencion,
-    delMantencion: delMantencion
+    delMantencion: delMantencion,
+    getMantencionDepto: getMantencionDepto,
+    getMantencionesAgendadas: getMantencionesAgendadas
 }

@@ -11,12 +11,15 @@ export default class NavBar extends Component {
   salir() {
     let x = 0;
     sessionStorage.Login = x;
+    sessionStorage.correo = x;
+    sessionStorage.idUsuario = x;
+    sessionStorage.tipoUsr = x;
     window.location.shref = "/";
   }
 
   render() {
     const login = sessionStorage.Login;
-    const tipo_usr = sessionStorage.tipoUsr;
+    // const tipo_usr = sessionStorage.tipoUsr;
 
     if (login ==1) {
         return (

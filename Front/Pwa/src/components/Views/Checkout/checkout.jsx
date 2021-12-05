@@ -3,7 +3,8 @@ import NavBarAdmin from '../../Layouts/NavBarAdmin';
 import axios from 'axios';
 import {toast} from 'react-toastify';
 import {Button, Form, Table} from  'react-bootstrap';
-import '../../../assetss/css/checks.css'
+import '../../../assetss/css/checks.css';
+import {useHistory} from 'react-router-dom';
 
 toast.configure({
 });
@@ -22,7 +23,23 @@ const notifyE = () =>{
     });
 };
 
+const notifyW = () =>{
+    toast.warn('Debe seleccionar una Id válida',{
+        position: toast.POSITION.TOP_CENTER,
+        theme: "colored"
+    });
+};
+
+const notifyW2 = () =>{
+    toast.warn('El costo no puede ser menor a 0',{
+        position: toast.POSITION.TOP_CENTER,
+        theme: "colored"
+    });
+};
+
 export default function Checkout() {
+
+    const history = useHistory();
 
     const [informeR, setInformeR] = useState([]);
     const [id_rva, setIdReserva] = useState(null);
@@ -40,10 +57,10 @@ export default function Checkout() {
     };
 
     useEffect((e)=>{
-        getIdReserva()
+        getOpciones()
     },[])
 
-    const getIdReserva = async (id)=>{
+    const getOpciones = async (id)=>{
         const res = await axios.get('http://localhost:4000/API/reservaProgress')
         let x = (res.data)
         console.log('id opcion: ', x)
@@ -64,8 +81,8 @@ export default function Checkout() {
     }
 
     const handleBuscar = async (id) =>{
-        if(id_rva ===""){
-            notifyE();
+        if(id_rva ==="-1"){
+            notifyW();
         }else{
         let url = {
             reserva : parseInt(id),
@@ -78,34 +95,33 @@ export default function Checkout() {
     }
 
     const handleCheckout = async ()=>{
-        if(!multa){
-            setMulta(0);
-        }
-        try{
-            const newCheckout = {
-                id_rva: parseInt(id_rva),
-                cost_multa: parseInt(multa),
-                deta_cho: detalle,
-                id_usr:parseInt(funcionario)
-            };
-            console.log('newCheckout:', newCheckout);
-            await axios.post('http://localhost:4000/API/checkout', newCheckout);
-            console.log("Check-out registrado");
-            const newPago ={
-                id_rva : id_rva,
-                monto_pagado: multa
-            };
-            await axios.post('http://localhost:4000/API/pago', newPago);
-            notifyS();
-            window.location.shref = "/checkout";
-        }catch{
-            notifyE();
-        }
+        if(multa <0){
+            notifyW2()
+        }else{
+            try{
+                const newCheckout = {
+                    id_rva: parseInt(id_rva),
+                    cost_multa: parseInt(multa),
+                    deta_cho: detalle,
+                    id_usr:parseInt(funcionario)
+                };
+                console.log('newCheckout:', newCheckout);
+                axios.post('http://localhost:4000/API/checkout', newCheckout);
+                console.log("Check-out registrado");
+                const newPago ={
+                    id_rva : id_rva,
+                    monto_pagado: multa
+                };
+                axios.post('http://localhost:4000/API/pago', newPago);
+                window.location.href = "/checkout";
+                notifyS();
+            }catch{
+                notifyE();
+            }}
     }
 
     return (
         <div id="body-checkin">
-            {/* <NavBar/> */}
             <NavBarAdmin/>
             <div className="container justify-items-center">
                 <br/>
@@ -116,7 +132,7 @@ export default function Checkout() {
                     <Form.Group className="mb-3" controlId="Reserva">
                         <h2>Ingrese el número de orden de Reserva</h2>
                         <Form.Select  name="id_rva" placeholder= "Ingrese N° de reserva" value={id_rva} required onChange={onInputChange}>
-                            <option value="">
+                            <option value="-1">
                                 Elige un Número de orden    
                             </option>
                             {opciones.map( op => (
@@ -154,10 +170,10 @@ export default function Checkout() {
                     </Table>
                     <br/>
                     <Form> 
-                        <h3>Ingrese el detalle del check-in</h3>
-                        <input type="number" id="input-multa" require name="multa" placeholder= "Ingrese costo de multas"  value={multa} required onChange={onInputMulta}/>
                         <h3>Ingrese el costo por multas</h3>
-                        <Form.Control as="textarea" require name="detalle" placeholder= "Ingrese detalle" rows={3} value={detalle} required onChange={onInputDetalle}/>
+                        <input type="number" id="input-multa" min={0}  name="multa" placeholder= "Ingrese costo de multas"  value={multa} required onChange={onInputMulta}/>
+                        <h3>Ingrese el detalle del check-out</h3>
+                        <Form.Control as="textarea"  name="detalle" placeholder= "Ingrese detalle" rows={3} value={detalle} required onChange={onInputDetalle}/>
 
                     </Form>
                     <br/>

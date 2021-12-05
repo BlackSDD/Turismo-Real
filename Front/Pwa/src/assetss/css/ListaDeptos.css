@@ -20,3 +20,14 @@
   padding-top: 2%;
   margin-top: 2%;
 }
+
+#encabezadoTabla{
+  background-color: black;
+  color: white;
+  font-size: small;
+}
+
+#cuerpoTabla{
+  background-color: white;
+  font-size: small;
+}

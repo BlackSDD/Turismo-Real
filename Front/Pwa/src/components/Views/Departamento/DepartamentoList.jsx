@@ -5,8 +5,6 @@ import { Link } from 'react-router-dom';
 import {toast} from 'react-toastify';
 // Import toastify css file
 import 'react-toastify/dist/ReactToastify.css';
-///import PWA
-<link rel="manifest" href="../../public/manifest.json"></link>
 
 toast.configure({
 
@@ -22,7 +20,7 @@ const notifyE = () =>{
 export default class UsuarioList extends Component {
 
     state = {
-        mantencion: []
+        departamento: []
     }
 
     async componentDidMount() {
@@ -30,16 +28,16 @@ export default class UsuarioList extends Component {
     }
 
     getMantencion = async () => {
-        const res = await axios.get('http://localhost:4000/API/mantencion')
+        const res = await axios.get('http://localhost:4000/API/departamento')
         this.setState({
-            mantencion: res.data
+            departamento: res.data
         })
     }
 
     Eliminar = async (Id) => {
         const answer = window.confirm("¿Estas Seguro?");
         if (answer){
-            await axios.delete('http://localhost:4000/API/mantencion/' + Id);
+            await axios.delete('http://localhost:4000/API/departamento/' + Id);
             notifyS();
         } else {
             notifyE();
@@ -55,33 +53,28 @@ export default class UsuarioList extends Component {
                 <div className="row">
                     
                     {
-                        this.state.mantencion.map(art => (
-                            <div className="col-sm-3 col-md-6" key={art.id_rmant}>
+                        this.state.departamento.map(art => (
+                            <div className="col-sm-3 col-md-6" key={art.id_dpto}>
                                         <div className="card-body">
                                         <p>
-                                          costo: {art.cost_mant}
+                                          direccion: {art.dir_dpto}
                                         </p>
                                         <p>
-                                          detalle: {art.deta_mant}
+                                          Habitacion: {art.num_dpto}
                                         </p>
-
+                                        <p>
+                                          Descripcion: {art.desc_dpto}
+                                        </p>
+                                        <p>
+                                          Costo noche: ${art.costo_arri_dpto}
+                                        </p>
                                         </div>
-                                    <div className="card-footer">
-                                        <button className="btn btn-danger" onClick={() => this.Eliminar(art.id_rmant)}>
-                                            CANCELAR MANTENCION
-                                        </button>
-                                    </div>
+                                    
                                 </div>
                         ))
                     }
 
-                        <Link to={"/UsuarioNew"} className="btn btn-secondary">
-                            <i className="material-icons">INGRESAR USUARIO</i>
-                        </Link>
-                            
-                        <Link to={"/UsuarioEdi"} className="btn btn-secondary">
-                            <i className="material-icons"> EDITAR USUARIO</i>
-                        </Link>
+                       
                     </div>
                 </div>
             

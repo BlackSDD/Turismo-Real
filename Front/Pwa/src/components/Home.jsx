@@ -8,13 +8,11 @@ import Navbar from '../components/Layouts/Navbar.jsx'
 
 //Forma de llamar a datos de sesion storage
 let email = sessionStorage.correo
-console.log('El correo es' + email)
-
+console.log('El correo es: ' + email)
 const Landing = () => {
     return (
         <div className="col-md" id="homdeDiv">
         <Navbar/>
-
             <div id="carrusel1" >
                 <Carrusel/>
             </div>

@@ -2,11 +2,11 @@ import React, {  Component, useEffect, useState } from 'react';
 import axios from 'axios';
 import {useHistory} from 'react-router-dom';
 import '../../../assetss/css/ListaDeptos.css';
-import Reservar from '../Reservas/Reserva';
+// import Reservar from '../Reservas/Reserva';
 import building from '../../../assetss/img/building.png'
 import Navbar from '../../Layouts/Navbar.jsx'
 import { Button } from 'react-bootstrap';
-import DatePicker from '../../Layouts/Date-Picker';
+// import DatePicker from '../../Layouts/Date-Picker';
 ///import PWA
 <link rel="manifest" href="../../public/manifest.json"></link>
 
@@ -39,13 +39,17 @@ export default function ListarDepto(){
     console.log('Listar Deptos');
     console.log({deptos});
     console.log('End Lista Deptos');
-
-        return (
+    let tipo = sessionStorage.tipoUsr
+    
+        
+    
+       return (
             <div>
                 <Navbar/>
                 <div id="listar-deptos">
-                    <h1>Listado de departamentos</h1>
                     <div className="container">
+                        <br/>
+                        <h1>Listado de departamentos</h1>
                         {
                             deptos.map(e =>(
                                 <div className="row" id="row-lista-depto">
