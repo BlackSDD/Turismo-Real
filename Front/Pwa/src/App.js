@@ -80,6 +80,8 @@ import ResMant from './components/Views/Mantencion/ResMant';
 
 
 function App() {
+        let tipo = parseInt(sessionStorage.tipoUsr)
+
   return (
     <React.Fragment>
       <Router>
@@ -87,12 +89,14 @@ function App() {
           <Switch>
         {/* Landing */}
                 <Route path="/" exact render ={ props=> ( <Landing {...props} />)}></Route>
-                <Route path="/login" exact render ={ props=> ( <Login {...props} />)}></Route>    
-                <Route path="/Admin" exact render ={ props=> ( <MainAdmin {...props} />)}></Route>    
+                <Route path="/login" exact render ={ props=> ( <Login {...props} />)}></Route>
+
+                 <Route path="/Admin" exact render ={ props=> ( <MainAdmin {...props} />)}></Route>    
+                
                 <Route path="/MainFuncionario" exact render ={ props=> ( <MainFuncionario {...props} />)}></Route>    
                 <Route path="/test" exact render ={ props=> ( <Test {...props} />)}></Route>     
                 <Route path="/test2" exact render ={ props=> ( <Test2 {...props} />)}></Route>  
-                <Route path="/test3" exact render ={ props=> ( <Test3 {...props} />)}></Route>    
+                 <Route path="/test3" exact render ={ props=> ( <Test3 {...props} />)}></Route>  
                 <Route path="/PagoConfirmado" exact render ={ props=> ( <PagoConfirmado {...props} />)}></Route>     
                 <Route path="/paypal" exact render ={ props=> ( <Paypal {...props} />)}></Route>     
         {/* PostRoutes--------- */}
@@ -123,7 +127,7 @@ function App() {
         {/* Informes */}
                 <Route path="/InformeGen" exact render ={ props=> ( <InformeGeneral {...props} />)}></Route>
         {/* Usuario */}
-                <Route path="/UsuarioList" exact render ={ props=> ( <UsuarioList {...props} />)}></Route>
+               <Route path="/UsuarioList" exact render ={ props=> ( <UsuarioList {...props} />)}></Route>
                 <Route path="/UsuarioNew" exact render ={ props=> ( <UsuarioNew {...props} />)}></Route>
                 <Route path="/UsuarioEdi" exact render ={ props=> ( <UsuarioEdi {...props} />)}></Route>
                 <Route path="/ClienteNew" exact render ={ props=> ( <ClienteNew {...props} />)}></Route>
