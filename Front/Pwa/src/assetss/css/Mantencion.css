@@ -1,11 +1,11 @@
-#body-checkin{
+#body-mantenciones{
     color:white;
     background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(0,0,0,1) 0%, rgba(70,116,175,1) 100%);
     /* padding-bottom: 5%; */
     min-height: 100vh;
 }
 
-#div-buscar-nro{
+#div-buscar-man{
     margin-top: 5%;
     padding: 5%;
     background-color: black;
@@ -14,11 +14,10 @@
     border-radius: 100px;
 }
 
-#container-detalle-checkin{
+#container-mantenciones{
     margin-top: 2%;
     width: 90%;
 }
-
-#input-fecha{
+#input-multa{
     width: 100%;
 }

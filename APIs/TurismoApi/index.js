@@ -642,7 +642,16 @@ router.route('/mantencion').put((request, response) => {
         response.json(err.message)
     });
 });
-
+// Trae mantenciones para el depto según año 
+router.route('/mantencionDepto').post((request, response) => {
+    let Mantencion = {...request.body}
+    MantencionSW.getMantencionDepto(Mantencion).then(result => {
+        response.json(result[0]);
+    }, (err) => {
+        console.log(err.message);
+        response.json(err.message)
+    });
+});
 ////////////////////PAGO///////////////////
 //Listar pagos
 router.route('/pago').get((request, response) => {
@@ -654,6 +663,7 @@ router.route('/pago').get((request, response) => {
     });
 });
 ///
+
 //Registrar pago
 router.route('/pago').post((request, response) => {
     let Pago = {...request.body}
@@ -748,6 +758,15 @@ router.route('/reserva').get((request, response) => {
 //// Get reserva por id
 router.route('/reserva/:id_rva').get((request, response) => {
     ReservaWS.getReservaId(request.params.id_rva).then(result =>{
+        response.json(result[0]);
+    });
+});
+
+
+//// Get reserva por usr
+router.route('/reserva/usr').post((request, response) => {
+    let Reserva = {...request.body}
+    ReservaWS.getReservasUsr(Reserva).then(result =>{
         response.json(result[0]);
     });
 });

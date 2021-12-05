@@ -6,6 +6,9 @@ import NavBarAdmin from './Layouts/NavBarAdmin';
 <link rel="manifest" href="../../public/manifest.json"></link>
 
 const MainAdmin = () => {
+
+    // let tipo_usr = sessionStorage.tipo_usr
+
     return (
         <div id="menuAdmin">
             <NavBarAdmin/>
@@ -27,7 +30,7 @@ const MainAdmin = () => {
                         <hr />
                         <li><Link class="menu-item text-white" to="/DeptoList">Administrar departamentos</Link></li>
                         <hr />
-                        <li><Link class="menu-item text-white" to="/ReservaMantencionList">Reservas de mantenciones</Link></li>
+                        <li><Link class="menu-item text-white" to="/DeptosMant">Reserva mantención</Link></li>
                         <hr />
                         <li><Link class="menu-item text-white" to="/ArticuloList">Inventario de departamentos</Link></li>
                     </div>

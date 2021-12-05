@@ -16,7 +16,7 @@ export default class NavBar extends Component {
 
   render() {
     const login = sessionStorage.Login;
-    const tipo_usr = sessionStorage.tipoUsr;
+    // const tipo_usr = sessionStorage.tipoUsr;
 
     if (login ==1) {
         return (

@@ -64,11 +64,25 @@ async function delMantencion(id_rmant){
     }
 }
 
-
+async function getMantencionDepto(mantencion){
+    try{
+        let pool = await sql.connect(cnx);
+        let salida = await pool.request()
+            .input("id_depto", sql.Int , mantencion.id_depto)
+            .input("agno", sql.NVarChar , mantencion.agno)
+            .execute('pd_getMantenciones');
+        console.log(salida.recordsets)
+        return salida.recordsets;    
+    } 
+    catch(err){
+        throw new Error (`Error en el procidemiento ${err.procName}...${err.message}`);
+    }
+}
 
 module.exports = {
     getMantencion: getMantencion,
     newMantencion : newMantencion,
     upMantencion : upMantencion,
-    delMantencion: delMantencion
+    delMantencion: delMantencion,
+    getMantencionDepto: getMantencionDepto
 }
