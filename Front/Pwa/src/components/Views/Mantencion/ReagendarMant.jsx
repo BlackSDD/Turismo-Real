@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import {toast} from 'react-toastify';
 import NavbarAdmin from '../../Layouts/NavBarAdmin';
-import { useParams, useLocation } from 'react-router-dom';
-import {Button} from  'react-bootstrap';
-import DateMant from './DateMant';
+import DateReagendarMant from './DateReagendarMant';
 ///import PWA
 <link rel="manifest" href="../../public/manifest.json"></link>
 
-
-export default function ResMant() {
+export default function ReagendarMant() {
 
     let storage = parseInt(sessionStorage.id_d);
     const [fechas, setFechas] = useState([]);
@@ -51,7 +47,7 @@ export default function ResMant() {
     return (
         <div>
             <NavbarAdmin/>
-            <DateMant
+            <DateReagendarMant
                 fechas={arrayF}
             />                          
         </div>

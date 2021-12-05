@@ -413,12 +413,12 @@ router.route('/contServicio').get((request, response) => {
 
 //agregar servicios extras
 router.route('/contServicio').post((request, response) => {
-    let ContratarServicio = {...request.body}
+    let ContratarServicio = {...request.body};
     ContratarServicioSW.newContratarServicio(ContratarServicio).then(result => {
         response.json(result[0]);
     }, (err) => {
         console.log(err.message);
-        response.json(err.message)
+        response.json(err.message);
     });
 });
 
@@ -426,21 +426,21 @@ router.route('/contServicio').post((request, response) => {
 router.route('/contServicio/:id_cont_serv').put((request, response) => {
     ContratarServicioSW.delContratarServicio(request.params.id_cont_serv).then(result => {
         response.json(result[0]);
-        console.log('Se elimino el registro de servicio contratado')
+        console.log('Se elimino el registro de servicio contratado');
     }, (err) => {
         console.log(err.message);
-        response.json(err.message)
+        response.json(err.message);
     });
 });
 
 //modificar
 router.route('/contServicio').put((request, response) => {
-    let ContratarServicio = {...request.body}
+    let ContratarServicio = {...request.body};
     ContratarServicioSW.upContratarServicio(ContratarServicio).then(result => {
         response.json(result[0]);
     }, (err) => {
         console.log(err.message);
-        response.json(err.message)
+        response.json(err.message);
     });
 });
 
@@ -451,18 +451,18 @@ router.route('/departamento').get((request, response) => {
         response.json(result[0]);
     }, (err) => {
         console.log(err.message);
-        response.json(err.message)
+        response.json(err.message);
     });
 });
 
 //agregar departamento
 router.route('/departamento').post((request, response) => {
-    let Departamento = {...request.body}
+    let Departamento = {...request.body};
     DepartamentoWS.newDepartamento(Departamento).then(result => {
         response.json(result[0]);
     }, (err) => {
         console.log(err.message);
-        response.json(err.message)
+        response.json(err.message);
     });
 });
 
@@ -472,18 +472,18 @@ router.route('/departamento/:id_dpto').delete((request, response) => {
         response.json(result[0]);
     }, (err) => {
         console.log(err.message);
-        response.json(err.message)
+        response.json(err.message);
     });
 });
 
 //modificar
 router.route('/departamento').put((request, response) => {
-    let Departamento = {...request.body}
+    let Departamento = {...request.body};
     DepartamentoWS.upDepartamento(Departamento).then(result => {
         response.json(result[0]);
     }, (err) => {
         console.log(err.message);
-        response.json(err.message)
+        response.json(err.message);
     });
 });
 
@@ -493,7 +493,7 @@ router.route('/departamento/:id_dpto').get((request, response) => {
         response.json(result[0]);
     }, (err) => {
         console.log(err.message);
-        response.json(err.message)
+        response.json(err.message);
     });
 });
 
@@ -504,7 +504,7 @@ router.route('/departamento/reg/:nom_rgn').get((request, response) => {
         response.json(result[0]);
     }, (err) => {
         console.log(err.message);
-        response.json(err.message)
+        response.json(err.message);
     });
 });
 
@@ -514,7 +514,7 @@ router.route('/disponibilidad/:id_dpto').get((request, response) => {
             response.json(result[0]);
         }, (err) => {
             console.log(err.message);
-            response.json(err.message)
+            response.json(err.message);
         });
     });
 
@@ -531,12 +531,12 @@ router.route('/disponibilidad/:id_dpto').get((request, response) => {
 
 // array para traer id {"Depto": id_dpto}
 router.route('/disponibilidadNoId').post((request, response) => {
-    let id_dpto = {...request.body}
+    let id_dpto = {...request.body};
     DisponibilidadWS.getNoDisponibleId(id_dpto).then(result => {
         response.json(result[0]);
     }, (err) => {
         console.log(err.message);
-        response.json(err.message)
+        response.json(err.message);
     });
 });
 
@@ -547,7 +547,7 @@ router.route('/gastos').get((request, response) => {
         response.json(result[0]);
     }, (err) => {
         console.log(err.message);
-        response.json(err.message)
+        response.json(err.message);
     });
 });
 
@@ -557,7 +557,7 @@ router.route('/gastos/dpto/:id_dpto').get((request, response) => {
         response.json(result[0]);
     }, (err) => {
         console.log(err.message);
-        response.json(err.message)
+        response.json(err.message);
     });
 });
 
@@ -565,33 +565,33 @@ router.route('/gastos/dpto/:id_dpto').get((request, response) => {
 router.route('/gastos/:id_dpto').delete((request, response) => {
     GastosWS.delGastos(request.params.id_dpto).then(result => {
         response.json(result[0]);
-        console.log('Se elimino el registro de gastos del departamento')       
+        console.log('Se elimino el registro de gastos del departamento');       
     }, (err) => {
         console.log(err.message);
-        response.json(err.message)
+        response.json(err.message);
     });
 });
 
 //modificar registro de gastos de un departamento
 router.route('/gastos').put((request, response) => {
-    let Gastos = {...request.body}
+    let Gastos = {...request.body};
     GastosWS.upGastos(Gastos).then(result => {
         response.json(result[0]);
-        console.log('Se acutalizó el registro de gastos del departamento')   
+        console.log('Se acutalizó el registro de gastos del departamento');   
      }, (err) => {
         console.log(err.message);
-        response.json(err.message)
+        response.json(err.message);
     });
 });
 
 //Registrar gastos de gastos de un departamento
 router.route('/gastos').post((request, response) => {
-    let Gastos = {...request.body}
+    let Gastos = {...request.body};
     GastosWS.NewGastos(Gastos).then(result => {
         response.json(result[0]);
     }, (err) => {
         console.log(err.message);
-        response.json(err.message)
+        response.json(err.message);
     });
 });
 
@@ -604,19 +604,19 @@ router.route('/mantencion').get((request, response) => {
         response.json(result[0]);
     }, (err) => {
         console.log(err.message);
-        response.json(err.message)
+        response.json(err.message);
     });
 });
 
 //agregar Mantencion
 router.route('/mantencion').post((request, response) => {
-    let Mantencion = {...request.body}
+    let Mantencion = {...request.body};
     MantencionSW.newMantencion(Mantencion).then(result => {
         response.json(result[0]);
-    console.log('Se a registrado la mantención')
+    console.log('Se ha registrado la mantención')
     }, (err) => {
         console.log(err.message);
-        response.json(err.message)
+        response.json(err.message);
     });
 });
 
@@ -624,22 +624,22 @@ router.route('/mantencion').post((request, response) => {
 router.route('/mantencion/:id_rmant').delete((request, response) => {
     MantencionSW.delMantencion(request.params.id_rmant).then(result => {
         response.json(result[0]);
-        console.log('Se elimino el registro de mantencion')       
+        console.log('Se elimino el registro de mantencion');       
     }, (err) => {
         console.log(err.message);
-        response.json(err.message)
+        response.json(err.message);
     });
 });
 
 //modificar Mantencion
 router.route('/mantencion').put((request, response) => {
-    let Mantencion = {...request.body}
+    let Mantencion = {...request.body};
     MantencionSW.upMantencion(Mantencion).then(result => {
         response.json(result[0]);
-        console.log('Se acutalizó el registro de mantencion')   
+        console.log('Se acutalizó el registro de mantencion');   
      }, (err) => {
         console.log(err.message);
-        response.json(err.message)
+        response.json(err.message);
     });
 });
 // Trae mantenciones para el depto según año 
@@ -652,6 +652,14 @@ router.route('/mantencionDepto').post((request, response) => {
         response.json(err.message)
     });
 });
+
+///Get mantenciones agendadas
+router.route('/mantencionAgendada').get((request, response) => {
+    MantencionSW.getMantencionesAgendadas().then(result =>{
+        response.json(result[0]);
+    });
+});
+
 ////////////////////PAGO///////////////////
 //Listar pagos
 router.route('/pago').get((request, response) => {
@@ -659,40 +667,40 @@ router.route('/pago').get((request, response) => {
         response.json(result[0]);
     }, (err) => {
         console.log(err.message);
-        response.json(err.message)
+        response.json(err.message);
     });
 });
 ///
 
 //Registrar pago
 router.route('/pago').post((request, response) => {
-    let Pago = {...request.body}
+    let Pago = {...request.body};
     PagoWS.NewPago(Pago).then(result => {
         response.json(result[0]);
-    console.log('Se ha registrado el pago')
+    console.log('Se ha registrado el pago');
     }, (err) => {
         console.log(err.message);
-        response.json(err.message)
+        response.json(err.message);
     });
 });
 
 //Calcular monto del pago
 router.route('/pago/montoPago/').post((request, response) => {
-    let id_rva = {...request.body}
+    let id_rva = {...request.body};
     PagoWS.getMontoPago(id_rva).then(result =>{
         response.json(result[0]);
     });
 });
 
 router.route('/pago/abonoPago/').post((request, response) => {
-    let id_rva = {...request.body}
+    let id_rva = {...request.body};
     PagoWS.getMontoAbono(id_rva).then(result =>{
         response.json(result[0]);
     });
 });
 
 router.route('/pago/ReservaPago').post((request, response) => {
-    let id_rva = {...request.body}
+    let id_rva = {...request.body};
     PagoWS.getMontoPagoArriendo(id_rva).then(result =>{
         response.json(result[0]);
     });
@@ -715,37 +723,43 @@ router.route('/reservaMantencion').get((request, response) => {
     });
 });
 
-router.route('/reservaMantencion/:id_rmant').get((request, response) => {
-    ResMantencionSW.getReservasMantencion(request.params.id_rmant).then(result =>{
+/// Get reserva de mantencion por id reserva
+router.route('/reservaMantencionID').post((request, response) => {
+    let id_rmant = {...request.body}
+    ResMantencionSW.getReservaMantencionID(id_rmant).then(result =>{
         response.json(result[0]);
-    });
-});
-
-
-//agregar Reserva Mantencion
-router.route('/reservaMantencion').post((request, response) => {
-    let ResMantencion = {...request.body}
-    ResMantencionSW.newReservaMantencion(ResMantencion).then(result => {
-        response.json(result[0]);
-    console.log('Se a registrado la reserva de mantención')
     }, (err) => {
         console.log(err.message);
         response.json(err.message)
     });
 });
 
-//modificar Reserva Mantencion
+//agregar Reserva Mantencion
+router.route('/reservaMantencion').post((request, response) => {
+    let ResMantencion = {...request.body};
+    ResMantencionSW.newReservaMantencion(ResMantencion).then(result => {
+        response.json(result[0]);
+    console.log('Se a registrado la reserva de mantención');
+    }, (err) => {
+        console.log(err.message);
+        response.json(err.message);
+    });
+});
+
+/////modificar Reserva Mantencion
 router.route('/reservaMantencion').put((request, response) => {
-    let ResMantencion = {...request.body}
+    let ResMantencion = {...request.body};
     ResMantencionSW.upReservaMantenciont(ResMantencion).then(result => {
         response.json(result[0]);
-        console.log('Se acutalizó el registro de reserva de mantencion')   
+        console.log('Se acutalizó el registro de reserva de mantencion');   
 
      }, (err) => {
         console.log(err.message);
-        response.json(err.message)
+        response.json(err.message);
     });
 });
+
+
 
 /////////////RESERVA///////////////
 ///Listar reservas
@@ -773,44 +787,44 @@ router.route('/reserva/usr').post((request, response) => {
 
 ///Crear reserva
 router.route('/reserva').post((request, response) => {
-    let Reserva = {...request.body}
+    let Reserva = {...request.body};
     ReservaWS.NewReserva(Reserva).then(result => {
         response.json(result[0]);
-        console.log('Reserva solicitada')   
+        console.log('Reserva solicitada');   
 
     }, (err) => {
         console.log(err.message);
-        response.json(err.message)
+        response.json(err.message);
     });
 });
 ///Modificar Reserva
 router.route('/reserva').put((request, response) => {
-    let Reserva = {...request.body}
+    let Reserva = {...request.body};
     ReservaWS.UpReserva(Reserva).then(result => {
         response.json(result[0]);
-        console.log('Reserva actualizada')   
+        console.log('Reserva actualizada');   
 
      }, (err) => {
         console.log(err.message);
-        response.json(err.message)
+        response.json(err.message);
     });
 });
 ///Cancelar reserva
 router.route('/cancelarReserva/:id_rva').put((request, response) => {
     ReservaWS.UpCancelarReserva(request.params.id_rva).then(result =>{
         response.json(result[0]);
-        console.log('Reserva cancelada') 
+        console.log('Reserva cancelada'); 
     });
 });
 
 // reserva en estado de agendamiento web
 router.route('/reservaCurrent').post((request, response)=>{
-    let id_usr = {...request.body}
+    let id_usr = {...request.body};
     ReservaWS.getCurrentRva(id_usr).then(result => {
         response.json(result[0]);  
      }, (err) => {
         console.log(err.message);
-        response.json(err.message)
+        response.json(err.message);
     });
 });
 
@@ -820,7 +834,7 @@ router.route('/reservaPreCheckin').get((request, response)=>{
         response.json(result[0]);  
      }, (err) => {
         console.log(err.message);
-        response.json(err.message)
+        response.json(err.message);
     });
 });
 
@@ -830,7 +844,7 @@ router.route('/reservaProgress').get((request, response)=>{
         response.json(result[0]);  
      }, (err) => {
         console.log(err.message);
-        response.json(err.message)
+        response.json(err.message);
     });
 });
 
@@ -858,12 +872,12 @@ router.route('/serviciosExtra/:id_serv').get((request, response) => {
 //Agregar un servicio extra
 // Registrar articulo
 router.route('/serviciosExtra').post((request, response) => {
-    let ServiciosExtras = {...request.body}
+    let ServiciosExtras = {...request.body};
     ServiciosExtraWS.newServicioExtra(ServiciosExtras).then(result => {
         response.json(result[0]);
     }, (err) => {
         console.log(err.message);
-        response.json(err.message)
+        response.json(err.message);
     });
 });
 
@@ -877,24 +891,24 @@ router.route('/tour').get((request, response) => {
 
 //Registrar tour
 router.route('/tour').post((request, response) => {
-    let Tour = {...request.body}
+    let Tour = {...request.body};
     TourWS.NewTour(Tour).then(result => {
         response.json(result[0]);
     }, (err) => {
         console.log(err.message);
-        response.json(err.message)
+        response.json(err.message);
     });
 });
 //Modificar Tour
 router.route('/tour').put((request, response) => {
-    let Tour = {...request.body}
+    let Tour = {...request.body};
     TourWS.UpTour(Tour).then(result => {
         response.json(result[0]);
-        console.log('Tour actualizado')   
+        console.log('Tour actualizado');   
 
      }, (err) => {
         console.log(err.message);
-        response.json(err.message)
+        response.json(err.message);
     });
 });
 
@@ -908,26 +922,26 @@ router.route('/transporte').get((request, response) => {
 
 ///Agregar transporte
 router.route('/transporte').post((request, response) => {
-    let Transporte = {...request.body}
+    let Transporte = {...request.body};
     TransporteWS.NewTransporte(Transporte).then(result => {
         response.json(result[0]);
-        console.log('Transporte registrado')   
+        console.log('Transporte registrado');   
 
     }, (err) => {
         console.log(err.message);
-        response.json(err.message)
+        response.json(err.message);
     });
 });
 ///Modificar transporte
 router.route('/transporte').put((request, response) => {
-    let Transporte = {...request.body}
+    let Transporte = {...request.body};
     TransporteWS.UpTransporte(Transporte).then(result => {
         response.json(result[0]);
-        console.log('Transporte actualizado')   
+        console.log('Transporte actualizado');   
 
      }, (err) => {
         console.log(err.message);
-        response.json(err.message)
+        response.json(err.message);
     });
 });
 
@@ -935,23 +949,23 @@ router.route('/transporte').put((request, response) => {
 
 
 router.route('/usuarioAutenticar').post((request, response) => {
-    let Usuario = {...request.body}
+    let Usuario = {...request.body};
     UsuarioWS.getUsuarioAutentificar(Usuario).then(result => {
         response.json(result[0]);
     }, (err) => {
         console.log(err.message);
-        response.json(err.message)
+        response.json(err.message);
     });
 });
 
 
 router.route('/usuario').post((request, response) => {
-    let Usuario = {...request.body}
+    let Usuario = {...request.body};
     UsuarioWS.newUsuario(Usuario).then(result => {
         response.json(result[0]);
     }, (err) => {
         console.log(err.message);
-        response.json(err.message)
+        response.json(err.message);
     });
 });
 
@@ -970,42 +984,42 @@ router.route('/usuario/:id_usr').get((request, response) => {
 });
 
 router.route('/usuario').put((request, response) => {
-    let Usuario = {...request.body}
+    let Usuario = {...request.body};
     UsuarioWS.UpUsuario(Usuario).then(result => {
         response.json(result[0]);
     }, (err) => {
         console.log(err.message);
-        response.json(err.message)
+        response.json(err.message);
     });
 });
 
 router.route('/suspenderUsuario/:id_usr').put((request, response) => {
     UsuarioWS.upSuspenderUsuario(request.params.id_usr).then(result => {
         response.json(result[0]);
-        console.log('Se elimino el articulo')       
+        console.log('Se elimino el articulo');       
     }, (err) => {
         console.log(err.message);
-        response.json(err.message)
+        response.json(err.message);
     });
 });
 
 router.route('/validarUsuario/:id_usr').put((request, response) => {
-    let Usuario = {...request.body}
+    let Usuario = {...request.body};
     UsuarioWS.upValidarUsuario(request.params.id_usr).then(result => {
         response.json(result[0]);
     }, (err) => {
         console.log(err.message);
-        response.json(err.message)
+        response.json(err.message);
     });
 });
 
 router.route('/cambiarTipoCliente/:id_usr').put((request, response) => {
-    let Usuario = {...request.body}
+    let Usuario = {...request.body};
     UsuarioWS.upCambiarCliente(request.params.id_usr).then(result => {
         response.json(result[0]);
     }, (err) => {
         console.log(err.message);
-        response.json(err.message)
+        response.json(err.message);
     });
 });
 
@@ -1061,12 +1075,12 @@ router.route('/tipousr').get((request, response) => {
 
 /////////////////////////INFORME RESERVAS DETALLADO////////////////////////////////////////
 router.route('/informeResDet/').post((request, response) => {
-    let id_rva = {...request.body}
+    let id_rva = {...request.body};
     InformesWS.getInformeReservaDet(id_rva).then(result =>{
         response.json(result[0]);
     }, (err) => {
         console.log(err.message);
-        response.json(err.message)
+        response.json(err.message);
     });
 });
 
@@ -1121,4 +1135,4 @@ router.route('/ZonaAnual').get((request, response) => {
 });
 var portcnx = process.env.PORT || 4000;
 app.listen(portcnx);
-console.log('fin de consulta')
+console.log('fin de consulta');

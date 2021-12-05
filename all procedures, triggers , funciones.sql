@@ -996,11 +996,14 @@ begin
 		rm.id_dpto as "id_dpto",
 		rm.id_usr as "id_usr",
 		rm.est_man as "est_man",
-		m.cost_mant as "cost_mant",
-		m.deta_mant as "deta_mant",
+		case when m.cost_mant is null
+			then convert(varchar,'Costo no registrado aún')
+		else
+			concat('$',convert(varchar,m.cost_mant)) end as "cost_mant",
+		ISNULL(m.deta_mant,'Mantención aún no realizada') as "deta_mant",
 		concat(cn.nom_cnd , ' '  , d.num_dpto) as "Departamento",
 		concat(u.nom_usr, ' ', u.appat_usr, ' ', u.apmat_usr) as "Solicitante"
-		from mantencion m join res_mant rm
+		from mantencion m full join res_mant rm
 			on m.id_rmant = rm.id_rmant 
 		join usuario u
 			on u.id_usr = rm.id_usr
@@ -1009,7 +1012,25 @@ begin
 		join condominio cn
 			on cn.id_cnd = d.id_cnd
 		where rm.id_dpto = @id_depto and year(rm.fec_rmant) = @agno
-		order by "Fecha"
+		order by "Fecha";
+end;
+go
+
+-- Devuelve las mantenciones que estan agendadas y aún no se realizan
+create or alter procedure pd_mantencionesAgendadas 
+as
+begin
+	select
+		rm.id_rmant as "id_rmant",
+		concat(cn.nom_cnd , ' '  , d.num_dpto) as "Departamento",
+		d.id_dpto as "id_dpto"
+		from mantencion m full join res_mant rm
+			on m.id_rmant = rm.id_rmant
+		join departamento d
+			on d.id_dpto = rm.id_dpto
+		join condominio cn
+			on cn.id_cnd = d.id_cnd
+		where rm.est_man = 'agendada'
 end
 go
 ---------------------------------------------------------------------------

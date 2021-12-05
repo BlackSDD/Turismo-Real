@@ -1,15 +1,33 @@
 import React, { useEffect, useState } from 'react';
+import PaypalCheckout from '../../Layouts/PaypalCheckout';
 import axios from 'axios';
 import {toast} from 'react-toastify';
-import NavbarAdmin from '../../Layouts/NavBarAdmin';
+import Navbar from '../../Layouts/Navbar';
 import { useParams, useLocation } from 'react-router-dom';
+import DatePicker from '../../Layouts/Date-Picker';
 import {Button} from  'react-bootstrap';
-import DateMant from './DateMant';
 ///import PWA
 <link rel="manifest" href="../../public/manifest.json"></link>
 
+toast.configure({
+});
 
-export default function ResMant() {
+
+const notifyS = () =>{
+    toast.success('Operación realizada con éxito',{
+        position: toast.POSITION.TOP_CENTER,
+        theme: "colored"
+    });
+};
+
+const notifyE = () =>{
+    toast.error('Operación cancelada',{
+        position: toast.POSITION.TOP_CENTER,
+        theme: "colored"
+    });
+};
+
+export default function Reserva() {
 
     let storage = parseInt(sessionStorage.id_d);
     const [fechas, setFechas] = useState([]);
@@ -43,6 +61,18 @@ export default function ResMant() {
         setFechas(res.data);
     };
 
+    const getReserva = async (id) =>{
+        const res = await axios.post('http://localhost:4000/API/disponibilidadNoId', id)
+        setFechas(res.data);
+    };
+
+    let variable = sessionStorage.Pagar;
+
+    useEffect(() => {
+        variable = sessionStorage.Pagar;
+        console.log('variable: ',variable)
+    },[])
+
     console.log('Inicio carga disponibilidad');
     console.log('Fechas: ',fechas);
     console.log('fechas ArrayF', arrayF);
@@ -50,8 +80,8 @@ export default function ResMant() {
     
     return (
         <div>
-            <NavbarAdmin/>
-            <DateMant
+            <Navbar/>
+            <DatePicker
                 fechas={arrayF}
             />                          
         </div>

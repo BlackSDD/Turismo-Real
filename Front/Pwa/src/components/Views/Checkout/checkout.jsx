@@ -30,6 +30,13 @@ const notifyW = () =>{
     });
 };
 
+const notifyW2 = () =>{
+    toast.warn('El costo no puede ser menor a 0',{
+        position: toast.POSITION.TOP_CENTER,
+        theme: "colored"
+    });
+};
+
 export default function Checkout() {
 
     const history = useHistory();
@@ -88,26 +95,29 @@ export default function Checkout() {
     }
 
     const handleCheckout = async ()=>{
-        try{
-            const newCheckout = {
-                id_rva: parseInt(id_rva),
-                cost_multa: parseInt(multa),
-                deta_cho: detalle,
-                id_usr:parseInt(funcionario)
-            };
-            console.log('newCheckout:', newCheckout);
-            axios.post('http://localhost:4000/API/checkout', newCheckout);
-            console.log("Check-out registrado");
-            const newPago ={
-                id_rva : id_rva,
-                monto_pagado: multa
-            };
-            axios.post('http://localhost:4000/API/pago', newPago);
-            window.location.href = "/checkout";
-            notifyS();
-        }catch{
-            notifyE();
-        }
+        if(multa <0){
+            notifyW2()
+        }else{
+            try{
+                const newCheckout = {
+                    id_rva: parseInt(id_rva),
+                    cost_multa: parseInt(multa),
+                    deta_cho: detalle,
+                    id_usr:parseInt(funcionario)
+                };
+                console.log('newCheckout:', newCheckout);
+                axios.post('http://localhost:4000/API/checkout', newCheckout);
+                console.log("Check-out registrado");
+                const newPago ={
+                    id_rva : id_rva,
+                    monto_pagado: multa
+                };
+                axios.post('http://localhost:4000/API/pago', newPago);
+                window.location.href = "/checkout";
+                notifyS();
+            }catch{
+                notifyE();
+            }}
     }
 
     return (
@@ -161,9 +171,9 @@ export default function Checkout() {
                     <br/>
                     <Form> 
                         <h3>Ingrese el costo por multas</h3>
-                        <input type="number" id="input-multa" require name="multa" placeholder= "Ingrese costo de multas"  value={multa} required onChange={onInputMulta}/>
+                        <input type="number" id="input-multa" min={0}  name="multa" placeholder= "Ingrese costo de multas"  value={multa} required onChange={onInputMulta}/>
                         <h3>Ingrese el detalle del check-out</h3>
-                        <Form.Control as="textarea" require name="detalle" placeholder= "Ingrese detalle" rows={3} value={detalle} required onChange={onInputDetalle}/>
+                        <Form.Control as="textarea"  name="detalle" placeholder= "Ingrese detalle" rows={3} value={detalle} required onChange={onInputDetalle}/>
 
                     </Form>
                     <br/>

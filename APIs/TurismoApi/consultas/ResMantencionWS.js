@@ -15,15 +15,14 @@ async function getReservasMantenciones(){
     }
 }
 
-async function getReservasMantencion(id_rmant){
+async function getReservaMantencionID(mantencion){
     try{
         let pool = await sql.connect(cnx);
         let salida = await pool.request()
-        .input('id_rmant', sql.Int, id_rmant)
-        .query('SELECT *  FROM Res_mant where id_rmant = @id_rmant');
+        .input('id_rmant', sql.Int, mantencion.id_rmant)
+        .execute('pd_getMantencionID');
         console.log(salida.recordsets);
         return salida.recordsets;
-        
     } 
     catch(err){
         console.log(err);
@@ -71,7 +70,7 @@ async function upReservaMantenciont(res_mant){
 
 
 module.exports = {
-    getReservasMantencion: getReservasMantencion,
+    getReservaMantencionID: getReservaMantencionID,
     getReservasMantenciones: getReservasMantenciones,
     newReservaMantencion: newReservaMantencion,
     upReservaMantenciont: upReservaMantenciont
