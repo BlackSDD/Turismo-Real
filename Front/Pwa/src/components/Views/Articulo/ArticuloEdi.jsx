@@ -5,6 +5,7 @@ import {Form} from 'react-bootstrap';
 import axios from 'axios';
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Link } from 'react-router-dom';
 ///import PWA
 <link rel="manifest" href="../../public/manifest.json"></link>
 
@@ -78,6 +79,15 @@ export default class ArticuloEdi extends Component{
     }
 
     render(){
+        let tipo = parseInt(sessionStorage.tipoUsr)
+    if(tipo != 1){
+        return(<>
+            <h1>ESTA PAGINA ES ADMINISTRATIVA</h1>
+            <Link to={"/"} className="btn btn-secondary">
+                        <i className="material-icons"> VOLVER AL INICIO</i>
+                    </Link>
+            </>
+        )}
         return (
             <React.Fragment>
                 <div id="admin-background">

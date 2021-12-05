@@ -3,6 +3,7 @@ import React from "react";
 import Footer from "../../Layouts/Footer";
 import { Component } from "react";
 import { Image, VarBinary } from "mssql";
+import { Link } from 'react-router-dom';
 ///import PWA
 <link rel="manifest" href="../../public/manifest.json"></link>
 
@@ -60,7 +61,16 @@ manejadorBoton=(e)=>{
 };
 
 render(){
-        
+    let tipo = parseInt(sessionStorage.tipoUsr)
+    if(tipo != 1){
+        return(<>
+            <h1>ESTA PAGINA ES ADMINISTRATIVA</h1>
+            <Link to={"/"} className="btn btn-secondary">
+                        <i className="material-icons"> VOLVER AL INICIO</i>
+                    </Link>
+            </>
+        )
+    }
     return(
         <React.Fragment>
         <div class="container">
