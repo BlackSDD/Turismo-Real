@@ -9,6 +9,8 @@ import depto4 from '../../assetss/img/depto4.jpg';
 import {faUser, faPhoneAlt, faAt} from '@fortawesome/free-solid-svg-icons';
 import Email from './Email';
 import {Image} from 'react-bootstrap';
+///import PWA
+<link rel="manifest" href="../../public/manifest.json"></link>
 
 function Footer() {
     return (

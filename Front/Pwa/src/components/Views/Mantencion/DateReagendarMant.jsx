@@ -6,6 +6,8 @@ import '../../../assetss/css/Date-Picker.css'
 import axios from 'axios';
 import {toast} from 'react-toastify';
 
+///import PWA
+<link rel="manifest" href="../../public/manifest.json"></link>;
 toast.configure({
 });
 

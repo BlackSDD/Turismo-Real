@@ -46,9 +46,9 @@ export default function ContratarServ() {
         getReserva();
     },[]);
   
-    useEffect(() => {
-        transformarFechas();
-    }, [fechas]);
+//     useEffect(() => {
+//         transformarFechas();
+//     }, [fechas]);
     
     const transformarFechas = () =>{
         const dates = fechas.map((e) => {

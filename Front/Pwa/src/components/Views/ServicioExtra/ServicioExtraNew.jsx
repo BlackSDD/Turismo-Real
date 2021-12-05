@@ -5,6 +5,7 @@ import {Form} from 'react-bootstrap';
 import axios from 'axios';
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Link } from 'react-router-dom';
 ///import PWA
 <link rel="manifest" href="../../public/manifest.json"></link>
 
@@ -45,8 +46,8 @@ export default class ReservaMantencionNew extends Component{
 
     handleSubmit = async (e) => {
         e.preventDefault();
-        const answer = window.confirm("¿Confirmar creación de este articulo?");
-            const newComuna = {
+        const answer = window.confirm("¿Confirmar creación de este servicio?");
+            const newServicio = {
                 nom_serv: this.state.nom_serv,
                 tipo_serv: this.state.tipo_serv,
                 desc_serv: this.state.desc_serv,
@@ -56,7 +57,7 @@ export default class ReservaMantencionNew extends Component{
                 notifyE();
             } 
             if (answer){
-            axios.post('http://localhost:4000/API/serviciosExtra', newComuna);
+            axios.post('http://localhost:4000/API/serviciosExtra', newServicio);
             notifyS();
             this.setState({
                 nom_serv: "",
@@ -76,11 +77,21 @@ export default class ReservaMantencionNew extends Component{
     }
 
     render(){
+        let tipo = parseInt(sessionStorage.tipoUsr)
+        if(tipo != 1 ){
+            return(<>
+                <h1>ESTA PAGINA ES ADMINISTRATIVA</h1>
+                <Link to={"/"} className="btn btn-secondary">
+                            <i className="material-icons"> VOLVER AL INICIO</i>
+                        </Link>
+                </>
+            )
+        }
         return (
             <React.Fragment>
                 <div id="admin-background">
                     <div class="container">
-                        <h1 id="create-comuna-title">Ingresar Articulo</h1>
+                        <h1 id="create-comuna-title">Ingresar Servicio</h1>
                         <div id="create-comuna-form">
                             <Form className="contact-form" onSubmit={this.handleSubmit}>
                                 <Form.Group className="mb-3" controlId="Articulo">
@@ -88,7 +99,7 @@ export default class ReservaMantencionNew extends Component{
                                     <Form.Control as="textarea" name="nom_serv" rows={1} value={this.state.nom_serv} required onChange={this.onInputChange}/>
                                 </Form.Group>
                                 <Form.Group>
-                                    <Form.Label>Ingrese el departamento</Form.Label>
+                                    <Form.Label>Ingrese el tipo de servicio</Form.Label>
                                     <Form.Select  value={this.state.tipo_serv} onChange={this.onInputChange} name="tipo_serv" required>
                                         <option Value="">elige una opcion</option>
                                         <option value="T">Tour</option>

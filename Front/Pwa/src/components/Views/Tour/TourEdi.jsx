@@ -4,6 +4,7 @@ import { Component } from "react";
 import {Form} from 'react-bootstrap';
 import axios from 'axios';
 import {toast} from 'react-toastify';
+import { Link } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 ///import PWA
 <link rel="manifest" href="../../public/manifest.json"></link>
@@ -93,6 +94,16 @@ export default class UsuarioEdi extends Component{
     }
 
     render(){
+        let tipo = parseInt(sessionStorage.tipoUsr)
+        if(tipo != 1 ){
+            return(<>
+                <h1>ESTA PAGINA ES ADMINISTRATIVA</h1>
+                <Link to={"/"} className="btn btn-secondary">
+                            <i className="material-icons"> VOLVER AL INICIO</i>
+                        </Link>
+                </>
+            )
+        }
         return (
             <React.Fragment>
                 <div id="admin-background">
@@ -160,7 +171,7 @@ export default class UsuarioEdi extends Component{
                                     </Form.Select>
                                 </Form.Group>
                                 
-                                <button type="submit" class="btn btn-primary" id="btnCreateComuna">Agregar Articulo</button>
+                                <button type="submit" class="btn btn-primary" id="btnCreateComuna">Modificar tour</button>
                             </Form>
                         </div>
                     </div>        

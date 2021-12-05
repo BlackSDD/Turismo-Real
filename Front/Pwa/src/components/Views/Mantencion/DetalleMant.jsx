@@ -124,7 +124,7 @@ export default function DetalleMant(){
                 <div className="container" id="div-buscar-man">
                     <Form className="contact-form" >
                         <Form.Group className="mb-3">
-                            <h2>Ingrese la mantencion para añadir dellate</h2>
+                            <h2>Ingrese la mantencion para añadir detalle</h2>
                             <Form.Select  name="id_rmant" placeholder= "Seleccione la mantención" value={id_rmant} required onChange={onInputMant}>
                                 <option value="-1">
                                     Elige una mantención   

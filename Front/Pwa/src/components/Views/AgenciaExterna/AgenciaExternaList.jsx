@@ -48,6 +48,15 @@ export default class ArticuloList extends Component {
     };
 
     render() {
+        let tipo = parseInt(sessionStorage.tipoUsr)
+        if(tipo != 1){
+            return(<>
+                <h1>ESTA PAGINA ES ADMINISTRATIVA</h1>
+                <Link to={"/"} className="btn btn-secondary">
+                            <i className="material-icons"> VOLVER AL INICIO</i>
+                        </Link>
+                </>
+            )}
         return (
             <div className="container-fluid">
                 <div className="row">
@@ -77,11 +86,11 @@ export default class ArticuloList extends Component {
                     }
 
                             <Link to={"/ArticuloNew"} className="btn btn-secondary">
-                                <i className="material-icons">INGRESAR ARTICULO</i>
+                                <i className="material-icons">INGRESAR AGENCIA</i>
                             </Link>
                             
                             <Link to={"/ArticuloEdi"} className="btn btn-secondary">
-                                <i className="material-icons"> EDITAR ARTICULO</i>
+                                <i className="material-icons"> EDITAR AGENCIA</i>
                             </Link>
                     </div>
                 </div>

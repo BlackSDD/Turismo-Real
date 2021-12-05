@@ -5,7 +5,8 @@ import costaQuilen from "../../assetss/img/costaQuilen.jpg";
 import '../../assetss/css/bootstrap.min.css';
 import '../../assetss/css/Carrusel.css';
 import {Carousel} from 'react-bootstrap';
-
+///import PWA
+<link rel="manifest" href="../../public/manifest.json"></link>
 
 function Carrusel() {  
     return (

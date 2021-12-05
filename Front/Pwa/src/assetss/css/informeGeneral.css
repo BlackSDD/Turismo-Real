@@ -1,0 +1,17 @@
+
+        @media print {
+            /* hide every other element */
+            * {
+                visibility:hidden;
+            }
+            /* print container elements */
+            .print-container, .print-container * {
+                visibility:visible;
+            }
+            /* ajustar posicion*/
+            .print-container {
+                position: absolute;
+                left:0px;
+                top:0px;
+            }
+        }

@@ -5,6 +5,7 @@ import {Form} from 'react-bootstrap';
 import axios from 'axios';
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Link } from 'react-router-dom';
 ///import PWA
 <link rel="manifest" href="../../public/manifest.json"></link>
 
@@ -51,8 +52,8 @@ export default class TourNew extends Component{
 
     handleSubmit = async (e) => {
         e.preventDefault();
-        const answer = window.confirm("¿Confirmar creación de este articulo?");
-            const newComuna = {
+        const answer = window.confirm("¿Confirmar creación de este tour?");
+            const newTour = {
                 id_serv: this.state.id_serv,
                 dur_hra: this.state.dur_hra,
                 dur_min: this.state.dur_min,
@@ -65,7 +66,7 @@ export default class TourNew extends Component{
                 transporte: this.state.transporte,
             };
             if (answer && this.id_serv !== "" && this.alimentacion!=="" && this.transporte !==""){
-            axios.post('http://localhost:4000/API/tour', newComuna);
+            axios.post('http://localhost:4000/API/tour', newTour);
             notifyS();
             this.setState({
                 id_serv: "",
@@ -91,6 +92,16 @@ export default class TourNew extends Component{
     }
 
     render(){
+        let tipo = parseInt(sessionStorage.tipoUsr)
+        if(tipo != 1 ){
+            return(<>
+                <h1>ESTA PAGINA ES ADMINISTRATIVA</h1>
+                <Link to={"/"} className="btn btn-secondary">
+                            <i className="material-icons"> VOLVER AL INICIO</i>
+                        </Link>
+                </>
+            )
+        }
         return (
             <React.Fragment>
                 <div id="admin-background">
@@ -158,7 +169,7 @@ export default class TourNew extends Component{
                                     </Form.Select>
                                 </Form.Group>
                                 
-                                <button type="submit" class="btn btn-primary" id="btnCreateComuna">Agregar Articulo</button>
+                                <button type="submit" class="btn btn-primary" id="btnCreateComuna">Agregar tour</button>
                             </Form>
                         </div>
                     </div>        

@@ -5,6 +5,7 @@ import {Form} from 'react-bootstrap';
 import axios from 'axios';
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Link } from 'react-router-dom';
 ///import PWA
 <link rel="manifest" href="../../public/manifest.json"></link>
 
@@ -45,15 +46,15 @@ export default class ArticuloNew extends Component{
 
     handleSubmit = async (e) => {
         e.preventDefault();
-        const answer = window.confirm("¿Confirmar creación de este articulo?");
-            const newComuna = {
+        const answer = window.confirm("¿Confirmar creación de esta agencia externa?");
+            const newAgencia = {
                 nom_age: this.state.nom_age,
                 email_age: this.state.email_age,
                 tel_age: this.state.tel_age,
                 id_com: this.state.id_com,
             };
             if (answer){
-            axios.post('http://localhost:4000/API/agencia', newComuna);
+            axios.post('http://localhost:4000/API/agencia', newAgencia);
             notifyS();
             this.setState({
                 nom_age: " ",
@@ -73,6 +74,15 @@ export default class ArticuloNew extends Component{
     }
 
     render(){
+        let tipo = parseInt(sessionStorage.tipoUsr)
+    if(tipo != 1){
+        return(<>
+            <h1>ESTA PAGINA ES ADMINISTRATIVA</h1>
+            <Link to={"/"} className="btn btn-secondary">
+                        <i className="material-icons"> VOLVER AL INICIO</i>
+                    </Link>
+            </>
+        )}
         return (
             <React.Fragment>
                 <div id="admin-background">
@@ -81,16 +91,16 @@ export default class ArticuloNew extends Component{
                         <div id="create-comuna-form">
                             <Form className="contact-form" onSubmit={this.handleSubmit}>
                                 <Form.Group className="mb-3" controlId="Articulo">
-                                    <Form.Label>Ingrese nombre del articulo</Form.Label>
-                                    <Form.Control as="textarea" name="nom_age" placeholder= "nombre del articulo" rows={1} value={this.state.nom_age} required onChange={this.onInputChange}/>
+                                    <Form.Label>Ingrese nombre de la agencia</Form.Label>
+                                    <Form.Control as="textarea" name="nom_age" placeholder= "nombre de la agencia" rows={1} value={this.state.nom_age} required onChange={this.onInputChange}/>
                                 </Form.Group>
                                 <Form.Group className="mb-3" controlId="Articulo">
-                                    <Form.Label>Ingrese la cantidad de objetos</Form.Label>
-                                    <Form.Control type="email" name="email_age" placeholder= "cantidad " rows={1} value={this.state.email_age} required onChange={this.onInputChange}/>
+                                    <Form.Label>Ingrese correo de la agencia</Form.Label>
+                                    <Form.Control type="email" name="email_age" placeholder= "ejemplo@ejemplo.cl " rows={1} value={this.state.email_age} required onChange={this.onInputChange}/>
                                 </Form.Group>
                                 <Form.Group className="mb-3" controlId="Articulo">
-                                    <Form.Label>Ingrese el precio del articulo</Form.Label>
-                                    <Form.Control as="input" name="tel_age" placeholder= "precio " rows={1} value={this.state.tel_age} required onChange={this.onInputChange}/>
+                                    <Form.Label>Ingrese telefono de la agencia</Form.Label>
+                                    <Form.Control as="input" name="tel_age" placeholder= "12345678 " rows={1} value={this.state.tel_age} required onChange={this.onInputChange}/>
                                 </Form.Group>
                                 <Form.Group>
                                     <Form.Label>Ingrese la comuna</Form.Label>
@@ -104,7 +114,7 @@ export default class ArticuloNew extends Component{
                                     }
                                     </Form.Select>
                                 </Form.Group>
-                                <button type="submit" class="btn btn-primary" id="btnCreateComuna">Agregar Articulo</button>
+                                <button type="submit" class="btn btn-primary" id="btnCreateComuna">Agregar Agencia</button>
                             </Form>
                         </div>
                     </div>        

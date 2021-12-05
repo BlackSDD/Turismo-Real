@@ -1,7 +1,8 @@
 import React from 'react';
 import emailjs from 'emailjs-com';
 import { Form} from 'react-bootstrap';
-
+///import PWA
+<link rel="manifest" href="../../public/manifest.json"></link>
 
 export default function Email() {
 

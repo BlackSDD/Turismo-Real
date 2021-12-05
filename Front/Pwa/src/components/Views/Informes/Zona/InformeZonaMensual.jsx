@@ -5,7 +5,10 @@ import { Link } from 'react-router-dom';
 import {toast} from 'react-toastify';
 // Import toastify css file
 import 'react-toastify/dist/ReactToastify.css';
-import	'../../../../assetss/css/ListaDeptos.css'
+import	'../../../../assetss/css/ListaDeptos.css';
+import '../../../../assetss/css/informeGeneral.css';
+///import PWA
+<link rel="manifest" href="../../public/manifest.json"></link>;
 
 toast.configure({
 
@@ -36,9 +39,20 @@ export default class InformeZonaMensual extends Component {
     }
 
     render() {
+        let tipo = parseInt(sessionStorage.tipoUsr)
+        if(tipo == 3||tipo ==0 ){
+            return(<>
+                <h1>ESTA PAGINA ES ADMINISTRATIVA</h1>
+                <Link to={"/"} className="btn btn-secondary">
+                            <i className="material-icons"> VOLVER AL INICIO</i>
+                        </Link>
+                </>
+            )
+        }
         return (
             <div className="container-fluid" id="listar-deptos">
             <div className="card-body" id="tajreta_tabla">
+            <div className="print-container" id="Informe">
                 <div className="row text-center">
                     <h1 id="title-login">Informe balance mensual por zona</h1>
                         <div className="table-responsive mb-5">
@@ -75,10 +89,11 @@ export default class InformeZonaMensual extends Component {
                                         ))
                                     }
                                     </table>
+                                    <button type="submit" class="btn btn-primary mb-3 col-4" style={{width:'25VH'}} onClick={()=>window.print("Informe")}>Imprimir</button>
 
                         </div>
                 </div>
-                    
+                    </div>
             </div>
         </div>
             

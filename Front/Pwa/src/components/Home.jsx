@@ -8,7 +8,13 @@ import Navbar from '../components/Layouts/Navbar.jsx'
 
 //Forma de llamar a datos de sesion storage
 let email = sessionStorage.correo
-console.log('El correo es: ' + email)
+let tipo = sessionStorage.tipoUsr
+
+if (tipo == null){sessionStorage.tipoUsr = 0}
+
+console.log('El correo es' + email)
+console.log('El tipo es' + sessionStorage.tipoUsr)
+
 const Landing = () => {
     return (
         <div className="col-md" id="homdeDiv">
