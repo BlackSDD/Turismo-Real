@@ -6,6 +6,7 @@ import {toast} from 'react-toastify';
 // Import toastify css file
 import 'react-toastify/dist/ReactToastify.css';
 ///import PWA
+
 <link rel="manifest" href="../../public/manifest.json"></link>
 
 toast.configure({
@@ -38,6 +39,16 @@ export default class ReservaMantencionList extends Component {
 
 
     render() {
+        let tipo = parseInt(sessionStorage.tipoUsr)
+        if(tipo == 3){
+            return(<>
+                <h1>ESTA PAGINA ES ADMINISTRATIVA</h1>
+                <Link to={"/"} className="btn btn-secondary">
+                            <i className="material-icons"> VOLVER AL INICIO</i>
+                        </Link>
+                </>
+            )
+        }
         return (
             <div className="container-fluid">
                 <div className="row">
