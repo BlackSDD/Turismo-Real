@@ -1,3 +1,2 @@
-/FrontPWA/Pwa/*.gitignore
-/FrontPWA/Pwa/.gitignore
-/node_modules/
+
+/node_modules
