@@ -5,6 +5,8 @@ import {toast} from 'react-toastify';
 import {Button, Form, Table} from  'react-bootstrap';
 import '../../../assetss/css/checks.css';
 import {useHistory} from 'react-router-dom';
+///import PWA
+<link rel="manifest" href="../../public/manifest.json"></link>
 
 toast.configure({
 });

@@ -38,8 +38,8 @@ export default class UsuarioEdi extends Component{
 
     handleSubmit = async (e) => {
         e.preventDefault();
-        const answer = window.confirm("¿Confirmar creación de este articulo?");
-            const newComuna = {
+        const answer = window.confirm("¿Confirmar la modificación de este usuario?");
+            const newUsuario = {
                 
                 email_usr: this.state.email_usr,
                 contr_usr: this.state.contr_usr,
@@ -48,7 +48,7 @@ export default class UsuarioEdi extends Component{
                 dv_usr: this.state.dv_usr,
             };
             if (answer){
-            axios.put('http://localhost:4000/API/usuario', newComuna);
+            axios.put('http://localhost:4000/API/usuario', newUsuario);
             notifyS();
             this.setState({
                 email_usr: "",
@@ -73,12 +73,12 @@ export default class UsuarioEdi extends Component{
             <React.Fragment>
                 <div id="admin-background">
                     <div class="container">
-                        <h1 id="create-comuna-title">Ingresar Articulo</h1>
+                        <h1 id="create-comuna-title">Ingresar Usuario</h1>
                         <div id="create-comuna-form">
                             <Form className="contact-form" onSubmit={this.handleSubmit}>
                                 <Form.Group className="mb-3" controlId="Articulo">
                                     <Form.Label>Correo Electronico</Form.Label>
-                                    <Form.Control type="email" name="email_usr" placeholder= "correo" rows={1} value={this.state.email_usr} required onChange={this.onInputChange}/>
+                                    <Form.Control type="email" name="email_usr" placeholder= "ejemplo@ejemplo.cl" rows={1} value={this.state.email_usr} required onChange={this.onInputChange}/>
                                 </Form.Group>
                                 <Form.Group className="mb-3" controlId="Articulo">
                                     <Form.Label>Contraseña</Form.Label>
@@ -86,15 +86,16 @@ export default class UsuarioEdi extends Component{
                                 </Form.Group>
                                 <Form.Group className="mb-3" controlId="Articulo">
                                     <Form.Label>Telefono</Form.Label>
-                                    <Form.Control as="input" name="tel_usr" placeholder= "nombre del articulo" rows={1} value={this.state.tel_usr} required onChange={this.onInputChange}/>
+                                    <Form.Control as="input" name="tel_usr" placeholder= "123456789" rows={1} value={this.state.tel_usr} required onChange={this.onInputChange}/>
                                 </Form.Group>
                                 <Form.Group className="mb-3" controlId="Articulo">
                                     <Form.Label>RUT</Form.Label>
-                                    <Form.Control as="textarea" name="rut_usr" placeholder= "nombre del articulo" rows={1} value={this.state.rut_usr} required onChange={this.onInputChange}/>
+                                    <Form.Control as="textarea" name="rut_usr" placeholder= "12345678" rows={1} value={this.state.rut_usr} required onChange={this.onInputChange}/>
                                 </Form.Group>
                                 <Form.Group className="mb-3" controlId="Articulo">
                                     <Form.Label>digito verificador</Form.Label>
                                     <Form.Select value={this.state.dv_usr} onChange={this.onInputChange} name="dv_usr" required>
+                                        <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
@@ -107,7 +108,7 @@ export default class UsuarioEdi extends Component{
                                         <option value="k">k</option>
                                     </Form.Select>
                                 </Form.Group>
-                                <button type="submit" class="btn btn-primary" id="btnCreateComuna">Agregar Articulo</button>
+                                <button type="submit" class="btn btn-primary" id="btnCreateComuna">Editar usuario</button>
                             </Form>
                         </div>
                     </div>        

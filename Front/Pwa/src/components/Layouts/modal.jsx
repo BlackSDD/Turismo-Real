@@ -1,6 +1,8 @@
 import React from "react";
 import '../../assetss/css/bootstrap.min.css';
 import '../../assetss/css/modal.css';
+///import PWA
+<link rel="manifest" href="../../public/manifest.json"></link>
 
 const Modal = ({ isOpen, closeModal, title, children }) => {
 

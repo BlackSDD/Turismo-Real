@@ -3,7 +3,8 @@ import "../../assetss/css/bootstrap.min.css";
 import { Nav, Navbar } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBuilding } from "@fortawesome/free-solid-svg-icons";
-
+///import PWA
+<link rel="manifest" href="../../public/manifest.json"></link>
 
 
 

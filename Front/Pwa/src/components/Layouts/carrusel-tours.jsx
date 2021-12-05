@@ -6,7 +6,8 @@ import tourVillarica from "../../assetss/img/tourVillarica.jpeg";
 import '../../assetss/css/bootstrap.min.css';
 import '../../assetss/css/carrusel-servicio.css';
 import {Carousel} from 'react-bootstrap';
-
+///import PWA
+<link rel="manifest" href="../../public/manifest.json"></link>
 
 function CarruselTours() {  
     return (

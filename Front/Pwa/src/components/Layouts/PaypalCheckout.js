@@ -5,6 +5,8 @@ import axios from 'axios';
 import NavBar from './Navbar';
 import '../../assetss/css/pago.css'
 import {Button} from 'react-bootstrap';
+///import PWA
+<link rel="manifest" href="../../public/manifest.json"></link>
 
 const PayPalButton = window.paypal.Buttons.driver("react", { React, ReactDOM });
 

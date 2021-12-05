@@ -107,52 +107,7 @@ render(){
                                 <input type="number" name="costo_arri_dpto" value={this.state.costo_arri_dpto}  placeholder="Ingrese el costo del departamento" className="form-control " onChange={this.onChange}/>
                             </div>
                         </div>
-
-
-
-                        <div className="row mt-5 mb-5  d-flex justify-content-center">
-                            <div className="col-4">
-                                 <label className="form-text text-end">Imagen 1</label>
-                            </div>
-                            <div className="col-4">
-                                <input type="file" name="img_1_dpto" accept=".jpg" size="10mb" value={this.state.img_1_dpto} className="form-control " onChange={this.onChange}/>
-                            </div>
-                        </div>
-
-
-
-                        <div className="row mt-5 mb-5  d-flex justify-content-center">
-                            <div className="col-4">
-                                 <label className="form-text text-end">Imagen 2</label>
-                            </div>
-                            <div className="col-4">
-                                <input type="file" name="img_2_dpto" value={this.state.img_2_dpto}  className="form-control " onChange={this.onChange}/>
-                            </div>
-                        </div>
-                        <div className="row mt-5 mb-5  d-flex justify-content-center">
-                            <div className="col-4">
-                                 <label className="form-text text-end">Imagen 3</label>
-                            </div>
-                            <div className="col-4">
-                                <input type="file" name="img_3_dpto" value={this.state.img_3_dpto}  className="form-control " onChange={this.onChange}/>
-                            </div>
-                        </div>
-                        <div className="row mt-5 mb-5  d-flex justify-content-center">
-                            <div className="col-4">
-                                 <label className="form-text text-end">Imagen 4</label>
-                            </div>
-                            <div className="col-4">
-                                <input type="file" name="img_4_dpto" value={this.state.img_4_dpto}  className="form-control " onChange={this.onChange}/>
-                            </div>
-                        </div>
-                        <div className="row mt-5 mb-5  d-flex justify-content-center">
-                            <div className="col-4">
-                                 <label className="form-text text-end">Imagen 5</label>
-                            </div>
-                            <div className="col-4">
-                                <input type="file" name="img_5_dpto" value={this.state.img_5_dpto}  className="form-control " onChange={this.onChange}/> 
-                            </div>
-                        </div>
+                        
                         <div className="row mt-5 mb-5  d-flex justify-content-center">
                             <div className="col-4">
                                  <label className="form-text text-end">Id Condominio</label>

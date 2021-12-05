@@ -3,7 +3,9 @@ import NavBarAdmin from '../../Layouts/NavBarAdmin';
 import axios from 'axios';
 import {toast} from 'react-toastify';
 import {Button, Form, Table} from  'react-bootstrap';
-import '../../../assetss/css/checks.css'
+import '../../../assetss/css/checks.css';
+///import PWA
+<link rel="manifest" href="../../public/manifest.json"></link>
 
 toast.configure({
 });

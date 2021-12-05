@@ -84,7 +84,7 @@ class InformesGenerales extends React.Component{
                 <div id="login-body">
                     <br/>
                     <div className="container" id="login-container">
-                        <div className="print-container" id="login">
+                        <div className="print-container" id="Informe">
                             <h1 id="title-login">Informe</h1>
                             <Form onSubmit={this.manejadorSubmit}>
                                 <Form.Group className="mb-1">
@@ -97,7 +97,7 @@ class InformesGenerales extends React.Component{
                                 </Form.Group>
                             </Form>
                             <button type="submit" class="btn btn-primary mb-3 col-4" style={{width:'25VH'}} onClick={()=>this.manejadorBoton(agno)}>VER</button>
-                            <button type="submit" class="btn btn-primary mb-3 col-4" style={{width:'25VH'}} onClick={()=>window.print("login")}>Imprimir</button>
+                            <button type="submit" class="btn btn-primary mb-3 col-4" style={{width:'25VH'}} onClick={()=>window.print("Informe")}>Imprimir</button>
 
                             <div >
                             <table class="table-wrapper-scroll-y my-custom-scrollbar"  style={{backgroundColor:'gray', color:'white', fontSize:'12px'}}>

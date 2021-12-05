@@ -175,7 +175,7 @@ export default function DeptosMant() {
             Ingresar detalle de mantención
           </Link>
           <Link className="btn btn-primary" id="btn-res-mant" to="/SelectReagendarMant">
-            Reagendar mantencion
+            Reagendar mantención
           </Link>
         </div>
       ) : (

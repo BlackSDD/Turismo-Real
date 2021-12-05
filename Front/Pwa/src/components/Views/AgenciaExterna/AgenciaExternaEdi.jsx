@@ -78,7 +78,7 @@ export default class ArticuloEdi extends Component{
             <React.Fragment>
                 <div id="admin-background">
                     <div class="container">
-                        <h1 id="create-comuna-title">Modifucar Articulo</h1>
+                        <h1 id="create-comuna-title">Modificar Agencia</h1>
                         <div id="create-comuna-form">
                             <Form className="contact-form" onSubmit={this.handleSubmit}>
                                 <Form.Group className="mb-3" controlId="Articulo">

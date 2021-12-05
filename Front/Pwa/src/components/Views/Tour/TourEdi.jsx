@@ -160,7 +160,7 @@ export default class UsuarioEdi extends Component{
                                     </Form.Select>
                                 </Form.Group>
                                 
-                                <button type="submit" class="btn btn-primary" id="btnCreateComuna">Agregar Articulo</button>
+                                <button type="submit" class="btn btn-primary" id="btnCreateComuna">Modificar tour</button>
                             </Form>
                         </div>
                     </div>        

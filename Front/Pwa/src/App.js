@@ -9,7 +9,7 @@ import Paypal from './components/Layouts/PaypalCheckout';
 //Landing
 import Login from './components/Login';
 import MainFuncionario from './components/InicioFuncionario';
-import Comuna from './components/Views/Post/Comuna';
+import Comuna from './components/Views/Comuna/Comuna';
 import Condominio from './components/Views/Post/RegistrarCondominios';
 import RegistrarDepartamento from './components/Views/Post/RegistrarDepartamento';
 // import Articulo from './components/Views/Post/RegistrarArticulo';
@@ -72,7 +72,7 @@ import Landing from './components/Home';
 import PagoConfirmado from './components/Layouts/pago-confirmado';
 
 //////////////Reserva Depto////////////
-import ContratoServicio from './components/Views/ContratoServicio/ContratoServ';
+// import ContratoServicio from './components/Views/ContratoServicio/ContratoServ';
 
 import DeptosMant from './components/Views/Mantencion/DeptosMant';
 import ResMant from './components/Views/Mantencion/ResMant';
@@ -162,7 +162,7 @@ function App() {
         {/* Generar Reserva Departamento */}
                 <Route path="/reservar" exact render ={ props=> ( <Reserva {...props} />)}></Route>
         {/* Generar contrato */}
-        <Route path="/ContratoServicio" exact render ={ props=> ( <ContratoServicio {...props} />)}></Route>                 
+        {/* <Route path="/ContratoServicio" exact render ={ props=> ( <ContratoServicio {...props} />)}></Route>                  */}
         </Switch>
                 <Footer/>  
         </Router>

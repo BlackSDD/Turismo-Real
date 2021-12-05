@@ -4,7 +4,8 @@ import taxi from "../../assetss/img/taxi.jpg";
 import '../../assetss/css/bootstrap.min.css';
 import '../../assetss/css/carrusel-servicio.css';
 import {Carousel} from 'react-bootstrap';
-
+///import PWA
+<link rel="manifest" href="../../public/manifest.json"></link>
 
 function CarruselTaxi() {  
     return (

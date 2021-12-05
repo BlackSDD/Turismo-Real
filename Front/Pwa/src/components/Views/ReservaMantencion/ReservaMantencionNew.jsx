@@ -49,7 +49,7 @@ export default class ReservaMantencionNew extends Component{
 
     handleSubmit = async (e) => {
         e.preventDefault();
-        const answer = window.confirm("¿Confirmar creación de este articulo?");
+        const answer = window.confirm("¿Confirmar la reserva de mantención?");
             const newComuna = {
                 fec_rmant: this.state.fec_rmant,
                 id_usr: this.state.id_usr,
@@ -80,7 +80,7 @@ export default class ReservaMantencionNew extends Component{
             <React.Fragment>
                 <div id="admin-background">
                     <div class="container">
-                        <h1 id="create-comuna-title">Ingresar Articulo</h1>
+                        <h1 id="create-comuna-title">Reservar mantención</h1>
                         <div id="create-comuna-form">
                             <Form className="contact-form" onSubmit={this.handleSubmit}>
                                 <Form.Group className="mb-3" controlId="Articulo">
@@ -111,7 +111,7 @@ export default class ReservaMantencionNew extends Component{
                                     }
                                     </Form.Select>
                                 </Form.Group>
-                                <button type="submit" class="btn btn-primary" id="btnCreateComuna">Agregar Articulo</button>
+                                <button type="submit" class="btn btn-primary" id="btnCreateComuna">Reservar Mantención</button>
                             </Form>
                         </div>
                     </div>        

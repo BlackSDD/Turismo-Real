@@ -5,6 +5,8 @@ import { Button, Form, Navbar } from "react-bootstrap";
 import "../../assetss/css/Date-Picker.css";
 import axios from "axios";
 import NavBar from "./Navbar";
+///import PWA
+<link rel="manifest" href="../../public/manifest.json"></link>
 
 export default class DatePicker extends React.Component {
   static defaultProps = {
