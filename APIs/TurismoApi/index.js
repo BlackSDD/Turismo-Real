@@ -856,24 +856,41 @@ router.route('/serviciosExtra').get((request, response) => {
         response.json(result[0]);
     });
 });
-//Ver un servicio extra en especifico
 
+//Ver un servicio extra en especifico
 router.route('/serviciosExtraTrasporte').get((request, response) => {
     ServiciosExtraWS.getServiciosExtrasTransporte().then(result =>{
         response.json(result[0]);
     });
 });
 
-router.route('/serviciosExtra/:id_serv').get((request, response) => {
-    ServiciosExtraWS.getServicoExtra(request.params.id_serv).then(result =>{
+/// obtiene un servicio extra en especifico
+router.route('/servicioExtraID').post((request, response) => {
+    let servicio = {...request.body}
+    ServiciosExtraWS.getServicioExtra(servicio).then(result =>{
         response.json(result[0]);
+    }, (err) => {
+        console.log(err.message);
+        response.json(err.message)
     });
 });
+
 //Agregar un servicio extra
 // Registrar articulo
 router.route('/serviciosExtra').post((request, response) => {
     let ServiciosExtras = {...request.body}
     ServiciosExtraWS.newServicioExtra(ServiciosExtras).then(result => {
+        response.json(result[0]);
+    }, (err) => {
+        console.log(err.message);
+        response.json(err.message)
+    });
+});
+
+/// Obtiene los servicios disponibles por depto
+router.route('/serviciosDisponibles').post((request, response) => {
+    let datos = {...request.body}
+    ServiciosExtraWS.getServiciosDisponibles(datos).then(result => {
         response.json(result[0]);
     }, (err) => {
         console.log(err.message);

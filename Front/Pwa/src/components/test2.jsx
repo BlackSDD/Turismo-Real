@@ -1,56 +1,63 @@
-import React, {useState, useEffect} from 'react';
-import Example from './Example';
-import axios from 'axios';
-import DatePicker from './Layouts/Date-Picker';
+import React from 'react';
+// import Helmet from 'react-helmet';
+import DayPicker, { DateUtils } from 'react-day-picker';
 
-function Test2(){
 
-    let id_d = {
-      id_dpto: 1
-    }
+export default class Example extends React.Component {
+  static defaultProps = {
+    numberOfMonths: 2,
+  };
 
-    const [fechas, setFechas] = useState([]);
-    const [arrayF, setArrayF] = useState([]);
+  constructor(props) {
+    super(props);
+    this.handleDayClick = this.handleDayClick.bind(this);
+    this.handleResetClick = this.handleResetClick.bind(this);
+    this.state = this.getInitialState();
+  }
 
-    useEffect(() =>{
-      getFechas(id_d)
-    }, []);
-
-    useEffect(() => {
-      const dates = fechas.map((e) => {
-        let newFecha = new Date(e.fec_disp_no);
-        const val = newFecha.toLocaleDateString("en-US", e.fec_disp_no);
-        return val;
-      })
-      setArrayF(dates);
-    }, [fechas]);
-
-    const getFechas = async (id) =>{
-      const res = await axios.post('http://localhost:4000/API/disponibilidadNoId', id)
-      setFechas(res.data)
+  getInitialState() {
+    return {
+      from: undefined,
+      to: undefined,
     };
+  }
 
-    console.log('Fechas: ', {fechas})
-    console.log('fechas ArrayF', {arrayF});
+  handleDayClick(day) {
+    const range = DateUtils.addDayToRange(day, this.state);
+    this.setState(range);
+  }
 
+  handleResetClick() {
+    this.setState(this.getInitialState());
+  }
+
+  render() {
+    const { from, to } = this.state;
+    const modifiers = { start: from, end: to };
     return (
-        <div>
-            {/* <Example  
-              fechas={arrayF}
-            /> */}
-            <DatePicker
-              fechas={arrayF}
-            />
-            Test 2 
-            {/* {
-              arrayF.map(e =>(
-                <div>
-                  <li>{e}</li>
-                </div>
-              ))
-            }  */}
-        </div>
+      <div className="RangeExample">
+        <p>
+          {!from && !to && 'Please select the first day.'}
+          {from && !to && 'Please select the last day.'}
+          {from &&
+            to &&
+            `Selected from ${from.toLocaleDateString()} to
+                ${to.toLocaleDateString()}`}{' '}
+          {from && to && (
+            <button className="link" onClick={this.handleResetClick}>
+              Reset
+            </button>
+          )}
+        </p>
+        <DayPicker
+          className="Selectable"
+          numberOfMonths={this.props.numberOfMonths}
+          selectedDays={[from, { from, to }]}
+          modifiers={modifiers}
+          onDayClick={this.handleDayClick}
+        />
+ 
+      </div>
     );
+  }
 }
-
-export default Test2

@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import PaypalCheckout from '../../Layouts/PaypalCheckout';
 import axios from 'axios';
 import {toast} from 'react-toastify';
 import Navbar from '../../Layouts/Navbar';
-import { useParams, useLocation } from 'react-router-dom';
-import DatePicker from '../../Layouts/Date-Picker';
-import {Button} from  'react-bootstrap';
+import {Button, ListGroup} from  'react-bootstrap';
+import '../../../assetss/css/contratoServ.css'
+import DateContServ from './DateContServ';
 ///import PWA
 <link rel="manifest" href="../../public/manifest.json"></link>
 
@@ -27,11 +26,14 @@ const notifyE = () =>{
     });
 };
 
-export default function Reserva() {
+export default function ContratarServ() {
 
     let storage = parseInt(sessionStorage.id_d);
     const [fechas, setFechas] = useState([]);
     const [arrayF, setArrayF] = useState([]);
+    const [reserva, setReserva] = useState([]);
+    const [seleccionado, setSeleccion] = useState(0);
+    const [rango, setRango] = useState([]);
 
     let id_d = {
         id_dpto : storage
@@ -40,7 +42,8 @@ export default function Reserva() {
     useEffect(() =>{
         console.log('storage: ', storage);
         console.log('id depto:', id_d);
-        getFechas(id_d);
+        // getFechas(id_d);
+        getReserva();
     },[]);
   
     useEffect(() => {
@@ -61,16 +64,36 @@ export default function Reserva() {
         setFechas(res.data);
     };
 
-    const getReserva = async (id) =>{
-        const res = await axios.post('http://localhost:4000/API/disponibilidadNoId', id)
-        setFechas(res.data);
+    const getReserva = async () =>{
+        let url = {
+            id_usr : parseInt(sessionStorage.idUsuario)
+        }
+        const res = await axios.post('http://localhost:4000/API/reserva/usr', url)
+        let x = res.data
+        setReserva(res.data);
+        console.log('x',x)
     };
+
+    const handleContratar=(ini, fin)=>{
+        console.log('fechas: ',ini , ' ', fin)
+        let x = [ini, fin];
+        console.log('x: ',x)
+        const dates = x.map((e)=>{
+            let newFecha = new Date(e);
+            const value = newFecha.toLocaleDateString("en-US", e);
+            return value;
+        })
+        setRango(dates)
+        console.log('dates: ',dates)
+        console.log('rango: ',rango);
+        setSeleccion(1)
+    }
 
     let variable = sessionStorage.Pagar;
 
     useEffect(() => {
         variable = sessionStorage.Pagar;
-        console.log('variable: ',variable)
+        console.log('Se debe pagar?: ',variable)
     },[])
 
     console.log('Inicio carga disponibilidad');
@@ -78,15 +101,95 @@ export default function Reserva() {
     console.log('fechas ArrayF', arrayF);
     console.log('End carga disponibilidad');
     
-    return (
-        <div>
-            <Navbar/>
-            <DatePicker
-                fechas={arrayF}
-            />                          
-        </div>
-    );
+    if(seleccionado==0){
+        return(
+            <div id="body-contratoServ">
+                <Navbar/>
+                <div className="container" id="container-contrato">
+                    <br/>
+                    <h1>Reservas vigentes</h1>
+                    {   reserva.map((e)=>{
+                        return(
+                            <div className="row" id="row-contserv">
+                                <div className="col-lg-5 col-md-12" >
+                                    <img alt="imagen" id="img-contserv"src="https://wallpaperaccess.com/full/3351449.jpg"></img>
+                                </div>
+                                <div className="col-lg-7 col-md-12" >
+                                    {/* <div className="container"> */}
+                                    <ListGroup id="listgroup-contserv">
+                                        <h3>
+                                        Orden de Reserva #{e.id_rva} {e.Departamento}
+                                        </h3>
+                                        <ListGroup.Item id="list-contserv">
+                                        {e.nom_rgn} Comuna: {e.nom_com}
+                                        </ListGroup.Item>
+                                        <ListGroup.Item id="list-contserv">
+                                            Fecha de arriendo {e.Fecha}
+                                        </ListGroup.Item>
+                                        <ListGroup.Item id="list-contserv">
+                                            Monto total reserva: {e.Costo_total}
+                                        </ListGroup.Item>
+                                        <ListGroup.Item id="list-contserv">
+                                            Costo del arriendo: {e.Costo_arriendo}
+                                        </ListGroup.Item>
+                                        <ListGroup.Item id="list-contserv">
+                                            Monto servicios extra: {e.Costoserviciosextra}
+                                        </ListGroup.Item>
+                                        <ListGroup.Item id="list-contserv">
+                                            Monto pagado hasta el momento: {e.MontoPagado}
+                                        </ListGroup.Item>
+                                        <br/>
+                                        <ListGroup.Item id="btn-cont" action onClick={()=>handleContratar(e.fec_ini_rva, e.fec_fin_rva, e.id_dpto)}>
+                                        Contratar Servicios para la reserva
+                                        </ListGroup.Item>
+                                    </ListGroup>
+                                    {/* </div> */}
+                                </div>
+                            </div>)})
+                    }
+                </div>
+            </div>
+        );
+    }else{
+        return (
+            <div id="body-contratoServ">
+                <Navbar/>
+                <DateContServ
+                    fechas={rango}
+                />                          
+            </div>
+        );
+    }
 }
 
+//         "Idreserva"
+//         "Departamento"
+//         "Cliente"
+//         "Estado_reserva"
+//         "Fecha"
+//          "fec_ini_rva" y fec_fin_rva
+//         "Costo_total"
+//         "Costo_arriendo"
+//         "Costoserviciosextra",
+//         "CostoMultas"
+//         "MontoPagado"
+//         "Detalle_check-in"
+//         "Detalle_check-out"
 
 
+//////////
+    // "id_rgn",
+	// "nom_rgn",
+	// "id_com",
+	// "nom_com",
+	// "id_cnd",
+	// "nom_cnd",
+	// "departamento",
+	// "id_agencia",
+	// "nom_age",
+	// "email_age",
+	// "tel_age",
+	// "id_serv",
+	// "nom_serv",
+	// "tipo_serv",
+	// "desc_serv"

@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import {toast} from 'react-toastify';
 import NavbarAdmin from '../../Layouts/NavBarAdmin';
-import { useParams, useLocation } from 'react-router-dom';
-import {Button} from  'react-bootstrap';
 import DateMant from './DateMant';
 ///import PWA
 <link rel="manifest" href="../../public/manifest.json"></link>

@@ -25,7 +25,7 @@ async function getReservasUsr(reserva){
         let pool = await sql.connect(cnx);
         let salida = await pool.request()
         .input("id_usr", sql.Int , reserva.id_usr)
-        .query('select * from reserva where id_usr = @id_usr');
+        .execute('pd_reservas_usr');
         console.log(salida.recordsets);
         return salida.recordsets;
     } 

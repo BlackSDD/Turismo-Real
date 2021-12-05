@@ -1,14 +1,12 @@
 import React, {Component, useState, useEffect} from 'react';
 import ReactDOM  from 'react-dom';
-import { useHistory} from 'react-router-dom';
 import axios from 'axios';
-import NavBar from './Navbar';
-import '../../assetss/css/pago.css'
-import {Button} from 'react-bootstrap';
+import NavBar from '../../Layouts/Navbar';
+import '../../../assetss/css/pago.css'
 
 const PayPalButton = window.paypal.Buttons.driver("react", { React, ReactDOM });
 
-function PaypalCheckout () {
+function PaypalReserva () {
     const [pago, setPago] = useState([]);
     const precio = pago.Pago ;
     const id_rva = parseInt(sessionStorage.reserva);
@@ -72,8 +70,6 @@ function PaypalCheckout () {
     console.log('Id rva:',id_rva);
     console.log('precio Dolar: ', valorDolar);
     console.log('End log paypal');
-
-    
         return( 
             <div id="body_pago">
                 <NavBar/>
@@ -102,4 +98,4 @@ function PaypalCheckout () {
 // "Detalle_check-in",
 // "Detalle_check-out"
 
-export default PaypalCheckout  
+export default PaypalReserva

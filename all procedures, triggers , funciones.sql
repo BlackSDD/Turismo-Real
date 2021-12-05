@@ -1033,6 +1033,36 @@ begin
 		where rm.est_man = 'agendada'
 end
 go
+
+-- Trae una mantencion según id
+create or alter procedure pd_getMantencionID (@id_rmant int)
+as 
+begin 
+	select 
+		rm.id_rmant as "id_rmant",
+		convert(varchar,rm.fec_rmant,103) as "Fecha",
+		rm.id_dpto as "id_dpto",
+		rm.id_usr as "id_usr",
+		rm.est_man as "est_man",
+		case when m.cost_mant is null
+			then convert(varchar,'Costo no registrado aún')
+		else
+			concat('$',convert(varchar,m.cost_mant)) end as "cost_mant",
+		ISNULL(m.deta_mant,'Mantención aún no realizada') as "deta_mant",
+		concat(cn.nom_cnd , ' '  , d.num_dpto) as "Departamento",
+		concat(u.nom_usr, ' ', u.appat_usr, ' ', u.apmat_usr) as "Solicitante"
+		from mantencion m full join res_mant rm
+			on m.id_rmant = rm.id_rmant 
+		join usuario u
+			on u.id_usr = rm.id_usr
+		join departamento d
+			on d.id_dpto = rm.id_dpto
+		join condominio cn
+			on cn.id_cnd = d.id_cnd
+		where rm.id_rmant = @id_rmant and rm.est_man = 'agendada'
+		order by "Fecha";
+end;
+go
 ---------------------------------------------------------------------------
 
 --TABLA PAGO
@@ -1280,6 +1310,83 @@ begin
 end
 go
 
+-- obtiene todas las reservas en progreso o reservadas del usuario
+create or alter procedure pd_reservas_usr (@id_usr int)
+as
+begin 
+	select
+			DISTINCT(r.id_rva) as "Idreserva",
+			concat(c.nom_cnd , ' '  , d.num_dpto) as "Departamento",
+			concat(u.nom_usr , ' ' , u.appat_usr , ' ' , u.apmat_usr) as "Cliente",
+			r.estado_rva as "Estado_reserva",
+			concat(convert(varchar,r.fec_ini_rva,103) , ' - ' , convert(varchar,r.fec_fin_rva,103)) as "Fecha",
+			concat('$',p.monto_total) as "Costo_total",
+			concat('$',p.monto_arr) as "Costo_arriendo",
+			concat('$',p.monto_serv_extra) as "Costoserviciosextra",
+			concat('$',p.monto_multas)as "CostoMultas",
+			concat('$',p.monto_pagado) as "MontoPagado",
+			isnull(ckin.deta_chi,'Check-in todavia no registrado') as "Detalle_check-in",
+			isnull(ckout.deta_cho,'Check-out todavia no registrado') as "Detalle_check-out"
+		from reserva r join usuario u
+			on u.id_usr = r.id_usr
+		left join checkin ckin
+			on r.id_rva = ckin.id_rva
+		left join checkout ckout
+			on r.id_rva = ckout.id_rva
+		join departamento d 
+			on r.id_dpto = d.id_dpto
+		join condominio c
+			on d.id_cnd = c.id_cnd
+		join pago p
+		on r.id_rva = p.id_rva
+		where r.id_usr = @id_usr and r.estado_rva in ('reservada','en progreso')
+		order by "Fecha"
+end;
+go
+
+--- Trae todas las reservas del usuario que esten vigentes
+create or alter procedure pd_reservas_usr (@id_usr int)
+as
+begin 
+	select
+			DISTINCT(r.id_rva) as "id_rva",
+			concat(cn.nom_cnd , ' '  , d.num_dpto) as "Departamento",
+			concat(u.nom_usr , ' ' , u.appat_usr , ' ' , u.apmat_usr) as "Cliente",
+			r.estado_rva as "Estado_reserva",
+			concat(convert(varchar,r.fec_ini_rva,103) , ' - ' , convert(varchar,r.fec_fin_rva,103)) as "Fecha",
+			convert(varchar,r.fec_ini_rva,103) as "fec_ini_rva",
+			convert(varchar,r.fec_fin_rva,103) as "fec_fin_rva",
+			concat('$',p.monto_total) as "Costo_total",
+			concat('$',p.monto_arr) as "Costo_arriendo",
+			concat('$',p.monto_serv_extra) as "Costoserviciosextra",
+			concat('$',p.monto_multas)as "CostoMultas",
+			concat('$',p.monto_pagado) as "MontoPagado",
+			rg.id_rgn as "id_rgn",
+			rg.nom_rgn as "nom_rgn",
+			cm.nom_com as "nom_com",
+			cm.id_com as "id_com",
+			isnull(ckin.deta_chi,'Check-in todavia no registrado') as "Detalle_check-in",
+			isnull(ckout.deta_cho,'Check-out todavia no registrado') as "Detalle_check-out"
+		from reserva r join usuario u
+			on u.id_usr = r.id_usr
+		left join checkin ckin
+			on r.id_rva = ckin.id_rva
+		left join checkout ckout
+			on r.id_rva = ckout.id_rva
+		join departamento d 
+			on r.id_dpto = d.id_dpto
+		join condominio cn
+			on d.id_cnd = cn.id_cnd
+		join comuna cm
+			on cm.id_com = cn.id_com
+		join region rg
+			on rg.id_rgn = cm.id_rgn
+		join pago p
+		on r.id_rva = p.id_rva
+		where r.id_usr = @id_usr and r.estado_rva in ('reservada','en progreso')
+		order by "Fecha"
+end;
+go
 ---------------------------------------------------------------------------
 
 --TABLA SERVEXTRAS
@@ -1393,6 +1500,40 @@ begin
 end;
 go
 
+-- get servicios disponibles por depto (dentro de la comuna)
+create or alter procedure pd_servicios_disponibles (@id_dpto int ,@id_rgn int)
+as
+begin 
+select 
+		rg.id_rgn as "id_rgn",
+		rg.nom_rgn as "nom_rgn",
+		cm.id_com as "id_com",
+		cm.nom_com as "nom_com",
+		cn.id_cnd as "id_cnd",
+		cn.nom_cnd as "nom_cnd",
+		concat(cn.nom_cnd, ' #',d.num_dpto) as "departamento",
+		a.id_agencia as "id_agencia",
+		a.nom_age as "nom_age",
+		a.email_age as "email_age",
+		a.tel_age as "tel_age",
+		s.id_serv as "id_serv",
+		s.nom_serv as "nom_serv",
+		s.tipo_serv as "tipo_serv",
+		s.desc_serv as "desc_serv"
+	from region rg full join comuna cm
+		on rg.id_rgn = cm.id_rgn
+	full join condominio cn
+		on cn.id_com = cn.id_com
+	full join departamento d 
+		on d.id_cnd = cn.id_cnd
+	full join agencia_externa a
+		on a.id_com = cm.id_com
+	full join servextras s
+		on s.id_agencia = a.id_agencia
+	where d.id_dpto = @id_dpto and s.desc_serv !='Servicio no disponible' and rg.id_rgn = @id_rgn
+	order by s.id_serv;
+end
+go
 ---------------------------------------------------------------------------
 
 -- TABLA TOUR

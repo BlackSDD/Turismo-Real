@@ -62,7 +62,7 @@ class Login extends React.Component {
             if (response.data[0].id_tipo_usr == "1") {
               notifyS();
               console.log("Admin");
-              this.props.history.push("/");
+              this.props.history.push("/Admin");
               // window.location.shref = "/Admin";
               sessionStorage.correo = response.data[0].email_usr;
               sessionStorage.idUsuario = response.data[0].id_usr;

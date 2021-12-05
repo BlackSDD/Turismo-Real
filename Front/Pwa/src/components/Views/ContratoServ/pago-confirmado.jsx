@@ -1,7 +1,7 @@
-import React, {Component, useState, useEffect} from 'react';
+import React, { useState, useEffect} from 'react';
 import axios from 'axios';
-import NavBar from './Navbar';
-import '../../assetss/css/pago.css'
+import NavBar from '../../Layouts/Navbar';
+import '../../../assetss/css/pago.css'
 import {Button} from 'react-bootstrap';
 
 

@@ -32,6 +32,7 @@ export default class NavBar extends Component {
               <Nav>
                 <Nav.Link href="/"> Home </Nav.Link>
                 <Nav.Link href="/listarDepto"> Ver departamentos </Nav.Link>
+                <Nav.Link href="/ContratarServ"> Contratar Servicio Extra </Nav.Link>
                 <Nav.Link onClick={this.salir} href="/">Salir</Nav.Link>
               </Nav>
             </Navbar.Collapse>

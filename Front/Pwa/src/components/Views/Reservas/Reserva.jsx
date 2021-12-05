@@ -1,31 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import PaypalCheckout from '../../Layouts/PaypalCheckout';
 import axios from 'axios';
 import {toast} from 'react-toastify';
 import Navbar from '../../Layouts/Navbar';
-import { useParams, useLocation } from 'react-router-dom';
-import DatePicker from '../../Layouts/Date-Picker';
-import {Button} from  'react-bootstrap';
+import DatePicker from './Date-Picker';
 ///import PWA
 <link rel="manifest" href="../../public/manifest.json"></link>
 
 toast.configure({
 });
-
-
-const notifyS = () =>{
-    toast.success('Operación realizada con éxito',{
-        position: toast.POSITION.TOP_CENTER,
-        theme: "colored"
-    });
-};
-
-const notifyE = () =>{
-    toast.error('Operación cancelada',{
-        position: toast.POSITION.TOP_CENTER,
-        theme: "colored"
-    });
-};
 
 export default function Reserva() {
 

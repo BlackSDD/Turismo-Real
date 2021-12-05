@@ -6,7 +6,8 @@ const sql = require('mssql');
 async function getServiciosExtras(){
     try{
         let pool = await sql.connect(cnx);
-        let salida = await pool.request().query('select * from servextras inner join agencia_externa on servextras.id_agencia = agencia_externa.id_agencia')
+        let salida = await pool.request()
+        .query('select * from servextras inner join agencia_externa on servextras.id_agencia = agencia_externa.id_agencia')
         console.log(salida.recordsets);
         return salida.recordsets;
         
@@ -15,7 +16,6 @@ async function getServiciosExtras(){
         console.log(err);
     }
 }
-
 
 async function getServiciosExtrasTransporte(){
     try{
@@ -30,24 +30,35 @@ async function getServiciosExtrasTransporte(){
     }
 }
 
-
-
-//Ver un servicio extra
-async function getServicoExtra(id_serv){
+// get los servicios disponibles por depto
+async function getServiciosDisponibles(datos){
     try{
         let pool = await sql.connect(cnx);
         let salida = await pool.request()
-        .input('id_serv', sql.Int, id_serv)
+        .input('id_dpto', sql.Int, datos.id_dpto)
+        .input('id_rgn', sql.Int, datos.id_dpto)
+        .execute("pd_servicios_disponibles");
+        console.log(salida.recordsets);
+        return salida.recordsets;
+    }catch(err){
+        console.log(err);
+    }
+}
+
+//Ver un servicio extra
+async function getServicioExtra(servicio){
+    try{
+        let pool = await sql.connect(cnx);
+        let salida = await pool.request()
+        .input('id_serv', sql.Int, servicio.id_serv)
         .query('SELECT *  FROM servextras where id_serv = @id_serv');
         console.log(salida.recordsets);
         return salida.recordsets;
-        
     } 
     catch(err){
         console.log(err);
     }
 }
-
 
 //Agregar un servicio extra
 async function newServicioExtra(ServiciosExtras){
@@ -62,7 +73,7 @@ async function newServicioExtra(ServiciosExtras){
         return newComuna.recordsets;    
     } 
     catch(err){
-        throw new Error (`Error en el procidemiento ${err.procName}...${err.message}`);
+        throw new Error (`Error en el procedimiento ${err.procName}...${err.message}`);
     }
 }
 
@@ -70,6 +81,7 @@ async function newServicioExtra(ServiciosExtras){
 module.exports = {
     getServiciosExtrasTransporte: getServiciosExtrasTransporte,
     getServiciosExtras: getServiciosExtras,
-    getServicoExtra: getServicoExtra,
-    newServicioExtra: newServicioExtra
+    getServicioExtra: getServicioExtra,
+    newServicioExtra: newServicioExtra,
+    getServiciosDisponibles: getServiciosDisponibles
 }

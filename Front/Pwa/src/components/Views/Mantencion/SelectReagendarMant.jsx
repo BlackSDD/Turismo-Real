@@ -1,23 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useHistory, Link } from "react-router-dom";
 import "../../../assetss/css/Mantencion.css";
 import { Button, Form } from "react-bootstrap";
 import NavBarAdmin from "../../Layouts/NavBarAdmin";
 import { toast } from "react-toastify";
 
-// import DatePicker from '../../Layouts/Date-Picker';
 ///import PWA
 <link rel="manifest" href="../../public/manifest.json"></link>;
 
 toast.configure({});
-
-const notifyS = () => {
-  toast.success("Operación realizada con éxito", {
-    position: toast.POSITION.TOP_CENTER,
-    theme: "colored",
-  });
-};
 
 const notifyE = () => {
   toast.error("Operación no se pudo llevar a cabo", {
@@ -33,34 +24,9 @@ const notifyW = () => {
   });
 };
 
-const notifyW2 = () => {
-  toast.warn("El valor de la reserva no puede ser menor a 0", {
-    position: toast.POSITION.TOP_CENTER,
-    theme: "colored",
-  });
-};
-
-const notifyW3 = () => {
-  toast.warn("El detalle de reserva no puede quedar vacio", {
-    position: toast.POSITION.TOP_CENTER,
-    theme: "colored",
-  });
-};
-
-const notifyW4 = () => {
-  toast.warn("Operación cancelada", {
-    position: toast.POSITION.TOP_CENTER,
-    theme: "colored",
-  });
-};
-
 export default function SelectReagendarMan() {
-  const [mantenciones, setMantenciones] = useState([]);
   const [opciones, setOpciones] = useState([]);
   const [id_rmant, setIdMant] = useState(-1);
-  const [costo, setCosto] = useState(0);
-  const [detalle, setDetalle] = useState("");
-  const [mostrar, setMostrar] = useState(false);
 
   useEffect(() => {
     getMantenciones();

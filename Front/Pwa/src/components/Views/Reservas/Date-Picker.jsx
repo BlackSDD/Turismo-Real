@@ -1,10 +1,8 @@
 import React from "react";
 import DayPicker, { DateUtils } from "react-day-picker";
 import { Button, Form, Navbar } from "react-bootstrap";
-// import 'react-day-picker/lib/style.css';
-import "../../assetss/css/Date-Picker.css";
+import "../../../assetss/css/Date-Picker.css";
 import axios from "axios";
-import NavBar from "./Navbar";
 
 export default class DatePicker extends React.Component {
   static defaultProps = {
@@ -75,10 +73,8 @@ export default class DatePicker extends React.Component {
     console.log("infoResv:", infoResv.curr_id);
     console.log("id final: ", idReserva);
     sessionStorage.reserva = idReserva;
-    // this.setState({reservado: true});
-    // console.log('Reservado: ',reservado);
     sessionStorage.Pagar = true;
-    window.location.href = "/paypal";
+    window.location.href = "/paypalReserva";
   };
 
   handleResetClick() {
@@ -89,7 +85,6 @@ export default class DatePicker extends React.Component {
     const { from, to, num } = this.state;
     const modifiers = { start: from, end: to };
     console.log("rango: ", this.state.range);
-
     return (
       <div id="body-date-picker">
         <Navbar />
@@ -118,7 +113,6 @@ export default class DatePicker extends React.Component {
               onDayClick={this.handleDayClick}
             />
             <br />
-
             <Form>
               <Form.Group className="mb-3" controlId="Cantidad">
                 <Form.Label>Ingrese la cantidad de personas</Form.Label>

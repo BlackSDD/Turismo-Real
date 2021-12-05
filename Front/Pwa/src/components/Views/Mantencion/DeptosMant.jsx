@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useHistory, Link } from "react-router-dom";
+import {  Link } from "react-router-dom";
 import "../../../assetss/css/Mantencion.css";
-import building from "../../../assetss/img/building.png";
 import { Button, Form, Table } from "react-bootstrap";
 import NavBarAdmin from "../../Layouts/NavBarAdmin";
 import { toast } from "react-toastify";
-
-// import DatePicker from '../../Layouts/Date-Picker';
 ///import PWA
 <link rel="manifest" href="../../public/manifest.json"></link>;
 

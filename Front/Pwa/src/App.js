@@ -1,15 +1,15 @@
 import React from 'react';
 import './assetss/css/App.css';
 import "bootstrap/dist/css/bootstrap.css";
+import 'react-day-picker/lib/style.css';
 /////Test
 import Test from './components/test';
 import Test2 from './components/test2';
 import Test3 from './components/test3';
-import Paypal from './components/Layouts/PaypalCheckout';
 //Landing
 import Login from './components/Login';
 import MainFuncionario from './components/InicioFuncionario';
-import Comuna from './components/Views/Post/Comuna';
+import Comuna from './components/Views/Comuna/Comuna';
 import Condominio from './components/Views/Post/RegistrarCondominios';
 import RegistrarDepartamento from './components/Views/Post/RegistrarDepartamento';
 // import Articulo from './components/Views/Post/RegistrarArticulo';
@@ -69,11 +69,12 @@ import TransporteList from './components/Views/Transporte/TransporteList';
 import Reserva from './components/Views/Reservas/Reserva';
 import MainAdmin from './components/InicioAdmin';
 import Landing from './components/Home';
-import PagoConfirmado from './components/Layouts/pago-confirmado';
-
+import PaypalReserva from './components/Views/Reservas/PaypalReserva';
+import PagoConfirmado from './components/Views/Reservas/pago-confirmado';
 //////////////Reserva Depto////////////
-import ContratoServicio from './components/Views/ContratoServicio/ContratoServ';
-
+import ContratarServ from './components/Views/ContratoServ/ContratarServ';
+import SeleccionarServ from './components/Views/ContratoServ/SeleccionarServ';
+///// Mantenciones
 import DeptosMant from './components/Views/Mantencion/DeptosMant';
 import ResMant from './components/Views/Mantencion/ResMant';
 import DetalleMant from './components/Views/Mantencion/DetalleMant';
@@ -100,7 +101,7 @@ function App() {
                 <Route path="/test2" exact render ={ props=> ( <Test2 {...props} />)}></Route>  
                  <Route path="/test3" exact render ={ props=> ( <Test3 {...props} />)}></Route>  
                 <Route path="/PagoConfirmado" exact render ={ props=> ( <PagoConfirmado {...props} />)}></Route>     
-                <Route path="/paypal" exact render ={ props=> ( <Paypal {...props} />)}></Route>     
+                <Route path="/paypalReserva" exact render ={ props=> ( <PaypalReserva {...props} />)}></Route>     
         {/* PostRoutes--------- */}
                 <Route path="/condominio" exact render={props => (<Condominio {...props}/>)}></Route>
                 <Route path="/Comuna" exact render ={ props=> ( <Comuna {...props} />)}></Route>
@@ -113,7 +114,6 @@ function App() {
         {/* Checkin */}
                 <Route path="/checkin" exact render ={ props=> ( <Checkin {...props} />)}></Route>
                 <Route path="/checkout" exact render ={ props=> ( <Checkout {...props} />)}></Route>
-
         {/* Articulo */}
                 <Route path="/ArticuloList" exact render ={ props=> ( <ArticuloList {...props} />)}></Route>
                 <Route path="/ArticuloNew" exact render ={ props=> ( <ArticuloNew {...props} />)}></Route>
@@ -162,7 +162,10 @@ function App() {
         {/* Generar Reserva Departamento */}
                 <Route path="/reservar" exact render ={ props=> ( <Reserva {...props} />)}></Route>
         {/* Generar contrato */}
-        <Route path="/ContratoServicio" exact render ={ props=> ( <ContratoServicio {...props} />)}></Route>                 
+                <Route path="/ContratarServ" exact render ={ props=> ( <ContratarServ {...props} />)}></Route>                 
+                <Route path="/SeleccionarServ" exact render ={ props=> ( <SeleccionarServ {...props} />)}></Route>                 
+        
+        {/*  */}
         </Switch>
                 <Footer/>  
         </Router>

@@ -1,6 +1,5 @@
 import React, {useEffect, useState } from 'react';
 import axios from 'axios';
-import {useHistory, Link} from 'react-router-dom';
 import '../../../assetss/css/Mantencion.css';
 import { Button, Form} from 'react-bootstrap';
 import NavBarAdmin from '../../Layouts/NavBarAdmin';
