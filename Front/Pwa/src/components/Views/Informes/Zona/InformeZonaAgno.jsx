@@ -40,7 +40,7 @@ export default class InformeZonaAgno extends Component {
             <div className="container-fluid" id="listar-deptos">
             <div className="card-body" id="tajreta_tabla">
                 <div className="row text-center">
-                    <h1 id="title-login">Informe balance semanal de departamentos</h1>
+                    <h1 id="title-login">Informe balance anual por zona</h1>
                         <div className="table-responsive mb-5">
                             <table class="table table-borderless ">
                                             <thead id="encabezadoTabla">
