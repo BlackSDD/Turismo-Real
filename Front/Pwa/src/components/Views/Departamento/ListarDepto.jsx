@@ -39,8 +39,11 @@ export default function ListarDepto(){
     console.log('Listar Deptos');
     console.log({deptos});
     console.log('End Lista Deptos');
-
-        return (
+    let tipo = sessionStorage.tipoUsr
+    
+        
+    
+       return (
             <div>
                 <Navbar/>
                 <div id="listar-deptos">

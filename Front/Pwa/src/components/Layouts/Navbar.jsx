@@ -11,6 +11,9 @@ export default class NavBar extends Component {
   salir() {
     let x = 0;
     sessionStorage.Login = x;
+    sessionStorage.correo = x;
+    sessionStorage.idUsuario = x;
+    sessionStorage.tipoUsr = x;
     window.location.shref = "/";
   }
 

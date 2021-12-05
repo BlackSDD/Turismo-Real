@@ -1,0 +1,415 @@
+
+-----------------------BALANCE DIARIO DE DEPARTAMENTO 
+create or alter procedure pd_balance_Depto_x_dia
+as
+begin
+	SELECT 
+		num_dpto as "Número", 
+		ISNULL(CONVERT( nvarchar, (fec_ini_rva)),'Sin reserva') as "Día",
+		nom_cnd as "Condominio",
+		SUM(ISNULL(monto_pagado,0)) as "Ganancias",
+		ISNULL(CONVERT( nvarchar, est_pago),'Sin reserva') as "Estado_pago",
+		SUM(ISNULL((gasto_agua + gasto_agua + gasto_dividendo + gasto_gas + gasto_luz + gasto_servicios),0)) as "Gastos_departamento",
+		SUM(ISNULL(cost_mant,0)) as "Gastos_de_mantención",
+		SUM(ISNULL(valor_arti,0)) as "Gasto_Artículos",
+		SUM(ISNULL(monto_pagado - (gasto_agua + gasto_agua + gasto_dividendo + gasto_gas + gasto_luz + gasto_servicios),0)) as "Balance"
+
+		from departamento
+		inner join condominio
+		on departamento.id_cnd = condominio.id_cnd
+		full outer join reserva
+		on departamento.id_dpto = reserva.id_dpto
+		full outer join pago
+		on reserva.id_rva = pago.id_rva
+		full outer join gastos
+		on departamento.id_dpto = gastos.id_dpto
+		full outer join res_mant
+		on departamento.id_dpto = res_mant.id_dpto
+		full outer join mantencion
+		on res_mant.id_rmant = mantencion.id_rmant
+		left JOIN articulo
+		on departamento.id_dpto = articulo.id_dpto
+
+		GROUP BY num_dpto, 
+		fec_ini_rva,
+		nom_cnd,
+		monto_pagado,
+		est_pago,
+		gasto_agua,
+		gasto_agua,
+		gasto_dividendo,
+		gasto_gas,
+		gasto_luz,
+		gasto_servicios,
+		cost_mant
+
+	order by fec_ini_rva asc
+	end;
+go
+
+
+-----------------------BALANCE SEMANAL DE DEPARTAMENTO 
+
+
+create or alter procedure pd_balance_Depto_x_semana
+as
+begin
+	SELECT 
+		num_dpto as "Número", 
+		ISNULL(CONVERT( nvarchar,(DATEPART(WEEK, fec_ini_rva)-DATEPART(WEEK, DATEADD(MM, DATEDIFF(MM,0,fec_ini_rva ), 0))+ 1)),'Sin reserva') AS "Semana_del_mes",
+		ISNULL(CONVERT( nvarchar, DATEname(MONTH,fec_ini_rva)),'Sin reserva') as "Mes",
+		nom_cnd as "Condominio",
+		ISNULL(monto_pagado,0) as "Ganancias",
+		ISNULL(CONVERT( nvarchar, est_pago),'Sin reserva') as "Estado_pago",
+		ISNULL((gasto_agua + gasto_agua + gasto_dividendo + gasto_gas + gasto_luz + gasto_servicios),0) as "Gastos_departamento",
+		ISNULL(cost_mant,0) as "Gastos_de_mantención",
+		ISNULL(SUM(valor_arti),0) as "Gasto_Artículos",
+		SUM(ISNULL(monto_pagado - (gasto_agua + gasto_agua + gasto_dividendo + gasto_gas + gasto_luz + gasto_servicios + valor_arti + cost_mant),0)) as "Balance"
+
+		from departamento
+		inner join condominio
+		on departamento.id_cnd = condominio.id_cnd
+		full outer join reserva
+		on departamento.id_dpto = reserva.id_dpto
+		full outer join pago
+		on reserva.id_rva = pago.id_rva
+		full outer join gastos
+		on departamento.id_dpto = gastos.id_dpto
+		full outer join res_mant
+		on departamento.id_dpto = res_mant.id_dpto
+		full outer join mantencion
+		on res_mant.id_rmant = mantencion.id_rmant
+		left JOIN articulo
+		on departamento.id_dpto = articulo.id_dpto
+
+		GROUP BY num_dpto, 
+		fec_ini_rva,
+		nom_cnd,
+		monto_pagado,
+		est_pago,
+		gasto_agua,
+		gasto_agua,
+		gasto_dividendo,
+		gasto_gas,
+		gasto_luz,
+		gasto_servicios,
+		cost_mant
+
+	order by fec_ini_rva asc
+	end;
+go
+
+
+-----------------------BALANCE MENSUAL DE DEPARTAMENTO 
+
+
+create or alter procedure pd_balance_Depto_mensual
+as
+begin
+	SELECT 
+		num_dpto as "Número", 
+		ISNULL(CONVERT( nvarchar, DATENAME(MONTH,(fec_ini_rva))),'Sin reserva') as "Mes",
+		ISNULL(CONVERT( nvarchar, DATENAME(YEAR,(fec_ini_rva))),'Sin reserva') as "Agno",
+		nom_cnd as "Condominio",
+		SUM(ISNULL(monto_pagado,0)) as "Ganancias",
+		ISNULL(CONVERT( nvarchar, est_pago),'Sin reserva') as "Estado_pago",
+		SUM(ISNULL((gasto_agua + gasto_agua + gasto_dividendo + gasto_gas + gasto_luz + gasto_servicios),0)) as "Gastos_departamento",
+		SUM(ISNULL(cost_mant,0)) as "Gastos_de_mantención",
+		SUM(ISNULL(valor_arti,0)) as "Gasto_Artículos",
+		SUM(ISNULL(monto_pagado - (gasto_agua + gasto_agua + gasto_dividendo + gasto_gas + gasto_luz + gasto_servicios),0)) as "Balance"
+
+		from departamento
+		inner join condominio
+		on departamento.id_cnd = condominio.id_cnd
+		full outer join reserva
+		on departamento.id_dpto = reserva.id_dpto
+		full outer join pago
+		on reserva.id_rva = pago.id_rva
+		full outer join gastos
+		on departamento.id_dpto = gastos.id_dpto
+		full outer join res_mant
+		on departamento.id_dpto = res_mant.id_dpto
+		full outer join mantencion
+		on res_mant.id_rmant = mantencion.id_rmant
+		left JOIN articulo
+		on departamento.id_dpto = articulo.id_dpto
+
+		GROUP BY num_dpto, 
+		fec_ini_rva,
+		nom_cnd,
+		monto_pagado,
+		est_pago,
+		gasto_agua,
+		gasto_agua,
+		gasto_dividendo,
+		gasto_gas,
+		gasto_luz,
+		gasto_servicios,
+		cost_mant
+
+	order by fec_ini_rva asc
+	end;
+go
+
+-----------------------BALANCE ANUAL DE DEPARTAMENTO 
+
+
+create or alter procedure pd_balance_Depto_agno
+as
+begin
+	SELECT 
+		num_dpto as "Número",
+		ISNULL(CONVERT( nvarchar, DATENAME(YEAR,(fec_ini_rva))),'Sin reserva') as "Agno",
+		nom_cnd as "Condominio",
+		SUM(ISNULL(monto_pagado,0)) as "Ganancias",
+		ISNULL(CONVERT( nvarchar, est_pago),'Sin reserva') as "Estado_pago",
+		SUM(ISNULL((gasto_agua + gasto_agua + gasto_dividendo + gasto_gas + gasto_luz + gasto_servicios),0)) as "Gastos_departamento",
+		SUM(ISNULL(cost_mant,0)) as "Gastos_de_mantención",
+		SUM(ISNULL(valor_arti,0)) as "Gasto_Artículos",
+		SUM(ISNULL(monto_pagado - (gasto_agua + gasto_agua + gasto_dividendo + gasto_gas + gasto_luz + gasto_servicios),0)) as "Balance"
+
+		from departamento
+		inner join condominio
+		on departamento.id_cnd = condominio.id_cnd
+		full outer join reserva
+		on departamento.id_dpto = reserva.id_dpto
+		full outer join pago
+		on reserva.id_rva = pago.id_rva
+		full outer join gastos
+		on departamento.id_dpto = gastos.id_dpto
+		full outer join res_mant
+		on departamento.id_dpto = res_mant.id_dpto
+		full outer join mantencion
+		on res_mant.id_rmant = mantencion.id_rmant
+		left JOIN articulo
+		on departamento.id_dpto = articulo.id_dpto
+
+		GROUP BY num_dpto, 
+		fec_ini_rva,
+		nom_cnd,
+		monto_pagado,
+		est_pago,
+		gasto_agua,
+		gasto_agua,
+		gasto_dividendo,
+		gasto_gas,
+		gasto_luz,
+		gasto_servicios,
+		cost_mant
+
+	order by fec_ini_rva asc
+	end;
+go
+
+----------------------------------------INFORME POR ZONA
+
+-----------------------BALANCE DIARIO POR ZONA
+
+create or alter procedure pd_balance_Zona_Diaria
+as
+begin
+SELECT
+		nom_rgn as "Zona", 
+		ISNULL(CONVERT( nvarchar, (fec_ini_rva)),'Sin reserva') as "Día",
+		SUM(ISNULL(monto_pagado,0)) as "Ganancias",
+		ISNULL(CONVERT( nvarchar, est_pago),'Sin reserva') as "Estado_pago",
+		SUM(ISNULL((gasto_agua + gasto_agua + gasto_dividendo + gasto_gas + gasto_luz + gasto_servicios),0)) as "Gastos_departamento",
+		SUM(ISNULL(cost_mant,0)) as "Gastos_de_mantención",
+		SUM(ISNULL(valor_arti,0)) as "Gasto_Artículos",
+		SUM(ISNULL(monto_pagado - (gasto_agua + gasto_agua + gasto_dividendo + gasto_gas + gasto_luz + gasto_servicios + valor_arti + cost_mant),0)) as "Balance"
+		
+		from region
+		FULL OUTER join comuna
+		on region.id_rgn = comuna.id_rgn
+		inner join condominio
+		on comuna.id_com = condominio.id_com
+		inner join departamento
+		on departamento.id_cnd = condominio.id_cnd
+		full outer join reserva
+		on departamento.id_dpto = reserva.id_dpto
+		inner join pago
+		on reserva.id_rva = pago.id_rva
+		full outer join gastos
+		on departamento.id_dpto = gastos.id_dpto
+		full outer join res_mant
+		on departamento.id_dpto = res_mant.id_dpto
+		full outer join mantencion
+		on res_mant.id_rmant = mantencion.id_rmant
+		LEFT JOIN articulo
+		on departamento.id_dpto = articulo.id_dpto
+
+		GROUP BY nom_rgn, 
+		fec_ini_rva,
+		nom_cnd,
+		monto_pagado,
+		est_pago,
+		gasto_agua,
+		gasto_agua,
+		gasto_dividendo,
+		gasto_gas,
+		gasto_luz,
+		gasto_servicios,
+		cost_mant
+
+	order by fec_ini_rva asc	
+	end;
+go
+
+-----------------------BALANCE SEMANAL POR ZONA
+
+create or alter procedure pd_balance_Zona_Semanal
+as
+begin
+SELECT
+		nom_rgn as "Zona", 
+		ISNULL(CONVERT( nvarchar,(DATEPART(WEEK, fec_ini_rva)-DATEPART(WEEK, DATEADD(MM, DATEDIFF(MM,0,fec_ini_rva ), 0))+ 1)),'Sin reserva') AS "Semana_del_mes",
+		ISNULL(CONVERT( nvarchar, DATEname(MONTH,fec_ini_rva)),'Sin reserva') as "Mes",
+		SUM(ISNULL(monto_pagado,0)) as "Ganancias",
+		ISNULL(CONVERT( nvarchar, est_pago),'Sin reserva') as "Estado_pago",
+		SUM(ISNULL((gasto_agua + gasto_agua + gasto_dividendo + gasto_gas + gasto_luz + gasto_servicios),0)) as "Gastos_departamento",
+		SUM(ISNULL(cost_mant,0)) as "Gastos_de_mantención",
+		SUM(ISNULL(valor_arti,0)) as "Gasto_Artículos",
+		SUM(ISNULL(monto_pagado - (gasto_agua + gasto_agua + gasto_dividendo + gasto_gas + gasto_luz + gasto_servicios + valor_arti + cost_mant),0)) as "Balance"
+		
+		from region
+		FULL OUTER join comuna
+		on region.id_rgn = comuna.id_rgn
+		inner join condominio
+		on comuna.id_com = condominio.id_com
+		inner join departamento
+		on departamento.id_cnd = condominio.id_cnd
+		full outer join reserva
+		on departamento.id_dpto = reserva.id_dpto
+		inner join pago
+		on reserva.id_rva = pago.id_rva
+		full outer join gastos
+		on departamento.id_dpto = gastos.id_dpto
+		full outer join res_mant
+		on departamento.id_dpto = res_mant.id_dpto
+		full outer join mantencion
+		on res_mant.id_rmant = mantencion.id_rmant
+		LEFT JOIN articulo
+		on departamento.id_dpto = articulo.id_dpto
+
+		GROUP BY nom_rgn, 
+		fec_ini_rva,
+		nom_cnd,
+		monto_pagado,
+		est_pago,
+		gasto_agua,
+		gasto_agua,
+		gasto_dividendo,
+		gasto_gas,
+		gasto_luz,
+		gasto_servicios,
+		cost_mant
+
+	order by fec_ini_rva asc
+	end;
+go
+
+-----------------------BALANCE MENSUAL POR ZONA
+
+create or alter procedure pd_balance_Zona_mensual
+as
+begin
+SELECT
+		nom_rgn as "Zona", 
+		ISNULL(CONVERT( nvarchar, DATENAME(MONTH,(fec_ini_rva))),'Sin reserva') as "Mes",
+		ISNULL(CONVERT( nvarchar, DATENAME(YEAR,(fec_ini_rva))),'Sin reserva') as "Agno",
+		SUM(ISNULL(monto_pagado,0)) as "Ganancias",
+		ISNULL(CONVERT( nvarchar, est_pago),'Sin reserva') as "Estado_pago",
+		SUM(ISNULL((gasto_agua + gasto_agua + gasto_dividendo + gasto_gas + gasto_luz + gasto_servicios),0)) as "Gastos_departamento",
+		SUM(ISNULL(cost_mant,0)) as "Gastos_de_mantención",
+		SUM(ISNULL(valor_arti,0)) as "Gasto_Artículos",
+		SUM(ISNULL(monto_pagado - (gasto_agua + gasto_agua + gasto_dividendo + gasto_gas + gasto_luz + gasto_servicios + valor_arti + cost_mant),0)) as "Balance"
+		
+		from region
+		FULL OUTER join comuna
+		on region.id_rgn = comuna.id_rgn
+		inner join condominio
+		on comuna.id_com = condominio.id_com
+		inner join departamento
+		on departamento.id_cnd = condominio.id_cnd
+		full outer join reserva
+		on departamento.id_dpto = reserva.id_dpto
+		inner join pago
+		on reserva.id_rva = pago.id_rva
+		full outer join gastos
+		on departamento.id_dpto = gastos.id_dpto
+		full outer join res_mant
+		on departamento.id_dpto = res_mant.id_dpto
+		full outer join mantencion
+		on res_mant.id_rmant = mantencion.id_rmant
+		LEFT JOIN articulo
+		on departamento.id_dpto = articulo.id_dpto
+
+		GROUP BY nom_rgn, 
+		fec_ini_rva,
+		nom_cnd,
+		monto_pagado,
+		est_pago,
+		gasto_agua,
+		gasto_agua,
+		gasto_dividendo,
+		gasto_gas,
+		gasto_luz,
+		gasto_servicios,
+		cost_mant
+
+	order by fec_ini_rva asc
+	end;
+go
+
+-----------------------BALANCE AÑO POR ZONA
+
+create or alter procedure pd_balance_Zona_anual
+as
+begin
+SELECT
+		nom_rgn as "Zona", 
+		ISNULL(CONVERT( nvarchar, DATENAME(YEAR,(fec_ini_rva))),'Sin reserva') as "Agno",
+		SUM(ISNULL(monto_pagado,0)) as "Ganancias",
+		ISNULL(CONVERT( nvarchar, est_pago),'Sin reserva') as "Estado_pago",
+		SUM(ISNULL((gasto_agua + gasto_agua + gasto_dividendo + gasto_gas + gasto_luz + gasto_servicios),0)) as "Gastos_departamento",
+		SUM(ISNULL(cost_mant,0)) as "Gastos_de_mantención",
+		SUM(ISNULL(valor_arti,0)) as "Gasto_Artículos",
+		SUM(ISNULL(monto_pagado - (gasto_agua + gasto_agua + gasto_dividendo + gasto_gas + gasto_luz + gasto_servicios + valor_arti + cost_mant),0)) as "Balance"
+		
+		from region
+		FULL OUTER join comuna
+		on region.id_rgn = comuna.id_rgn
+		inner join condominio
+		on comuna.id_com = condominio.id_com
+		inner join departamento
+		on departamento.id_cnd = condominio.id_cnd
+		full outer join reserva
+		on departamento.id_dpto = reserva.id_dpto
+		inner join pago
+		on reserva.id_rva = pago.id_rva
+		full outer join gastos
+		on departamento.id_dpto = gastos.id_dpto
+		full outer join res_mant
+		on departamento.id_dpto = res_mant.id_dpto
+		full outer join mantencion
+		on res_mant.id_rmant = mantencion.id_rmant
+		LEFT JOIN articulo
+		on departamento.id_dpto = articulo.id_dpto
+
+		GROUP BY nom_rgn, 
+		fec_ini_rva,
+		nom_cnd,
+		monto_pagado,
+		est_pago,
+		gasto_agua,
+		gasto_agua,
+		gasto_dividendo,
+		gasto_gas,
+		gasto_luz,
+		gasto_servicios,
+		cost_mant
+
+	order by fec_ini_rva asc
+	end;
+go
+
