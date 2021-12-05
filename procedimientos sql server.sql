@@ -687,6 +687,31 @@ begin
 end;
 go
 
+create or alter procedure pd_getMantenciones (@id_depto int, @agno int)
+as 
+begin 
+	select 
+		rm.id_rmant as "id_rmant",
+		convert(varchar,rm.fec_rmant,103) as "Fecha",
+		rm.id_dpto as "id_dpto",
+		rm.id_usr as "id_usr",
+		rm.est_man as "est_man",
+		m.cost_mant as "cost_mant",
+		m.deta_mant as "deta_mant",
+		concat(cn.nom_cnd , ' '  , d.num_dpto) as "Departamento",
+		concat(u.nom_usr, ' ', u.appat_usr, ' ', u.apmat_usr) as "Solicitante"
+		from mantencion m join res_mant rm
+			on m.id_rmant = rm.id_rmant 
+		join usuario u
+			on u.id_usr = rm.id_usr
+		join departamento d
+			on d.id_dpto = rm.id_dpto
+		join condominio cn
+			on cn.id_cnd = d.id_cnd
+		where rm.id_dpto = @id_depto and year(rm.fec_rmant) = @agno
+		order by "Fecha"
+end
+go
 ---------------------------------------------------------------------------
 
 --TABLA RESERVA

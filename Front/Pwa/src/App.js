@@ -71,7 +71,8 @@ import Reserva from './components/Views/Reservas/Reserva';
 import MainAdmin from './components/InicioAdmin';
 import Landing from './components/Home';
 import PagoConfirmado from './components/Layouts/pago-confirmado';
-
+import DeptosMant from './components/Views/Mantencion/DeptosMant';
+import ResMant from './components/Views/Mantencion/ResMant';
 
 function App() {
   return (
@@ -122,6 +123,9 @@ function App() {
                 <Route path="/UsuarioEdi" exact render ={ props=> ( <UsuarioEdi {...props} />)}></Route>
                 <Route path="/ClienteNew" exact render ={ props=> ( <ClienteNew {...props} />)}></Route>
         {/* ReservaMantencion */}
+                <Route path="/DeptosMant" exact render ={ props=> ( <DeptosMant {...props} />)}></Route>
+                <Route path="/ResMant" exact render ={ props=> ( <ResMant {...props} />)}></Route>
+
                 <Route path="/ReservaMantencionList" exact render ={ props=> ( <ReservaMantencionList {...props} />)}></Route>
                 <Route path="/ReservaMantencionNew" exact render ={ props=> ( <ReservaMantencionNew {...props} />)}></Route>
                 <Route path="/ReservaMantencionEdi" exact render ={ props=> ( <ReservaMantencionEdi {...props} />)}></Route>     

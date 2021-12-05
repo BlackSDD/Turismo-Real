@@ -26,7 +26,7 @@ export default class NavBarAdmin extends Component {
               <Navbar.Collapse>
                 <Nav>
                   <Nav.Link href="/MainFuncionario"> Inicio Funcionario </Nav.Link>
-                  <Nav.Link href="/check-in"> Ingresar Check-in </Nav.Link>
+                  <Nav.Link href="/checkin"> Ingresar Check-in </Nav.Link>
                   <Nav.Link href="/checkout"> Ingresar Checkout </Nav.Link>
                   <Nav.Link onClick={this.salir} href="/">Salir</Nav.Link>
                 </Nav>
@@ -43,7 +43,7 @@ export default class NavBarAdmin extends Component {
                 <Navbar.Collapse>
                   <Nav>
                     <Nav.Link href="/Admin"> Home </Nav.Link>
-                    <Nav.Link href="/"> Reservar Mantención  </Nav.Link>
+                    <Nav.Link href="/DeptosMant"> Reservar Mantención  </Nav.Link>
                     <Nav.Link onClick={this.salir} href="/">Salir</Nav.Link>
                   </Nav>
                 </Navbar.Collapse>

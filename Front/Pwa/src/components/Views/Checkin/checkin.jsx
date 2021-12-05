@@ -22,6 +22,13 @@ const notifyE = () =>{
     });
 };
 
+const notifyW = () =>{
+    toast.warn('Debe seleccionar una Id válida',{
+        position: toast.POSITION.TOP_CENTER,
+        theme: "colored"
+    });
+};
+
 export default function Checkin() {
 
     const [informeR, setInformeR] = useState([]);
@@ -66,8 +73,8 @@ export default function Checkin() {
     };
 
     const handleBuscar = async (id) =>{
-        if(id_rva ===""){
-            notifyE();
+        if(id_rva ==="-1"){
+            notifyW();
         }else{
         let url = {
             reserva : parseInt(id),
@@ -85,18 +92,18 @@ export default function Checkin() {
             monto_pagado: montoPago
         };
         try{
-        await axios.post('http://localhost:4000/API/pago', newPago);
-        console.log("Pago recibido");
-        const newCheckin = {
-            id_rva: parseInt(id_rva),
-            deta_chi: detalle,
-            id_usr: parseInt(funcionario)
+            await axios.post('http://localhost:4000/API/pago', newPago);
+            console.log("Pago recibido");
+            const newCheckin = {
+                id_rva: parseInt(id_rva),
+                deta_chi: detalle,
+                id_usr: parseInt(funcionario)
         };
-        console.log('newCheckin:', newCheckin);
-        await axios.post('http://localhost:4000/API/checkin', newCheckin);
-        console.log("Check-in registrado");
-        notifyS();
-        window.location.href= "/checkin";
+            console.log('newCheckin:', newCheckin);
+            await axios.post('http://localhost:4000/API/checkin', newCheckin);
+            console.log("Check-in registrado");
+            notifyS();
+            window.location.href= "/checkin";
         }catch{
             notifyE();
         }
@@ -115,7 +122,7 @@ export default function Checkin() {
                     <Form.Group className="mb-3" controlId="Reserva">
                         <h2>Ingrese el número de orden de Reserva</h2>
                         <Form.Select  name="id_rva" placeholder= "Ingrese N° de reserva" value={id_rva} required onChange={onInputChange}>
-                            <option value="">
+                            <option value="-1">
                                 Elige un Número de orden    
                             </option>
                             {opciones.map( op => (
@@ -155,7 +162,7 @@ export default function Checkin() {
                     </Table>
                     <br/>
                     <Form> 
-                        <h3>Ingrese el detalle del check-in</h3>
+                        <h3>Ingrese el detalle del Check-in</h3>
                         <Form.Control as="textarea" require name="detalle" placeholder= "Ingrese detalle" rows={3} value={detalle} required onChange={onInputDetalle}/>
                     </Form>
                     <br/>
