@@ -8,8 +8,10 @@ import Navbar from '../components/Layouts/Navbar.jsx'
 
 //Forma de llamar a datos de sesion storage
 let email = sessionStorage.correo
+let tipo = sessionStorage.tipoUsr
 
-sessionStorage.tipoUsr = 0
+if (tipo == null){sessionStorage.tipoUsr = 0}
+
 console.log('El correo es' + email)
 console.log('El tipo es' + sessionStorage.tipoUsr)
 

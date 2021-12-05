@@ -37,10 +37,21 @@ export default class ReservaMantencionList extends Component {
         })
     }
 
+    deleteNote = async (Id) => {
+        const answer = window.confirm("¿Estas Seguro?");
+        if (answer){
+            await axios.delete('http://localhost:4000/API/mantencion/' + Id);
+            notifyS();
+        } else {
+            notifyE();
+        }
+        this.getReservaMantencion();
+    };
+
 
     render() {
         let tipo = parseInt(sessionStorage.tipoUsr)
-        if(tipo == 3){
+        if(tipo != 1 ){
             return(<>
                 <h1>ESTA PAGINA ES ADMINISTRATIVA</h1>
                 <Link to={"/"} className="btn btn-secondary">
@@ -64,7 +75,15 @@ export default class ReservaMantencionList extends Component {
                                           Estado:  {art.est_man}
                                         </p>                  
                                         </div>
+                                        <div className="card-footer">
+                                        <button className="btn btn-danger" onClick={() => this.deleteNote(art.id_rmant)}>
+                                            Eliminar
+                                        </button>
+                                    </div>
                                 </div>
+                                
+                                
+                            
                         ))
                     }
 

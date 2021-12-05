@@ -3,7 +3,8 @@ import NavBarAdmin from '../../Layouts/NavBarAdmin';
 import axios from 'axios';
 import {toast} from 'react-toastify';
 import {Button, Form, Table} from  'react-bootstrap';
-import '../../../assetss/css/checks.css'
+import '../../../assetss/css/checks.css';
+import { Link } from 'react-router-dom';
 
 toast.configure({
 });
@@ -107,6 +108,17 @@ export default function Checkin() {
         }catch{
             notifyE();
         }
+    }
+
+    let tipo = parseInt(sessionStorage.tipoUsr)
+    if(tipo == 0 || tipo == 3){
+        return(<>
+            <h1>ESTA PAGINA ES ADMINISTRATIVA</h1>
+            <Link to={"/"} className="btn btn-secondary">
+                        <i className="material-icons"> VOLVER AL INICIO</i>
+                    </Link>
+            </>
+        )
     }
 
     return (

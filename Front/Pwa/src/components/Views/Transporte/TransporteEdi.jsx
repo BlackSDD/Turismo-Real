@@ -78,7 +78,7 @@ export default class UsuarioEdi extends Component{
 
     render(){
         let tipo = parseInt(sessionStorage.tipoUsr)
-        if(tipo == 3 || tipo == 0 ){
+        if(tipo != 1 ){
             return(<>
                 <h1>ESTA PAGINA ES ADMINISTRATIVA</h1>
                 <Link to={"/"} className="btn btn-secondary">

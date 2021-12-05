@@ -36,6 +36,16 @@ export default class InformeDeptoAgno extends Component {
     }
 
     render() {
+        let tipo = parseInt(sessionStorage.tipoUsr)
+        if(tipo == 3||tipo ==0 ){
+            return(<>
+                <h1>ESTA PAGINA ES ADMINISTRATIVA</h1>
+                <Link to={"/"} className="btn btn-secondary">
+                            <i className="material-icons"> VOLVER AL INICIO</i>
+                        </Link>
+                </>
+            )
+        }
         return (
             <div className="container-fluid" id="listar-deptos">
             <div className="card-body" id="tajreta_tabla">
