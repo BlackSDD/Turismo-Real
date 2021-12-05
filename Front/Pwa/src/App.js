@@ -71,6 +71,10 @@ import Reserva from './components/Views/Reservas/Reserva';
 import MainAdmin from './components/InicioAdmin';
 import Landing from './components/Home';
 import PagoConfirmado from './components/Layouts/pago-confirmado';
+//////////////Reserva Depto////////////
+import ContratoServicio from './components/Views/ContratoServicio/ContratoServ';
+
+
 
 
 function App() {
@@ -141,7 +145,9 @@ function App() {
                 <Route path="/TransporteEdit" exact render ={ props=> ( <TransporteEdit {...props} />)}></Route>
                 <Route path="/TransporteList" exact render ={ props=> ( <TransporteList {...props} />)}></Route>                                                                                        
         {/* Generar Reserva Departamento */}
-                <Route path="/reservar" exact render ={ props=> ( <Reserva {...props} />)}></Route>     
+                <Route path="/reservar" exact render ={ props=> ( <Reserva {...props} />)}></Route>
+        {/* Generar contrato */}
+        <Route path="/ContratoServicio" exact render ={ props=> ( <ContratoServicio {...props} />)}></Route>                 
         </Switch>
                 <Footer/>  
         </Router>

@@ -751,6 +751,15 @@ router.route('/reserva/:id_rva').get((request, response) => {
     });
 });
 
+
+//// Get reserva por usr
+router.route('/reserva/usr').post((request, response) => {
+    let Reserva = {...request.body}
+    ReservaWS.getReservasUsr(Reserva).then(result =>{
+        response.json(result[0]);
+    });
+});
+
 ///Crear reserva
 router.route('/reserva').post((request, response) => {
     let Reserva = {...request.body}
