@@ -144,6 +144,7 @@ select
 	sum(g.gasto_servicios) as "Gastos de servicios día factura",
 	sum(g.gasto_comunes) as "Gastos comunes día factura",
 	sum(g.gasto_dividendo) as "Dividendo día factura"
+	sum(g.gasto_luz + g.gasto_agua)as "totalisimo"
 	from departamento d join gastos g
 		on d.id_dpto = g.id_dpto
     join condominio cn

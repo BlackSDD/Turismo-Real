@@ -44,8 +44,6 @@ async function getNoDisponibleId(id_dpto){
 }
 
 
-
-
 module.exports = {
     getDisponibilidad: getDisponibilidad,
     // getNoDisponibe: getNoDisponibe,

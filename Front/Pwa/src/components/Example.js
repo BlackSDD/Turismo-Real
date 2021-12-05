@@ -29,7 +29,7 @@ function Example({fechas}) {
     function handleResetClick() {
         setState(getInitialState());
     }
-
+    
     const getInitialState = () => {
         return {
           from: undefined,

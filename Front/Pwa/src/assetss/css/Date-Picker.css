@@ -14,8 +14,6 @@
   border-bottom-right-radius: 50% !important;
 }
 
-
-
 #body-date-picker{
     color: black;
     background-image: url("https://images.pexels.com/photos/325185/pexels-photo-325185.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
@@ -26,12 +24,31 @@
 }
 
 #container-date-picker{
-  background-color: white;
+    background-color: white;
     border: 2px solid black;
     border-radius: 5px;
-    padding-top: 5%;
-    padding-bottom: 5%;
     margin-top: 5%;
+    min-width: 60%;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+    text-align: center;
+}
+#color{
+  background-color: aquamarine;
+  height: fit-content;
+}
+
+#p-date-mant{
+    font-size: larger;
+    font-weight: bold;
+}
+#container-form-picker{
+  background-color: white;
+  /* padding-top: 5%; */
+  padding-bottom: 5%;
+  margin-top: 5%;
 }
 
 #button-date-picker1{
@@ -39,6 +56,7 @@
   padding-right: 2%;
   margin-right: 1%;
 }
+
 #button-date-picker2{
   color: white;
   padding-left: 2%;
