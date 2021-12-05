@@ -74,6 +74,7 @@ var router = express.Router();
 
 
 var cors = require('cors');
+const informesWS = require('./consultas/InformesWS');
 const corsOptions ={
     origin:'http://localhost:3000', 
     credentials:true,            //access-control-allow-credentials:true
@@ -1008,6 +1009,17 @@ router.route('/cambiarTipoCliente/:id_usr').put((request, response) => {
     });
 });
 
+router.route('/cambiarTipoCliente/:id_usr').put((request, response) => {
+    let Usuario = {...request.body}
+    UsuarioWS.upCambiarCliente(request.params.id_usr).then(result => {
+        response.json(result[0]);
+    }, (err) => {
+        console.log(err.message);
+        response.json(err.message)
+    });
+});
+
+
 
 ////////////////EXTRAS//////////////////////
 ///listar marca
@@ -1065,16 +1077,48 @@ router.route('/informeResDetServ/:id_reserva').get((request, response) => {
 });
 
 //////////////////////////INFORME RESERVAS GENERAL////////////////////////////////////////////////////
-
-router.route('/informeResGen').post((request, response) => {
-    let informeResGen = {...request.body}
-    InformesWS.getInformeReservaGen(informeResGen).then(result =>{
+////////////////////////porDepartamento
+router.route('/InformeDeptoDia').get((request, response) => {
+    InformesWS.Departamentoxdia().then(result =>{
         response.json(result[0]);
     });
 });
 
-//////////////////////////INFORME RESERVAS GENERAL////////////////////////////////////////////////////
+router.route('/DepartamentoxSemana').get((request, response) => {
+    InformesWS.DepartamentoxSemana().then(result =>{
+        response.json(result[0]);
+    });
+});
 
+router.route('/DepartamentoAnual').get((request, response) => {
+    InformesWS.DepartamentoAnual().then(result =>{
+        response.json(result[0]);
+    });
+});
+
+router.route('/Zonaxdia').get((request, response) => {
+    InformesWS.Zonaxdia().then(result =>{
+        response.json(result[0]);
+    });
+});
+
+router.route('/ZonaSemanal').get((request, response) => {
+    InformesWS.ZonaxSemanal().then(result =>{
+        response.json(result[0]);
+    });
+});
+
+router.route('/ZonaMensual').get((request, response) => {
+    InformesWS.ZonaxMensual().then(result =>{
+        response.json(result[0]);
+    });
+});
+
+router.route('/ZonaAnual').get((request, response) => {
+    InformesWS.ZonaAnual().then(result =>{
+        response.json(result[0]);
+    });
+});
 var portcnx = process.env.PORT || 4000;
 app.listen(portcnx);
 console.log('fin de consulta')
