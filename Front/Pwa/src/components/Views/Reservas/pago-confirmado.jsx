@@ -3,6 +3,7 @@ import axios from 'axios';
 import NavBar from '../../Layouts/Navbar';
 import '../../../assetss/css/pago.css'
 import {Button} from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 
 export default  function PagoConfirmado () {

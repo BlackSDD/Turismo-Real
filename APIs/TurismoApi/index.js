@@ -1,4 +1,5 @@
 console.log('inicio')
+var nodemailer = require('nodemailer');
 
 
 ///Informes////
@@ -1150,6 +1151,45 @@ router.route('/ZonaAnual').get((request, response) => {
         response.json(result[0]);
     });
 });
+
+router.post('/correo', (req, res) => {
+    nodemailer.createTestAccount((err, account) => {
+        const htmlEmail = `
+            <h3>Contact deatails </h3>
+            <ul>
+
+                <li>Name: ${req.body.name} </li>
+                <li>Phone: ${req.body.phone} </li>
+                <li>Email: ${req.body.email} </li>
+            </ul>
+            <h3> este es un correo de prueba <h3>
+            <p>buenas buenas prueba</p>`
+        
+        let mailerConfig = {    
+            host: "smtp.gmail.com",  
+            secure: false,
+            port: 587,
+            auth: {
+                user: "turismoreal.portafolio2021@gmail.com",
+                pass: "tlyqeqtymwutxpnx"
+            }
+        };
+        let transporter = nodemailer.createTransport(mailerConfig);
+        let mailOptions = {
+            from: 'turismoreal.portafolio2021@gmail.com',
+            to: req.body.email,
+            subject: 'Some Subject',
+            text: req.body.content,
+            html: htmlEmail
+        };
+
+        transporter.sendMail(mailOptions, (err, info, response) => {
+            response.json(result[0]);
+        });
+    })
+})
+
+
 var portcnx = process.env.PORT || 4000;
 app.listen(portcnx);
 console.log('fin de consulta');

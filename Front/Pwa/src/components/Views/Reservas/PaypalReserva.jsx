@@ -3,6 +3,7 @@ import ReactDOM  from 'react-dom';
 import axios from 'axios';
 import NavBar from '../../Layouts/Navbar';
 import '../../../assetss/css/pago.css'
+import { Link } from 'react-router-dom';
 
 const PayPalButton = window.paypal.Buttons.driver("react", { React, ReactDOM });
 

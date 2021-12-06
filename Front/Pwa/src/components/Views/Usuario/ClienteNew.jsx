@@ -89,6 +89,13 @@ export default class UsuarioNew extends Component{
         }
     }
 
+    handleOnSubmit = async (e) => {
+        e.preventDefault();
+        const  email  = { email: this.state.email_usr};
+         await axios.post('api/consultation',{
+            email
+        })
+    }
 
 
     onInputChange = (e) => {
@@ -103,7 +110,7 @@ export default class UsuarioNew extends Component{
                     <div class="container">
                         <h1 id="create-comuna-title">Ingresar Articulo</h1>
                         <div id="create-comuna-form">
-                            <Form className="contact-form" onSubmit={this.handleSubmit}>
+                            <Form className="contact-form" onSubmit={ this.handleOnSubmi}>
                                 <Form.Group className="mb-3" controlId="Articulo">
                                     <Form.Label>Correo Electronico</Form.Label>
                                     <Form.Control type="email" name="email_usr" placeholder= "correo" rows={1} value={this.state.email_usr} required onChange={this.onInputChange}/>
