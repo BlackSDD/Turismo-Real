@@ -35,7 +35,7 @@ AS
 go
 
 --- Trae el abono requerido para reservar 
-ALTER   FUNCTION fn_pago_abono ( @ID_RVA INT) RETURNS INT
+create or ALTER   FUNCTION fn_pago_abono ( @ID_RVA INT) RETURNS INT
 AS 
    BEGIN
       DECLARE @V_MONTO INT
@@ -844,7 +844,6 @@ select
 	d.desc_dpto as "desc_dpto",
 	d.costo_arri_dpto as "costo_arri_dpto"
 	from 
-	from 
 	departamento d join condominio cn
 		on d.id_cnd = cn.id_cnd
 	join comuna cm
@@ -1103,7 +1102,7 @@ begin
 end
 go
 
-ALTER   function fn_pago_total_reserva (@id_rva int) returns varchar
+create or ALTER   function fn_pago_total_reserva (@id_rva int) returns varchar
 as
 begin
 	declare @v_monto int;

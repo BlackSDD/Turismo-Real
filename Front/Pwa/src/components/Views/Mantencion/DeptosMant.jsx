@@ -163,16 +163,22 @@ export default function DeptosMant() {
             </tbody>
           </Table>
           <br />
-
+       
           <Link className="btn btn-primary" id="btn-res-mant" to="/ResMant">
             Agendar Mantención
           </Link>
-          <br/>  
+           
+           
           <Link className="btn btn-primary" id="btn-res-mant" to="/DetalleMant">
             Ingresar detalle de mantención
           </Link>
+         
+          <br/>  
           <Link className="btn btn-primary" id="btn-res-mant" to="/SelectReagendarMant">
             Reagendar mantención
+          </Link>
+          <Link className="btn btn-primary" id="btn-res-mant" to="/CancelMant">
+            Cancelar mantención
           </Link>
         </div>
       ) : (

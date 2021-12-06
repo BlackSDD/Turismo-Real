@@ -90,6 +90,7 @@ import SelectReagendarMant from './components/Views/Mantencion/SelectReagendarMa
 import ReagendarMant from './components/Views/Mantencion/ReagendarMant';
 import DetalleMant from './components/Views/Mantencion/DetalleMant';
 import DateMant from './components/Views/Mantencion/DateMant';
+import CancelMant from './components/Views/Mantencion/CancelMant';
 
 
 function App() {
@@ -161,6 +162,7 @@ function App() {
                 <Route path="/ReagendarMant" exact render={ props=> ( <ReagendarMant {...props}/>)}></Route>
                 <Route path="/DetalleMant" exact render={ props=> ( <DetalleMant {...props}/>)}></Route>
                 <Route path="/DateMant" exact render={ props=> (<DateMant {...props}/>)}></Route>
+                <Route path="/CancelMant" exact render={ props=> (<CancelMant {...props}/>)}></Route>
 
 
                 <Route path="/ReservaMantencionList" exact render ={ props=> ( <ReservaMantencionList {...props} />)}></Route>
