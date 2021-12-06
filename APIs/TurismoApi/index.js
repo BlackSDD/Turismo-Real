@@ -1,5 +1,5 @@
 console.log('inicio')
-var nodemailer = require('nodemailer');
+const nodemailer = require('nodemailer');
 
 
 ///Informes////
@@ -1152,7 +1152,7 @@ router.route('/ZonaAnual').get((request, response) => {
     });
 });
 
-router.post('/correo', (req, res) => {
+router.route('/correo').post((req, response) => {
     nodemailer.createTestAccount((err, account) => {
         const htmlEmail = `
             <h3>Contact deatails </h3>
@@ -1163,7 +1163,7 @@ router.post('/correo', (req, res) => {
                 <li>Email: ${req.body.email} </li>
             </ul>
             <h3> este es un correo de prueba <h3>
-            <p>buenas buenas prueba</p>`
+            <p>esta es una prueba de correccion</p>`
         
         let mailerConfig = {    
             host: "smtp.gmail.com",  
@@ -1183,10 +1183,21 @@ router.post('/correo', (req, res) => {
             html: htmlEmail
         };
 
-        transporter.sendMail(mailOptions, (err, info, response) => {
-            response.json(result[0]);
+        transporter.sendMail(mailOptions, (err, info) => {
+            if (error) {
+                console.log('error:', err);
+                response.status(500).send({status: 'FAIL', msg: 'Internal error: email not sent'})
+                response.end();
+            } else {
+                console.log('Message sent: %s', info.content);
+                console.log('Message URL: %s', nodemailer.getTestMessageUrl);
+                response.status(200).json({status: 'OK', msg: 'Email sent'})
+                response.end();
+            }
         });
-    })
+        response.end()
+    }) 
+    
 })
 
 
