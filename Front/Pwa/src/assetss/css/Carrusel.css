@@ -64,3 +64,10 @@
     position: relative;
     top: 0;
 }
+
+#imgCarrusel{
+    padding: 0.5%;
+    background-color: ghostwhite;
+    border: 1px solid #212529;
+    border-radius: 15px;
+}

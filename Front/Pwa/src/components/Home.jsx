@@ -43,7 +43,7 @@ const Landing = () => {
                             </div>
                         </div>
                         <div className="col-sm">
-                            <h4>Diviertete y Conoce más con nuestros convenios de Tours</h4>
+                            <h4>Diviertete más con nuestros convenios de Tours</h4>
                             <div id="carruselS">
                                 <CarruselTours/>
                             </div>
