@@ -5,6 +5,7 @@ import {Button} from 'react-bootstrap';
 import '../../../assetss/css/Date-Picker.css'
 import axios from 'axios';
 import {toast} from 'react-toastify';
+import NavBar from '../../Layouts/Navbar';
 
 ///import PWA
 <link rel="manifest" href="../../public/manifest.json"></link>;
@@ -98,6 +99,25 @@ export default class DateReagendarMant extends React.Component {
   }
 
   render() {
+    let tipo = parseInt(sessionStorage.tipoUsr)
+    if(tipo == 0 || tipo==2 ||tipo ==3){
+        return(
+        <div id="menuAdmin">
+        <NavBar/>
+        <div className="row  d-flex justify-content-center mb-5">
+        <div className="card-header mb-5" style={{backgroundColor:'black', opacity:0.8}}>
+        <div className="title col-12 mt-5 text-center">
+                <h1>Turismo Real</h1>
+            </div>
+            <div className="title col-12 mt-1 mb-5 text-center">
+                <h3>esta pagina es administrativa</h3>
+                <h3>porfavor inicie sesion</h3>
+            </div>
+        </div>             
+
+        </div>
+    </div>)
+    }
       return (
         <div id="body-date-picker">
           <br/>

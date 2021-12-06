@@ -4,6 +4,8 @@ import Footer from "../../Layouts/Footer";
 import { Component } from "react";
 import { Image, VarBinary } from "mssql";
 import { Link } from 'react-router-dom';
+import NavBar from "../../Layouts/Navbar";
+import NavBarAdmin from "../../Layouts/NavBarAdmin";
 ///import PWA
 <link rel="manifest" href="../../public/manifest.json"></link>
 
@@ -18,11 +20,6 @@ class DeptoNew extends Component{
             n_amb_dpto:"" , 
             desc_dpto:"" , 
             costo_arri_dpto:"" , 
-            img_1_dpto:"" , 
-            img_2_dpto:null , 
-            img_3_dpto:null ,
-            img_4_dpto:null , 
-            img_5_dpto:null ,
             id_cnd:"" 	
     };
 
@@ -62,18 +59,28 @@ manejadorBoton=(e)=>{
 
 render(){
     let tipo = parseInt(sessionStorage.tipoUsr)
-    if(tipo != 1){
-        return(<>
-            <h1>ESTA PAGINA ES ADMINISTRATIVA</h1>
-            <Link to={"/"} className="btn btn-secondary">
-                        <i className="material-icons"> VOLVER AL INICIO</i>
-                    </Link>
-            </>
-        )
+    if(tipo == 0 || tipo==2 ||tipo ==3){
+        return(
+        <div id="menuAdmin">
+        <NavBar/>
+        <div className="row  d-flex justify-content-center mb-5">
+        <div className="card-header mb-5" style={{backgroundColor:'black', opacity:0.8}}>
+        <div className="title col-12 mt-5 text-center">
+                <h1>Turismo Real</h1>
+            </div>
+            <div className="title col-12 mt-1 mb-5 text-center">
+                <h3>esta pagina es administrativa</h3>
+                <h3>porfavor inicie sesion</h3>
+            </div>
+        </div>             
+
+        </div>
+    </div>)
     }
     return(
         <React.Fragment>
         <div class="container">
+        <NavBarAdmin/>
             <header class="heading text-center mt-5 mb-5"><h3>Registrar departamento</h3></header>
                 <div>
                     <form onSubmit={this.manejadorSubmit}>

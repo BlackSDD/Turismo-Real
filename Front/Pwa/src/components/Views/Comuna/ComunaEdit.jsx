@@ -1,5 +1,7 @@
 import React from "react";
 import { Component } from "react";
+import NavBar from "../../Layouts/Navbar";
+import NavBarAdmin from "../../Layouts/NavBarAdmin";
 //libreria
 import axios from 'axios';
 
@@ -33,7 +35,7 @@ export default class ComunaEdi extends Component{
             };
             await axios.put('http://localhost:4000/API/comuna/' + this.state.id_com, updatedComuna);
         
-            window.location.assign("http://localhost:3000/listarcomuna");
+            //window.location.assign("http://localhost:3000/listarcomuna");
 
     }
 
@@ -44,9 +46,29 @@ export default class ComunaEdi extends Component{
     };
 
     render(){
+        let tipo = parseInt(sessionStorage.tipoUsr)
+        if(tipo == 0 || tipo==2 ||tipo ==3){
+            return(
+            <div id="menuAdmin">
+            <NavBar/>
+            <div className="row  d-flex justify-content-center mb-5">
+            <div className="card-header mb-5" style={{backgroundColor:'black', opacity:0.8}}>
+            <div className="title col-12 mt-5 text-center">
+                    <h1>Turismo Real</h1>
+                </div>
+                <div className="title col-12 mt-1 mb-5 text-center">
+                    <h3>esta pagina es administrativa</h3>
+                    <h3>porfavor inicie sesion</h3>
+                </div>
+            </div>             
+    
+            </div>
+        </div>)
+        }
         
             return (
                 <div className="col-md-6 offset-md-3">
+                    <NavBarAdmin/>
                     <div className="card card-body">
                         <h4>nueva comuna</h4>
                         <form onSubmit={this.onSubmit}>
