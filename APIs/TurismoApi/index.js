@@ -1155,15 +1155,9 @@ router.route('/ZonaAnual').get((request, response) => {
 router.route('/correo').post((req, response) => {
     nodemailer.createTestAccount((err, account) => {
         const htmlEmail = `
-            <h3>Contact deatails </h3>
-            <ul>
-
-                <li>Name: ${req.body.name} </li>
-                <li>Phone: ${req.body.phone} </li>
-                <li>Email: ${req.body.email} </li>
-            </ul>
-            <h3> este es un correo de prueba <h3>
-            <p>esta es una prueba de correccion</p>`
+            <h3>Estimado ${req.body.name} </h3>
+            <h3> este es un correo de confirmacion que su cuenta se a creado con exito, dentro de los siguientes dias sera revisada por un administrador para su activacion <h3>
+            <h3> si dentro de dos dias no se activa la cuenta, por favor envia un correo dentro de nuestra pagina <h3>`
         
         let mailerConfig = {    
             host: "smtp.gmail.com",  
@@ -1178,7 +1172,7 @@ router.route('/correo').post((req, response) => {
         let mailOptions = {
             from: 'turismoreal.portafolio2021@gmail.com',
             to: req.body.email,
-            subject: 'Some Subject',
+            subject: 'Creacion de cuenta Turismo Real',
             text: req.body.content,
             html: htmlEmail
         };

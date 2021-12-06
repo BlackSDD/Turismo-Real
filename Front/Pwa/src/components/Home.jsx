@@ -10,10 +10,10 @@ import Navbar from '../components/Layouts/Navbar.jsx'
 let email = sessionStorage.correo
 let tipo = sessionStorage.tipoUsr
 
-if (tipo == null){sessionStorage.tipoUsr = 0}
+if ( !tipo ){sessionStorage.tipoUsr = 0}
 
-console.log('El correo es' + email)
-console.log('El tipo es' + sessionStorage.tipoUsr)
+console.log('El correo es ' + email)
+console.log('El tipo es ' + sessionStorage.tipoUsr)
 
 const Landing = () => {
     return (

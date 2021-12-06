@@ -151,7 +151,7 @@ export default class UsuarioNew extends Component{
                                     </Form.Select>
                                 </Form.Group>
                                 <Form.Group>
-                                    <Form.Label>Ingrese el departamento</Form.Label>
+                                    <Form.Label>Ingrese el tipo de usuario</Form.Label>
                                     <Form.Select  value={this.state.id_tipo_usr} onChange={this.onInputChange} name="id_tipo_usr" required>
                                     {
                                         this.state.tipo.map(reg => (
