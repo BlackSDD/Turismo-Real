@@ -102,7 +102,7 @@ export default class UsuarioNew extends Component{
             <React.Fragment>
                 <div id="admin-background">
                     <div class="container">
-                        <h1 id="create-comuna-title">Ingresar Articulo</h1>
+                        <h1 id="create-comuna-title">Ingresar Usuario</h1>
                         <div id="create-comuna-form">
                             <Form className="contact-form" onSubmit={this.handleSubmit}>
                                 <Form.Group className="mb-3" controlId="Articulo">

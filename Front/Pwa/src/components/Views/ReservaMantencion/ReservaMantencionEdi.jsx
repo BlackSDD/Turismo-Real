@@ -11,7 +11,6 @@ import 'react-toastify/dist/ReactToastify.css';
 <link rel="manifest" href="../../public/manifest.json"></link>
 
 toast.configure({
-
 });
  
 const notifyS = () =>{
@@ -66,7 +65,7 @@ export default class ReservaMantencionEdi extends Component{
     render(){
 
         let tipo = parseInt(sessionStorage.tipoUsr)
-        if(tipo == 3 ){
+        if(tipo == 3 || tipo == 0){
             return(<>
                 <h1>ESTA PAGINA ES ADMINISTRATIVA</h1>
                 <Link to={"/"} className="btn btn-secondary">
