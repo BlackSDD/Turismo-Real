@@ -2,7 +2,14 @@ import React, {Component, useState, useEffect} from 'react';
 import ReactDOM  from 'react-dom';
 import axios from 'axios';
 import NavBar from '../../Layouts/Navbar';
+
 import '../../../assetss/css/pago.css'
+import { Link } from 'react-router-dom';
+
+import '../../../assetss/css/pago.css';
+///import PWA
+<link rel="manifest" href="../../public/manifest.json"></link>
+
 
 const PayPalButton = window.paypal.Buttons.driver("react", { React, ReactDOM });
 
@@ -70,6 +77,16 @@ function PaypalReserva () {
     console.log('Id rva:',id_rva);
     console.log('precio Dolar: ', valorDolar);
     console.log('End log paypal');
+    let tipo = parseInt(sessionStorage.tipoUsr)
+        if(tipo == 0 ){
+            return(<>
+                <h1>Por favor inicie sesion antes de Continuar</h1>
+                <Link to={"/"} className="btn btn-secondary">
+                            <i className="material-icons"> VOLVER AL INICIO</i>
+                        </Link>
+                </>
+            )
+        }
         return( 
             <div id="body_pago">
                 <NavBar/>

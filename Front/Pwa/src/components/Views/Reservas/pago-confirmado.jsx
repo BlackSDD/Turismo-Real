@@ -1,8 +1,14 @@
 import React, { useState, useEffect} from 'react';
 import axios from 'axios';
 import NavBar from '../../Layouts/Navbar';
-import '../../../assetss/css/pago.css'
+import '../../../assetss/css/pago.css';
 import {Button} from 'react-bootstrap';
+
+import { Link } from 'react-router-dom';
+
+///import PWA
+<link rel="manifest" href="../../public/manifest.json"></link>
+
 
 
 export default  function PagoConfirmado () {
@@ -32,6 +38,16 @@ export default  function PagoConfirmado () {
     console.log('informe Reserva:',{informeR});
     console.log('Id rva:',id_rva);    
 
+    let tipo = parseInt(sessionStorage.tipoUsr)
+        if(tipo == 0 ){
+            return(<>
+                <h1>Por favor inicie sesion antes de Continuar</h1>
+                <Link to={"/"} className="btn btn-secondary">
+                            <i className="material-icons"> VOLVER AL INICIO</i>
+                        </Link>
+                </>
+            )
+        }
         return(
             <div id="body_pago">
                 <NavBar/>

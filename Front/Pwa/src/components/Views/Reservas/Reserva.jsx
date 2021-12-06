@@ -4,6 +4,7 @@ import {toast} from 'react-toastify';
 import Navbar from '../../Layouts/Navbar';
 import DatePicker from './Date-Picker';
 ///import PWA
+import { Link } from 'react-router-dom';
 <link rel="manifest" href="../../public/manifest.json"></link>
 
 toast.configure({
@@ -55,6 +56,17 @@ export default function Reserva() {
     console.log('fechas ArrayF', arrayF);
     console.log('End carga disponibilidad');
     
+    let tipo = parseInt(sessionStorage.tipoUsr)
+        if(tipo == 0 ){
+            return(<>
+                <h1>Por favor inicie sesion antes de Continuar</h1>
+                <Link to={"/"} className="btn btn-secondary">
+                            <i className="material-icons"> VOLVER AL INICIO</i>
+                        </Link>
+                </>
+            )
+        }
+
     return (
         <div>
             <Navbar/>

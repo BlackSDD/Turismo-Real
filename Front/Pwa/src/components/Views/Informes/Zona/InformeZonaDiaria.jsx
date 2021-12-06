@@ -9,6 +9,7 @@ import	'../../../../assetss/css/ListaDeptos.css';
 import '../../../../assetss/css/informeGeneral.css';
 ///import PWA
 <link rel="manifest" href="../../public/manifest.json"></link>;
+
 toast.configure({
 
 });
