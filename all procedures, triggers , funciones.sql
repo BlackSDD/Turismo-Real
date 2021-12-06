@@ -22,7 +22,7 @@ end;
 go
 
 
--- Calcula el monto que falta por pagar 
+-- Calcula el monto que falta por pagar del costo total 
 create or ALTER FUNCTION fn_monto_pago ( @ID_RVA INT) RETURNS INT
 AS 
    BEGIN
@@ -34,6 +34,17 @@ AS
    END 
 go
 
+--- Trae el abono requerido para reservar 
+ALTER   FUNCTION fn_pago_abono ( @ID_RVA INT) RETURNS INT
+AS 
+   BEGIN
+      DECLARE @V_MONTO INT
+      SELECT @V_MONTO = abono_req
+      FROM pago
+      WHERE ID_RVA = @ID_RVA
+      RETURN @V_MONTO
+   END 
+go
 
 -- Calcula el monto de los costos de servicios extras
 create or ALTER  function fn_servicios (@id_rva int) returns int
@@ -820,18 +831,19 @@ create or alter procedure pd_listar_deptos
 as
 begin
 select 
-	rg.id_rgn,
-	rg.nom_rgn,
-	cm.id_com,
-	cm.nom_com,
-	cn.id_cnd,
-	cn.nom_cnd,
+	rg.id_rgn as "id_rgn",
+	rg.nom_rgn as "nom_rgn",
+	cm.id_com as "id_com",
+	cm.nom_com as "nom_com",
+	cn.id_cnd as "id_cnd",
+	cn.nom_cnd as "nom_cnd",
 	concat( cn.nom_cnd, ' #' ,d.num_dpto ) as "depto",
-	d.id_dpto,
-	d.dir_dpto,
-	d.n_amb_dpto,
-	d.desc_dpto,
-	d.costo_arri_dpto
+	d.id_dpto as "id_dpto",
+	d.dir_dpto as "dir_dpto",
+	d.n_amb_dpto as "n_amb_dpto",
+	d.desc_dpto as "desc_dpto",
+	d.costo_arri_dpto as "costo_arri_dpto"
+	from 
 	from 
 	departamento d join condominio cn
 		on d.id_cnd = cn.id_cnd
@@ -1090,6 +1102,20 @@ begin
 		where id_rva = @id_rva
 end
 go
+
+ALTER   function fn_pago_total_reserva (@id_rva int) returns varchar
+as
+begin
+	declare @v_monto int;
+	declare @retorno varchar;
+	select @v_monto = monto_arr - monto_pagado 
+	from pago
+	where id_rva = @id_rva
+	set @retorno = concat('$ ',@v_monto);
+	return @retorno
+end
+go
+
 ---------------------------------------------------------------------------
 
 --TABLA REGION
@@ -1315,16 +1341,22 @@ create or alter procedure pd_reservas_usr (@id_usr int)
 as
 begin 
 	select
-			DISTINCT(r.id_rva) as "Idreserva",
-			concat(c.nom_cnd , ' '  , d.num_dpto) as "Departamento",
+			DISTINCT(r.id_rva) as "id_rva",
+			concat(cn.nom_cnd , ' '  , d.num_dpto) as "Departamento",
 			concat(u.nom_usr , ' ' , u.appat_usr , ' ' , u.apmat_usr) as "Cliente",
 			r.estado_rva as "Estado_reserva",
 			concat(convert(varchar,r.fec_ini_rva,103) , ' - ' , convert(varchar,r.fec_fin_rva,103)) as "Fecha",
+			r.fec_ini_rva as "fec_ini_rva",
+			r.fec_fin_rva as "fec_fin_rva",
 			concat('$',p.monto_total) as "Costo_total",
 			concat('$',p.monto_arr) as "Costo_arriendo",
 			concat('$',p.monto_serv_extra) as "Costoserviciosextra",
 			concat('$',p.monto_multas)as "CostoMultas",
 			concat('$',p.monto_pagado) as "MontoPagado",
+			rg.id_rgn as "id_rgn",
+			rg.nom_rgn as "nom_rgn",
+			cm.nom_com as "nom_com",
+			cm.id_com as "id_com",
 			isnull(ckin.deta_chi,'Check-in todavia no registrado') as "Detalle_check-in",
 			isnull(ckout.deta_cho,'Check-out todavia no registrado') as "Detalle_check-out"
 		from reserva r join usuario u
@@ -1335,8 +1367,12 @@ begin
 			on r.id_rva = ckout.id_rva
 		join departamento d 
 			on r.id_dpto = d.id_dpto
-		join condominio c
-			on d.id_cnd = c.id_cnd
+		join condominio cn
+			on d.id_cnd = cn.id_cnd
+		join comuna cm
+			on cm.id_com = cn.id_com
+		join region rg
+			on rg.id_rgn = cm.id_rgn
 		join pago p
 		on r.id_rva = p.id_rva
 		where r.id_usr = @id_usr and r.estado_rva in ('reservada','en progreso')
