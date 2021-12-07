@@ -69,7 +69,7 @@ async function getInformeReservaDet(id_rva){
     try{
         let pool = await sql.connect(cnx);
         let salida = await pool.request()
-            .input("id_rva", sql.Int , id_rva.reserva)
+            .input("id_reserva", sql.Int , id_rva)
             .execute('pd_informe_reserva_det');
         console.log('salida.recordsets');
         return salida.recordsets;

@@ -91,12 +91,20 @@ export default class DatePicker extends React.Component {
     console.log("rango: ", this.state.range);
     let tipo = parseInt(sessionStorage.tipoUsr)
         if(tipo == 0 ){
-            return(<>
-                <h1>Por favor inicie sesion antes de Continuar</h1>
-                <Link to={"/"} className="btn btn-secondary">
-                            <i className="material-icons"> VOLVER AL INICIO</i>
-                        </Link>
-                </>
+            return(<div id="menuAdmin">
+            <Navbar/>
+            <div className="row  d-flex justify-content-center mb-5">
+            <div className="card-header mb-5" style={{backgroundColor:'black', opacity:0.8}}>
+            <div className="title col-12 mt-5 text-center">
+                    <h1>Turismo Real</h1>
+                </div>
+                <div className="title col-12 mt-1 mb-5 text-center">
+                    <h3>porfavor inicie sesion</h3>
+                </div>
+            </div>             
+    
+            </div>
+        </div>
             )
         }
     return (

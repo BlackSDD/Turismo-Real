@@ -15,6 +15,7 @@ export default function Reserva() {
     let storage = parseInt(sessionStorage.id_d);
     const [fechas, setFechas] = useState([]);
     const [arrayF, setArrayF] = useState([]);
+    const [dpto, setDpto] = useState([]);
 
     let id_d = {
         id_dpto : storage
@@ -42,6 +43,9 @@ export default function Reserva() {
     const getFechas = async (id) =>{
         const res = await axios.post('http://localhost:4000/API/disponibilidadNoId', id)
         setFechas(res.data);
+        const dpto = await axios.post('http://localhost:4000/API/departamento/', id)
+        setDpto(dpto.data)
+        console.log(dpto)
     };
 
     let variable = sessionStorage.Pagar;
@@ -58,12 +62,20 @@ export default function Reserva() {
     
     let tipo = parseInt(sessionStorage.tipoUsr)
         if(tipo == 0 ){
-            return(<>
-                <h1>Por favor inicie sesion antes de Continuar</h1>
-                <Link to={"/"} className="btn btn-secondary">
-                            <i className="material-icons"> VOLVER AL INICIO</i>
-                        </Link>
-                </>
+            return(<div id="menuAdmin">
+            <Navbar/>
+            <div className="row  d-flex justify-content-center mb-5">
+            <div className="card-header mb-5" style={{backgroundColor:'black', opacity:0.8}}>
+            <div className="title col-12 mt-5 text-center">
+                    <h1>Turismo Real</h1>
+                </div>
+                <div className="title col-12 mt-1 mb-5 text-center">
+                    <h3>porfavor inicie sesion</h3>
+                </div>
+            </div>             
+    
+            </div>
+        </div>
             )
         }
 

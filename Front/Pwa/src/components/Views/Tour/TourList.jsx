@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import '../../../assetss/css/ListaDeptos.css';
 import { Link } from 'react-router-dom';
 import NavBar from '../../Layouts/Navbar';
 import NavBarAdmin from '../../Layouts/NavBarAdmin';

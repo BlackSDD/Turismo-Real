@@ -36,9 +36,9 @@ insert into condominio values (seq_condominio.NEXTVAL,'Las camelias',2);
 insert into condominio values (seq_condominio.NEXTVAL,'Entre Lagos',3);
 
 
-insert into departamento values (seq_departamento.NEXTVAL,'1 Norte 1540',315,3,'Departamento con habitación principal y baño en suite, living-comedor y cocina independiente',58000,empty_blob(),empty_blob(),empty_blob(),empty_blob(),empty_blob(),1);
-insert into departamento values (seq_departamento.NEXTVAL,'AV Walter Martinez 3564',103,2,'Departamento de 2 ambientes, habitación principal con baño en suite, cocina concepto abierto y living',37000,empty_blob(),empty_blob(),empty_blob(),empty_blob(),empty_blob(),2);
-insert into departamento values (seq_departamento.NEXTVAL,'El Arrayan 760',708,4,'Departamento amplio con vista al lago Villarica, habitación principal con baño en suite, habitación secundaria con 2 camas, baño de visitas living - comedor y concina independiente',115000,empty_blob(),empty_blob(),empty_blob(),empty_blob(),empty_blob(),3);
+insert into departamento values (seq_departamento.NEXTVAL,'1 Norte 1540',315,3,'Departamento con habitación principal y baño en suite, living-comedor y cocina independiente',58000,1);
+insert into departamento values (seq_departamento.NEXTVAL,'AV Walter Martinez 3564',103,2,'Departamento de 2 ambientes, habitación principal con baño en suite, cocina concepto abierto y living',37000,2);
+insert into departamento values (seq_departamento.NEXTVAL,'El Arrayan 760',708,4,'Departamento amplio con vista al lago Villarica, habitación principal con baño en suite, habitación secundaria con 2 camas, baño de visitas living - comedor y concina independiente',115000,3);
 
 
 insert into articulo values (seq_articulo.NEXTVAL,'cama king', 1,'cama habitación principal, nueva',750000,1);

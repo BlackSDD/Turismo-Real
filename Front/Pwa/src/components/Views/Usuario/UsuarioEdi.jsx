@@ -69,6 +69,7 @@ export default class UsuarioEdi extends Component{
     }
 
     render(){
+        
         return (
             <React.Fragment>
                 <div id="admin-background">

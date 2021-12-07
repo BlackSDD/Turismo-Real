@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import	'../../../../assetss/css/ListaDeptos.css';
 import '../../../../assetss/css/informeGeneral.css';
 import NavBar from '../../../Layouts/Navbar';
+import ReactToPrint from 'react-to-print';
 ///import PWA
 <link rel="manifest" href="../../public/manifest.json"></link>;
 

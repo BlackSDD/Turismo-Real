@@ -2,6 +2,7 @@ import React from "react";
 import { Component } from "react";
 import NavBar from "../../Layouts/Navbar";
 import NavBarAdmin from "../../Layouts/NavBarAdmin";
+import '../../../assetss/css/Comuna.css';
 //libreria
 import axios from 'axios';
 
@@ -67,8 +68,11 @@ export default class ComunaEdi extends Component{
         }
         
             return (
+
+                <div id="menuAdmin">
+                <NavBarAdmin/>
                 <div className="col-md-6 offset-md-3">
-                    <NavBarAdmin/>
+                    
                     <div className="card card-body">
                         <h4>nueva comuna</h4>
                         <form onSubmit={this.onSubmit}>
@@ -102,6 +106,7 @@ export default class ComunaEdi extends Component{
                                     
                         </form>
                     </div>
+                </div>
                 </div>
             )
         }

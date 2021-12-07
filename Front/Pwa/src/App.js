@@ -117,7 +117,7 @@ function App() {
         {/* PostRoutes--------- */}
                 {/*<Route path="/condominio" exact render={props => (<Condominio {...props}/>)}></Route>*/}
                 <Route path="/Comuna" exact render ={ props=> ( <Comuna {...props} />)}></Route>
-                <Route path="/Comuna/EDIT" exact render ={ props=> ( <ComunaEdi {...props} />)}></Route>
+                <Route path="/ComunaEdi" exact render ={ props=> ( <ComunaEdi {...props} />)}></Route>
                 {/*<Route path="/registrardepartamento" exact render={props => (<RegistrarDepartamento {...props}/>)}></Route>*/}
                 {/*<Route path="/agencia" exact render={props => (<AgenciaExterna   {...props}/>)}></Route>*/}
         {/* ListarRoutes */}

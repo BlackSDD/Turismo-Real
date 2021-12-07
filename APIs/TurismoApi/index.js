@@ -1092,9 +1092,8 @@ router.route('/tipousr').get((request, response) => {
 //////// INFORMES
 
 /////////////////////////INFORME RESERVAS DETALLADO////////////////////////////////////////
-router.route('/informeResDet/').post((request, response) => {
-    let id_rva = {...request.body};
-    InformesWS.getInformeReservaDet(id_rva).then(result =>{
+router.route('/informeResDet/:id_reserva').get((request, response) => {
+    InformesWS.getInformeReservaDet(request.params.id_reserva).then(result =>{
         response.json(result[0]);
     }, (err) => {
         console.log(err.message);
@@ -1152,7 +1151,7 @@ router.route('/ZonaAnual').get((request, response) => {
     });
 });
 
-router.route('/correo').post((req, response) => {
+router.route('/correoregistro').post((req, response) => {
     nodemailer.createTestAccount((err, account) => {
         const htmlEmail = `
             <h3>Estimado ${req.body.name} </h3>
@@ -1173,7 +1172,6 @@ router.route('/correo').post((req, response) => {
             from: 'turismoreal.portafolio2021@gmail.com',
             to: req.body.email,
             subject: 'Creacion de cuenta Turismo Real',
-            text: req.body.content,
             html: htmlEmail
         };
 
@@ -1194,6 +1192,48 @@ router.route('/correo').post((req, response) => {
     
 })
 
+
+//correo arriendo
+router.route('/correoarriendo').post((req, response) => {
+    nodemailer.createTestAccount((err, account) => {
+        const htmlEmail = `
+            <h3>Estimado ${req.body.name} </h3>
+            <h3> este es un correo de aceptacion para su arriendo en el departamento ${req.body.dpto} habitacion n°${req.body.n_habitacion}<h3>
+            <h3> si dentro de dos dias no se activa la cuenta, por favor envia un correo dentro de nuestra pagina <h3>`
+        
+        let mailerConfig = {    
+            host: "smtp.gmail.com",  
+            secure: false,
+            port: 587,
+            auth: {
+                user: "turismoreal.portafolio2021@gmail.com",
+                pass: "tlyqeqtymwutxpnx"
+            }
+        };
+        let transporter = nodemailer.createTransport(mailerConfig);
+        let mailOptions = {
+            from: 'turismoreal.portafolio2021@gmail.com',
+            to: req.body.email,
+            subject: 'Confirmacion de arriendo',
+            html: htmlEmail
+        };
+
+        transporter.sendMail(mailOptions, (err, info) => {
+            if (error) {
+                console.log('error:', err);
+                response.status(500).send({status: 'FAIL', msg: 'Internal error: email not sent'})
+                response.end();
+            } else {
+                console.log('Message sent: %s', info.content);
+                console.log('Message URL: %s', nodemailer.getTestMessageUrl);
+                response.status(200).json({status: 'OK', msg: 'Email sent'})
+                response.end();
+            }
+        });
+        response.end()
+    }) 
+    
+})
 
 var portcnx = process.env.PORT || 4000;
 app.listen(portcnx);
