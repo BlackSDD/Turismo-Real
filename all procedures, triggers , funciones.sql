@@ -720,9 +720,6 @@ create or alter procedure pd_modificarContServ
 	@deta_cont NVARCHAR(100),
 	@fec_acord date,
     @hora_acord char(5),
-	@lugar_recogida NVARCHAR(100),
-	@lugar_destino NVARCHAR(100),
-	@km_rec decimal(6,3),
     @cant_adult int,
     @cant_nigno int,
     @cant_3ra int
@@ -736,17 +733,10 @@ begin
 		begin
 			set @costo_total = dbo.[fn_costo_tour](@cant_adult, @cant_nigno, @cant_3ra, @id_serv);
 		end;
-    else if @tipo = 'V' 
-		begin
-			set @costo_total = dbo.[fn_costo_transporte](@id_serv, @hora_acord, @km_rec);
-		end;
 	update cont_serv set
 		deta_cont = @deta_cont,
 		fec_acord = @fec_acord,
 		hora_acord = @hora_acord,
-		lugar_recogida = @lugar_recogida,
-		lugar_destino = @lugar_destino,
-		km_rec = @km_rec,
 		cant_adult = @cant_adult,
 		cant_nigno = @cant_nigno,
 		cant_3ra = @cant_3ra
@@ -844,7 +834,6 @@ select
 	d.desc_dpto as "desc_dpto",
 	d.costo_arri_dpto as "costo_arri_dpto"
 	from 
-	from 
 	departamento d join condominio cn
 		on d.id_cnd = cn.id_cnd
 	join comuna cm
@@ -855,16 +844,67 @@ select
 end;
 go
 
----------------------------------------------------------------------------
--- TABLA DISPONIBILIDAD
+----------------------------------------------------------------------------
 
--- Traer fechas no disponibles según id depto
-create or alter procedure pd_fechas_no_disp (@id_dpto int)
+--------- agregar nuevo destino
+create or alter procedure pd_agregar_destino
+(
+	@id_serv INT,
+	@id_dpto int,
+	@trayecto nvarchar(100),
+	@tipo nvarchar(25) ,
+	@km_rec DECIMAL(6,3) ,
+	@direccion nvarchar(100)
+)
 as
 begin
-	select * from disponibilidad where id_dpto = @id_dpto and esta_disp = 'No';
+	insert into destinos (id_serv, id_dpto, trayecto, tipo, km_rec, direccion)
+	values
+	(
+	@id_serv,
+	@id_dpto,
+	@trayecto ,
+	@tipo  ,
+	@km_rec,
+	@direccion
+	);
+end
+go
+
+-- eliminar destino
+create or alter procedure pd_eliminar_destino
+(
+	@id_destino INT
+)
+as
+begin
+	delete destinos 
+	where id_destino = @id_destino
 end;
 go
+
+-- get destinos por depto y servicio
+create or alter procedure pd_getDestinos (@id_serv int, @id_dpto int)
+as
+begin
+	select
+			d.id_destino as "id_destino",
+			d.id_serv as "id_serv",
+			d.id_dpto as "id_dpto",
+			d.km_rec as "km_rec",
+			d.trayecto as "trayecto",
+			d.tipo as "tipo_destino",
+			d.direccion as "direccion",
+			s.nom_serv as "nom_serv",
+			s.tipo_serv as "tipo_serv",
+			s.desc_serv as "desc_serv"
+		from destinos d join servextras s
+			on d.id_serv = s.id_serv
+		where s.id_serv = @id_serv and d.id_dpto = @id_dpto
+end
+go
+---------------------------------------------------------------------------
+-- TABLA DISPONIBILIDAD
 
 -- Traer Fechas no disponibles según id depto
 create or alter procedure pd_fechas_no_disp (@id_dpto int)
@@ -877,10 +917,18 @@ begin
 	select 
 		id_dpto,
 		esta_disp,
-		concat(year(fec_disp), ',',month(fec_disp),',', DAY(fec_disp)) as "fec_disp_no"
-		from disponibilidad where id_dpto = @id_dpto and esta_disp = 'No';
+		concat(year(fec_disp), '/',month(fec_disp),'/', DAY(fec_disp)) as "fec_disp_no",
+		fec_disp as "fecha",
+		convert(varchar, fec_disp,111) as "fec_us"
+		from disponibilidad where id_dpto = @id_dpto and esta_disp = 'No'
+		order by "fec_us";
 end;
 go
+
+-------------------------------------------------------------------------------------
+
+
+
 ----------------------------------------------------------------------------
 -- TABLA GASTOS
 
@@ -1336,50 +1384,6 @@ begin
 end
 go
 
--- obtiene todas las reservas en progreso o reservadas del usuario
-create or alter procedure pd_reservas_usr (@id_usr int)
-as
-begin 
-	select
-			DISTINCT(r.id_rva) as "id_rva",
-			concat(cn.nom_cnd , ' '  , d.num_dpto) as "Departamento",
-			concat(u.nom_usr , ' ' , u.appat_usr , ' ' , u.apmat_usr) as "Cliente",
-			r.estado_rva as "Estado_reserva",
-			concat(convert(varchar,r.fec_ini_rva,103) , ' - ' , convert(varchar,r.fec_fin_rva,103)) as "Fecha",
-			r.fec_ini_rva as "fec_ini_rva",
-			r.fec_fin_rva as "fec_fin_rva",
-			concat('$',p.monto_total) as "Costo_total",
-			concat('$',p.monto_arr) as "Costo_arriendo",
-			concat('$',p.monto_serv_extra) as "Costoserviciosextra",
-			concat('$',p.monto_multas)as "CostoMultas",
-			concat('$',p.monto_pagado) as "MontoPagado",
-			rg.id_rgn as "id_rgn",
-			rg.nom_rgn as "nom_rgn",
-			cm.nom_com as "nom_com",
-			cm.id_com as "id_com",
-			isnull(ckin.deta_chi,'Check-in todavia no registrado') as "Detalle_check-in",
-			isnull(ckout.deta_cho,'Check-out todavia no registrado') as "Detalle_check-out"
-		from reserva r join usuario u
-			on u.id_usr = r.id_usr
-		left join checkin ckin
-			on r.id_rva = ckin.id_rva
-		left join checkout ckout
-			on r.id_rva = ckout.id_rva
-		join departamento d 
-			on r.id_dpto = d.id_dpto
-		join condominio cn
-			on d.id_cnd = cn.id_cnd
-		join comuna cm
-			on cm.id_com = cn.id_com
-		join region rg
-			on rg.id_rgn = cm.id_rgn
-		join pago p
-		on r.id_rva = p.id_rva
-		where r.id_usr = @id_usr and r.estado_rva in ('reservada','en progreso')
-		order by "Fecha"
-end;
-go
-
 --- Trae todas las reservas del usuario que esten vigentes
 create or alter procedure pd_reservas_usr (@id_usr int)
 as
@@ -1392,11 +1396,14 @@ begin
 			concat(convert(varchar,r.fec_ini_rva,103) , ' - ' , convert(varchar,r.fec_fin_rva,103)) as "Fecha",
 			convert(varchar,r.fec_ini_rva,103) as "fec_ini_rva",
 			convert(varchar,r.fec_fin_rva,103) as "fec_fin_rva",
+			convert(varchar, r.fec_ini_rva,111) as "fec_ini_us",
+			convert(varchar, r.fec_fin_rva,111) as "fec_fin_us",
 			concat('$',p.monto_total) as "Costo_total",
 			concat('$',p.monto_arr) as "Costo_arriendo",
 			concat('$',p.monto_serv_extra) as "Costoserviciosextra",
 			concat('$',p.monto_multas)as "CostoMultas",
 			concat('$',p.monto_pagado) as "MontoPagado",
+			d.id_dpto as "id_dpto",
 			rg.id_rgn as "id_rgn",
 			rg.nom_rgn as "nom_rgn",
 			cm.nom_com as "nom_com",
@@ -1490,6 +1497,8 @@ BEGIN
 				END;
 			CLOSE COND;
 			DEALLOCATE COND;
+			DELETE destinos
+				where id_serv = @id_serv;
 			DELETE transporte
 				WHERE id_serv = @id_serv
 			UPDATE servextras SET 
@@ -1517,6 +1526,40 @@ begin
 	@desc_serv,
     @id_agencia
 	);
+end;
+go
+
+-- trae un servicio en especifico
+create or alter procedure pd_getServicio(@id_serv int)
+as
+begin 
+	select 
+		sv.id_serv as "id_serv",
+		sv.nom_serv as "nom_serv",
+		sv.tipo_serv as "tipo_serv",
+		sv.desc_serv as "desc_serv",
+		a.id_agencia as "id_agencia",
+		a.nom_age as "nom_age",
+		a.email_age as "email_age",
+		a.tel_age as "tes_age",
+		a.id_com as "id_com",
+		v.cost_km_dia as "cost_km_dia",
+		v.cost_km_noc as "cost_km_noc",
+		t.ubi_partida as "partida",
+		t.ubi_fin as "fin",
+		t.alimentacion as "alimentacion",
+		t.transporte as "transporte_tour",
+		concat(t.dur_hra,':',t.dur_min, ' hrs') as "duracion",
+		t.cost_adult as "cost_adult",
+		t.cost_3ra as "cost_3ra", 
+		t.cost_nigno as "cost_nigno"
+		from servextras sv join agencia_externa a
+			on sv.id_agencia = a.id_agencia
+		full join transporte v 
+			on v.id_serv = sv.id_serv
+		full join tour t
+			on t.id_serv = sv.id_serv
+		where sv.id_serv = @id_serv
 end;
 go
 
@@ -1548,6 +1591,7 @@ select
 		cn.id_cnd as "id_cnd",
 		cn.nom_cnd as "nom_cnd",
 		concat(cn.nom_cnd, ' #',d.num_dpto) as "departamento",
+		d.id_dpto as "id_dpto",
 		a.id_agencia as "id_agencia",
 		a.nom_age as "nom_age",
 		a.email_age as "email_age",
@@ -1555,7 +1599,17 @@ select
 		s.id_serv as "id_serv",
 		s.nom_serv as "nom_serv",
 		s.tipo_serv as "tipo_serv",
-		s.desc_serv as "desc_serv"
+		s.desc_serv as "desc_serv",
+		v.cost_km_dia as "cost_km_dia",
+		v.cost_km_noc as "cost_km_noc",
+		t.ubi_partida as "partida",
+		t.ubi_fin as "fin",
+		t.alimentacion as "alimentacion",
+		t.transporte as "transporte_tour",
+		concat(t.dur_hra,':',t.dur_min, ' hrs') as "duracion",
+		t.cost_adult as "cost_adult",
+		t.cost_3ra as "cost_3ra", 
+		t.cost_nigno as "cost_nigno"
 	from region rg full join comuna cm
 		on rg.id_rgn = cm.id_rgn
 	full join condominio cn
@@ -1566,6 +1620,10 @@ select
 		on a.id_com = cm.id_com
 	full join servextras s
 		on s.id_agencia = a.id_agencia
+	full join tour t
+		on t.id_serv = s.id_serv
+	full join transporte v
+		on v.id_serv = s.id_serv
 	where d.id_dpto = @id_dpto and s.desc_serv !='Servicio no disponible' and rg.id_rgn = @id_rgn
 	order by s.id_serv;
 end

@@ -68,7 +68,9 @@ export default class Comuna extends Component{
         this.setState({[e.target.name]: e.target.value});
     }
     
-        
+    
+    
+    
     render(){
         let tipo = parseInt(sessionStorage.tipoUsr)
         if(tipo != 1){

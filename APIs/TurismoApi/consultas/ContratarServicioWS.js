@@ -15,8 +15,6 @@ async function getContratarServicio(){
     }
 }
 
-
-
 async function newContratarServicio(ContratarServicio){
     try{
         let pool = await sql.connect(cnx);
@@ -33,8 +31,7 @@ async function newContratarServicio(ContratarServicio){
             .input('cant_nino', sql.Int , ContratarServicio.cant_nino)
             .input('cant_3ra', sql.Int , ContratarServicio.cant_3ra)
             .execute('pd_agregarContServ');
-        return newServicio.recordsets;
-              
+        return newServicio.recordsets;              
     } 
     catch(err){
         console.log(err);

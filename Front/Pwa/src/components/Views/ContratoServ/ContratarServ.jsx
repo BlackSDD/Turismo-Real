@@ -5,6 +5,7 @@ import Navbar from '../../Layouts/Navbar';
 import {Button, ListGroup} from  'react-bootstrap';
 import '../../../assetss/css/contratoServ.css'
 import DateContServ from './DateContServ';
+import servicioExtra from '../../../assetss/img/servicioExtra.webp'
 ///import PWA
 <link rel="manifest" href="../../public/manifest.json"></link>
 
@@ -34,7 +35,7 @@ export default function ContratarServ() {
     const [reserva, setReserva] = useState([]);
     const [seleccionado, setSeleccion] = useState(0);
     const [rango, setRango] = useState([]);
-
+    const [datos, setDatos] = useState([]);
     let id_d = {
         id_dpto : storage
     };
@@ -74,18 +75,23 @@ export default function ContratarServ() {
         console.log('x',x)
     };
 
-    const handleContratar=(ini, fin)=>{
-        console.log('fechas: ',ini , ' ', fin)
+    const handleContratar=(ini, fin, id_dpto, id_region)=>{
+        console.log('fechas: ',ini , ' hasta', fin)
         let x = [ini, fin];
-        console.log('x: ',x)
+        console.log('x: ',{x})
         const dates = x.map((e)=>{
             let newFecha = new Date(e);
             const value = newFecha.toLocaleDateString("en-US", e);
             return value;
         })
         setRango(dates)
-        console.log('dates: ',dates)
+        setDatos({
+            id_dpto: id_dpto,
+            id_rgn: id_region
+        })
+        console.log('dates: ',dates);
         console.log('rango: ',rango);
+        console.log('datos: ', datos);
         setSeleccion(1)
     }
 
@@ -112,10 +118,9 @@ export default function ContratarServ() {
                         return(
                             <div className="row" id="row-contserv">
                                 <div className="col-lg-5 col-md-12" >
-                                    <img alt="imagen" id="img-contserv"src="https://wallpaperaccess.com/full/3351449.jpg"></img>
+                                    <img alt="imagen" id="img-contserv"src={servicioExtra}></img>
                                 </div>
                                 <div className="col-lg-7 col-md-12" >
-                                    {/* <div className="container"> */}
                                     <ListGroup id="listgroup-contserv">
                                         <h3>
                                         Orden de Reserva #{e.id_rva} {e.Departamento}
@@ -139,13 +144,12 @@ export default function ContratarServ() {
                                             Monto pagado hasta el momento: {e.MontoPagado}
                                         </ListGroup.Item>
                                         <br/>
-                                        <ListGroup.Item id="btn-cont" action onClick={()=>handleContratar(e.fec_ini_rva, e.fec_fin_rva, e.id_dpto)}>
+                                        <ListGroup.Item id="btn-cont" action onClick={()=>handleContratar(e.fec_ini_us, e.fec_fin_us, e.id_dpto, e.id_rgn)}>
                                         Contratar Servicios para la reserva
                                         </ListGroup.Item>
                                     </ListGroup>
-                                    {/* </div> */}
                                 </div>
-                            </div>)})
+                        </div>)})
                     }
                 </div>
             </div>
@@ -156,6 +160,7 @@ export default function ContratarServ() {
                 <Navbar/>
                 <DateContServ
                     fechas={rango}
+                    datosDepto={datos}
                 />                          
             </div>
         );

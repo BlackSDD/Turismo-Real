@@ -17,6 +17,7 @@ export default class NavBarAdmin extends Component {
   render() {
     // const login = sessionStorage.Login;
     const tipo_usr = sessionStorage.tipoUsr;
+    
         if(tipo_usr==2){
           return (
             <Navbar id="navbar" bg="dark" variant="dark" sticky="top" expand="lg">

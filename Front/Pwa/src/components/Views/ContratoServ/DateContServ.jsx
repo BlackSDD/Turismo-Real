@@ -1,9 +1,12 @@
 import React from "react";
 import DayPicker, { DateUtils } from "react-day-picker";
-import { Button, Form, Navbar } from "react-bootstrap";
+import { Button, Card, Form, ListGroup, ListGroupItem } from "react-bootstrap";
 import "../../../assetss/css/Date-Picker.css";
 import axios from "axios";
 import {toast} from 'react-toastify';
+import Taxi from '../../../assetss/img/taxi.jpg';
+import Tour from '../../../assetss/img/tourLogo.jpg';
+import '../../../assetss/css/contratoServ.css';
 ///import PWA
 <link rel="manifest" href="../../public/manifest.json"></link>
 
@@ -31,8 +34,6 @@ const notifyW = () =>{
   });
 };
 
-
-
 export default class DateContServ extends React.Component {
   static defaultProps = {
     numberOfMonths: 1,
@@ -41,7 +42,8 @@ export default class DateContServ extends React.Component {
   constructor(props) {
     super(props);
     this.handleDayClick = this.handleDayClick.bind(this);
-    this.state = {selectedDay: null};
+    this.state = {selectedDay: null,
+    servicios:[]};
   }
 
   handleDayClick(day, { selected }) {
@@ -53,6 +55,20 @@ export default class DateContServ extends React.Component {
   onInputChange = (e) => {
     this.setState({[e.target.name]: e.target.value});
     console.log(e.target.value)
+  }
+
+  async componentDidMount(){
+    const datos = this.props.datosDepto
+    console.log('datos: prop', datos)
+    const res = await axios.post('http://localhost:4000/API/serviciosDisponibles', datos)
+    this.setState({
+      servicios: res.data
+    })
+    console.log('servicios:', this.state.servicios)
+  } 
+
+  handleSeleccionar = async (datos)=>{
+    
   }
 
   HandleContrato = async (fecha) => {
@@ -95,49 +111,43 @@ export default class DateContServ extends React.Component {
     console.log('props',this.props.fechas)
     const from = this.props.fechas[0];
     const to  = this.props.fechas[1];
-    console.log({from})
-    console.log({to})
+    const servicios = this.state;
+    const selectServ = this.state;
+    // console.log({from})
+    // console.log({to})
+    // console.log({servicios})
     return (
       <div id="body-date-picker">
           <br/>
             <div id="container-date-picker">
               <div id="color"><p id="p-date-mant"> Agendar Mantencion</p> </div>
-                <div id="container-form-picker">
-                  <h3 >
-                      {!this.selectedDay && 'Elija una fecha de Mantención'}
-                      {this.selectedDay && 
-                          `Fecha de reserva desde: ${this.selectedDay.toLocaleDateString()}`}{' '}
-                  </h3>
-                  <br/>
-                  <DayPicker id="date-picker"
-                      initialMonth={new Date(from)}
-                      className="Selectable"
-                      selectedDays={this.state.selectedDay}
-                      showOutsideDays
-                      disabledDays={   
-                          [{
-                            after: new Date(to)
-                          },
-                          {
-                            before: new Date(from)
-                          }]
-                      }
-                      onDayClick={this.handleDayClick}
-                  />
-                  <br/>
-                  {this.state.selectedDay &&(
-                    <div>
-                      <Button id="button-date-picker1" variant="success" onClick={()=>{this.HandleContrato(this.state.selectedDay)}}>
-                        Generar contrato de servicio
-                      </Button>
-                      <Button id="button-date-picker2" variant="info" onClick={this.handleCancelar}>
-                        Cancelar contrato de servicio
-                      </Button>
-                    </div>
-                  )}
+              <div id="container-form-picker">
+                <h3>
+                  {!this.selectedDay && 'Elija una fecha de Mantención'}
+                  {this.selectedDay && 
+                  `Fecha de reserva desde: ${this.selectedDay.toLocaleDateString()}`}{' '}
+                </h3><br/>
+                <DayPicker id="date-picker"
+                    initialMonth={new Date(from)}
+                    className="Selectable"
+                    selectedDays={this.state.selectedDay}
+                    showOutsideDays
+                    disabledDays={[{after: new Date(to)},{before: new Date(from)}]}
+                    onDayClick={this.handleDayClick}
+                /><br/>
+              </div>
+            </div>              
+              {this.state.selectedDay && selectServ &&(
+                <div>
+                  <Button id="button-date-picker1" variant="success" onClick={()=>{this.HandleContrato(this.state.selectedDay)}}>
+                    Generar contrato de servicio
+                  </Button>
+                  <Button id="button-date-picker2" variant="info" onClick={this.handleCancelar}>
+                    Cancelar contrato de servicio
+                  </Button>
                 </div>
-            </div>
-        </div>   
+              )}                
+      </div> 
     );
   }
 }

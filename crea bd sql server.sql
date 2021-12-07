@@ -14,6 +14,8 @@ drop table modelo;
 
 drop table marca;
 
+drop table destinos;
+
 drop table transporte;
 
 drop table tour;
@@ -137,10 +139,15 @@ CREATE TABLE departamento (
     id_cnd            INT NOT NULL
 );
 
-CREATE TABLE disponibilidad (
-    fec_disp     DATE NOT NULL,
-    esta_disp    CHAR(2) DEFAULT 'Si' NOT NULL,
-    id_dpto      INT NOT NULL
+
+create table destinos(
+	id_destino INT IDENTITY(1,1) NOT NULL, 
+	id_serv INT NOT NULL,
+	id_dpto int not null,
+	trayecto nvarchar(100) not null,
+	tipo char(1) not null,
+	km_rec DECIMAL(6,3) not null,
+	direccion nvarchar(100) not null
 );
 
 CREATE TABLE gastos (
@@ -452,6 +459,20 @@ ALTER TABLE transporte ADD CONSTRAINT transporte_pk PRIMARY KEY ( id_serv );
 ALTER TABLE transporte
     ADD CONSTRAINT transporte_servextras_fk FOREIGN KEY ( id_serv )
         REFERENCES servextras ( id_serv );
+
+alter table destinos add constraint destino_pk primary key (id_destino)
+
+alter table destinos add constraint destino_depto_fk foreign key (id_dpto)
+	references departamento (id_dpto);
+
+alter table destinos add constraint destino_transporte_fk foreign key (id_serv)
+	references servextras (id_serv);
+
+alter table destinos add constraint destino_un unique (id_serv, id_dpto, trayecto, tipo);
+
+ALTER TABLE destinos
+    ADD CONSTRAINT tipo CHECK ( tipo IN ( 'I', 'V')
+);
 
 ALTER TABLE marca ADD CONSTRAINT marca_pk PRIMARY KEY (id_marca);
 

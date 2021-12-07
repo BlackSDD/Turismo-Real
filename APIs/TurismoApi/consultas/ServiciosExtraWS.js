@@ -36,7 +36,7 @@ async function getServiciosDisponibles(datos){
         let pool = await sql.connect(cnx);
         let salida = await pool.request()
         .input('id_dpto', sql.Int, datos.id_dpto)
-        .input('id_rgn', sql.Int, datos.id_dpto)
+        .input('id_rgn', sql.Int, datos.id_rgn)
         .execute("pd_servicios_disponibles");
         console.log(salida.recordsets);
         return salida.recordsets;
@@ -51,7 +51,7 @@ async function getServicioExtra(servicio){
         let pool = await sql.connect(cnx);
         let salida = await pool.request()
         .input('id_serv', sql.Int, servicio.id_serv)
-        .query('SELECT *  FROM servextras where id_serv = @id_serv');
+        .execute('pd_getServicio');
         console.log(salida.recordsets);
         return salida.recordsets;
     } 
@@ -77,11 +77,26 @@ async function newServicioExtra(ServiciosExtras){
     }
 }
 
+async function deleteServExtra(servicio){
+    try{
+        let pool = await sql.connect(cnx);
+        let salida = await pool.request()
+        .input("id_serv", sql.Int , servicio.id_serv)
+        .execute('pd_eliminarServExtras');
+        console.log(salida.recordsets);
+        return salida.recordsets;
+    } 
+    catch(err){
+        throw new Error (`Error en el procedimiento ${err.procName}...${err.message}`);
+    }
+}
+
 
 module.exports = {
     getServiciosExtrasTransporte: getServiciosExtrasTransporte,
     getServiciosExtras: getServiciosExtras,
     getServicioExtra: getServicioExtra,
     newServicioExtra: newServicioExtra,
-    getServiciosDisponibles: getServiciosDisponibles
+    getServiciosDisponibles: getServiciosDisponibles,
+    deleteServExtra : deleteServExtra
 }

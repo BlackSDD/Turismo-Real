@@ -1,7 +1,9 @@
 console.log('inicio')
 const nodemailer = require('nodemailer');
 
-
+////Destinos/////
+const DestinosWS = require('./consultas/DestinosWS');
+const Destino = require('./constructores/Destino');
 ///Informes////
 const InformesWS = require('./consultas/InformesWS');
 /////Departamento
@@ -509,6 +511,43 @@ router.route('/departamento/reg/:nom_rgn').get((request, response) => {
     });
 });
 
+////////////Destino////////////////
+
+/// Get destino por id servicio y depto
+router.route('/getDestinos').post((request, response) => {
+    let datos = {...request.body};
+    DestinosWS.getDestinos(datos).then(result => {
+        response.json(result[0]);
+    }, (err) => {
+        console.log(err.message);
+        response.json(err.message);
+    });
+});
+
+router.route('/newDestino').post((request, response) => {
+    let datos = {...request.body};
+    DestinosWS.newDestino(datos).then(result => {
+        response.json(result[0]);
+        console.log('Destino añadido')
+    }, (err) => {
+        console.log(err.message);
+        response.json(err.message);
+    });
+});
+
+router.route('/deleteDestino').delete((request, response) => {
+    let datos = {...request.body};
+    DestinosWS.deleteDestino(datos).then(result => {
+        response.json(result[0]);
+        console.log('Destino eliminado')
+    }, (err) => {
+        console.log(err.message);
+        response.json(err.message);
+    });
+});
+
+
+
 /////////////// Disponibilidad ///////////////
 router.route('/disponibilidad/:id_dpto').get((request, response) => {
     DisponibilidadWS.getDisponibilidad(request.params.id_dpto).then(result =>{
@@ -869,6 +908,17 @@ router.route('/serviciosExtraTrasporte').get((request, response) => {
 router.route('/servicioExtraID').post((request, response) => {
     let servicio = {...request.body}
     ServiciosExtraWS.getServicioExtra(servicio).then(result =>{
+        response.json(result[0]);
+    }, (err) => {
+        console.log(err.message);
+        response.json(err.message)
+    });
+});
+
+/// 
+router.route('/deleteServicio').delete((request, response) => {
+    let servicio = {...request.body}
+    ServiciosExtraWS.deleteServExtra(servicio).then(result =>{
         response.json(result[0]);
     }, (err) => {
         console.log(err.message);
