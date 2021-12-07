@@ -3,6 +3,7 @@ import { Form } from "react-bootstrap";
 import 'react-toastify/dist/ReactToastify.css';
 import {toast} from 'react-toastify';
 import axios from "axios";
+import NavBar from "../../Layouts/Navbar";
 import '../../../assetss/css/informeGeneral.css';
 // import { position, width } from "dom-helpers";
 // import { faHandMiddleFinger } from "@fortawesome/free-solid-svg-icons";
@@ -80,6 +81,25 @@ class InformesGenerales extends React.Component{
         console.log('info', info)
 
         if(x === 0){
+            let tipo = parseInt(sessionStorage.tipoUsr)
+    if(tipo == 0  ||tipo ==3){
+        return(
+        <div id="menuAdmin">
+        <NavBar/>
+        <div className="row  d-flex justify-content-center mb-5">
+        <div className="card-header mb-5" style={{backgroundColor:'black', opacity:0.8}}>
+        <div className="title col-12 mt-5 text-center">
+                <h1>Turismo Real</h1>
+            </div>
+            <div className="title col-12 mt-1 mb-5 text-center">
+                <h3>esta pagina es administrativa</h3>
+                <h3>porfavor inicie sesion</h3>
+            </div>
+        </div>             
+
+        </div>
+    </div>)
+    }
         return(
                 <div id="login-body">
                     <br/>

@@ -10,12 +10,12 @@ import Test3 from './components/test3';
 import Login from './components/Login';
 import MainFuncionario from './components/InicioFuncionario';
 import Comuna from './components/Views/Comuna/Comuna';
-import Condominio from './components/Views/Post/RegistrarCondominios';
-import RegistrarDepartamento from './components/Views/Post/RegistrarDepartamento';
+//import Condominio from './components/Views/Post/RegistrarCondominios';
+//import RegistrarDepartamento from './components/Views/Post/RegistrarDepartamento';
 // import Articulo from './components/Views/Post/RegistrarArticulo';
-import AgenciaExterna from './components/Views/Post/AgenciaExterna';
-import ComunaWS from './components/Views/Get/ListarComunas';
-import ComunaEdi from './components/Views/put/Comuna';
+//import AgenciaExterna from './components/Views/Post/AgenciaExterna';
+import ComunaWS from './components/Views/Comuna/ListarComunas';
+import ComunaEdi from './components/Views/Comuna/ComunaEdit';
 import Footer from './components/Layouts/Footer';
 import Navbar  from './components/Layouts/Navbar';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
@@ -90,6 +90,7 @@ import SelectReagendarMant from './components/Views/Mantencion/SelectReagendarMa
 import ReagendarMant from './components/Views/Mantencion/ReagendarMant';
 import DetalleMant from './components/Views/Mantencion/DetalleMant';
 import DateMant from './components/Views/Mantencion/DateMant';
+import CancelMant from './components/Views/Mantencion/CancelMant';
 
 
 function App() {
@@ -114,11 +115,11 @@ function App() {
                 <Route path="/PagoConfirmado" exact render ={ props=> ( <PagoConfirmado {...props} />)}></Route>     
                 <Route path="/paypalReserva" exact render ={ props=> ( <PaypalReserva {...props} />)}></Route>     
         {/* PostRoutes--------- */}
-                <Route path="/condominio" exact render={props => (<Condominio {...props}/>)}></Route>
+                {/*<Route path="/condominio" exact render={props => (<Condominio {...props}/>)}></Route>*/}
                 <Route path="/Comuna" exact render ={ props=> ( <Comuna {...props} />)}></Route>
                 <Route path="/Comuna/EDIT" exact render ={ props=> ( <ComunaEdi {...props} />)}></Route>
-                <Route path="/registrardepartamento" exact render={props => (<RegistrarDepartamento {...props}/>)}></Route>
-                <Route path="/agencia" exact render={props => (<AgenciaExterna   {...props}/>)}></Route>
+                {/*<Route path="/registrardepartamento" exact render={props => (<RegistrarDepartamento {...props}/>)}></Route>*/}
+                {/*<Route path="/agencia" exact render={props => (<AgenciaExterna   {...props}/>)}></Route>*/}
         {/* ListarRoutes */}
                 <Route path="/listarComuna" exact render ={ props=> ( <ComunaWS {...props} />)}></Route>
                 <Route path="/listarDepto" exact render ={ props=> ( <DeptoList {...props} />)}></Route>
@@ -161,6 +162,7 @@ function App() {
                 <Route path="/ReagendarMant" exact render={ props=> ( <ReagendarMant {...props}/>)}></Route>
                 <Route path="/DetalleMant" exact render={ props=> ( <DetalleMant {...props}/>)}></Route>
                 <Route path="/DateMant" exact render={ props=> (<DateMant {...props}/>)}></Route>
+                <Route path="/CancelMant" exact render={ props=> (<CancelMant {...props}/>)}></Route>
 
 
                 <Route path="/ReservaMantencionList" exact render ={ props=> ( <ReservaMantencionList {...props} />)}></Route>

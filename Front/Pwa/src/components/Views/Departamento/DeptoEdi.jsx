@@ -6,6 +6,8 @@ import axios from 'axios';
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
+import NavBar from "../../Layouts/Navbar";
+import NavBarAdmin from "../../Layouts/NavBarAdmin";
 ///import PWA
 <link rel="manifest" href="../../public/manifest.json"></link>
 
@@ -35,11 +37,7 @@ export default class DeptoEdi extends Component{
 	    n_amb_dpto:'', 
 	    desc_dpto:'' , 
 	    costo_arri_dpto:'', 
-	    img_1_dpto:'' , 
-	    img_2_dpto:'' , 
-	    img_3_dpto:'' ,
-	    img_4_dpto:'' , 
-	    img_5_dpto:'' ,
+
     }
 
 
@@ -54,11 +52,7 @@ export default class DeptoEdi extends Component{
                 n_amb_dpto:this.state.n_amb_dpto, 
                 desc_dpto:this.state.desc_dpto , 
                 costo_arri_dpto:this.state.costo_arri_dpto , 
-                img_1_dpto:this.state.img_1_dpto , 
-                img_2_dpto:this.state.img_2_dpto , 
-                img_3_dpto:this.state.img_3_dpto ,
-                img_4_dpto:this.state.img_4_dpto , 
-                img_5_dpto:this.state.img_5_dpto ,
+
                 };
             if (answer){
             axios.put('http://localhost:4000/API/departamento', newComuna);
@@ -70,11 +64,6 @@ export default class DeptoEdi extends Component{
                 n_amb_dpto:'' , 
                 desc_dpto:'' , 
                 costo_arri_dpto:'' , 
-                img_1_dpto:'' , 
-                img_2_dpto:'' , 
-                img_3_dpto:'' ,
-                img_4_dpto:'' , 
-                img_5_dpto:'' ,
                 });
         } else {
             notifyE();
@@ -89,18 +78,28 @@ export default class DeptoEdi extends Component{
 
     render(){
         let tipo = parseInt(sessionStorage.tipoUsr)
-    if(tipo != 1){
-        return(<>
-            <h1>ESTA PAGINA ES ADMINISTRATIVA</h1>
-            <Link to={"/"} className="btn btn-secondary">
-                        <i className="material-icons"> VOLVER AL INICIO</i>
-                    </Link>
-            </>
-        )
+    if(tipo == 0 || tipo==2 ||tipo ==3){
+        return(
+        <div id="menuAdmin">
+        <NavBar/>
+        <div className="row  d-flex justify-content-center mb-5">
+        <div className="card-header mb-5" style={{backgroundColor:'black', opacity:0.8}}>
+        <div className="title col-12 mt-5 text-center">
+                <h1>Turismo Real</h1>
+            </div>
+            <div className="title col-12 mt-1 mb-5 text-center">
+                <h3>esta pagina es administrativa</h3>
+                <h3>porfavor inicie sesion</h3>
+            </div>
+        </div>             
+
+        </div>
+    </div>)
     }
         return (
             <React.Fragment>
                 <div id="admin-background">
+                <NavBarAdmin/>
                     <div class="container">
                         <h1 id="create-comuna-title">Actualizar departamento</h1>
                         <div id="create-comuna-form">
@@ -126,26 +125,7 @@ export default class DeptoEdi extends Component{
                                     <Form.Control type="number" name="costo_arri_dpto" placeholder= "Costo de arriendo" rows={1} value={this.state.Imagen_usr} required onChange={this.onInputChange}/>
                                 </Form.Group>
 
-                                <Form.Group className="mb-3" controlId="Departamento">
-                                    <Form.Label>Imagen</Form.Label>
-                                    <Form.Control as="file" name="img_1_dpto" placeholder= "nombre del Departamento" rows={1} value={this.state.Imagen_usr} required onChange={this.onInputChange}/>
-                                </Form.Group>
-                                <Form.Group className="mb-3" controlId="Departamento">
-                                    <Form.Label>Imagen</Form.Label>
-                                    <Form.Control as="file" name="img_2_dpto" placeholder= "nombre del Departamento" rows={1} value={this.state.Imagen_usr} required onChange={this.onInputChange}/>
-                                </Form.Group>
-                                <Form.Group className="mb-3" controlId="Departamento">
-                                    <Form.Label>Imagen</Form.Label>
-                                    <Form.Control as="file" name="img_3_dpto" placeholder= "nombre del Departamento" rows={1} value={this.state.Imagen_usr} required onChange={this.onInputChange}/>
-                                </Form.Group>
-                                <Form.Group className="mb-3" controlId="Departamento">
-                                    <Form.Label>Imagen</Form.Label>
-                                    <Form.Control as="file" name="img_4_dpto" placeholder= "nombre del Departamento" rows={1} value={this.state.Imagen_usr} required onChange={this.onInputChange}/>
-                                </Form.Group>
-                                <Form.Group className="mb-3" controlId="Departamento">
-                                    <Form.Label>Imagen</Form.Label>
-                                    <Form.Control as="file" name="img_5_dpto" placeholder= "nombre del Departamento" rows={1} value={this.state.Imagen_usr} required onChange={this.onInputChange}/>
-                                </Form.Group>
+                                
 
 
                                 <button type="submit" class="btn btn-primary mt-5" id="btnCreateComuna">Actualizar Departamento</button>

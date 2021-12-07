@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import NavBar from '../../../Layouts/Navbar';
 // Importing toastify module
 import {toast} from 'react-toastify';
 // Import toastify css file
@@ -40,14 +41,23 @@ export default class InformeDeptoAgno extends Component {
 
     render() {
         let tipo = parseInt(sessionStorage.tipoUsr)
-        if(tipo == 3||tipo ==0 ){
-            return(<>
-                <h1>ESTA PAGINA ES ADMINISTRATIVA</h1>
-                <Link to={"/"} className="btn btn-secondary">
-                            <i className="material-icons"> VOLVER AL INICIO</i>
-                        </Link>
-                </>
-            )
+        if(tipo == 0  ||tipo ==3){
+            return(
+            <div id="menuAdmin">
+            <NavBar/>
+            <div className="row  d-flex justify-content-center mb-5">
+            <div className="card-header mb-5" style={{backgroundColor:'black', opacity:0.8}}>
+            <div className="title col-12 mt-5 text-center">
+                    <h1>Turismo Real</h1>
+                </div>
+                <div className="title col-12 mt-1 mb-5 text-center">
+                    <h3>esta pagina es administrativa</h3>
+                    <h3>porfavor inicie sesion</h3>
+                </div>
+            </div>             
+    
+            </div>
+        </div>)
         }
         return (
             <div className="container-fluid" id="listar-deptos">

@@ -65,11 +65,18 @@ export default class UsuarioNew extends Component{
                 est_cta: 'suspendida',
                 tipo_cli: 'normal',
                 id_tipo_usr: this.state.id_tipo_usr,
-   
+                
                 
             };
-            if (answer && this.state.dv_usr!== ""){
+            const newUSR = {
+                name : this.state.nom_usr,
+                phone: this.state.tel_usr,
+                email : this.state.email_usr
+            };
+            if (answer ){
             axios.post('http://localhost:4000/API/usuario', newComuna);
+            axios.post('http://localhost:4000/API/correo', newUSR);
+            console.log(newUSR)
             notifyS();
             this.setState({
                 email_usr: '',
@@ -110,7 +117,7 @@ export default class UsuarioNew extends Component{
                     <div class="container">
                         <h1 id="create-comuna-title">Ingresar Cliente</h1>
                         <div id="create-comuna-form">
-                            <Form className="contact-form" onSubmit={ this.handleOnSubmi}>
+                            <Form className="contact-form" onSubmit={ this.handleSubmit}>
                                 <Form.Group className="mb-3" controlId="Articulo">
                                     <Form.Label>Correo Electronico</Form.Label>
                                     <Form.Control type="email" name="email_usr" placeholder= "ejemplo@ejemplo.cl" rows={1} value={this.state.email_usr} required onChange={this.onInputChange}/>

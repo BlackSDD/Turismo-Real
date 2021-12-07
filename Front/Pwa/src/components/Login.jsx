@@ -62,17 +62,19 @@ class Login extends React.Component {
             if (response.data[0].id_tipo_usr == "1") {
               notifyS();
               console.log("Admin");
-              this.props.history.push("/Admin");
+              window.location.assign("http://localhost:3000/Admin");
+              //this.props.history.push("/Admin");
               // window.location.shref = "/Admin";
               sessionStorage.correo = response.data[0].email_usr;
               sessionStorage.idUsuario = response.data[0].id_usr;
-              sessionStorage.tipoUsr = response.data[0].id_tipo_usr;
+              sessionStorage.tipoUsr = 1;
               let login = 1;
               sessionStorage.Login = login;
             } else if (response.data[0].id_tipo_usr == "2") {
               notifyS();
               console.log("Funcionario");
-              this.props.history.push("/MainFuncionario");
+              window.location.assign("http://localhost:3000/MainFuncionario");
+              //this.props.history.push("/MainFuncionario");
               // window.location.shref = "/Admin";
               sessionStorage.correo = response.data[0].email_usr;
               sessionStorage.idUsuario = response.data[0].id_usr;
@@ -88,7 +90,8 @@ class Login extends React.Component {
               sessionStorage.Login = login;
               let email = sessionStorage.correo;
               console.log("El correo es: " + email);
-              this.props.history.push("/");
+              window.location.assign("http://localhost:3000/");
+              //this.props.history.push("/");
               // window.location.shref = "/";
               notifyS();
             }

@@ -35,7 +35,7 @@ AS
 go
 
 --- Trae el abono requerido para reservar 
-ALTER   FUNCTION fn_pago_abono ( @ID_RVA INT) RETURNS INT
+create or ALTER   FUNCTION fn_pago_abono ( @ID_RVA INT) RETURNS INT
 AS 
    BEGIN
       DECLARE @V_MONTO INT
@@ -1151,7 +1151,7 @@ begin
 end
 go
 
-ALTER   function fn_pago_total_reserva (@id_rva int) returns varchar
+create or ALTER   function fn_pago_total_reserva (@id_rva int) returns varchar
 as
 begin
 	declare @v_monto int;
