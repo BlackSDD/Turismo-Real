@@ -40,6 +40,9 @@ insert into departamento (dir_dpto, num_dpto, n_amb_dpto, desc_dpto, costo_arri_
 insert into departamento (dir_dpto, num_dpto, n_amb_dpto, desc_dpto, costo_arri_dpto, id_cnd) values ('AV Walter Martinez 3564',103,2,'Departamento de 2 ambientes, habitación principal con baño en suite, cocina concepto abierto y living',37000,2);
 insert into departamento (dir_dpto, num_dpto, n_amb_dpto, desc_dpto, costo_arri_dpto, id_cnd) values ('El Arrayan 760',708,4,'Departamento amplio con vista al lago Villarica, habitación principal con baño en suite, habitación secundaria con 2 camas, baño de visitas living - comedor y concina independiente',115000,3);
 
+exec pd_agregarComuna 'Valparaiso',5;
+exec pd_agregarCondominio 'Condominio Pelicanos',4;
+exec pd_agregarDepartamento 'Cerro Baron',202,3,'Departamento con hermosa vista al oceano', 50000, 4;
 
 insert into articulo (nom_arti, cant_arti, deta_arti, valor_arti, fec_compra, id_dpto) values ('cama king', 1,'cama habitación principal, nueva',750000, getdate(), 1);
 insert into articulo (nom_arti, cant_arti, deta_arti, valor_arti, fec_compra, id_dpto) values ('refrigerador', 1,'refrigerador de 2 puertas, semi-nuevo',380000, getdate(), 1);
@@ -73,6 +76,21 @@ insert into transporte (id_serv, cost_km_dia, cost_km_noc) values (1,950,1150);
 insert into transporte (id_serv, cost_km_dia, cost_km_noc) values (2,870,1070);
 insert into tour (id_serv ,dur_hra, dur_min, cost_adult, cost_nigno, cost_3ra, ubi_partida, ubi_fin, alimentacion, transporte) values (3,9,30,95000,0,87000,'El Arrayan 760','El Arrayan 760','Si','Si');
 
+
+exec pd_agregar_destino 1,1,'Trayecto mall Marina Arauco', 'I', 7.5, 'AV Libertad 785'
+exec pd_agregar_destino 1,1,'Trayecto mall Marina Arauco', 'V', 7.5, 'AV Libertad 785'
+exec pd_agregar_destino 1,4,'Trayecto mall Marina Arauco', 'I', 15.7, 'AV Libertad 785'
+exec pd_agregar_destino 1,4,'Trayecto mall Marina Arauco', 'V', 15.7, 'AV Libertad 785'
+
+exec pd_agregar_destino 1,1,'Trayecto terminal de buses', 'I', 7.5, 'AV oriente 2040'
+exec pd_agregar_destino 1,1,'Trayecto terminal de buses', 'V', 7.5, 'AV oriente 2040'
+exec pd_agregar_destino 1,4,'Trayecto terminal de buses', 'I', 15.7, 'AV oriente 2040'
+exec pd_agregar_destino 1,4,'Trayecto terminal de buses', 'V', 15.7, 'AV oriente 2040'
+
+exec pd_agregar_destino 2,1,'Trayecto terminal de buses', 'I', 6.5, 'AV Chacabuco 512'
+exec pd_agregar_destino 2,1,'Trayecto terminal de buses', 'V', 6.5, 'AV Chacabuco 512'
+exec pd_agregar_destino 2,1,'Trayecto mall La serena', 'I', 7.5, 'AV Maulen 1480'
+exec pd_agregar_destino 2,1,'Trayecto mall La serena', 'V', 7.5, 'AV Maulen 1480'
 
 insert into marca (nombre_marca) values ('Nissan');
 insert into marca (nombre_marca) values ('Chevrolet');

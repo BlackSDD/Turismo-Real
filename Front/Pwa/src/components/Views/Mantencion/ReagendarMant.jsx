@@ -29,7 +29,7 @@ export default function ReagendarMant() {
     const transformarFechas = () =>{
         const dates = fechas.map((e) => {
             let newFecha = new Date(e.fec_disp_no);
-            const val = newFecha.toLocaleDateString("en-US", e.fec_disp_no);
+            const val = newFecha.toLocaleDateString("en-US", e.fec_us);
             return val;
             })
         setArrayF(dates);
